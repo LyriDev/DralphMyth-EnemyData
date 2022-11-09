@@ -1,1 +1,2 @@
-console.log("Hello World!");
+type element="火"|"氷"|"風"|"土"|"雷"|"水"|"光"|"闇"|"無"//属性
+type moveType="物理"|"息"|"魔法"//種別
