@@ -11,42 +11,22 @@
             "initiative":16,
             "actionPoint":5,
             "actionNumber":2,
-            "statusEffects":[
-                {
-                    "flame":true
+            "statusEffects":{
+                "flame":true,
+                "ice":true,
+                "dazzle":true,
+                "sleep":true,
+                "confusion":true,
+                "stun":true,
+                "curse":true,
+                "atkDown":true,
+                "defDown":{
+                    "physical":true,
+                    "breath":true,
+                    "magic":true
                 },
-                {
-                    "ice":true
+                "spdDown":true
                 },
-                {
-                    "dazzle":true
-                },
-                {
-                    "sleep":true
-                },
-                {
-                    "confusion":true
-                },
-                {
-                    "stun":true
-                },
-                {
-                    "curse":true
-                },
-                {
-                    "atkDown":true
-                },
-                {
-                    "defDown":{
-                        "physical":true,
-                        "breath":true,
-                        "magic":true
-                    }
-                },
-                {
-                    "spdDown":true
-                }
-            ],
             "stealth":false,
             "abilities":[
                 {
@@ -117,42 +97,22 @@
             "initiative":null,
             "actionPoint":null,
             "actionNumber":null,
-            "statusEffects":[
-                {
-                    "flame":null
+            "statusEffects":{
+                "flame":null,
+                "ice":null,
+                "dazzle":null,
+                "sleep":null,
+                "confusion":null,
+                "stun":null,
+                "curse":null,
+                "atkDown":null,
+                "defDown":{
+                    "physical":null,
+                    "breath":null,
+                    "magic":null
                 },
-                {
-                    "ice":null
-                },
-                {
-                    "dazzle":null
-                },
-                {
-                    "sleep":null
-                },
-                {
-                    "confusion":null
-                },
-                {
-                    "stun":null
-                },
-                {
-                    "curse":null
-                },
-                {
-                    "atkDown":null
-                },
-                {
-                    "defDown":{
-                        "physical":null,
-                        "breath":null,
-                        "magic":null
-                    }
-                },
-                {
-                    "spdDown":null
-                }
-            ],
+                "spdDown":null
+            },
             "stealth":null,
             "abilities":[
                 {
