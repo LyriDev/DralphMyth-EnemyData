@@ -1,4 +1,28 @@
-.main{
+html{
+    background-color: #333333;
+}
+
+table{
     margin: 0 auto;
-    border: solid 1px gray;
+    border:solid 2px black;
+    color: #cccccc
+}
+
+tr:nth-child(2n){
+    background-color: #444444;
+}
+tr:nth-child(2n+1){
+    background-color: #222222;
+}
+th{
+    border:solid 1px #000000;
+    background-color: #111111;
+    color: #cccccc;
+}
+td{
+    border:solid 1px black;
+}
+
+#main{
+    margin: 0 auto;
 }
