@@ -54,6 +54,6 @@ $(function(){
         dataType:"json",// json形式でデータを取得
     })
     .done(function(data){
-        showEnemyData(data)//全部のデータを表示する
+        //showEnemyData(data)//全部のデータを表示する
     })
 })
