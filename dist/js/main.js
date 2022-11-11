@@ -1,8 +1,12 @@
-const drawArea=document.getElementById("main")
+const drawArea=document.getElementById("main")//書き換えるHTMLのエリア
 
+/* 種別リスト */
 const elementList=["火","氷","風","土","雷","水","光","闇","無"]
 const attackTypeList=["物理","息","魔法"]
 
+
+
+/* HTMLの書き換え処理 */
 function addHtmlTag(tagName,content){//受け取った中身をタグで挟む
     return `<${tagName}>${content}</${tagName}>`
 }
