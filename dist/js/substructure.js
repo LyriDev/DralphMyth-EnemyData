@@ -1,5 +1,4 @@
-//const main=document.getElementById("main")//書き換えるHTMLのエリア
-const tableArea=document.getElementById("tableArea")//書き換えるHTMLのエリア
+const mainArea=document.getElementById("main")//書き換えるHTMLのエリア
 
 /* 種別リスト */
 const elementList=["火","氷","風","土","雷","水","光","闇","無"]
@@ -14,6 +13,10 @@ function convertNull(value){//値がnullなら"？"として返す関数
     }
 }
 
-function addHtmlTag(tagName,content){//受け取った中身をHTMLのタグで挟む関数
-    return `<${tagName}>${convertNull(content)}</${tagName}>`
+function addHtmlTag(content,tagName,className=null){//受け取った中身をHTMLのタグで挟む関数
+    if(className===null){//クラスを設定しない場合
+        return `<${tagName}>${convertNull(content)}</${tagName}>`
+    }else{//クラスを設定する場合
+        return `<${tagName} class="${className}">${convertNull(content)}</${tagName}>`
+    }
 }
