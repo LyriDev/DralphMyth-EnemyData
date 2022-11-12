@@ -1,4 +1,7 @@
 const mainArea=document.getElementById("main")//書き換えるHTMLのエリア
+const viewUrl="./html/view.html"//view.htmlのローカルパス
+const editUrl="./html/edit.html"//edit.htmlのローカルパス
+
 
 /* 種別リスト */
 const elementList=["火","氷","風","土","雷","水","光","闇","無"]

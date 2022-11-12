@@ -3,11 +3,50 @@ html{
     color: #AAAAAA;
     font-size: 16px;
 }
-
+body{
+    margin-top:0;
+    overflow-x: hidden
+}
+#searchText,#createButton,.level,.tag,.viewButton,.editButton{
+    font-size: 1.25rem;
+}
+#createButton,.viewButton,.editButton{
+    border:solid 1px #5D656D;
+    border-radius: 3px;
+    background-color: #3A3F44;
+    color: #F5F5F5;
+    transition: border 0.3s;
+}
+#header{
+    margin:0 -200%;
+    padding:0 200%;
+    margin-top: 0px;
+    background-color: #202328;
+}
+form{
+    width: 490px;
+    margin: 0 auto;
+}
+#searchText{
+    margin: 10px;
+    padding: 5px;
+    border: 1px solid #52575C;
+    border-radius: 3px;
+}
+#searchText::placeholder{
+    color: #E1E1E1;
+}
+#searchText:focus {
+    background: #F9F9F9;
+}
+#createButtonArea{
+    margin: 10px;
+    float:right;
+}
 #main{
     position: absolute;
     width: 490px;
-    margin: auto;
+    margin: 10px auto;
     left: 0;
     right: 0;
     border:solid 1px #555555;
@@ -35,9 +74,6 @@ html{
     color: #F5F5F5;
     font-size: 1.5rem;
 }
-.level,.tag,.viewButton,.editButton{
-    font-size: 1.25rem;
-}
 .level{
     padding: 0px 5px 0px 5px;
     overflow-wrap: break-word;
@@ -54,13 +90,8 @@ html{
 }
 .viewButton,.editButton{
     margin: 0px 5px 5px 0px;
-    border:solid 1px #5D656D;
-    border-radius: 3px;
-    background-color: #3A3F44;
-    color: #F5F5F5;
-    transition: border 0.3s;
 }
-.viewButton:hover,.editButton:hover{
+#createButton:hover,.viewButton:hover,.editButton:hover{
     border:solid 1px #7A8288;
     cursor: pointer;
 }

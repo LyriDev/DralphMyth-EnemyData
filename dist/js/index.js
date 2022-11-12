@@ -1,6 +1,4 @@
 function createEnemyElement(index,name,level,tag){//表示する敵データの要素を作成する関数
-    const viewUrl="./html/view.html"
-    const editUrl="./html/edit.html"
     return `
         <div class="data">
             <div class="name">${convertNull(name)}</div>
@@ -33,7 +31,6 @@ function getAllEnemyTag(data){//敵データの全タグ種を取得する関数
 }
 function showEnemyData(data,filter=null){//表示する敵データを作成する関数
     let result=""
-    
     if(filter===null){//フィルターなしのとき
         let allEnemyTag=getAllEnemyTag(data)
         for(let i in allEnemyTag){//タグ毎にデータをまとめて出力する
@@ -47,6 +44,12 @@ function showEnemyData(data,filter=null){//表示する敵データを作成す�
     mainArea.innerHTML=result//表の中身を変更する
 }
 
+function updatecreateButton(index){//"新規作成"ボタンで移動するリンク先を更新する関数
+    document.getElementById("createButtonArea").innerHTML=`
+    <button id="createButton" onclick="location.href='${editUrl}?index=${index}'; return false">新規作成</button>
+    `
+}
+
 /* ここから実際の処理 */
 $(function(){
     $.ajax({
@@ -54,6 +57,7 @@ $(function(){
         dataType:"json",// json形式でデータを取得
     })
     .done(function(data){
+        updatecreateButton(data.enemy.length)//"新規作成"ボタンで移動するリンク先を更新する
         showEnemyData(data)//全部のデータを表示する
     })
 })
