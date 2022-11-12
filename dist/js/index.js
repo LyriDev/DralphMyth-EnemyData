@@ -1,4 +1,4 @@
-function createEnemyElement(name,level,tag){//表示する敵データの要素を作成する関数
+function createEnemyElement(index,name,level,tag){//表示する敵データの要素を作成する関数
     const viewUrl="./html/view.html"
     const editUrl="./html/edit.html"
     return `
@@ -7,24 +7,24 @@ function createEnemyElement(name,level,tag){//表示する敵データの要素�
             <div class="level">Lv${level}</div>
             <div class="tag">${tag}</div>
             <div class="button">
-                <button class="editButton" onclick="location.href='${viewUrl}'" >閲覧</button>
-                <button class="editButton" onclick="location.href='${editUrl}'" >編集</button>
+                <button class="editButton" onclick="location.href='${viewUrl}?index=${index}'" >閲覧</button>
+                <button class="editButton" onclick="location.href='${editUrl}?index=${index}'" >編集</button>
             </div>
         </div>
     `
 }
 function getEnemyDataByTag(data,tagName){//指定されたタグに合致する敵データを取得する関数
     let result=""
-    $.each(data.enemy,function(key,value){
+    $.each(data.enemy,function(index,value){
         if(tagName===value.tag){
-            result+=createEnemyElement(value.name,value.level,value.tag)
+            result+=createEnemyElement(index,value.name,value.level,value.tag)
         }
     })
     return result
 }
 function getAllEnemyTag(data){//敵データの全タグ種を取得する関数
     let enemyTagList=new Array
-    $.each(data.enemy,function(key,value){
+    $.each(data.enemy,function(index,value){
         if(!enemyTagList.includes(value.tag)){
             enemyTagList.push(value.tag)
         }
