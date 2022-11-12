@@ -1,16 +1,17 @@
 html{
     background-color: #272B30;
     color: #AAAAAA;
+    font-size: 16px;
 }
 
 #main{
-    width: 360px;
-    margin: auto;
     position: absolute;
+    width: 490px;
+    margin: auto;
     left: 0;
     right: 0;
-    border-radius: 3px;
     border:solid 1px #555555;
+    border-radius: 3px;
 }
 .data{
     border-top:solid 1px #52575C;
@@ -30,31 +31,36 @@ html{
     clear: both;
 }
 .name{
+    padding: 5px;
     color: #F5F5F5;
+    font-size: 1.5rem;
+}
+.level,.tag,.viewButton,.editButton{
+    font-size: 1.25rem;
 }
 .level{
-    width: 50px;
+    padding: 0px 5px 0px 5px;
+    overflow-wrap: break-word;
+    inline-size: 50px;
     float: left;
 }
 .tag{
-    inline-size: 200px;
+    overflow-wrap: break-word;
+    inline-size: 300px;
     float: left;
 }
-
+.button{
+    float:right;
+}
 .viewButton,.editButton{
-    background-color: #3A3F44;
-    margin: 3px 0px;
+    margin: 0px 5px 5px 0px;
     border:solid 1px #5D656D;
     border-radius: 3px;
+    background-color: #3A3F44;
     color: #F5F5F5;
     transition: border 0.3s;
 }
-
 .viewButton:hover,.editButton:hover{
     border:solid 1px #7A8288;
     cursor: pointer;
-}
-
-.editButton{
-    clear: left;
 }
