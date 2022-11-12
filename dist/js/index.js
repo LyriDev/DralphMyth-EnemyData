@@ -3,9 +3,9 @@ function createEnemyElement(index,name,level,tag){//表示する敵データの�
     const editUrl="./html/edit.html"
     return `
         <div class="data">
-            <div class="name">${name}</div>
-            <div class="level">Lv${level}</div>
-            <div class="tag">${tag}</div>
+            <div class="name">${convertNull(name)}</div>
+            <div class="level">Lv${convertNull(level)}</div>
+            <div class="tag">${convertNull(tag)}</div>
             <div class="button">
                 <button class="editButton" onclick="location.href='${viewUrl}?index=${index}'" >閲覧</button>
                 <button class="editButton" onclick="location.href='${editUrl}?index=${index}'" >編集</button>
