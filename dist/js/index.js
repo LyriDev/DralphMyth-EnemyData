@@ -1,12 +1,14 @@
 function createEnemyElement(name,level,tag){//表示する敵データの要素を作成する関数
+    const viewUrl="./html/view.html"
+    const editUrl="./html/edit.html"
     return `
         <div class="data">
             <div class="name">${name}</div>
             <div class="level">Lv${level}</div>
             <div class="tag">${tag}</div>
             <div class="button">
-                <input class="viewButton" type="button" value="閲覧">
-                <input class="editButton" type="button" value="編集">
+                <button class="editButton" onclick="location.href='${viewUrl}'" >閲覧</button>
+                <button class="editButton" onclick="location.href='${editUrl}'" >編集</button>
             </div>
         </div>
     `
