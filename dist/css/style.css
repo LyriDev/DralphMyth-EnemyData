@@ -1,0 +1,15 @@
+html{
+    background-color: #272B30;
+    color: #AAAAAA;
+    font-size: 16px;
+}
+body{
+    margin-top:0;
+    overflow-x: hidden
+}
+#header{
+    margin:0 -200%;
+    padding:0 200%;
+    margin-top: 0px;
+    background-color: #202328;
+}

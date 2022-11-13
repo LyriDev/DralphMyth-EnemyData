@@ -11,24 +11,13 @@
 form{
     width: 490px;
     margin: 0 auto;
+    text-align: right;
 }
-#searchText{
-    margin: 10px;
-    padding: 5px;
-    border: 2px solid #52575C;
-    border-radius: 3px;
-}
-#searchText::placeholder{
-    color: #E1E1E1;
-}
-#searchText:focus {
-    outline: 1.5px solid rgba(255,255,255,30%);
-}
+
 #headerButtonArea{
-    margin: 10px;
-    float:right;
+padding: 10px 0;
 }
-#main{
+/* #main{
     position: absolute;
     width: 490px;
     margin: 10px auto;
@@ -79,4 +68,4 @@ form{
 #headerButton:hover,.viewButton:hover,.editButton:hover{
     border:solid 1px #7A8288;
     cursor: pointer;
-}
+} */

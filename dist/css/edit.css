@@ -1,34 +1,36 @@
-#searchText,#headerButton,.level,.tag,.viewButton,.editButton{
-    font-size: 1.25rem;
-}
-#headerButton,.viewButton,.editButton{
-    border:solid 1px #5D656D;
-    border-radius: 3px;
-    background-color: #3A3F44;
-    color: #F5F5F5;
-    transition: border 0.3s;
-}
 form{
     width: 490px;
     margin: 0 auto;
-}
-#searchText{
-    margin: 10px;
-    padding: 5px;
-    border: 2px solid #52575C;
-    border-radius: 3px;
-}
-#searchText::placeholder{
-    color: #E1E1E1;
-}
-#searchText:focus {
-    outline: 1.5px solid rgba(255,255,255,30%);
+    text-align: right;
 }
 #headerButtonArea{
-    margin: 10px;
-    float:right;
+padding: 10px 0;
 }
-#main{
+#headerButton,#saveButton{
+    font-size: 1.25rem;
+    border-radius: 3px;
+    color: #F5F5F5;
+}
+#headerButton:hover,#saveButton:hover{
+    cursor: pointer;
+}
+#headerButton{
+    border:solid 1px #5D656D;
+    background-color: #3A3F44;
+}
+#headerButton:hover{
+    border:solid 1px #7A8288;
+    transition: border 0.3s;
+}
+#saveButton{
+    background-color: #62C462;
+}
+#saveButton:hover{
+    background-color: #59C159;
+    transition: background-color 0.3s;
+}
+
+/* #main{
     position: absolute;
     width: 490px;
     margin: 10px auto;
@@ -79,4 +81,4 @@ form{
 #headerButton:hover,.viewButton:hover,.editButton:hover{
     border:solid 1px #7A8288;
     cursor: pointer;
-}
+} */
