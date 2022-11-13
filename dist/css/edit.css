@@ -23,10 +23,11 @@ padding: 10px 0;
     transition: border 0.3s;
 }
 #saveButton{
-    border:0;
+    border:solid 1px #62C462;
     background-color: #62C462;
 }
 #saveButton:hover{
+    border:solid 1px #59C159;
     background-color: #59C159;
     transition: background-color 0.3s;
 }
