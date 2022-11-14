@@ -20,9 +20,30 @@ function convertNull(value,alt="？"){//値がnullなら"？"として返す関�
     }
 }
 
-
-
 /* ページごとに表示するコンテンツを変更するための関数 */
+function updateHTML(data){//HTMLを更新する関数
+    switchCssFile()//読み込むCSSファイルを差し替える
+    updateHeader()//ヘッダーを更新する
+    updateMain(data)//メインを更新する
+}
+
+function switchCssFile(_page=page){//ページ毎に読み込むCSSファイルを変更する関数
+    let cssUrl//cssファイルのパス
+    switch(_page){
+        case null://一覧ページ
+            cssUrl="./css/index.css"
+            break
+        case "view"://閲覧ページ
+            cssUrl="./css/view.css"
+            break
+        case "edit"://編集ページ
+            cssUrl="./css/edit.css"
+            break
+        default:
+            break
+    }
+    $("#styleSwitch").attr("href",cssUrl)//CSSファイルを差し替える
+}
 
 function updateHeader(_page=page){//ヘッダーを変更する関数
     let result
@@ -46,7 +67,6 @@ function updateHeader(_page=page){//ヘッダーを変更する関数
                 </div>
             </div id="headerContent">
             `
-            $("#styleSwitch").attr("href","./css/view.css" )
             break
         case "edit"://編集ページのヘッダー
             result=`
@@ -65,17 +85,54 @@ function updateHeader(_page=page){//ヘッダーを変更する関数
                 alert("保存しました")
                 saveJson()//jsonファイルを上書き更新する
             })
-            $("#styleSwitch").attr("href","./css/edit.css" )
             break
     }
     document.getElementById("header").innerHTML=result
 }
 
-function updateMain(_page=page){//メインを変更する関数
-//TODO メインを変更する処理
+function updateMain(data,_page=page){//メインを変更する関数
+    switch(_page){
+        case null://一覧ページの際の処理
+            updateSearchText(data)//検索するための処理を検索ボックスに適用する
+            implementCreateButton(data.enemy.length)//新規作成ボタンに処理を適用する
+            showEnemyData(data)//全部のデータを表示する
+            break
+        default:
+            break
+    }
 }
 
 /* 一覧ページを表示中に使う関数 */
+function showEnemyData(data,filter=""){//表示する敵データを作成する関数
+    let result=""
+    if(filter===""){//フィルターなしのとき
+        let allEnemyTag=getAllEnemyTag(data)
+        for(let i in allEnemyTag){//タグ毎にデータをまとめて出力する
+            result+=getEnemyDataByTag(data,allEnemyTag[i])
+        }
+    }else{//フィルターありのとき
+        result+=getEnemyDataByTag(data,filter)//指定されたタグを持つデータのみを出力する
+    }
+    mainArea.innerHTML=result//表の中身を変更する
+}
+function getAllEnemyTag(data){//敵データの全タグ種を取得する関数
+    let enemyTagList=new Array
+    $.each(data.enemy,function(index,value){
+        if(!enemyTagList.includes(value.tag)){
+            enemyTagList.push(value.tag)
+        }
+    })
+    return enemyTagList
+}
+function getEnemyDataByTag(data,tagName){//指定されたタグに合致する敵データを取得する関数
+    let result=""
+    $.each(data.enemy,function(index,value){
+        if(tagName===value.tag){
+            result+=createEnemyElement(index,value.name,value.level,value.tag)
+        }
+    })
+    return result
+}
 function createEnemyElement(index,name,level,tag){//表示する敵データの要素を作成する関数
     return `
         <div class="data">
@@ -88,36 +145,6 @@ function createEnemyElement(index,name,level,tag){//表示する敵データの�
             </div>
         </div>
     `
-}
-function getEnemyDataByTag(data,tagName){//指定されたタグに合致する敵データを取得する関数
-    let result=""
-    $.each(data.enemy,function(index,value){
-        if(tagName===value.tag){
-            result+=createEnemyElement(index,value.name,value.level,value.tag)
-        }
-    })
-    return result
-}
-function getAllEnemyTag(data){//敵データの全タグ種を取得する関数
-    let enemyTagList=new Array
-    $.each(data.enemy,function(index,value){
-        if(!enemyTagList.includes(value.tag)){
-            enemyTagList.push(value.tag)
-        }
-    })
-    return enemyTagList
-}
-function showEnemyData(data,filter=""){//表示する敵データを作成する関数
-    let result=""
-    if(filter===""){//フィルターなしのとき
-        let allEnemyTag=getAllEnemyTag(data)
-        for(let i in allEnemyTag){//タグ毎にデータをまとめて出力する
-            result+=getEnemyDataByTag(data,allEnemyTag[i])
-        }
-    }else{//フィルターありのとき
-        result+=getEnemyDataByTag(data,filter)//指定されたタグを持つデータのみを出力する
-    }
-    mainArea.innerHTML=result//表の中身を変更する
 }
 
 /* 閲覧ページを表示中に使う関数 */
@@ -142,21 +169,12 @@ function implementCreateButton(index){//新規作成ボタンに処理を適用�
 }
 
 /* ここから実際の処理 */
-updateHeader()//ページごとにヘッダーを更新する
 $(function(){
     $.ajax({
         url:"./data.json",//jsonファイルの場所
         dataType:"json",// json形式でデータを取得
     })
     .done(function(data){
-        switch(page){
-            case null://一覧ページの際の処理
-                updateSearchText(data)//検索するための処理を検索ボックスに適用する
-                showEnemyData(data)//全部のデータを表示する
-                implementCreateButton(data.enemy.length)//新規作成ボタンに処理を適用する
-                break
-            default:
-                break
-        }
+        updateHTML(data)//HTMLを更新する
     })
 })
