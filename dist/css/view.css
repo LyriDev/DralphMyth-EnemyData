@@ -8,7 +8,7 @@
     color: #F5F5F5;
     transition: border 0.3s;
 }
-form{
+#headerContent{
     width: 490px;
     margin: 0 auto;
     text-align: right;

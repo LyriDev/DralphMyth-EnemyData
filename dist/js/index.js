@@ -29,32 +29,42 @@ function updateHeader(_page=page){//ヘッダーを変更する関数
     switch (_page){
         case null://一覧ページのヘッダー
             result=`
-            <form>
+            <div id="headerContent">
                 <input type="text" id="searchText" placeholder="タグ検索">
-                <div id="headerButtonArea"> </div>
-            </form>
-            `//新規作成ボタンは後でindexを変更する仕様
+                <div id="headerButtonArea">
+                    <button id="headerButton">新規作成</button>
+                </div>
+            </div>
+            `//新規作成ボタンは後でimplementCreateButton()で動作処理を適用する仕様
             break
         case "view"://閲覧ページのヘッダー
             result=`
-            <form>
+            <div id="headerContent">
                 <div id="headerButtonArea">
-                    <button id="headerButton" onclick="location.href='./index.html?page=edit&index=${index}'; return false">編集</button>
-                    <button id="headerButton" onclick="location.href='./index.html'; return false">一覧</button>
+                    <button id="headerButton" onclick="location.href='./index.html?page=edit&index=${index}'">編集</button>
+                    <button id="headerButton" onclick="location.href='./index.html'">一覧</button>
                 </div>
-            </form>
+            </div id="headerContent">
             `
             $("#styleSwitch").attr("href","./css/view.css" )
             break
         case "edit"://編集ページのヘッダー
             result=`
-            <form>
+            <div id="headerContent">
                 <div id="headerButtonArea">
-                    <button id="headerButton" onclick="location.href='./index.html?page=view&index=${index}'; return false">閲覧</button>
-                    <button id="saveButton" onclick="; return false">保存</button>
+                    <button id="headerButton">閲覧</button>
+                    <button id="saveButton">保存</button>
                 </div>
-            </form>
-            `//TODO 保存ボタンのonclick処理
+            </div>
+            `
+            $(document).on("click","#headerButton",function(){//閲覧ボタンに処理を適用する
+                saveJson()//jsonファイルを上書き更新する
+                location.href=`./index.html?page=view&index=${index}`
+            })
+            $(document).on("click","#saveButton",function(){//保存ボタンに処理を適用する
+                alert("保存しました")
+                saveJson()//jsonファイルを上書き更新する
+            })
             $("#styleSwitch").attr("href","./css/edit.css" )
             break
     }
@@ -62,7 +72,7 @@ function updateHeader(_page=page){//ヘッダーを変更する関数
 }
 
 function updateMain(_page=page){//メインを変更する関数
-
+//TODO メインを変更する処理
 }
 
 /* 一覧ページを表示中に使う関数 */
@@ -110,6 +120,12 @@ function showEnemyData(data,filter=""){//表示する敵データを作成する
     mainArea.innerHTML=result//表の中身を変更する
 }
 
+/* 閲覧ページを表示中に使う関数 */
+
+/* 編集ページを表示中に使う関数 */
+function saveJson(){//更新されたjsonファイルを保存する関数
+//TODO jsonファイルを上書き更新する
+}
 
 /* ヘッダー関連の処理 */
 function updateSearchText(data){////検索するための処理を検索ボックスに適用する関数
@@ -119,10 +135,10 @@ function updateSearchText(data){////検索するための処理を検索ボッ�
     })
 }
 
-function updateCreateButton(index){//"新規作成"ボタンで移動するリンク先を更新する関数
-    document.getElementById("headerButtonArea").innerHTML=`
-    <button id="headerButton" onclick="location.href='./index.html?page=edit&index=${index}'; return false">新規作成</button>
-    `
+function implementCreateButton(index){//新規作成ボタンに処理を適用する関数
+    $(document).on("click","#headerButton",function(){//新規作成ボタンに処理を適用する
+        location.href=`./index.html?page=edit&index=${index}`
+    })
 }
 
 /* ここから実際の処理 */
@@ -133,12 +149,14 @@ $(function(){
         dataType:"json",// json形式でデータを取得
     })
     .done(function(data){
-        if(page===null){//一覧ページの際の処理
-            updateSearchText(data)//検索するための処理を検索ボックスに適用する
-            showEnemyData(data)//全部のデータを表示する
-            updateCreateButton(data.enemy.length)//"新規作成"ボタンで移動するリンク先を更新する
-        }else{
-
+        switch(page){
+            case null://一覧ページの際の処理
+                updateSearchText(data)//検索するための処理を検索ボックスに適用する
+                showEnemyData(data)//全部のデータを表示する
+                implementCreateButton(data.enemy.length)//新規作成ボタンに処理を適用する
+                break
+            default:
+                break
         }
     })
 })
