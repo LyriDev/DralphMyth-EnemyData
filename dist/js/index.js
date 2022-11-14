@@ -11,7 +11,6 @@ function getQuery(name){//クエリ文字列(URLパラメータ)を取得する�
 }
 const page=getQuery("page")//開いているページの種類
 const index=getQuery("index")//開いているページの項目
-let jsonData//取得するjsonのデータ
 
 function convertNull(value,alt="？"){//値がnullなら"？"として返す関数
     if(value===null){
@@ -113,12 +112,14 @@ function showEnemyData(data,filter=""){//表示する敵データを作成する
 
 
 /* ヘッダー関連の処理 */
-const filterByTag=function(){//#headerButtonAreaのonイベントに設定するための関数
-    const filter=$("#searchText").val()//検索ボックスに入力された値
-    showEnemyData(jsonData,filter)//敵データにフィルターをかけて表示する
+function updateSearchText(data){////検索するための処理を検索ボックスに適用する関数
+    $("#searchText").on("input",function(){
+        const filter=$("#searchText").val()//検索ボックスに入力された値
+        showEnemyData(data,filter)//敵データにフィルターをかけて表示する
+    })
 }
 
-function updatecreateButton(index){//"新規作成"ボタンで移動するリンク先を更新する関数
+function updateCreateButton(index){//"新規作成"ボタンで移動するリンク先を更新する関数
     document.getElementById("headerButtonArea").innerHTML=`
     <button id="headerButton" onclick="location.href='./index.html?page=edit&index=${index}'; return false">新規作成</button>
     `
@@ -132,11 +133,10 @@ $(function(){
         dataType:"json",// json形式でデータを取得
     })
     .done(function(data){
-        jsonData=data
         if(page===null){//一覧ページの際の処理
-            $("#searchText").on("input",filterByTag)//検索するための処理を検索ボックスに適用する
-            showEnemyData(jsonData)//全部のデータを表示する
-            updatecreateButton(jsonData.enemy.length)//"新規作成"ボタンで移動するリンク先を更新する
+            updateSearchText(data)//検索するための処理を検索ボックスに適用する
+            showEnemyData(data)//全部のデータを表示する
+            updateCreateButton(data.enemy.length)//"新規作成"ボタンで移動するリンク先を更新する
         }else{
 
         }
