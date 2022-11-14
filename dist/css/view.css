@@ -17,7 +17,7 @@
 #headerButtonArea{
 padding: 10px 0;
 }
-/* #main{
+#main{
     position: absolute;
     width: 490px;
     margin: 10px auto;
@@ -26,7 +26,8 @@ padding: 10px 0;
     border:solid 1px #555555;
     border-radius: 3px;
 }
-.data{
+
+/* .data{
     border-top:solid 1px #52575C;
 }
 .data:first-child{
@@ -42,30 +43,12 @@ padding: 10px 0;
     content: "";
     display: block;
     clear: both;
-}
+} */
+
 .name{
+    margin: 0 10px;
     padding: 5px;
+    border-bottom: solid 1px #F5F5F5;
     color: #F5F5F5;
     font-size: 1.5rem;
 }
-.level{
-    padding: 0px 5px 0px 5px;
-    overflow-wrap: break-word;
-    inline-size: 50px;
-    float: left;
-}
-.tag{
-    overflow-wrap: break-word;
-    inline-size: 300px;
-    float: left;
-}
-.button{
-    float:right;
-}
-.viewButton,.editButton{
-    margin: 0px 5px 5px 0px;
-}
-#headerButton:hover,.viewButton:hover,.editButton:hover{
-    border:solid 1px #7A8288;
-    cursor: pointer;
-} */

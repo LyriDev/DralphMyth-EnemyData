@@ -97,6 +97,8 @@ function updateMain(data,_page=page){//メインを変更する関数
             implementCreateButton(data.enemy.length)//新規作成ボタンに処理を適用する
             showEnemyData(data)//全部のデータを表示する
             break
+        case "view":
+            viewEnemyData(data)
         default:
             break
     }
@@ -113,7 +115,7 @@ function showEnemyData(data,filter=""){//表示する敵データを作成する
     }else{//フィルターありのとき
         result+=getEnemyDataByTag(data,filter)//指定されたタグを持つデータのみを出力する
     }
-    mainArea.innerHTML=result//表の中身を変更する
+    mainArea.innerHTML=result//メインの中身を変更する
 }
 function getAllEnemyTag(data){//敵データの全タグ種を取得する関数
     let enemyTagList=new Array
@@ -148,6 +150,16 @@ function createEnemyElement(index,name,level,tag){//表示する敵データの�
 }
 
 /* 閲覧ページを表示中に使う関数 */
+function viewEnemyData(data){
+    let result
+    result=`
+        <div class="data">
+            <div class="name">ミ＝ゴ&nbsp;Lv5</div>
+            <div class="tag">道中敵</div>
+        </div>
+    `
+    mainArea.innerHTML=result//メインの中身を変更する
+}
 
 /* 編集ページを表示中に使う関数 */
 function saveJson(){//更新されたjsonファイルを保存する関数
