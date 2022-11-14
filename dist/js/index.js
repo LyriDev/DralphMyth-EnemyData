@@ -123,7 +123,7 @@ function showEnemyData(data,filter=""){//表示する敵データを作成する
 }
 function getAllEnemyTag(data){//敵データの全タグ種を取得する関数
     let enemyTagList=new Array
-    $.each(data.enemy,function(index,value){
+    $.each(data.enemy,function(key,value){
         if(!enemyTagList.includes(value.tag)){
             enemyTagList.push(value.tag)
         }
@@ -132,22 +132,22 @@ function getAllEnemyTag(data){//敵データの全タグ種を取得する関数
 }
 function getEnemyDataByTag(data,tagName){//指定されたタグに合致する敵データを取得する関数
     let result=""
-    $.each(data.enemy,function(index,value){
+    $.each(data.enemy,function(key,value){
         if(tagName===value.tag){
-            result+=createEnemyElement(index,value.name,value.level,value.tag)
+            result+=createEnemyElement(key,value.name,value.level,value.tag)
         }
     })
     return result
 }
-function createEnemyElement(index,name,level,tag){//表示する敵データの要素を作成する関数
+function createEnemyElement(key,name,level,tag){//表示する敵データの要素を作成する関数
     return `
         <div class="data">
             <div class="name">${convertNull(name)}</div>
             <div class="level">Lv${convertNull(level,"?")}</div>
             <div class="tag">${convertNull(tag,"")}</div>
             <div class="button">
-                <button class="editButton" onclick="location.href='./index.html?page=view&index=${index}'" >閲覧</button>
-                <button class="editButton" onclick="location.href='./index.html?page=edit&index=${index}'" >編集</button>
+                <button class="editButton" onclick="location.href='./index.html?page=view&index=${key}'" >閲覧</button>
+                <button class="editButton" onclick="location.href='./index.html?page=edit&index=${key}'" >編集</button>
             </div>
         </div>
     `
@@ -178,9 +178,9 @@ function updateSearchText(data){////検索するための処理を検索ボッ�
     })
 }
 
-function implementCreateButton(index){//新規作成ボタンに処理を適用する関数
+function implementCreateButton(dataLength){//新規作成ボタンに処理を適用する関数
     $(document).on("click","#headerButton",function(){//新規作成ボタンに処理を適用する
-        location.href=`./index.html?page=edit&index=${index}`
+        location.href=`./index.html?page=edit&index=${dataLength}`
     })
 }
 
