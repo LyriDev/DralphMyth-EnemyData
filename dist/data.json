@@ -1,21 +1,21 @@
 {
     "enemy":[
         {
-            "tag":"道中敵",
             "name":"ミ＝ゴ",
             "level":5,
+            "tag":"道中敵",
             "elements":["氷"],
             "species":"虫系",
-            "HP":80,
-            "armor":12,
-            "dodge":100,
-            "initiative":16,
-            "actionPoint":5,
-            "actionNumber":2,
             "sanCheck":{
                 "success":"0",
                 "failure":"1d6"
             },
+            "HP":80,
+            "armor":12,
+            "initiative":16,
+            "actionPoint":5,
+            "dodge":100,
+            "actionNumber":2,
             "statusEffects":{
                 "flame":100,
                 "ice":100,
@@ -113,21 +113,21 @@
             "note":""
         },
         {
-            "tag":null,
             "name":null,
             "level":null,
+            "tag":null,
             "elements":[null],
             "species":null,
-            "HP":null,
-            "armor":null,
-            "dodge":null,
-            "initiative":null,
-            "actionPoint":null,
-            "actionNumber":null,
             "sanCheck":{
                 "success":null,
                 "failure":null
             },
+            "HP":null,
+            "armor":null,
+            "initiative":null,
+            "actionPoint":null,
+            "dodge":null,
+            "actionNumber":null,
             "statusEffects":{
                 "flame":null,
                 "ice":null,
@@ -171,21 +171,21 @@
             "note":""
         },
         {
-            "tag":"道中敵2",
             "name":"ミ＝ゴ",
             "level":1,
+            "tag":"道中敵2",
             "elements":["氷"],
             "species":"虫系",
-            "HP":80,
-            "armor":12,
-            "dodge":100,
-            "initiative":16,
-            "actionPoint":5,
-            "actionNumber":2,
             "sanCheck":{
                 "success":"0",
                 "failure":"1d6"
             },
+            "HP":80,
+            "armor":12,
+            "initiative":16,
+            "actionPoint":5,
+            "dodge":100,
+            "actionNumber":2,
             "statusEffects":{
                 "flame":100,
                 "ice":100,
@@ -283,21 +283,21 @@
             "note":""
         },
         {
-            "tag":"道中敵2",
             "name":"ミ＝ゴ",
             "level":2,
+            "tag":"道中敵2",
             "elements":["氷"],
             "species":"虫系",
-            "HP":80,
-            "armor":12,
-            "dodge":100,
-            "initiative":16,
-            "actionPoint":5,
-            "actionNumber":2,
             "sanCheck":{
                 "success":"0",
                 "failure":"1d6"
             },
+            "HP":80,
+            "armor":12,
+            "initiative":16,
+            "actionPoint":5,
+            "dodge":100,
+            "actionNumber":2,
             "statusEffects":{
                 "flame":100,
                 "ice":100,

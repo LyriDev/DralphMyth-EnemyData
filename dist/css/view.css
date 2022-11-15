@@ -27,28 +27,36 @@ padding: 10px 0;
     border-radius: 3px;
 }
 
-/* .data{
-    border-top:solid 1px #52575C;
-}
-.data:first-child{
-	border: none;
-}
-.data:nth-child(2n+1){
-    background-color: #3A3F44;
-}
-.data:nth-child(2n){
-    background-color: #272B30;
-}
-.data::after {
-    content: "";
-    display: block;
-    clear: both;
-} */
-
-.name{
-    margin: 0 10px;
+#name{
+    margin: 0 10px 10px 10px;
     padding: 5px;
     border-bottom: solid 1px #F5F5F5;
     color: #F5F5F5;
     font-size: 1.5rem;
+}
+#tag,.parameterBox > div{
+    content: "";
+    display:inline-block;
+    color: #F5F5F5;
+    font-size: 1.25rem;
+}
+#tag{
+    margin: 0 10px 10px 10px;
+    border-bottom: solid 1px #F5F5F5;
+}
+.parameterBox{
+    padding: 0 10px;
+    text-align: center;
+    font-size: 0;
+}
+.parameterBox > div{
+    max-width: 450px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    border-bottom: solid 2px #F5F5F5;
+    text-align:center;
+    word-wrap: break-word;
+}
+.parameterBox > div:last-child{
+    padding-right: 10px;
 }

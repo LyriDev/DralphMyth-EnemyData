@@ -157,9 +157,20 @@ function createEnemyElement(key,name,level,tag){//表示する敵データの要
 function viewEnemyData(data){
     let result
     result=`
-        <div class="data">
-            <div class="name">ミ＝ゴ&nbsp;Lv5</div>
-            <div class="tag">道中敵</div>
+        <div id="name">ミ＝ゴ&nbsp;Lv5</div>
+        <div id="tag">道中敵</div>
+        <div class="parameterBox">
+            <div>属性<br>氷</div>
+            <div>種族<br>虫系</div>
+            <div>SANチェック<br>0/1d6</div>
+        </div>
+        <div class="parameterBox">
+            <div>HP<br>800</div>
+            <div>装甲<br>12</div>
+            <div>イニシアチブ<br>16</div>
+            <div>行動P<br>4</div>
+            <div>回避<br>100%</div>
+            <div>行動回数<br>2回</div>
         </div>
     `
     mainArea.innerHTML=result//メインの中身を変更する
