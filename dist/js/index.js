@@ -172,6 +172,18 @@ function viewEnemyData(data){
             <div>回避<br>100%</div>
             <div>行動回数<br>2回</div>
         </div>
+        <table id="statusEffectTable">
+            <tr>
+                <td>炎</td>
+                <td>氷</td>
+                <td>幻惑</td>
+            </tr>
+            <tr>
+                <td>100%</td>
+                <td>100%</td>
+                <td>100%</td>
+            </tr>
+        </table>
     `
     mainArea.innerHTML=result//メインの中身を変更する
 }
