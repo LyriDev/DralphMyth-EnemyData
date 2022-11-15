@@ -27,7 +27,7 @@ const attackTypeList=["物理","息","魔法"]
 /* ページごとに表示するコンテンツを変更するための関数 */
 function updateHTML(data){//HTMLを更新する関数
     switchCssFile()//読み込むCSSファイルを差し替える
-    updateHeader()//ヘッダーを更新する
+    updateHeader(data)//ヘッダーを更新する
     updateMain(data)//メインを更新する
 }
 
@@ -49,7 +49,7 @@ function switchCssFile(_page=page){//ページ毎に読み込むCSSファイル�
     $("#styleSwitch").attr("href",cssUrl)//CSSファイルを差し替える
 }
 
-function updateHeader(_page=page){//ヘッダーを変更する関数
+function updateHeader(data,_page=page){//ヘッダーを変更する関数
     let result
     switch (_page){
         case null://一覧ページのヘッダー
@@ -57,10 +57,10 @@ function updateHeader(_page=page){//ヘッダーを変更する関数
             <div id="headerContent">
                 <input type="text" id="searchText" placeholder="タグ検索">
                 <div id="headerButtonArea">
-                    <button id="headerButton">新規作成</button>
+                    <button id="headerButton" onclick="location.href='./index.html?page=edit&index=${data.enemy.length}'">新規作成</button>
                 </div>
             </div>
-            `//新規作成ボタンは後でimplementCreateButton()で動作処理を適用する仕様
+            `
             break
         case "view"://閲覧ページのヘッダー
             result=`
@@ -98,7 +98,6 @@ function updateMain(data,_page=page){//メインを変更する関数
     switch(_page){
         case null://一覧ページの際の処理
             updateSearchText(data)//検索するための処理を検索ボックスに適用する
-            implementCreateButton(data.enemy.length)//新規作成ボタンに処理を適用する
             showEnemyData(data)//全部のデータを表示する
             break
         case "view":
@@ -198,12 +197,6 @@ function updateSearchText(data){////検索するための処理を検索ボッ�
     $("#searchText").on("input",function(){
         const filter=$("#searchText").val()//検索ボックスに入力された値
         showEnemyData(data,filter)//敵データにフィルターをかけて表示する
-    })
-}
-
-function implementCreateButton(dataLength){//新規作成ボタンに処理を適用する関数
-    $(document).on("click","#headerButton",function(){//新規作成ボタンに処理を適用する
-        location.href=`./index.html?page=edit&index=${dataLength}`
     })
 }
 
