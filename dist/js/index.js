@@ -57,10 +57,14 @@ function updateHeader(data,_page=page){//ヘッダーを変更する関数
             <div id="headerContent">
                 <input type="text" id="searchText" placeholder="タグ検索">
                 <div id="headerButtonArea">
-                    <button id="headerButton" onclick="location.href='./index.html?page=edit&index=${data.enemy.length}'">新規作成</button>
+                    <button id="headerButton">新規作成</button>
                 </div>
             </div>
             `
+            $(document).on("click","#headerButton",function(){//閲覧ボタンに処理を適用する
+                addJsonData(data)//jsonファイルに新しいデータを追加する
+                location.href=`./index.html?page=view&index=${data.enemy.length}`
+            })
             break
         case "view"://閲覧ページのヘッダー
             result=`
@@ -150,6 +154,10 @@ function createEnemyElement(key,name,level,tag){//表示する敵データの要
             </div>
         </div>
     `
+}
+
+function addJsonData(data){
+
 }
 
 /* 閲覧ページを表示中に使う関数 */
