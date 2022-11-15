@@ -55,8 +55,15 @@
                     "attackNumber":2,
                     "reach":5,
                     "range":"",
+                    "statusEffects":[
+                        {
+                            "effectType":"スタン",
+                            "level":2,
+                            "turn":5
+                        }
+                    ],
                     "effects":[
-                        "スタンLv2(5ターン)"
+
                     ]
                 },
                 {
@@ -69,8 +76,15 @@
                     "attackNumber":1,
                     "reach":1,
                     "range":"",
+                    "statusEffects":[
+                        {
+                            "effectType":"スタン",
+                            "level":2,
+                            "turn":5
+                        }
+                    ],
                     "effects":[
-                        ""
+
                     ]
                 },
                 {
@@ -83,8 +97,14 @@
                     "attackNumber":5,
                     "reach":5,
                     "range":"",
+                    "statusEffects":[
+                        {
+                            "effectType":"スタン",
+                            "level":2,
+                            "turn":5
+                        }
+                    ],
                     "effects":[
-                        "スタンLv2(5ターン)",
                         "ファンブル無効",
                         "ファンブル時、次回行動で使用不可"
                     ]
@@ -205,8 +225,15 @@
                     "attackNumber":2,
                     "reach":5,
                     "range":"",
+                    "statusEffects":[
+                        {
+                            "effectType":"スタン",
+                            "level":2,
+                            "turn":5
+                        }
+                    ],
                     "effects":[
-                        "スタンLv2(5ターン)"
+
                     ]
                 },
                 {
@@ -219,8 +246,15 @@
                     "attackNumber":1,
                     "reach":1,
                     "range":"",
+                    "statusEffects":[
+                        {
+                            "effectType":"スタン",
+                            "level":2,
+                            "turn":5
+                        }
+                    ],
                     "effects":[
-                        ""
+
                     ]
                 },
                 {
@@ -233,8 +267,14 @@
                     "attackNumber":5,
                     "reach":5,
                     "range":"",
+                    "statusEffects":[
+                        {
+                            "effectType":"スタン",
+                            "level":2,
+                            "turn":5
+                        }
+                    ],
                     "effects":[
-                        "スタンLv2(5ターン)",
                         "ファンブル無効",
                         "ファンブル時、次回行動で使用不可"
                     ]
@@ -297,8 +337,15 @@
                     "attackNumber":2,
                     "reach":5,
                     "range":"",
+                    "statusEffects":[
+                        {
+                            "effectType":"スタン",
+                            "level":2,
+                            "turn":5
+                        }
+                    ],
                     "effects":[
-                        "スタンLv2(5ターン)"
+
                     ]
                 },
                 {
@@ -311,8 +358,15 @@
                     "attackNumber":1,
                     "reach":1,
                     "range":"",
+                    "statusEffects":[
+                        {
+                            "effectType":"スタン",
+                            "level":2,
+                            "turn":5
+                        }
+                    ],
                     "effects":[
-                        ""
+
                     ]
                 },
                 {
@@ -325,8 +379,14 @@
                     "attackNumber":5,
                     "reach":5,
                     "range":"",
+                    "statusEffects":[
+                        {
+                            "effectType":"スタン",
+                            "level":2,
+                            "turn":5
+                        }
+                    ],
                     "effects":[
-                        "スタンLv2(5ターン)",
                         "ファンブル無効",
                         "ファンブル時、次回行動で使用不可"
                     ]
