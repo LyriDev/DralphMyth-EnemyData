@@ -33,12 +33,30 @@
 .parameterBox > div:last-child{
     padding-right: 10px;
 }
-#statusEffectTable{
+.statusEffectTable{
+    margin: 0 auto 10px auto;
+    color: #F5F5F5;
     border: solid 1px #555555;
     text-align: center;
-
 }
-#statusEffectTable > tr > td{
+.statusEffectTable > tr > td{
     max-width: 10px;
     word-wrap: break-word;
+}
+
+
+table{
+    border-collapse: separate;
+    border-spacing: 0px;
+}
+th{
+    border: solid 1px #555555;
+    background-color: #272B30;
+    font-weight: normal;
+}
+td{
+    border: solid 1px #555555;
+    border-radius: 3px;
+    background-color: #778899;
+    color:black;
 }

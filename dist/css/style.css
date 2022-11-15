@@ -57,6 +57,7 @@ body{
     right: 0;
     border:solid 1px #555555;
     border-radius: 3px;
+    background-color: #3A3F44;
 }
 #main:empty{
     border: 0;

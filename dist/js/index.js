@@ -179,13 +179,35 @@ function viewEnemyData(data){
             <div>回避<br>100%</div>
             <div>行動回数<br>2回</div>
         </div>
-        <table id="statusEffectTable">
+        <table class="statusEffectTable">
             <tr>
-                <td>炎</td>
-                <td>氷</td>
-                <td>幻惑</td>
+                <th>炎</th>
+                <th>氷</th>
+                <th>幻惑</th>
+                <th>眠り</th>
+                <th>混乱</th>
+                <th>スタン</th>
+                <th>呪い</th>
             </tr>
             <tr>
+                <td>100%</td>
+                <td>100%</td>
+                <td>100%</td>
+                <td>100%</td>
+                <td>100%</td>
+                <td>100%</td>
+                <td>100%</td>
+            </tr>
+        </table>
+        <table class="statusEffectTable">
+            <tr>
+                <th>攻撃力低下</th>
+                <th>物理防御力低下</th>
+                <th>息防御力低下</th>
+                <th>魔法防御力低下</th>
+            </tr>
+            <tr>
+                <td>100%</td>
                 <td>100%</td>
                 <td>100%</td>
                 <td>100%</td>
