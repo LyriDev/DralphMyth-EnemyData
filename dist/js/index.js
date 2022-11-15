@@ -63,7 +63,7 @@ function updateHeader(data,_page=page){//ヘッダーを変更する関数
             `
             $(document).on("click","#headerButton",function(){//閲覧ボタンに処理を適用する
                 addJsonData(data)//jsonファイルに新しいデータを追加する
-                location.href=`./index.html?page=view&index=${data.enemy.length}`
+                location.href=`./index.html?page=edit&index=${data.enemy.length}`
             })
             break
         case "view"://閲覧ページのヘッダー

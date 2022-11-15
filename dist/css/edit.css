@@ -1,26 +1,10 @@
-#headerContent{
-    width: 490px;
-    margin: 0 auto;
-    text-align: right;
-}
-#headerButtonArea{
-padding: 10px 0;
-}
-#headerButton,#saveButton{
+#saveButton{
     font-size: 1.25rem;
     border-radius: 3px;
     color: #F5F5F5;
 }
-#headerButton:hover,#saveButton:hover{
+#saveButton:hover{
     cursor: pointer;
-}
-#headerButton{
-    border:solid 1px #5D656D;
-    background-color: #3A3F44;
-}
-#headerButton:hover{
-    border:solid 1px #7A8288;
-    transition: border 0.3s;
 }
 #saveButton{
     border:solid 1px #62C462;
@@ -31,56 +15,3 @@ padding: 10px 0;
     background-color: #59C159;
     transition: background-color 0.3s;
 }
-
-/* #main{
-    position: absolute;
-    width: 490px;
-    margin: 10px auto;
-    left: 0;
-    right: 0;
-    border:solid 1px #555555;
-    border-radius: 3px;
-}
-.data{
-    border-top:solid 1px #52575C;
-}
-.data:first-child{
-	border: none;
-}
-.data:nth-child(2n+1){
-    background-color: #3A3F44;
-}
-.data:nth-child(2n){
-    background-color: #272B30;
-}
-.data::after {
-    content: "";
-    display: block;
-    clear: both;
-}
-.name{
-    padding: 5px;
-    color: #F5F5F5;
-    font-size: 1.5rem;
-}
-.level{
-    padding: 0px 5px 0px 5px;
-    overflow-wrap: break-word;
-    inline-size: 50px;
-    float: left;
-}
-.tag{
-    overflow-wrap: break-word;
-    inline-size: 300px;
-    float: left;
-}
-.button{
-    float:right;
-}
-.viewButton,.editButton{
-    margin: 0px 5px 5px 0px;
-}
-#headerButton:hover,.viewButton:hover,.editButton:hover{
-    border:solid 1px #7A8288;
-    cursor: pointer;
-} */
