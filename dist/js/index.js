@@ -75,8 +75,9 @@ function updateHeader(data,_page=page){//ヘッダーを変更する関数
             result=`
             <div id="headerContent">
                 <div id="headerButtonArea">
-                    <button id="headerButton" onclick="location.href='./index.html?page=edit&index=${index}'">編集</button>
                     <button id="headerButton" onclick="location.href='./index.html'">一覧</button>
+                    <button id="headerButton" onclick="location.href='./index.html?page=edit&index=${index}'">編集</button>
+                    <button id="headerButton" onclick="exportEnemyPiece(${index})">出力</button>
                 </div>
             </div id="headerContent">
             `
@@ -167,22 +168,25 @@ function getEnemyDataByTag(data,tagName){//指定されたタグに合致する�
     return result
 }
 function createEnemyElement(key,name,level,tag){//表示する敵データの要素を作成する関数
-    return `
+    let result=`
         <div class="data">
             <div class="name">${convertNull(name)}</div>
             <div class="level">Lv${convertNull(level,"?")}</div>
             <div class="tag">${convertNull(tag,"")}</div>
             <div class="button">
-                <button class="editButton" onclick="location.href='./index.html?page=view&index=${key}'" >閲覧</button>
-                <button class="editButton" onclick="location.href='./index.html?page=edit&index=${key}'" >編集</button>
+                <button class="viewButton" onclick="location.href='./index.html?page=view&index=${key}'">閲覧</button>
+                <button class="editButton" onclick="location.href='./index.html?page=edit&index=${key}'">編集</button>
+                <button id="exportButton${key}" class="exportButton">出力</button>
             </div>
         </div>
     `
+    $(document).on("click",`#exportButton${key}`,function(){//出力ボタンに処理を適用する
+        exportEnemyPiece(key)//敵コマをクリップボードに出力する
+    })
+    return result
 }
 
-function addJsonData(data){
-//TODO jsonにデータを追加する処理
-}
+
 
 /* 閲覧ページを表示中に使う関数 */
 function viewEnemyData(data){
@@ -360,8 +364,18 @@ function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替え�
 }
 
 /* 編集ページを表示中に使う関数 */
+
+/* データを編集・出力する関数 */
+function addJsonData(data){//jsonにデータを追加する関数
+    //TODO jsonにデータを追加する処理
+}
+
 function saveJson(){//更新されたjsonファイルを保存する関数
-//TODO jsonファイルを上書き更新する
+    //TODO jsonファイルを上書き更新する処理
+}
+
+function exportEnemyPiece(key){//敵コマをクリップボードに出力する関数
+    alert("敵データをクリップボードに出力しました。"+"\n"+key)
 }
 
 

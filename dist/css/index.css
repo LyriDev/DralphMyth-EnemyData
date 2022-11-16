@@ -1,7 +1,7 @@
-#searchText,.level,.tag,.viewButton,.editButton{
+#searchText,.level,.tag,.viewButton,.editButton,.exportButton{
     font-size: 1.25rem;
 }
-.viewButton,.editButton{
+.viewButton,.editButton,.exportButton{
     border:solid 1px #5D656D;
     border-radius: 3px;
     background-color: #3A3F44;
@@ -45,16 +45,16 @@
 }
 .tag{
     overflow-wrap: break-word;
-    inline-size: 300px;
+    inline-size: 230px;
     float: left;
 }
 .button{
     float:right;
 }
-.viewButton,.editButton{
+.viewButton,.editButton,.exportButton{
     margin: 0px 5px 5px 0px;
 }
-.viewButton:hover,.editButton:hover{
+.viewButton:hover,.editButton:hover,.exportButton:hover{
     border:solid 1px #7A8288;
     cursor: pointer;
 }
