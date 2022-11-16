@@ -49,7 +49,7 @@ body{
     transition: border 0.3s;
     cursor: pointer;
 }
-input[type="text"]{
+input[type="text"],textarea{
     padding: 5px;
     border: 2px solid #52575C;
     border-radius: 3px;
@@ -57,8 +57,16 @@ input[type="text"]{
 input[type="text"]::placeholder{
     color: #E1E1E1;
 }
-input[type="text"]:focus {
-    outline: 1.5px solid rgba(255,255,255,30%);
+input[type="text"]:hover,textarea:hover{
+    border-color: #6A6E72;
+}
+input[type="text"]:focus,textarea:focus{
+    outline: 1.5px solid #6A6E72;
+}
+
+textarea {
+    resize: none;
+    overflow:hidden;
 }
 
 #main{

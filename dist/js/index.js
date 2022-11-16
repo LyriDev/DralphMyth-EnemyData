@@ -102,13 +102,18 @@ function updateMain(data,_page=page){//メインを変更する関数
     switch(_page){
         case null://一覧ページの際の処理
             updateSearchText(data)//検索するための処理を検索ボックスに適用する
-            showEnemyData(data)//全部のデータを表示する
+            updateMainContent(showEnemyData(data))//全部のデータを表示する
             break
         case "view":
-            viewEnemyData(data)
+            updateMainContent(viewEnemyData(data))//閲覧ページの中身でmainAreaを上書きする
+            updateTextarea()//textareaの初期値に合わせて高さを自動調整する
         default:
             break
     }
+}
+
+function updateMainContent(content){//メインの中身を上書きする関数
+    mainArea.innerHTML=content//メインの中身を変更する
 }
 
 /* 一覧ページを表示中に使う関数 */
@@ -122,7 +127,7 @@ function showEnemyData(data,filter=""){//表示する敵データを作成する
     }else{//フィルターありのとき
         result+=getEnemyDataByTag(data,filter)//指定されたタグを持つデータのみを出力する
     }
-    mainArea.innerHTML=result//メインの中身を変更する
+    return result
 }
 function getAllEnemyTag(data){//敵データの全タグ種を取得する関数
     let enemyTagList=new Array
@@ -157,13 +162,13 @@ function createEnemyElement(key,name,level,tag){//表示する敵データの要
 }
 
 function addJsonData(data){
-
+//TODO jsonにデータを追加する処理
 }
 
 /* 閲覧ページを表示中に使う関数 */
 function viewEnemyData(data){
-    let result// &#10005; バツ
-    result=`
+    // &#10005; バツ
+    return `
         <div id="name">ミ＝ゴ&nbsp;Lv5</div>
         <div id="tag">道中敵</div>
         <div class="parameterBox">
@@ -215,8 +220,52 @@ function viewEnemyData(data){
                 <td>100%</td>
             </tr>
         </table>
+        <div class="cardBox">
+            <div class="cardHeader">
+                <p class="cardHeaderTitle">特性</p>
+                <a class="cardHeaderIcon">
+                    <span class="arrowDown">a</span>
+                </a>
+            </div>
+            <div class="cardBody">
+                <div class="cardTable">
+                    <div class="cardTable-abilityName">
+                        <div class="cardTableTitle">特性名</div>
+                        <input readonly type="text" class="cardTableContent" value="連鎖">
+                    </div>
+                    <div class="cardTable-abilityEffect">
+                        <div class="cardTableTitle">効果</div>
+                        <textarea readonly class="cardTableContent" rows="1">雷攻撃が命中時に発動、その命中した敵の中心に３×３マスにいる敵に命中する。(連鎖した敵には連鎖判定は発生しない)</textarea>
+                    </div>
+                </div>
+                <div class="cardTable">
+                    <div class="cardTable-abilityName">
+                        <div class="cardTableTitle">特性名</div>
+                        <input type="text" class="cardTableContent" value="連鎖">
+                    </div>
+                </div>
+                <div class="cardTable">
+                    <div class="cardTable-abilityName">
+                        <div class="cardTableTitle">特性名</div>
+                        <input type="text" class="cardTableContent" value="連鎖">
+                    </div>
+                </div>
+            </div>
+        </div>
     `
-    mainArea.innerHTML=result//メインの中身を変更する
+}
+
+function updateTextarea(){//textareaの初期値に合わせて高さを自動調整する関数
+    $(function() {
+        const targetArea = $("textarea");
+        const rawTarget = targetArea.get(0);
+        let lineHeight = Number(targetArea.attr("rows"));
+        while (rawTarget.scrollHeight > rawTarget.offsetHeight){
+            lineHeight++;
+            targetArea.attr("rows", lineHeight);
+        }
+        targetArea.attr("rows", lineHeight-3);//なんかよくわからんけどこれ入れると高さがいい感じになる
+    });
 }
 
 /* 編集ページを表示中に使う関数 */

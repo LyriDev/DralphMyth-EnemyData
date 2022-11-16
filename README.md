@@ -20,9 +20,6 @@
     1. 例:**「"C:\Program Files\Google\Chrome\Application\chrome.exe" --allow-file-access-from-files」**
 1. これでchromeのショートカットファイルの作成は完了。
 ### htmlファイルの開き方  
-作成したショートカットファイルを実行し、開いたchromeのタブで以下のローカルパスを開く。
-1. エクスプローラーの右クリックメニュー「パスのコピー(A)」から、**DralphMyth-EnemyData/dist/index.html**のパスを取得する。
-1. コピーしたパスは「"」(ダブルクオート)で囲われているので、外して、  
-パスの先頭に「file:///」を追加して、  
-chromeのURL欄に貼り付けて移動する。
-1. 例:**「file:///C:/Users/user/Downloads/DralphMyth-EnemyData/dist/index.html」**
+作成したショートカットファイルを実行し、開いたchromeのタブで以下を行う。
+1. エクスプローラーから、**DralphMyth-EnemyData/dist/index.html**というファイルを確認する。
+1. 開いているchromeのタブに、【1】で確認したファイルを、ドラッグ&ドロップする。
