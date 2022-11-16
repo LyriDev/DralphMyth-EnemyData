@@ -82,3 +82,17 @@ textarea {
 #main:empty{
     border: 0;
 }
+
+.arrowDown{
+    display: inline-block;
+    vertical-align: middle;
+    color: #AAAAAA;
+    line-height: 1;
+    width: 0.5em;
+    height: 0.5em;
+    border: 0.2em solid currentColor;
+    border-left: 0;
+    border-bottom: 0;
+    box-sizing: border-box;
+    transform: translateY(-25%) rotate(135deg);
+}

@@ -224,7 +224,7 @@ function viewEnemyData(data){
             <div class="cardHeader">
                 <p class="cardHeaderTitle">特性</p>
                 <a class="cardHeaderIcon">
-                    <span class="arrowDown">a</span>
+                    <span class="arrowDown"></span>
                 </a>
             </div>
             <div class="cardBody">
