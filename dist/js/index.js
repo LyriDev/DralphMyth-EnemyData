@@ -96,8 +96,8 @@ function updateHeader(data,_page=page){//ヘッダーを変更する関数
                 location.href=`./index.html?page=view&index=${index}`
             })
             $(document).on("click","#saveButton",function(){//保存ボタンに処理を適用する
-                alert("保存しました")
                 saveJson()//jsonファイルを上書き更新する
+                alert("保存しました")
             })
             break
     }
@@ -176,13 +176,10 @@ function createEnemyElement(key,name,level,tag){//表示する敵データの要
             <div class="button">
                 <button class="viewButton" onclick="location.href='./index.html?page=view&index=${key}'">閲覧</button>
                 <button class="editButton" onclick="location.href='./index.html?page=edit&index=${key}'">編集</button>
-                <button id="exportButton${key}" class="exportButton">出力</button>
+                <button class="exportButton" onclick="exportEnemyPiece(${key})">出力</button>
             </div>
         </div>
     `
-    $(document).on("click",`#exportButton${key}`,function(){//出力ボタンに処理を適用する
-        exportEnemyPiece(key)//敵コマをクリップボードに出力する
-    })
     return result
 }
 
@@ -376,6 +373,7 @@ function saveJson(){//更新されたjsonファイルを保存する関数
 
 function exportEnemyPiece(key){//敵コマをクリップボードに出力する関数
     alert("敵データをクリップボードに出力しました。"+"\n"+key)
+    //TODO 敵コマをクリップボードに出力する処理
 }
 
 
