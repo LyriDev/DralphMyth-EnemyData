@@ -106,7 +106,7 @@ function updateMain(data,_page=page){//メインを変更する関数
             break
         case "view":
             updateMainContent(viewEnemyData(data))//閲覧ページの中身でmainAreaを上書きする
-            updateTextarea()//textareaの初期値に合わせて高さを自動調整する
+            updateAllTextarea()//textareaの初期値に合わせて高さを自動調整する
         default:
             break
     }
@@ -168,7 +168,7 @@ function addJsonData(data){
 /* 閲覧ページを表示中に使う関数 */
 function viewEnemyData(data){
     // &#10005; バツ
-    return `
+    let result= `
         <div id="name">ミ＝ゴ&nbsp;Lv5</div>
         <div id="tag">道中敵</div>
         <div class="parameterBox">
@@ -235,7 +235,7 @@ function viewEnemyData(data){
                     </div>
                     <div class="cardTable-abilityEffect">
                         <div class="cardTableTitle">効果</div>
-                        <textarea readonly class="cardTableContent" rows="1">雷攻撃が命中時に発動、その命中した敵の中心に３×３マスにいる敵に命中する。(連鎖した敵には連鎖判定は発生しない)</textarea>
+                        <textarea readonly id="textarea0" class="cardTableContent" rows="1">雷攻撃が命中時に発動、その命中した敵の中心に３×３マスにいる敵に命中する。(連鎖した敵には連鎖判定は発生しない)</textarea>
                     </div>
                 </div>
                 <div class="cardTable">
@@ -245,7 +245,7 @@ function viewEnemyData(data){
                     </div>
                     <div class="cardTable-abilityEffect">
                         <div class="cardTableTitle">効果</div>
-                        <textarea readonly class="cardTableContent" rows="1">「電気ライフル」の攻撃時のみ発動、対象に命中するまでに通ったマスにいる敵にも命中する。</textarea>
+                        <textarea readonly id="textarea1" class="cardTableContent" rows="1">「電気ライフル」の攻撃時のみ発動、対象に命中するまでに通ったマスにいる敵にも命中する。</textarea>
                     </div>
                 </div>
                 <div class="cardTable">
@@ -255,17 +255,23 @@ function viewEnemyData(data){
                     </div>
                     <div class="cardTable-abilityEffect">
                         <div class="cardTableTitle">効果</div>
-                        <textarea readonly class="cardTableContent" rows="1">雷攻撃が命中時に発動</textarea>
+                        <textarea readonly id="textarea2" class="cardTableContent" rows="1">雷攻撃が命中時に発動</textarea>
                     </div>
                 </div>
             </div>
         </div>
     `
+    return result
 }
-
-function updateTextarea(){//textareaの初期値に合わせて高さを自動調整する関数
+function updateAllTextarea(){//全てのtextareaの初期値に合わせてそれぞれ高さを自動調整する関数
+    const textareaList = $('textarea[id^="textarea"]');
+    for(let i=0;i<textareaList.length;i++){
+        updateTextarea(`#textarea${i}`)
+    }
+}
+function updateTextarea(textareaId){//textareaの初期値に合わせて高さを自動調整する関数
     $(function() {
-        const targetArea = $("textarea");
+        const targetArea = $(textareaId);
         const rawTarget = targetArea.get(0);
         let lineHeight = Number(targetArea.attr("rows"));
         while (rawTarget.scrollHeight > rawTarget.offsetHeight){
