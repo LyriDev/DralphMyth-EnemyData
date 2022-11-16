@@ -106,7 +106,7 @@ function updateMain(data,_page=page){//メインを変更する関数
             break
         case "view":
             updateMainContent(viewEnemyData(data))//閲覧ページの中身でmainAreaを上書きする
-            updateAllTextarea()//textareaの初期値に合わせて高さを自動調整する
+            updateAllTextarea("abilityEffect")//textareaの初期値に合わせて高さを自動調整する
         default:
             break
     }
@@ -235,7 +235,7 @@ function viewEnemyData(data){
                     </div>
                     <div class="cardTable-abilityEffect">
                         <div class="cardTableTitle">効果</div>
-                        <textarea readonly id="textarea0" class="cardTableContent" rows="1">雷攻撃が命中時に発動、その命中した敵の中心に３×３マスにいる敵に命中する。(連鎖した敵には連鎖判定は発生しない)</textarea>
+                        <textarea readonly id="abilityEffect0" class="cardTableContent" rows="1">雷攻撃が命中時に発動、その命中した敵の中心に３×３マスにいる敵に命中する。(連鎖した敵には連鎖判定は発生しない)</textarea>
                     </div>
                 </div>
                 <div class="cardTable">
@@ -245,7 +245,7 @@ function viewEnemyData(data){
                     </div>
                     <div class="cardTable-abilityEffect">
                         <div class="cardTableTitle">効果</div>
-                        <textarea readonly id="textarea1" class="cardTableContent" rows="1">「電気ライフル」の攻撃時のみ発動、対象に命中するまでに通ったマスにいる敵にも命中する。</textarea>
+                        <textarea readonly id="abilityEffect1" class="cardTableContent" rows="1">「電気ライフル」の攻撃時のみ発動、対象に命中するまでに通ったマスにいる敵にも命中する。</textarea>
                     </div>
                 </div>
                 <div class="cardTable">
@@ -255,7 +255,7 @@ function viewEnemyData(data){
                     </div>
                     <div class="cardTable-abilityEffect">
                         <div class="cardTableTitle">効果</div>
-                        <textarea readonly id="textarea2" class="cardTableContent" rows="1">雷攻撃が命中時に発動</textarea>
+                        <textarea readonly id="abilityEffect2" class="cardTableContent" rows="1">雷攻撃が命中時に発動</textarea>
                     </div>
                 </div>
             </div>
@@ -263,10 +263,10 @@ function viewEnemyData(data){
     `
     return result
 }
-function updateAllTextarea(){//全てのtextareaの初期値に合わせてそれぞれ高さを自動調整する関数
-    const textareaList = $('textarea[id^="textarea"]');
+function updateAllTextarea(idName){//全てのtextareaの初期値に合わせてそれぞれ高さを自動調整する関数
+    const textareaList = $(`textarea[id^="${idName}"]`);
     for(let i=0;i<textareaList.length;i++){
-        updateTextarea(`#textarea${i}`)
+        updateTextarea(`#${idName}${i}`)
     }
 }
 function updateTextarea(textareaId){//textareaの初期値に合わせて高さを自動調整する関数
