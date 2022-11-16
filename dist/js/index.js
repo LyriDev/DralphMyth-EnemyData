@@ -241,13 +241,21 @@ function viewEnemyData(data){
                 <div class="cardTable">
                     <div class="cardTable-abilityName">
                         <div class="cardTableTitle">特性名</div>
-                        <input type="text" class="cardTableContent" value="連鎖">
+                        <input readonly type="text" class="cardTableContent" value="貫通">
+                    </div>
+                    <div class="cardTable-abilityEffect">
+                        <div class="cardTableTitle">効果</div>
+                        <textarea readonly class="cardTableContent" rows="1">「電気ライフル」の攻撃時のみ発動、対象に命中するまでに通ったマスにいる敵にも命中する。</textarea>
                     </div>
                 </div>
                 <div class="cardTable">
                     <div class="cardTable-abilityName">
                         <div class="cardTableTitle">特性名</div>
-                        <input type="text" class="cardTableContent" value="連鎖">
+                        <input readonly type="text" class="cardTableContent" value="連鎖">
+                    </div>
+                    <div class="cardTable-abilityEffect">
+                        <div class="cardTableTitle">効果</div>
+                        <textarea readonly class="cardTableContent" rows="1">雷攻撃が命中時に発動</textarea>
                     </div>
                 </div>
             </div>
