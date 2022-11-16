@@ -264,7 +264,6 @@ function updateTextarea(){//textareaの初期値に合わせて高さを自動�
             lineHeight++;
             targetArea.attr("rows", lineHeight);
         }
-        targetArea.attr("rows", lineHeight-3);//なんかよくわからんけどこれ入れると高さがいい感じになる
     });
 }
 
