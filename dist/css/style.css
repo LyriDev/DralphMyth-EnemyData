@@ -49,6 +49,18 @@ body{
     transition: border 0.3s;
     cursor: pointer;
 }
+input[type="text"]{
+    padding: 5px;
+    border: 2px solid #52575C;
+    border-radius: 3px;
+}
+input[type="text"]::placeholder{
+    color: #E1E1E1;
+}
+input[type="text"]:focus {
+    outline: 1.5px solid rgba(255,255,255,30%);
+}
+
 #main{
     position: absolute;
     width: 490px;

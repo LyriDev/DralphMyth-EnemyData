@@ -162,7 +162,7 @@ function addJsonData(data){
 
 /* 閲覧ページを表示中に使う関数 */
 function viewEnemyData(data){
-    let result
+    let result// &#10005; バツ
     result=`
         <div id="name">ミ＝ゴ&nbsp;Lv5</div>
         <div id="tag">道中敵</div>
@@ -188,6 +188,7 @@ function viewEnemyData(data){
                 <th>混乱</th>
                 <th>スタン</th>
                 <th>呪い</th>
+                <th>隠密</th>
             </tr>
             <tr>
                 <td>100%</td>
@@ -197,6 +198,7 @@ function viewEnemyData(data){
                 <td>100%</td>
                 <td>100%</td>
                 <td>100%</td>
+                <td>&#9675;</td>
             </tr>
         </table>
         <table class="statusEffectTable">
