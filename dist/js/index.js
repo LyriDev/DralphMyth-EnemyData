@@ -11,6 +11,7 @@ function getQuery(name){//クエリ文字列(URLパラメータ)を取得する�
 }
 const page=getQuery("page")//開いているページの種類
 const index=getQuery("index")//開いているページの項目
+const isOpenList={ability:true,move:true,note:true}//アコーディオンメニューが開いているかどうか
 
 function convertNull(value,alt="？"){//値がnullなら"？"として返す関数
     if(value===null){
@@ -61,9 +62,13 @@ function updateHeader(data,_page=page){//ヘッダーを変更する関数
                 </div>
             </div>
             `
-            $(document).on("click","#headerButton",function(){//閲覧ボタンに処理を適用する
+            $(document).on("click","#headerButton",function(){//新規作成ボタンに処理を適用する
                 addJsonData(data)//jsonファイルに新しいデータを追加する
                 location.href=`./index.html?page=edit&index=${data.enemy.length}`
+            })
+            $(document).on("input","#searchText",function(){//検索ボックスに処理を適用する
+                const filter=$("#searchText").val()//検索ボックスに入力された値
+                updateMainContent(showEnemyData(data,filter))//敵データにフィルターをかけて表示する
             })
             break
         case "view"://閲覧ページのヘッダー
@@ -99,14 +104,28 @@ function updateHeader(data,_page=page){//ヘッダーを変更する関数
 }
 
 function updateMain(data,_page=page){//メインを変更する関数
-    switch(_page){
+    let result=""
+    switch(_page){//Mainの中身を更新する処理
         case null://一覧ページの際の処理
-            updateSearchText(data)//検索するための処理を検索ボックスに適用する
-            updateMainContent(showEnemyData(data))//全部のデータを表示する
+            result=showEnemyData(data)//全部のデータを表示する
             break
-        case "view":
-            updateMainContent(viewEnemyData(data))//閲覧ページの中身でmainAreaを上書きする
+        case "view"://閲覧ページの際の処理
+            result=viewEnemyData(data)//閲覧ページの中身でmainAreaを上書きする
+        case "edit"://編集ページの際の処理
+            break
+        default:
+            break
+    }
+    updateMainContent(result)//Mainの中身を更新する
+    switch(_page){//Mainの中身に処理を適用する処理
+        case null://一覧ページの際の処理
+            break
+        case "view"://閲覧ページの際の処理
             updateAllTextarea("abilityEffect")//textareaの初期値に合わせて高さを自動調整する
+            updateAllTextarea("moveEffect")//textareaの初期値に合わせて高さを自動調整する
+            setAccordionMenu(".cardHeader")//アコーディオンメニューを特性タブに適用する
+        case "edit"://編集ページの際の処理
+            break
         default:
             break
     }
@@ -221,13 +240,13 @@ function viewEnemyData(data){
             </tr>
         </table>
         <div class="cardBox">
-            <div class="cardHeader">
-                <p class="cardHeaderTitle">特性</p>
+            <div class="cardHeader" data-target="ability">
+                <div class="cardHeaderTitle">特性</div>
                 <a class="cardHeaderIcon">
-                    <span class="arrowDown"></span>
+                    <span id="abilityArrow" class="arrowDown"></span>
                 </a>
             </div>
-            <div class="cardBody">
+            <div id="ability" class="cardBody">
                 <div class="cardTable">
                     <div class="cardTable-abilityName">
                         <div class="cardTableTitle">特性名</div>
@@ -248,6 +267,16 @@ function viewEnemyData(data){
                         <textarea readonly id="abilityEffect1" class="cardTableContent" rows="1">「電気ライフル」の攻撃時のみ発動、対象に命中するまでに通ったマスにいる敵にも命中する。</textarea>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="cardBox">
+            <div class="cardHeader" data-target="move">
+                <div class="cardHeaderTitle">技</div>
+                <a class="cardHeaderIcon">
+                    <span id="moveArrow" class="arrowDown"></span>
+                </a>
+            </div>
+            <div id="move" class="cardBody">
                 <div class="cardTable">
                     <div class="cardTable-abilityName">
                         <div class="cardTableTitle">特性名</div>
@@ -255,7 +284,17 @@ function viewEnemyData(data){
                     </div>
                     <div class="cardTable-abilityEffect">
                         <div class="cardTableTitle">効果</div>
-                        <textarea readonly id="abilityEffect2" class="cardTableContent" rows="1">雷攻撃が命中時に発動</textarea>
+                        <textarea readonly id="moveEffect0" class="cardTableContent" rows="1">雷攻撃が命中時に発動、その命中した敵の中心に３×３マスにいる敵に命中する。(連鎖した敵には連鎖判定は発生しない)</textarea>
+                    </div>
+                </div>
+                <div class="cardTable">
+                    <div class="cardTable-abilityName">
+                        <div class="cardTableTitle">特性名</div>
+                        <input readonly type="text" class="cardTableContent" value="貫通">
+                    </div>
+                    <div class="cardTable-abilityEffect">
+                        <div class="cardTableTitle">効果</div>
+                        <textarea readonly id="moveEffect1" class="cardTableContent" rows="1">「電気ライフル」の攻撃時のみ発動、対象に命中するまでに通ったマスにいる敵にも命中する。</textarea>
                     </div>
                 </div>
             </div>
@@ -280,19 +319,52 @@ function updateTextarea(textareaId){//textareaの初期値に合わせて高さ�
         }
     });
 }
+function setAccordionMenu(className){//アコーディオンメニューを実装する関数
+    $(document).on("click",className,function(){
+        const target=$(this).data("target")//[data-target]の属性値を代入する
+        const idName="#"+target//[target]と同じ名前のID
+        $(idName).slideToggle()//[target]と同じ名前のIDを持つ要素に[slideToggle()]を実行する
+        const arrowIcon=$(`#${target}Arrow`)//矢印アイコンの要素
+        toggleArrowIcon(arrowIcon,target)//トグルを記憶して矢印アイコンを切り替える
+    })
+}
+function getArrowIcon(toggle){//アコーディオンメニューに使う矢印アイコンを表示する関数
+    let result=""
+    if(toggle){//アコーディオンメニューが開いているとき
+        result="arrowDown"
+    }else{//アコーディオンメニューが閉じているとき
+        result="arrowLeft"
+    }
+    return result
+}
+
+function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替える関数
+    switch(target){
+        case "ability":
+            $(arrowIcon).addClass(getArrowIcon(!isOpenList.ability))
+            $(arrowIcon).removeClass(getArrowIcon(isOpenList.ability))
+            isOpenList.ability=!isOpenList.ability
+            break
+        case "move":
+            $(arrowIcon).addClass(getArrowIcon(!isOpenList.move))
+            $(arrowIcon).removeClass(getArrowIcon(isOpenList.move))
+            isOpenList.move=!isOpenList.move
+            break
+        case "note":
+            $(arrowIcon).addClass(getArrowIcon(!isOpenList.note))
+            $(arrowIcon).removeClass(getArrowIcon(isOpenList.note))
+            isOpenList.note=!isOpenList.note
+            break
+    }
+
+}
 
 /* 編集ページを表示中に使う関数 */
 function saveJson(){//更新されたjsonファイルを保存する関数
 //TODO jsonファイルを上書き更新する
 }
 
-/* ヘッダー関連の処理 */
-function updateSearchText(data){////検索するための処理を検索ボックスに適用する関数
-    $("#searchText").on("input",function(){
-        const filter=$("#searchText").val()//検索ボックスに入力された値
-        showEnemyData(data,filter)//敵データにフィルターをかけて表示する
-    })
-}
+
 
 /* ここから実際の処理 */
 $(function(){

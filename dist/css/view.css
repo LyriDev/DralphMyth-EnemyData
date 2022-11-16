@@ -87,7 +87,7 @@
     margin-left: auto;
     cursor: pointer;
 }
-.cardHeaderIcon:hover .arrowDown{
+.cardHeaderIcon:hover .arrowLeft,.cardHeaderIcon:hover .arrowDown{
     color: #F5F5F5;
 }
 

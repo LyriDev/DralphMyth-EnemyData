@@ -72,7 +72,7 @@ textarea {
 #main{
     position: absolute;
     width: 490px;
-    margin: 60px auto 0 auto;
+    margin: 60px auto 10px auto;
     left: 0;
     right: 0;
     border:solid 1px #555555;
@@ -83,7 +83,7 @@ textarea {
     border: 0;
 }
 
-.arrowDown{
+.arrowLeft,.arrowDown{
     display: inline-block;
     vertical-align: middle;
     color: #AAAAAA;
@@ -94,5 +94,13 @@ textarea {
     border-left: 0;
     border-bottom: 0;
     box-sizing: border-box;
+    -webkit-backface-visibility:hidden;
+    backface-visibility:hidden;
+    caret-color: transparent; 
+}
+.arrowLeft{
+    transform: translateX(25%) rotate(-135deg);
+}
+.arrowDown{
     transform: translateY(-25%) rotate(135deg);
 }
