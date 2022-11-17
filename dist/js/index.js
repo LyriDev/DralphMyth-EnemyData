@@ -20,6 +20,12 @@ function convertNull(value,alt="？"){//値がnullなら"？"として返す関�
         return value
     }
 }
+function deleteValueInList(array,value){//配列から特定の要素を削除する関数
+    const result=array.slice()//引数の配列を値渡しでコピーする
+    const arrayIndex = result.indexOf(value);
+    result.splice(arrayIndex,1)
+    return result
+}
 
 function sortAsc(array){//配列を昇順でソートする関数
     const cloneArray=array.slice()//引数の配列を値渡しでコピーする
@@ -161,6 +167,7 @@ function updateMain(data,_page=page){//メインを変更する関数
             break
         case "view"://閲覧ページの際の処理
             result=viewEnemyData(data)//閲覧ページの中身でmainAreaを上書きする
+            break
         case "edit"://編集ページの際の処理
             break
         default:
@@ -174,6 +181,7 @@ function updateMain(data,_page=page){//メインを変更する関数
             updateAllTextarea("abilityEffect")//textareaの初期値に合わせて高さを自動調整する
             updateAllTextarea("moveEffect")//textareaの初期値に合わせて高さを自動調整する
             setAccordionMenu(".cardHeader")//アコーディオンメニューを特性タブに適用する
+            break
         case "edit"://編集ページの際の処理
             break
         default:
@@ -213,13 +221,11 @@ function getEnemyDataByTag(data,tagName,nameFilter){//指定されたタグに�
     $.each(data.enemy,function(key,value){
         if(tagName===value.tag){
             if(nameFilter===""){//名前フィルターなしのとき
-                enemyArray.push({key,value})
-                //result+=createEnemyElement(key,value.name,value.level,value.tag)
+                enemyArray.push({key:key,value:value})
             }else{//名前フィルターありのとき
                 const nameFilterReg=new RegExp("^"+nameFilter+".*")//前方部分一致の正規表現
                 if(nameFilterReg.test(value.name)){
-                    enemyArray.push({key,value})
-                    //result+=createEnemyElement(key,value.name,value.level,value.tag)
+                    enemyArray.push({key:key,value:value})
                 }
             }
         }
@@ -230,19 +236,19 @@ function getEnemyDataByTag(data,tagName,nameFilter){//指定されたタグに�
 function getEnemyDataByName(enemyArray){//敵データを名前別に整理する関数
     let result=""
     const enemyNameList=getEnemyNameList(enemyArray)
-    console.log(enemyNameList)
     for(let i in enemyNameList){
-        console.log(i+":"+enemyNameList[i])
+        const enemyArraySortedByName=new Array
         for(let j in enemyArray){
-            console.log(j+";"+enemyArray[j].value.name)
             if(enemyArray[j].value.name===enemyNameList[i]){
                 const Key=enemyArray[j].key
                 const Value=enemyArray[j].value
-                console.log(Key + Value.name)
-                result+=createEnemyElement(Key,Value.name,Value.level,Value.tag)
+                //result+=createEnemyElement(Key,Value.name,Value.level,Value.tag)
+                enemyArraySortedByName.push({key:Key,value:Value})
             }
         }
+        result+=getEnemyDataByLevel(enemyArraySortedByName)+"\n"
     }
+    //console.log("!!!\n"+result+"\n!!!")
     return result
 }
 function getEnemyNameList(enemyArray){//敵データの名前一覧を取得する関数
@@ -254,13 +260,41 @@ function getEnemyNameList(enemyArray){//敵データの名前一覧を取得す�
     }
     return enemyNameList
 }
+function getEnemyDataByLevel(enemyArray){//敵データをレベル別に整理する関数
+    let result=""
+    const enemyLevelList=getEnemyLevelList(enemyArray)
+    console.log(enemyLevelList)
+    for(let i in enemyLevelList){
+        for(let j in enemyArray){
+            if(enemyArray[j].value.level===enemyLevelList[i]){
+                const Key=enemyArray[j].key
+                const Value=enemyArray[j].value
+                result+=createEnemyElement(Key,Value.name,Value.level,Value.tag)
+            }
+        }
+    }
+    return result
+}
 function getEnemyLevelList(enemyArray){//敵データのレベル一覧を取得する関数
-
+    let enemyLevelList=new Array
+    for(let i in enemyArray){
+        if(!enemyLevelList.includes(enemyArray[i].value.level)){
+            enemyLevelList.push(enemyArray[i].value.level)
+        }
+    }
+    if(enemyLevelList.includes(null)){//nullLevelを含む場合
+        enemyLevelList=deleteValueInList(enemyLevelList,null)
+        enemyLevelList=sortAsc(enemyLevelList)
+        enemyLevelList.push(null)
+    }else{//nullLevelを含まない場合
+        enemyLevelList=sortAsc(enemyLevelList)
+    }
+    return enemyLevelList
 }
 function createEnemyElement(key,name,level,tag){//表示する敵データの要素を作成する関数
     let result=`
         <div class="data">
-            <div class="name">${convertNull(name)}${key}</div>
+            <div class="name">${convertNull(name)}</div>
             <div class="level">Lv${convertNull(level,"?")}</div>
             <div class="tag">${convertNull(tag,"")}</div>
             <div class="button">
