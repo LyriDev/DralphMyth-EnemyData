@@ -614,6 +614,27 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
     return result
 }
 
+function addAbilityBox(enemyDataValue){
+    let result=""
+    let textareaNumber=0
+    for(let i in enemyDataValue.abilities){
+        result+=`
+        <div class="cardTable">
+            <div class="cardTable-ability-name">
+                <div class="cardTableTitle">特性名</div>
+                <input readonly type="text" class="cardTableContent" value="${enemyDataValue.abilities[i].name}">
+            </div>
+            <div class="cardTable-ability-effect">
+                <div class="cardTableTitle">効果</div>
+                <textarea readonly id="ability-effect${textareaNumber}" class="cardTableContent" rows="1">${enemyDataValue.abilities[i].effect}</textarea>
+            </div>
+        </div>
+        `
+        textareaNumber++
+    }
+    return result
+}
+
 function updateAllTextarea(idName){//全てのtextareaの初期値に合わせてそれぞれ高さを自動調整する関数
     const textareaList = $(`textarea[id^="${idName}"]`);
     for(let i=0;i<textareaList.length;i++){
