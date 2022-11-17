@@ -194,6 +194,7 @@ function updateMainContent(content){//メインの中身を上書きする関数
 }
 
 /* 一覧ページを表示中に使う関数 */
+//タグ>名前>レベル、の順番にソートされる仕様
 function showEnemyData(data,tagFilter="",nameFilter=""){//表示する敵データを作成する関数
     let result=""
     if(tagFilter===""){//タグフィルターなしのとき
@@ -246,9 +247,8 @@ function getEnemyDataByName(enemyArray){//敵データを名前別に整理す�
                 enemyArraySortedByName.push({key:Key,value:Value})
             }
         }
-        result+=getEnemyDataByLevel(enemyArraySortedByName)+"\n"
+        result+=getEnemyDataByLevel(enemyArraySortedByName)
     }
-    //console.log("!!!\n"+result+"\n!!!")
     return result
 }
 function getEnemyNameList(enemyArray){//敵データの名前一覧を取得する関数
@@ -263,7 +263,6 @@ function getEnemyNameList(enemyArray){//敵データの名前一覧を取得す�
 function getEnemyDataByLevel(enemyArray){//敵データをレベル別に整理する関数
     let result=""
     const enemyLevelList=getEnemyLevelList(enemyArray)
-    console.log(enemyLevelList)
     for(let i in enemyLevelList){
         for(let j in enemyArray){
             if(enemyArray[j].value.level===enemyLevelList[i]){
