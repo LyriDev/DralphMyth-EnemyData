@@ -159,14 +159,15 @@
                     "index":"",
                     "name":"",
                     "successRate":"",
-                    "type":"",
+                    "types":[""],
                     "elements":[""],
                     "damage":"",
                     "attackNumber":"",
                     "reach":"",
                     "range":"",
+                    "statusEffects":[
+                    ],
                     "effects":[
-                        ""
                     ]
                 }
             ],

@@ -51,6 +51,14 @@ function addValueToArray(array,value){//配列の値の後ろにそれぞれ要�
     return addedArray
 }
 
+function addValue(value,add,negative){//値が否定条件に合致しなければ、値の後ろに要素を追加して返す関数
+    if(value===negative){
+        return value
+    }else{
+        return `${value}${add}`
+    }
+}
+
 function deleteValueInArray(array,value){//配列から特定の要素を削除する関数
     const result=array.slice()//引数の配列を値渡しでコピーする
     const arrayIndex = result.indexOf(value);
@@ -354,8 +362,8 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
         <div id="name">${enemyDataValue.name}&nbsp;Lv${convertProperty(enemyDataValue.level,"","?")}</div>
         <div id="tag">${enemyDataValue.tag}</div>
         <div class="parameterBox">
-            <div>属性<br>${convertProperty(addDotToArray(enemyDataValue.elements,"・",""),"","?") }</div>
-            <div>系統<br>${convertProperty(addDotToArray(addValueToArray(enemyDataValue.species,"系"),"・",""),"","?")}</div>
+            <div>属性<br>${convertProperty(addDotToArray(enemyDataValue.elements,"・"),"","?") }</div>
+            <div>系統<br>${convertProperty(addDotToArray(addValueToArray(enemyDataValue.species,"系"),"・"),"","?")}</div>
             <div>SANチェック<br>${convertProperty(enemyDataValue.sanCheck.success,"","?")}/${convertProperty(enemyDataValue.sanCheck.failure,"","?")}</div>
         </div>
         <div class="parameterBox">
@@ -470,43 +478,45 @@ function addMoveBox(enemyDataValue){//閲覧ページの技欄を作成する関
         const move=enemyDataValue.moves[i]
         result+=`
             <div class="cardTable">
-                <div class="cardTable-move-index">
-                    <div class="cardTableTitle">技番号</div>
-                    <input readonly type="text" class="cardTableContent" value="${move.index}">
+                <div class="clearFix">
+                    <div class="cardTable-move-index">
+                        <div class="cardTableTitle">技番号</div>
+                        <input readonly type="text" class="cardTableContent" value="${move.index}">
+                    </div>
+                    <div class="cardTable-move-name">
+                        <div class="cardTableTitle">技名</div>
+                        <input readonly type="text" class="cardTableContent" value="${move.name}">
+                    </div>
+                    <div class="cardTable-move-element">
+                        <div class="cardTableTitle">属性</div>
+                        <input readonly type="text" class="cardTableContent" value="${addDotToArray(move.elements,"・")}">
+                    </div>
+                    <div class="cardTable-move-type">
+                        <div class="cardTableTitle">種別</div>
+                        <input readonly type="text" class="cardTableContent" value="${addDotToArray(move.types,"・")}">
+                    </div>
+                    <div class="cardTable-move-reach">
+                        <div class="cardTableTitle">射程</div>
+                        <input readonly type="text" class="cardTableContent" value="${move.reach}">
+                    </div>
+                    <div class="cardTable-move-range">
+                        <div class="cardTableTitle">範囲</div>
+                        <input readonly type="text" class="cardTableContent" value="${move.range}">
+                    </div>
+                    <div class="cardTable-move-successRate">
+                        <div class="cardTableTitle">成功率</div>
+                        <input readonly type="text" class="cardTableContent" value="${addValue(move.successRate,"%","")}">
+                    </div>
+                    <div class="cardTable-move-attackNumber">
+                        <div class="cardTableTitle">攻撃回数</div>
+                        <input readonly type="text" class="cardTableContent" value="${move.attackNumber}">
+                    </div>
+                    <div class="cardTable-move-damage">
+                        <div class="cardTableTitle">ダメージ</div>
+                        <input readonly type="text" class="cardTableContent" value="${move.damage}">
+                    </div>
                 </div>
-                <div class="cardTable-move-name">
-                    <div class="cardTableTitle">技名</div>
-                    <input readonly type="text" class="cardTableContent" value="${move.name}">
-                </div>
-                <div class="cardTable-move-element">
-                    <div class="cardTableTitle">属性</div>
-                    <input readonly type="text" class="cardTableContent" value="${convertProperty(addDotToArray(move.elements,"・",""),"","?")}">
-                </div>
-                <div class="cardTable-move-type">
-                    <div class="cardTableTitle">種別</div>
-                    <input readonly type="text" class="cardTableContent" value="${convertProperty(addDotToArray(move.types,"・",""),"","?")}">
-                </div>
-                <div class="cardTable-move-reach">
-                    <div class="cardTableTitle">射程</div>
-                    <input readonly type="text" class="cardTableContent" value="${move.reach}">
-                </div>
-                <div class="cardTable-move-range">
-                    <div class="cardTableTitle">範囲</div>
-                    <input readonly type="text" class="cardTableContent" value="${move.range}">
-                </div>
-                <div class="cardTable-move-successRate">
-                    <div class="cardTableTitle">成功率</div>
-                    <input readonly type="text" class="cardTableContent" value="${move.successRate}%">
-                </div>
-                <div class="cardTable-move-attackNumber">
-                    <div class="cardTableTitle">攻撃回数</div>
-                    <input readonly type="text" class="cardTableContent" value="${move.attackNumber}">
-                </div>
-                <div class="cardTable-move-damage">
-                    <div class="cardTableTitle">ダメージ</div>
-                    <input readonly type="text" class="cardTableContent" value="${move.damage}">
-                </div>
-                ${addMoveBox_statusEffect(move.statusEffectsove)}
+                ${addMoveBox_statusEffect(move.statusEffects)}
                 ${addMoveBox_effect(move.effects)}
             </div>
         `
@@ -514,6 +524,7 @@ function addMoveBox(enemyDataValue){//閲覧ページの技欄を作成する関
     return result
 }
 function addMoveBox_statusEffect(moveStatusEffectArray){//閲覧ページの技欄の状態異常欄を作成する関数
+    if(moveStatusEffectArray.length===0){return ""}//状態異常がないなら欄を作らない
     let result=""
     result+=`
         <div class="cardTable-move-statusEffect clearFix">
@@ -553,6 +564,7 @@ function addMoveBox_statusEffect_content(moveStatusEffectArray,key){//閲覧ペ�
     return result
 }
 function addMoveBox_effect(moveEffectArray){//閲覧ページの技欄の効果欄を作成する関数
+    if(moveEffectArray.length===0){return ""}//効果がないなら欄を作らない
     let result=""
     result+=`
         <div class="cardTable-move-effect">
