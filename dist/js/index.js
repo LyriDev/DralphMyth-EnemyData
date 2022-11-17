@@ -56,7 +56,7 @@ function updateHeader(data,_page=page){//ヘッダーを変更する関数
         case null://一覧ページのヘッダー
             result=`
             <div id="headerContent">
-                <input type="text" id="searchText" placeholder="タグ検索">
+                <input type="text" id="searchTag" placeholder="タグ検索">
                 <div id="headerButtonArea">
                     <button id="headerButton">新規作成</button>
                 </div>
@@ -66,9 +66,9 @@ function updateHeader(data,_page=page){//ヘッダーを変更する関数
                 addJsonData(data)//jsonファイルに新しいデータを追加する
                 location.href=`./index.html?page=edit&index=${data.enemy.length}`
             })
-            $(document).on("input","#searchText",function(){//検索ボックスに処理を適用する
-                const filter=$("#searchText").val()//検索ボックスに入力された値
-                updateMainContent(showEnemyData(data,filter))//敵データにフィルターをかけて表示する
+            $(document).on("input","#searchTag",function(){//タグ検索ボックスに処理を適用する
+                const tagFilter=$("#searchTag").val()//タグ検索ボックスに入力された値
+                updateMainContent(showEnemyData(data,tagFilter))//敵データにフィルターをかけて表示する
             })
             break
         case "view"://閲覧ページのヘッダー
@@ -137,15 +137,15 @@ function updateMainContent(content){//メインの中身を上書きする関数
 }
 
 /* 一覧ページを表示中に使う関数 */
-function showEnemyData(data,filter=""){//表示する敵データを作成する関数
+function showEnemyData(data,tagFilter=""){//表示する敵データを作成する関数
     let result=""
-    if(filter===""){//フィルターなしのとき
+    if(tagFilter===""){//フィルターなしのとき
         let allEnemyTag=getAllEnemyTag(data)
         for(let i in allEnemyTag){//タグ毎にデータをまとめて出力する
             result+=getEnemyDataByTag(data,allEnemyTag[i])
         }
     }else{//フィルターありのとき
-        result+=getEnemyDataByTag(data,filter)//指定されたタグを持つデータのみを出力する
+        result+=getEnemyDataByTag(data,tagFilter)//指定されたタグを持つデータのみを出力する
     }
     return result
 }
