@@ -412,26 +412,7 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
                 </a>
             </div>
             <div id="ability" class="cardBody">
-                <div class="cardTable">
-                    <div class="cardTable-ability-name">
-                        <div class="cardTableTitle">特性名</div>
-                        <input readonly type="text" class="cardTableContent" value="連鎖">
-                    </div>
-                    <div class="cardTable-ability-effect">
-                        <div class="cardTableTitle">効果</div>
-                        <textarea readonly id="ability-effect0" class="cardTableContent" rows="1">雷攻撃が命中時に発動、その命中した敵の中心に３×３マスにいる敵に命中する。(連鎖した敵には連鎖判定は発生しない)</textarea>
-                    </div>
-                </div>
-                <div class="cardTable">
-                    <div class="cardTable-ability-name">
-                        <div class="cardTableTitle">特性名</div>
-                        <input readonly type="text" class="cardTableContent" value="貫通">
-                    </div>
-                    <div class="cardTable-ability-effect">
-                        <div class="cardTableTitle">効果</div>
-                        <textarea readonly id="ability-effect1" class="cardTableContent" rows="1">「電気ライフル」の攻撃時のみ発動、対象に命中するまでに通ったマスにいる敵にも命中する。</textarea>
-                    </div>
-                </div>
+                ${addAbilityBox(enemyDataValue)}
             </div>
         </div>
         <div class="cardBox">
@@ -442,159 +423,7 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
                 </a>
             </div>
             <div id="move" class="cardBody">
-                <div class="cardTable">
-                    <div class="cardTable-move-index">
-                        <div class="cardTableTitle">技番号</div>
-                        <input readonly type="text" class="cardTableContent" value="1">
-                    </div>
-                    <div class="cardTable-move-name">
-                        <div class="cardTableTitle">技名</div>
-                        <input readonly type="text" class="cardTableContent" value="改造電気ライフル">
-                    </div>
-                    <div class="cardTable-move-element">
-                        <div class="cardTableTitle">属性</div>
-                        <input readonly type="text" class="cardTableContent" value="雷">
-                    </div>
-                    <div class="cardTable-move-type">
-                        <div class="cardTableTitle">種別</div>
-                        <input readonly type="text" class="cardTableContent" value="魔法">
-                    </div>
-                    <div class="cardTable-move-reach">
-                        <div class="cardTableTitle">射程</div>
-                        <input readonly type="text" class="cardTableContent" value="5">
-                    </div>
-                    <div class="cardTable-move-range">
-                        <div class="cardTableTitle">範囲</div>
-                        <input readonly type="text" class="cardTableContent" value="">
-                    </div>
-                    <div class="cardTable-move-successRate">
-                        <div class="cardTableTitle">成功率</div>
-                        <input readonly type="text" class="cardTableContent" value="90%">
-                    </div>
-                    <div class="cardTable-move-attackNumber">
-                        <div class="cardTableTitle">攻撃回数</div>
-                        <input readonly type="text" class="cardTableContent" value="3">
-                    </div>
-                    <div class="cardTable-move-damage">
-                        <div class="cardTableTitle">ダメージ</div>
-                        <input readonly type="text" class="cardTableContent" value="8d10">
-                    </div>
-                    <div class="cardTable-move-statusEffect clearFix">
-                        <div class="cardTable-move-statusEffect-type">
-                            <div class="cardTableTitle">状態異常</div>
-                            <input readonly type="text" class="cardTableContent" value="スタン">
-                        </div>
-                        <div class="cardTable-move-statusEffect-level">
-                            <div class="cardTableTitle">レベル</div>
-                            <input readonly type="text" class="cardTableContent" value="2">
-                        </div>
-                            <div class="cardTable-move-statusEffect-turn">
-                            <div class="cardTableTitle">ターン</div>
-                            <input readonly type="text" class="cardTableContent" value="5">
-                        </div>
-                    </div>
-                    <div class="cardTable-move-effect">
-                    </div>
-                </div>
-                <div class="cardTable">
-                    <div class="cardTable-move-index">
-                        <div class="cardTableTitle">技番号</div>
-                        <input readonly type="text" class="cardTableContent" value="2">
-                    </div>
-                    <div class="cardTable-move-name">
-                        <div class="cardTableTitle">技名</div>
-                        <input readonly type="text" class="cardTableContent" value="鋏攻撃">
-                    </div>
-                    <div class="cardTable-move-element">
-                        <div class="cardTableTitle">属性</div>
-                        <input readonly type="text" class="cardTableContent" value="無">
-                    </div>
-                    <div class="cardTable-move-type">
-                        <div class="cardTableTitle">種別</div>
-                        <input readonly type="text" class="cardTableContent" value="物理">
-                    </div>
-                    <div class="cardTable-move-reach">
-                        <div class="cardTableTitle">射程</div>
-                        <input readonly type="text" class="cardTableContent" value="1">
-                    </div>
-                    <div class="cardTable-move-range">
-                        <div class="cardTableTitle">範囲</div>
-                        <input readonly type="text" class="cardTableContent" value="">
-                    </div>
-                    <div class="cardTable-move-successRate">
-                        <div class="cardTableTitle">成功率</div>
-                        <input readonly type="text" class="cardTableContent" value="85%">
-                    </div>
-                    <div class="cardTable-move-attackNumber">
-                        <div class="cardTableTitle">攻撃回数</div>
-                        <input readonly type="text" class="cardTableContent" value="1">
-                    </div>
-                    <div class="cardTable-move-damage">
-                        <div class="cardTableTitle">ダメージ</div>
-                        <input readonly type="text" class="cardTableContent" value="6d6">
-                    </div>
-                    <div class="cardTable-move-statusEffect clearFix">
-                    </div>
-                    <div class="cardTable-move-effect">
-                    </div>
-                </div>
-                <div class="cardTable">
-                    <div class="cardTable-move-index">
-                        <div class="cardTableTitle">技番号</div>
-                        <input readonly type="text" class="cardTableContent" value="3">
-                    </div>
-                    <div class="cardTable-move-name">
-                        <div class="cardTableTitle">技名</div>
-                        <input readonly type="text" class="cardTableContent" value="改造電気銃">
-                    </div>
-                    <div class="cardTable-move-element">
-                        <div class="cardTableTitle">属性</div>
-                        <input readonly type="text" class="cardTableContent" value="雷">
-                    </div>
-                    <div class="cardTable-move-type">
-                        <div class="cardTableTitle">種別</div>
-                        <input readonly type="text" class="cardTableContent" value="魔法">
-                    </div>
-                    <div class="cardTable-move-reach">
-                        <div class="cardTableTitle">射程</div>
-                        <input readonly type="text" class="cardTableContent" value="5">
-                    </div>
-                    <div class="cardTable-move-range">
-                        <div class="cardTableTitle">範囲</div>
-                        <input readonly type="text" class="cardTableContent" value="">
-                    </div>
-                    <div class="cardTable-move-successRate">
-                        <div class="cardTableTitle">成功率</div>
-                        <input readonly type="text" class="cardTableContent" value="80%">
-                    </div>
-                    <div class="cardTable-move-attackNumber">
-                        <div class="cardTableTitle">攻撃回数</div>
-                        <input readonly type="text" class="cardTableContent" value="5">
-                    </div>
-                    <div class="cardTable-move-damage">
-                        <div class="cardTableTitle">ダメージ</div>
-                        <input readonly type="text" class="cardTableContent" value="5d10">
-                    </div>
-                    <div class="cardTable-move-statusEffect clearFix">
-                        <div class="cardTable-move-statusEffect-type">
-                            <div class="cardTableTitle">状態異常</div>
-                            <input readonly type="text" class="cardTableContent" value="スタン">
-                        </div>
-                        <div class="cardTable-move-statusEffect-level">
-                            <div class="cardTableTitle">レベル</div>
-                            <input readonly type="text" class="cardTableContent" value="2">
-                        </div>
-                            <div class="cardTable-move-statusEffect-turn">
-                            <div class="cardTableTitle">ターン</div>
-                            <input readonly type="text" class="cardTableContent" value="5">
-                        </div>
-                    </div>
-                    <div class="cardTable-move-effect">
-                        <div class="cardTableTitle">効果</div>
-                        <textarea readonly id="move-effect0" class="cardTableContent" rows="1">ファンブル無効</textarea>
-                        <textarea readonly id="move-effect1" class="cardTableContent" rows="1">ファンブル時、次回行動で使用不可</textarea>
-                    </div>
-                </div>
+                ${addMoveBox(enemyDataValue)}
             </div>
         </div>
         <div class="cardBox">
@@ -614,21 +443,131 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
     return result
 }
 
-function addAbilityBox(enemyDataValue){
+function addAbilityBox(enemyDataValue){//閲覧ページの特性欄を作成する関数
     let result=""
-    let textareaNumber=0
+    let textareaNumber=0//textareaのidへ順番にインデックスをつける
     for(let i in enemyDataValue.abilities){
+        const ability=enemyDataValue.abilities[i]
         result+=`
         <div class="cardTable">
             <div class="cardTable-ability-name">
                 <div class="cardTableTitle">特性名</div>
-                <input readonly type="text" class="cardTableContent" value="${enemyDataValue.abilities[i].name}">
+                <input readonly type="text" class="cardTableContent" value="${ability.name}">
             </div>
             <div class="cardTable-ability-effect">
                 <div class="cardTableTitle">効果</div>
-                <textarea readonly id="ability-effect${textareaNumber}" class="cardTableContent" rows="1">${enemyDataValue.abilities[i].effect}</textarea>
+                <textarea readonly id="ability-effect${textareaNumber}" class="cardTableContent" rows="1">${ability.effect}</textarea>
             </div>
         </div>
+        `
+        textareaNumber++
+    }
+    return result
+}
+function addMoveBox(enemyDataValue){//閲覧ページの技欄を作成する関数
+    let result=""
+    for(let i in enemyDataValue.moves){
+        const move=enemyDataValue.moves[i]
+        result+=`
+            <div class="cardTable">
+                <div class="cardTable-move-index">
+                    <div class="cardTableTitle">技番号</div>
+                    <input readonly type="text" class="cardTableContent" value="${move.index}">
+                </div>
+                <div class="cardTable-move-name">
+                    <div class="cardTableTitle">技名</div>
+                    <input readonly type="text" class="cardTableContent" value="${move.name}">
+                </div>
+                <div class="cardTable-move-element">
+                    <div class="cardTableTitle">属性</div>
+                    <input readonly type="text" class="cardTableContent" value="${convertProperty(addDotToArray(move.elements,"・",""),"","?")}">
+                </div>
+                <div class="cardTable-move-type">
+                    <div class="cardTableTitle">種別</div>
+                    <input readonly type="text" class="cardTableContent" value="${convertProperty(addDotToArray(move.types,"・",""),"","?")}">
+                </div>
+                <div class="cardTable-move-reach">
+                    <div class="cardTableTitle">射程</div>
+                    <input readonly type="text" class="cardTableContent" value="${move.reach}">
+                </div>
+                <div class="cardTable-move-range">
+                    <div class="cardTableTitle">範囲</div>
+                    <input readonly type="text" class="cardTableContent" value="${move.range}">
+                </div>
+                <div class="cardTable-move-successRate">
+                    <div class="cardTableTitle">成功率</div>
+                    <input readonly type="text" class="cardTableContent" value="${move.successRate}%">
+                </div>
+                <div class="cardTable-move-attackNumber">
+                    <div class="cardTableTitle">攻撃回数</div>
+                    <input readonly type="text" class="cardTableContent" value="${move.attackNumber}">
+                </div>
+                <div class="cardTable-move-damage">
+                    <div class="cardTableTitle">ダメージ</div>
+                    <input readonly type="text" class="cardTableContent" value="${move.damage}">
+                </div>
+                ${addMoveBox_statusEffect(move.statusEffectsove)}
+                ${addMoveBox_effect(move.effects)}
+            </div>
+        `
+    }
+    return result
+}
+function addMoveBox_statusEffect(moveStatusEffectArray){//閲覧ページの技欄の状態異常欄を作成する関数
+    let result=""
+    result+=`
+        <div class="cardTable-move-statusEffect clearFix">
+            <div class="cardTable-move-statusEffect-type">
+                <div class="cardTableTitle">状態異常</div>
+                ${addMoveBox_statusEffect_content(moveStatusEffectArray,"effectType")}
+            </div>
+            <div class="cardTable-move-statusEffect-level">
+                <div class="cardTableTitle">レベル</div>
+                ${addMoveBox_statusEffect_content(moveStatusEffectArray,"level")}
+            </div>
+                <div class="cardTable-move-statusEffect-turn">
+                <div class="cardTableTitle">ターン</div>
+                ${addMoveBox_statusEffect_content(moveStatusEffectArray,"turn")}
+            </div>
+        </div>
+    `
+    return result
+}
+function addMoveBox_statusEffect_content(moveStatusEffectArray,key){//閲覧ページの技欄の状態異常欄の中身を作成する関数
+    let result=""
+    for(let i in moveStatusEffectArray){
+        switch(key){
+            case "effectType":
+                result+=`<input readonly type="text" class="cardTableContent" value="${moveStatusEffectArray[i].effectType}">`
+                break
+            case "level":
+                result+=`<input readonly type="text" class="cardTableContent" value="${moveStatusEffectArray[i].level}">`
+                break
+            case "turn":
+                result+=`<input readonly type="text" class="cardTableContent" value="${moveStatusEffectArray[i].turn}">`
+                break
+            default:
+                break
+        }
+    }
+    return result
+}
+function addMoveBox_effect(moveEffectArray){//閲覧ページの技欄の効果欄を作成する関数
+    let result=""
+    result+=`
+        <div class="cardTable-move-effect">
+            <div class="cardTableTitle">効果</div>
+            ${addMoveBox_effect_content(moveEffectArray)}
+        </div>
+    `
+    return result
+}
+function addMoveBox_effect_content(moveEffectArray){//閲覧ページの技欄の効果欄の中身を作成する関数
+    let result=""
+    let textareaNumber=0//textareaのidへ順番にインデックスをつける
+    for(let i in moveEffectArray){
+        result+=`
+            <textarea readonly id="move-effect${textareaNumber}" class="cardTableContent" rows="1">${moveEffectArray[i]}</textarea>
         `
         textareaNumber++
     }

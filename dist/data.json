@@ -46,7 +46,7 @@
             ],
             "moves":[
                 {
-                    "number":1,
+                    "index":1,
                     "name":"改造電気ライフル",
                     "elements":["雷"],
                     "types":["魔法"],
@@ -66,7 +66,7 @@
                     ]
                 },
                 {
-                    "number":2,
+                    "index":2,
                     "name":"鋏攻撃",
                     "elements":["無"],
                     "types":["物理"],
@@ -86,7 +86,7 @@
                     ]
                 },
                 {
-                    "number":3,
+                    "index":3,
                     "name":"改造電気銃",
                     "elements":["雷"],
                     "types":["魔法"],
@@ -156,7 +156,7 @@
             ],
             "moves":[
                 {
-                    "number":"",
+                    "index":"",
                     "name":"",
                     "successRate":"",
                     "type":"",
@@ -173,7 +173,7 @@
             "note":""
         },
         {
-            "name":"ミゴ",
+            "name":"ミーゴ",
             "level":5,
             "tag":"道中敵2",
             "elements":["氷","火"],
@@ -218,10 +218,10 @@
             ],
             "moves":[
                 {
-                    "number":1,
+                    "index":1,
                     "name":"改造電気ライフル",
-                    "elements":["雷"],
-                    "types":["魔法"],
+                    "elements":["雷","氷"],
+                    "types":["魔法","息"],
                     "reach":5,
                     "range":"",
                     "successRate":90,
@@ -232,13 +232,18 @@
                             "effectType":"スタン",
                             "level":2,
                             "turn":5
+                        },
+                        {
+                            "effectType":"氷",
+                            "level":3,
+                            "turn":2
                         }
                     ],
                     "effects":[
                     ]
                 },
                 {
-                    "number":2,
+                    "index":2,
                     "name":"鋏攻撃",
                     "elements":["無"],
                     "types":["物理"],
@@ -258,7 +263,7 @@
                     ]
                 },
                 {
-                    "number":3,
+                    "index":3,
                     "name":"改造電気銃",
                     "elements":["雷"],
                     "types":["魔法"],
@@ -328,7 +333,7 @@
             ],
             "moves":[
                 {
-                    "number":1,
+                    "index":1,
                     "name":"改造電気ライフル",
                     "elements":["雷"],
                     "types":["魔法"],
@@ -348,7 +353,7 @@
                     ]
                 },
                 {
-                    "number":2,
+                    "index":2,
                     "name":"鋏攻撃",
                     "elements":["無"],
                     "types":["物理"],
@@ -368,7 +373,7 @@
                     ]
                 },
                 {
-                    "number":3,
+                    "index":3,
                     "name":"改造電気銃",
                     "elements":["雷"],
                     "types":["魔法"],
@@ -438,7 +443,7 @@
             ],
             "moves":[
                 {
-                    "number":1,
+                    "index":1,
                     "name":"改造電気ライフル",
                     "elements":["雷"],
                     "types":["魔法"],
@@ -458,7 +463,7 @@
                     ]
                 },
                 {
-                    "number":2,
+                    "index":2,
                     "name":"鋏攻撃",
                     "elements":["無"],
                     "types":["物理"],
@@ -478,7 +483,7 @@
                     ]
                 },
                 {
-                    "number":3,
+                    "index":3,
                     "name":"改造電気銃",
                     "elements":["雷"],
                     "types":["魔法"],
