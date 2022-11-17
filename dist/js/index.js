@@ -57,6 +57,7 @@ function updateHeader(data,_page=page){//ヘッダーを変更する関数
             result=`
             <div id="headerContent">
                 <input type="text" id="searchTag" placeholder="タグ検索">
+                <input type="text" id="searchName" placeholder="名前検索">
                 <div id="headerButtonArea">
                     <button id="headerButton">新規作成</button>
                 </div>
@@ -66,9 +67,10 @@ function updateHeader(data,_page=page){//ヘッダーを変更する関数
                 addJsonData(data)//jsonファイルに新しいデータを追加する
                 location.href=`./index.html?page=edit&index=${data.enemy.length}`
             })
-            $(document).on("input","#searchTag",function(){//タグ検索ボックスに処理を適用する
+            $(document).on("input","#searchTag,#searchName",function(){//検索ボックスに処理を適用する
                 const tagFilter=$("#searchTag").val()//タグ検索ボックスに入力された値
-                updateMainContent(showEnemyData(data,tagFilter))//敵データにフィルターをかけて表示する
+                const nameFilter=$("#searchName").val()//名前検索ボックスに入力された値
+                updateMainContent(showEnemyData(data,tagFilter,nameFilter))//敵データにフィルターをかけて表示する
             })
             break
         case "view"://閲覧ページのヘッダー
@@ -137,15 +139,15 @@ function updateMainContent(content){//メインの中身を上書きする関数
 }
 
 /* 一覧ページを表示中に使う関数 */
-function showEnemyData(data,tagFilter=""){//表示する敵データを作成する関数
+function showEnemyData(data,tagFilter="",nameFilter=""){//表示する敵データを作成する関数
     let result=""
-    if(tagFilter===""){//フィルターなしのとき
+    if(tagFilter===""){//タグフィルターなしのとき
         let allEnemyTag=getAllEnemyTag(data)
         for(let i in allEnemyTag){//タグ毎にデータをまとめて出力する
-            result+=getEnemyDataByTag(data,allEnemyTag[i])
+            result+=getEnemyDataByTag(data,allEnemyTag[i],nameFilter)
         }
-    }else{//フィルターありのとき
-        result+=getEnemyDataByTag(data,tagFilter)//指定されたタグを持つデータのみを出力する
+    }else{//タグフィルターありのとき
+        result+=getEnemyDataByTag(data,tagFilter,nameFilter)//指定されたタグを持つデータのみを出力する
     }
     return result
 }
@@ -158,11 +160,19 @@ function getAllEnemyTag(data){//敵データの全タグ種を取得する関数
     })
     return enemyTagList
 }
-function getEnemyDataByTag(data,tagName){//指定されたタグに合致する敵データを取得する関数
+function getEnemyDataByTag(data,tagName,nameFilter){//指定されたタグに合致する敵データを取得する関数
     let result=""
     $.each(data.enemy,function(key,value){
         if(tagName===value.tag){
-            result+=createEnemyElement(key,value.name,value.level,value.tag)
+            if(nameFilter===""){//名前フィルターなしのとき
+                result+=createEnemyElement(key,value.name,value.level,value.tag)
+            }else{//名前フィルターありのとき
+                const nameFilterReg=new RegExp("^"+nameFilter+".*")//前方部分一致の正規表現
+                console.log(nameFilterReg)
+                if(nameFilterReg.test(value.name)){
+                    result+=createEnemyElement(key,value.name,value.level,value.tag)
+                }
+            }
         }
     })
     return result

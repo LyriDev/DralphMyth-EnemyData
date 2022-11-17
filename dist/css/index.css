@@ -1,4 +1,4 @@
-#searchTag,.level,.tag,.viewButton,.editButton,.exportButton{
+#searchTag,#searchName,.level,.tag,.viewButton,.editButton,.exportButton{
     font-size: 1.25rem;
 }
 .viewButton,.editButton,.exportButton{
@@ -9,11 +9,17 @@
     transition: border 0.3s;
 }
 
-#searchTag{
+#searchTag,#searchName{
     position: fixed;
     top:calc((50px/2) - ((2px + 5px + 1.25rem + 5px + 2px)/2));
+
+    width:170px;
+}
+#searchTag{
     left:calc(50% - 490px/2);
-    width:180px;
+}
+#searchName{
+    left:calc((50% - 490px/2) + 170px + 20px);
 }
 
 .data{
