@@ -209,28 +209,58 @@ function getAllEnemyTag(data){//敵データの全タグ種を取得する関数
 }
 function getEnemyDataByTag(data,tagName,nameFilter){//指定されたタグに合致する敵データを取得する関数
     let result=""
+    let enemyArray=new Array
     $.each(data.enemy,function(key,value){
         if(tagName===value.tag){
             if(nameFilter===""){//名前フィルターなしのとき
-                result+=createEnemyElement(key,value.name,value.level,value.tag)
+                enemyArray.push({key,value})
+                //result+=createEnemyElement(key,value.name,value.level,value.tag)
             }else{//名前フィルターありのとき
                 const nameFilterReg=new RegExp("^"+nameFilter+".*")//前方部分一致の正規表現
-                console.log(nameFilterReg)
                 if(nameFilterReg.test(value.name)){
-                    result+=createEnemyElement(key,value.name,value.level,value.tag)
+                    enemyArray.push({key,value})
+                    //result+=createEnemyElement(key,value.name,value.level,value.tag)
                 }
             }
         }
     })
+    result=getEnemyDataByName(enemyArray)
     return result
 }
-function getEnemyLevel(enemyName){//敵データの名前を受け取ってレベル一覧を返す関数
+function getEnemyDataByName(enemyArray){//敵データを名前別に整理する関数
+    let result=""
+    const enemyNameList=getEnemyNameList(enemyArray)
+    console.log(enemyNameList)
+    for(let i in enemyNameList){
+        console.log(i+":"+enemyNameList[i])
+        for(let j in enemyArray){
+            console.log(j+";"+enemyArray[j].value.name)
+            if(enemyArray[j].value.name===enemyNameList[i]){
+                const Key=enemyArray[j].key
+                const Value=enemyArray[j].value
+                console.log(Key + Value.name)
+                result+=createEnemyElement(Key,Value.name,Value.level,Value.tag)
+            }
+        }
+    }
+    return result
+}
+function getEnemyNameList(enemyArray){//敵データの名前一覧を取得する関数
+    let enemyNameList=new Array
+    for(let i in enemyArray){
+        if(!enemyNameList.includes(enemyArray[i].value.name)){
+            enemyNameList.push(enemyArray[i].value.name)
+        }
+    }
+    return enemyNameList
+}
+function getEnemyLevelList(enemyArray){//敵データのレベル一覧を取得する関数
 
 }
 function createEnemyElement(key,name,level,tag){//表示する敵データの要素を作成する関数
     let result=`
         <div class="data">
-            <div class="name">${convertNull(name)}</div>
+            <div class="name">${convertNull(name)}${key}</div>
             <div class="level">Lv${convertNull(level,"?")}</div>
             <div class="tag">${convertNull(tag,"")}</div>
             <div class="button">
