@@ -96,10 +96,10 @@
     color:#F5F5F5
 }
 .cardTable{
+    clear: left;
     width: 440px;
     margin:0 auto;
     padding: 10px;
-    background-color: red;
 }
 .cardTable:nth-child(2n+1){
     background-color: #3A3F44;
@@ -114,53 +114,162 @@
 
 } */
 
-/* 特性欄 */
-.cardTable-abilityName,.cardTable-abilityName .cardTableTitle{
+/* 特性 */
+.cardTable-ability-name,.cardTable-ability-name .cardTableTitle{
     width: calc(440px/2);
 }
-.cardTable-abilityName .cardTableContent{
+.cardTable-ability-name .cardTableContent{
     width: calc((440px/2 - (2px + 10px + 2px)));
 }
-.cardTable-abilityEffect,.cardTable-abilityEffect .cardTableTitle{
+.cardTable-ability-effect,.cardTable-ability-effect .cardTableTitle{
     width: 440px;
 }
-.cardTable-abilityEffect .cardTableContent{
+.cardTable-ability-effect .cardTableContent{
     width: calc((440px - (2px + 10px + 2px)));
     /* これがないと謎の隙間がある */
     margin-bottom: calc((5px + 2px)*-1);
 }
 
-/* 技欄 */
-.cardTable-moveIndex{
+/* 技 */
+/* 技 技番号 */
+.cardTable-move-index{
     float: left;
-    border: solid 1px red;
 }
-.cardTable-moveIndex,.cardTable-moveIndex .cardTableTitle{
-    width: 100px;
+.cardTable-move-index,.cardTable-move-index .cardTableTitle{
+    width: 70px;
 }
-.cardTable-moveIndex .cardTableContent{
-    width: calc((100px - (2px + 10px + 2px)));
+.cardTable-move-index .cardTableContent{
+    width: calc((70px - (2px + 10px + 2px)));
 }
-
-.cardTable-moveName{
+/* 技 技名 */
+.cardTable-move-name{
     float: left;
-    border: solid 1px blue;
 }
-.cardTable-moveName,.cardTable-moveName .cardTableTitle{
-    width: calc(440px/2);
+.cardTable-move-name,.cardTable-move-name .cardTableTitle{
+    width: calc(440px - 70px);
 }
-.cardTable-moveName .cardTableContent{
-    width: calc((440px/2 - (2px + 10px + 2px)));
+.cardTable-move-name .cardTableContent{
+    width: calc(((440px - 70px) - (2px + 10px + 2px)));
 }
-
-.cardTable-moveEffect{
+/* 技 属性 */
+.cardTable-move-element{
+    float: left;
+}
+.cardTable-move-element,.cardTable-move-element .cardTableTitle{
+    width: 70px;
+}
+.cardTable-move-element .cardTableContent{
+    width: calc((70px - (2px + 10px + 2px)));
+}
+/* 技 種別 */
+.cardTable-move-type{
+    float: left;
+}
+.cardTable-move-type,.cardTable-move-type .cardTableTitle{
+    width: 70px;
+}
+.cardTable-move-type .cardTableContent{
+    width: calc((70px - (2px + 10px + 2px)));
+}
+/* 技 射程 */
+.cardTable-move-reach{
+    float: left;
+}
+.cardTable-move-reach,.cardTable-move-reach .cardTableTitle{
+    width: 70px;
+}
+.cardTable-move-reach .cardTableContent{
+    width: calc((70px - (2px + 10px + 2px)));
+}
+/* 技 範囲 */
+.cardTable-move-range{
+    float: left;
+}
+.cardTable-move-range,.cardTable-move-range .cardTableTitle{
+    width: calc(440px - 70px*3);
+}
+.cardTable-move-range .cardTableContent{
+    width: calc(((440px - 70px*3) - (2px + 10px + 2px)));
+}
+/* 技 成功率 */
+.cardTable-move-successRate{
+    float: left;
+}
+.cardTable-move-successRate,.cardTable-move-successRate .cardTableTitle{
+    width: 70px;
+}
+.cardTable-move-successRate .cardTableContent{
+    width: calc((70px - (2px + 10px + 2px)));
+}
+/* 技 攻撃回数 */
+.cardTable-move-attackNumber{
+    float: left;
+}
+.cardTable-move-attackNumber,.cardTable-move-attackNumber .cardTableTitle{
+    width: 70px;
+}
+.cardTable-move-attackNumber .cardTableContent{
+    width: calc((70px - (2px + 10px + 2px)));
+}
+/* 技 ダメージ */
+.cardTable-move-damage{
+    float: left;
+}
+.cardTable-move-damage,.cardTable-move-damage .cardTableTitle{
+    width: 70px;
+}
+.cardTable-move-damage .cardTableContent{
+    width: calc(((440px - 70px*2) - (2px + 10px + 2px)));
+}
+/* 技 状態異常 */
+.cardTable-move-statusEffect{
     clear: left;
-    border: solid 1px green;
 }
-.cardTable-moveEffect,.cardTable-moveEffect .cardTableTitle{
+/* 技 状態異常 種類 */
+.cardTable-move-statusEffect-type{
+    float: left;
+}
+.cardTable-move-statusEffect-type,.cardTable-move-statusEffect-type .cardTableTitle{
+    width: 200px;
+}
+.cardTable-move-statusEffect-type .cardTableContent{
+    width: calc((200px - (2px + 10px + 2px)));
+}
+/* 技 状態異常 レベル */
+.cardTable-move-statusEffect-level{
+    float: left;
+}
+.cardTable-move-statusEffect-level,.cardTable-move-statusEffect-level .cardTableTitle{
+    width: 70px;
+}
+.cardTable-move-statusEffect-level .cardTableContent{
+    width: calc((70px - (2px + 10px + 2px)));
+}
+/* 技 状態異常 ターン */
+.cardTable-move-statusEffect-turn{
+    float: left;
+}
+.cardTable-move-statusEffect-turn,.cardTable-move-statusEffect-turn .cardTableTitle{
+    width: 70px;
+}
+.cardTable-move-statusEffect-turn .cardTableContent{
+    width: calc((70px - (2px + 10px + 2px)));
+}
+/* 技 効果 */
+.cardTable-move-effect{
+    clear: left;
+}
+.cardTable-move-effect,.cardTable-move-effect .cardTableTitle{
     width: 440px;
 }
-.cardTable-moveEffect .cardTableContent{
+.cardTable-move-effect .cardTableContent{
+    width: calc((440px - (2px + 10px + 2px)));
+    /* これがないと謎の隙間がある */
+    margin-bottom: calc((5px + 2px)*-1);
+}
+/* 備考 */
+#note0{
+    clear: left;
     width: calc((440px - (2px + 10px + 2px)));
     /* これがないと謎の隙間がある */
     margin-bottom: calc((5px + 2px)*-1);

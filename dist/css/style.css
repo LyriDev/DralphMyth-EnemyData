@@ -82,6 +82,7 @@ textarea {
     border: 0;
 }
 
+/* 矢印アイコン */
 .arrowLeft,.arrowDown{
     display: inline-block;
     vertical-align: middle;
@@ -102,4 +103,21 @@ textarea {
 }
 .arrowDown{
     transform: translateY(-25%) rotate(135deg);
+}
+
+/* clearFix */
+.clearFix:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.clearFix:before {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.clearFix {
+	display: block;
 }
