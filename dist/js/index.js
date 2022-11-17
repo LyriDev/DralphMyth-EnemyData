@@ -9,18 +9,49 @@ function getQuery(name){//クエリ文字列(URLパラメータ)を取得する�
     if(!results[2]){return ''}
     return decodeURIComponent(results[2].replace(/\+/g," "))
 }
-const page=getQuery("page")//開いているページの種類
-const index=getQuery("index")//開いているページの項目
+const Page=getQuery("page")//開いているページの種類
+const Index=getQuery("index")//開いているページの項目
 const isOpenList={ability:true,move:true,note:true}//アコーディオンメニューが開いているかどうか
 
-function convertNull(value,alt="？"){//値がnullなら"？"として返す関数
-    if(value===null){
+function convertProperty(value,target,alt){//null値などを代替テキストに変換する関数
+    if(value===target){
         return alt
     }else{
         return value
     }
 }
-function deleteValueInList(array,value){//配列から特定の要素を削除する関数
+
+function convertAvailability(value){//有効/無効を〇/×に変換する関数
+    if(value==="有効"){
+        return "&#9675;"
+    }else if(value==="無効"){
+        return "&#10005;"
+    }else{
+        return ""
+    }
+}
+
+function addDotToArray(array,value){//配列の間に要素を追加して文字列として返す関数
+    let result=""
+    if(array.length<2){//配列の"間"がないなら処理を終了
+        return String(array)
+    }
+    for(let i=0;i<array.length-1;i++){
+        result+=`${array[i]}${value}`
+    }
+    result+=array[array.length-1]
+    return result
+}
+
+function addValueToArray(array,value){//配列の値の後ろにそれぞれ要素を追加して返す関数
+    let addedArray=new Array
+    for(let i in array){
+        addedArray.push(`${array[i]}${value}`)
+    }
+    return addedArray
+}
+
+function deleteValueInArray(array,value){//配列から特定の要素を削除する関数
     const result=array.slice()//引数の配列を値渡しでコピーする
     const arrayIndex = result.indexOf(value);
     result.splice(arrayIndex,1)
@@ -74,6 +105,23 @@ function sortAsc(array){//配列を昇順でソートする関数
     return cloneArray
 }
 
+function getTypeArray(array){//数値と空白文字を含む配列から要素の種類を抜き出してソートする関数
+    let valueList=new Array//要素の種類を保存する配列
+    for(let i in array){
+        if(!valueList.includes(array[i])){
+            valueList.push(array[i])
+        }
+    }
+    if(valueList.includes("")){//空白文字を含む場合
+        valueList=deleteValueInArray(valueList,"")//一旦空白文字を消して、
+        valueList=sortAsc(valueList)//ソートして、
+        valueList.push("")//消した空白文字を追加する
+    }else{//空白文字を含まない場合
+        valueList=sortAsc(valueList)
+    }
+    return valueList
+}
+
 /* 種別リスト */
 const elementList=["火","氷","風","土","雷","水","光","闇","無"]
 const attackTypeList=["物理","息","魔法"]
@@ -85,7 +133,7 @@ function updateHTML(data){//HTMLを更新する関数
     updateMain(data)//メインを更新する
 }
 
-function switchCssFile(_page=page){//ページ毎に読み込むCSSファイルを変更する関数
+function switchCssFile(_page=Page){//ページ毎に読み込むCSSファイルを変更する関数
     let cssUrl//cssファイルのパス
     switch(_page){
         case null://一覧ページ
@@ -103,7 +151,7 @@ function switchCssFile(_page=page){//ページ毎に読み込むCSSファイル�
     $("#styleSwitch").attr("href",cssUrl)//CSSファイルを差し替える
 }
 
-function updateHeader(data,_page=page){//ヘッダーを変更する関数
+function updateHeader(data,_page=Page){//ヘッダーを変更する関数
     let result
     switch (_page){
         case null://一覧ページのヘッダー
@@ -131,8 +179,8 @@ function updateHeader(data,_page=page){//ヘッダーを変更する関数
             <div id="headerContent">
                 <div id="headerButtonArea">
                     <button id="headerButton" onclick="location.href='./index.html'">一覧</button>
-                    <button id="headerButton" onclick="location.href='./index.html?page=edit&index=${index}'">編集</button>
-                    <button id="headerButton" onclick="exportEnemyPiece(${index})">出力</button>
+                    <button id="headerButton" onclick="location.href='./index.html?page=edit&index=${Index}'">編集</button>
+                    <button id="headerButton" onclick="exportEnemyPiece(${Index})">出力</button>
                 </div>
             </div id="headerContent">
             `
@@ -148,7 +196,7 @@ function updateHeader(data,_page=page){//ヘッダーを変更する関数
             `
             $(document).on("click","#headerButton",function(){//閲覧ボタンに処理を適用する
                 saveJson()//jsonファイルを上書き更新する
-                location.href=`./index.html?page=view&index=${index}`
+                location.href=`./index.html?page=view&index=${Index}`
             })
             $(document).on("click","#saveButton",function(){//保存ボタンに処理を適用する
                 saveJson()//jsonファイルを上書き更新する
@@ -159,14 +207,14 @@ function updateHeader(data,_page=page){//ヘッダーを変更する関数
     document.getElementById("header").innerHTML=result
 }
 
-function updateMain(data,_page=page){//メインを変更する関数
+function updateMain(data,_page=Page){//メインを変更する関数
     let result=""
     switch(_page){//Mainの中身を更新する処理
         case null://一覧ページの際の処理
             result=showEnemyData(data)//全部のデータを表示する
             break
         case "view"://閲覧ページの際の処理
-            result=viewEnemyData(data)//閲覧ページの中身でmainAreaを上書きする
+            result=viewEnemyData(data.enemy[Index])//閲覧ページの中身でmainAreaを上書きする
             break
         case "edit"://編集ページの際の処理
             break
@@ -210,12 +258,11 @@ function showEnemyData(data,tagFilter="",nameFilter=""){//表示する敵デー�
     return result
 }
 function getAllEnemyTag(data){//敵データの全タグ種を取得する関数
-    let enemyTagList=new Array
+    let enemyTagArray=new Array
     $.each(data.enemy,function(key,value){
-        if(!enemyTagList.includes(value.tag)){
-            enemyTagList.push(value.tag)
-        }
+        enemyTagArray.push(value.tag)
     })
+    let enemyTagList=getTypeArray(enemyTagArray)
     return enemyTagList
 }
 function getEnemyDataByTag(data,tagName,nameFilter){//指定されたタグに合致する敵データを取得する関数
@@ -245,7 +292,6 @@ function getEnemyDataByName(enemyArray){//敵データを名前別に整理す�
             if(enemyArray[j].value.name===enemyNameList[i]){
                 const Key=enemyArray[j].key
                 const Value=enemyArray[j].value
-                //result+=createEnemyElement(Key,Value.name,Value.level,Value.tag)
                 enemyArraySortedByName.push({key:Key,value:Value})
             }
         }
@@ -268,36 +314,30 @@ function getEnemyDataByLevel(enemyArray){//敵データをレベル別に整理�
     for(let i in enemyLevelList){
         for(let j in enemyArray){
             if(enemyArray[j].value.level===enemyLevelList[i]){
-                const Key=enemyArray[j].key
-                const Value=enemyArray[j].value
-                result+=createEnemyElement(Key,Value.name,Value.level,Value.tag)
+                result+=createEnemyElement(enemyArray[j])
             }
         }
     }
     return result
 }
 function getEnemyLevelList(enemyArray){//敵データのレベル一覧を取得する関数
-    let enemyLevelList=new Array
+    let enemyLevelArray=new Array
     for(let i in enemyArray){
-        if(!enemyLevelList.includes(enemyArray[i].value.level)){
-            enemyLevelList.push(enemyArray[i].value.level)
-        }
+        enemyLevelArray.push(enemyArray[i].value.level)
     }
-    if(enemyLevelList.includes(null)){//nullLevelを含む場合
-        enemyLevelList=deleteValueInList(enemyLevelList,null)
-        enemyLevelList=sortAsc(enemyLevelList)
-        enemyLevelList.push(null)
-    }else{//nullLevelを含まない場合
-        enemyLevelList=sortAsc(enemyLevelList)
-    }
+    let enemyLevelList=getTypeArray(enemyLevelArray)
     return enemyLevelList
 }
-function createEnemyElement(key,name,level,tag){//表示する敵データの要素を作成する関数
+function createEnemyElement(enemyData){//表示する敵データの要素を作成する関数
+    const key=enemyData.key
+    const name=enemyData.value.name
+    const level=enemyData.value.level
+    const tag=enemyData.value.tag
     let result=`
         <div class="data">
-            <div class="name">${convertNull(name)}</div>
-            <div class="level">Lv${convertNull(level,"?")}</div>
-            <div class="tag">${convertNull(tag,"")}</div>
+            <div class="name">${name}</div>
+            <div class="level">Lv${convertProperty(level,"","?")}</div>
+            <div class="tag">${tag}</div>
             <div class="button">
                 <button class="viewButton" onclick="location.href='./index.html?page=view&index=${key}'">閲覧</button>
                 <button class="editButton" onclick="location.href='./index.html?page=edit&index=${key}'">編集</button>
@@ -308,32 +348,30 @@ function createEnemyElement(key,name,level,tag){//表示する敵データの要
     return result
 }
 
-
-
 /* 閲覧ページを表示中に使う関数 */
-function viewEnemyData(enemyData){
-    // &#10005; バツ
+function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
     let result= `
-        <div id="name">ミ＝ゴ&nbsp;Lv5</div>
-        <div id="tag">道中敵</div>
+        <div id="name">${enemyDataValue.name}&nbsp;Lv${convertProperty(enemyDataValue.level,"","?")}</div>
+        <div id="tag">${enemyDataValue.tag}</div>
         <div class="parameterBox">
-            <div>属性<br>氷</div>
-            <div>種族<br>虫系</div>
-            <div>SANチェック<br>0/1d6</div>
+            <div>属性<br>${convertProperty(addDotToArray(enemyDataValue.elements,"・",""),"","?") }</div>
+            <div>系統<br>${convertProperty(addDotToArray(addValueToArray(enemyDataValue.species,"系"),"・",""),"","?")}</div>
+            <div>SANチェック<br>${convertProperty(enemyDataValue.sanCheck.success,"","?")}/${convertProperty(enemyDataValue.sanCheck.failure,"","?")}</div>
         </div>
         <div class="parameterBox">
-            <div>HP<br>800</div>
-            <div>装甲<br>12</div>
-            <div>イニシアチブ<br>16</div>
-            <div>行動P<br>4</div>
-            <div>回避<br>100%</div>
-            <div>行動回数<br>2回</div>
+            <div>HP<br>${convertProperty(enemyDataValue.HP,"","?")}</div>
+            <div>装甲<br>${convertProperty(enemyDataValue.armor,"","?")}</div>
+            <div>イニシアチブ<br>${convertProperty(enemyDataValue.initiative,"","?")}</div>
+            <div>行動P<br>${convertProperty(enemyDataValue.actionPoint,"","?")}</div>
+            <div>回避<br>${convertProperty(enemyDataValue.dodge,"","?")}%</div>
+            <div>行動回数<br>${convertProperty(enemyDataValue.actionNumber,"","?")}回</div>
         </div>
         <table class="statusEffectTable">
             <tr>
                 <th>炎</th>
                 <th>氷</th>
                 <th>幻惑</th>
+                <th>毒</th>
                 <th>眠り</th>
                 <th>混乱</th>
                 <th>スタン</th>
@@ -341,14 +379,15 @@ function viewEnemyData(enemyData){
                 <th>隠密</th>
             </tr>
             <tr>
-                <td>100%</td>
-                <td>100%</td>
-                <td>100%</td>
-                <td>100%</td>
-                <td>100%</td>
-                <td>100%</td>
-                <td>100%</td>
-                <td>&#9675;</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.flame,"","?")}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.ice,"","?")}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.dazzle,"","?")}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.poison,"","?")}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.sleep,"","?")}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.confusion,"","?")}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.stun,"","?")}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.curse,"","?")}%</td>
+                <td>${convertProperty(convertAvailability(enemyDataValue.statusEffects.stealth),"","&#8722;")}</td>
             </tr>
         </table>
         <table class="statusEffectTable">
@@ -359,10 +398,10 @@ function viewEnemyData(enemyData){
                 <th>魔法防御力低下</th>
             </tr>
             <tr>
-                <td>100%</td>
-                <td>100%</td>
-                <td>100%</td>
-                <td>100%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.atkDown,"","?")}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.defDown.physical,"","?")}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.defDown.breath,"","?")}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.defDown.magic,"","?")}%</td>
             </tr>
         </table>
         <div class="cardBox">
@@ -574,6 +613,7 @@ function viewEnemyData(enemyData){
     `
     return result
 }
+
 function updateAllTextarea(idName){//全てのtextareaの初期値に合わせてそれぞれ高さを自動調整する関数
     const textareaList = $(`textarea[id^="${idName}"]`);
     for(let i=0;i<textareaList.length;i++){
