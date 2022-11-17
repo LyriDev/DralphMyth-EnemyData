@@ -235,7 +235,7 @@
                             "turn":5
                         },
                         {
-                            "effectType":"氷",
+                            "effectType":"魔法防御力低下",
                             "level":3,
                             "turn":2
                         }
@@ -278,6 +278,11 @@
                             "effectType":"スタン",
                             "level":2,
                             "turn":5
+                        },
+                        {
+                            "effectType":"物理防御力低下",
+                            "level":3,
+                            "turn":2
                         }
                     ],
                     "effects":[

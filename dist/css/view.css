@@ -230,10 +230,10 @@
     float: left;
 }
 .cardTable-move-statusEffect-type,.cardTable-move-statusEffect-type .cardTableTitle{
-    width: calc(70px*3);
+    width: 140px;
 }
 .cardTable-move-statusEffect-type .cardTableContent{
-    width: calc(((70px*3) - (2px + 10px + 2px)));
+    width: calc((140px - (2px + 10px + 2px)));
 }
 /* 技 状態異常 レベル */
 .cardTable-move-statusEffect-level{
