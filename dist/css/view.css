@@ -99,6 +99,7 @@
     width: 440px;
     margin:0 auto;
     padding: 10px;
+    background-color: red;
 }
 .cardTable:nth-child(2n+1){
     background-color: #3A3F44;
@@ -106,7 +107,6 @@
 .cardTable:nth-child(2n){
     background-color: #272B30;
 }
-
 .cardTableTitle,.cardTableContent{
     font-size: 1rem;
 }
@@ -114,23 +114,53 @@
 
 } */
 
-.cardTable-abilityName{
-    width: calc(440px/2);
-}
-.cardTable-abilityName .cardTableTitle{
+/* 特性欄 */
+.cardTable-abilityName,.cardTable-abilityName .cardTableTitle{
     width: calc(440px/2);
 }
 .cardTable-abilityName .cardTableContent{
     width: calc((440px/2 - (2px + 10px + 2px)));
-
 }
-.cardTable-abilityEffect{
-    width: 440px;
-}
-.cardTable-abilityEffect .cardTableTitle{
+.cardTable-abilityEffect,.cardTable-abilityEffect .cardTableTitle{
     width: 440px;
 }
 .cardTable-abilityEffect .cardTableContent{
+    width: calc((440px - (2px + 10px + 2px)));
+    /* これがないと謎の隙間がある */
+    margin-bottom: calc((5px + 2px)*-1);
+}
+
+/* 技欄 */
+.cardTable-moveIndex{
+    float: left;
+    border: solid 1px red;
+}
+.cardTable-moveIndex,.cardTable-moveIndex .cardTableTitle{
+    width: 100px;
+}
+.cardTable-moveIndex .cardTableContent{
+    width: calc((100px - (2px + 10px + 2px)));
+}
+
+.cardTable-moveName{
+    float: left;
+    border: solid 1px blue;
+}
+.cardTable-moveName,.cardTable-moveName .cardTableTitle{
+    width: calc(440px/2);
+}
+.cardTable-moveName .cardTableContent{
+    width: calc((440px/2 - (2px + 10px + 2px)));
+}
+
+.cardTable-moveEffect{
+    clear: left;
+    border: solid 1px green;
+}
+.cardTable-moveEffect,.cardTable-moveEffect .cardTableTitle{
+    width: 440px;
+}
+.cardTable-moveEffect .cardTableContent{
     width: calc((440px - (2px + 10px + 2px)));
     /* これがないと謎の隙間がある */
     margin-bottom: calc((5px + 2px)*-1);

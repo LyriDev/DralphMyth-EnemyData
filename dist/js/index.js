@@ -178,8 +178,10 @@ function updateMain(data,_page=page){//メインを変更する関数
         case null://一覧ページの際の処理
             break
         case "view"://閲覧ページの際の処理
-            updateAllTextarea("abilityEffect")//textareaの初期値に合わせて高さを自動調整する
-            updateAllTextarea("moveEffect")//textareaの初期値に合わせて高さを自動調整する
+            updateAllTextarea("abilityEffect")
+            updateAllTextarea("moveEffect")
+            updateTextarea("#note")
+            //textareaの初期値に合わせて高さを自動調整する
             setAccordionMenu(".cardHeader")//アコーディオンメニューを特性タブに適用する
             break
         case "edit"://編集ページの際の処理
@@ -402,21 +404,26 @@ function viewEnemyData(data){
             </div>
             <div id="move" class="cardBody">
                 <div class="cardTable">
-                    <div class="cardTable-abilityName">
-                        <div class="cardTableTitle">特性名</div>
-                        <input readonly type="text" class="cardTableContent" value="連鎖">
+                    <div class="cardTable-moveIndex">
+                        <div class="cardTableTitle">技番号</div>
+                        <input readonly type="text" class="cardTableContent" value="3">
                     </div>
-                    <div class="cardTable-abilityEffect">
+                    <div class="cardTable-moveName">
+                        <div class="cardTableTitle">技名</div>
+                        <input readonly type="text" class="cardTableContent" value="改造電気銃">
+                    </div>
+                    <div class="cardTable-moveEffect">
                         <div class="cardTableTitle">効果</div>
-                        <textarea readonly id="moveEffect0" class="cardTableContent" rows="1">雷攻撃が命中時に発動、その命中した敵の中心に３×３マスにいる敵に命中する。(連鎖した敵には連鎖判定は発生しない)</textarea>
+                        <textarea readonly id="moveEffect0" class="cardTableContent" rows="1">ファンブル無効</textarea>
+                        <textarea readonly id="moveEffect0" class="cardTableContent" rows="1">ファンブル時、次回行動で使用不可</textarea>
                     </div>
                 </div>
                 <div class="cardTable">
-                    <div class="cardTable-abilityName">
-                        <div class="cardTableTitle">特性名</div>
+                    <div class="cardTable-moveName">
+                        <div class="cardTableTitle">技名</div>
                         <input readonly type="text" class="cardTableContent" value="貫通">
                     </div>
-                    <div class="cardTable-abilityEffect">
+                    <div class="cardTable-moveEffect">
                         <div class="cardTableTitle">効果</div>
                         <textarea readonly id="moveEffect1" class="cardTableContent" rows="1">「電気ライフル」の攻撃時のみ発動、対象に命中するまでに通ったマスにいる敵にも命中する。</textarea>
                     </div>
