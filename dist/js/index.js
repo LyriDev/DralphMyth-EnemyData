@@ -21,6 +21,53 @@ function convertNull(value,alt="？"){//値がnullなら"？"として返す関�
     }
 }
 
+function sortAsc(array){//配列を昇順でソートする関数
+    const cloneArray=array.slice()//引数の配列を値渡しでコピーする
+    function quickSort(start,end){
+        const pivot=cloneArray[Math.floor((start+end)/2)]//配列の真ん中辺りをピボットとして設定する
+        let left=start
+        let right=end
+
+        //ピポットより小さい値を左側へ、大きい値を右側へ分割する
+        while(true){
+            //leftの値がpivotより小さければleftを一つ右へ移動する
+            //基準値(pivot)以上の値を左から探す
+            while(cloneArray[left]<pivot){
+                left++;
+            }
+            //rightの値がpivotより小さければrightを一つ左へ移動する
+            //基準値(pivot)未満の値を右から探す
+            while(pivot<cloneArray[right]){
+                right--;
+            }
+            //leftとrightの値がぶつかったら、そこでグループ分けの処理を止める。
+            if(right <= left){
+                break;
+            }
+    
+            //rightとrightの値がぶつかっていない場合、leftとrightを交換
+            //交換後にleftを後ろへ、rightを前へ一つ移動する
+            let tmp =cloneArray[left];
+            cloneArray[left] =cloneArray[right];
+            cloneArray[right] =tmp;
+            left++;
+            right--;
+        }
+
+        //左側に分割できるデータがある場合、quickSort関数を呼び出して再帰的に処理を繰り返す。
+        if(start < left-1){
+            quickSort(start,left-1);
+        }
+        //右側に分割できるデータがある場合、quickSort関数を呼び出して再帰的に処理を繰り返す。
+        if(right+1 < end){
+            quickSort(right+1,end);
+        }
+    }
+
+    quickSort(0,cloneArray.length-1)
+    return cloneArray
+}
+
 /* 種別リスト */
 const elementList=["火","氷","風","土","雷","水","光","闇","無"]
 const attackTypeList=["物理","息","魔法"]
@@ -176,6 +223,9 @@ function getEnemyDataByTag(data,tagName,nameFilter){//指定されたタグに�
         }
     })
     return result
+}
+function getEnemyLevel(enemyName){//敵データの名前を受け取ってレベル一覧を返す関数
+
 }
 function createEnemyElement(key,name,level,tag){//表示する敵データの要素を作成する関数
     let result=`
