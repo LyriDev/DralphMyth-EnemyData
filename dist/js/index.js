@@ -395,7 +395,7 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
                 <td>${convertProperty(enemyDataValue.statusEffects.confusion,"","?")}%</td>
                 <td>${convertProperty(enemyDataValue.statusEffects.stun,"","?")}%</td>
                 <td>${convertProperty(enemyDataValue.statusEffects.curse,"","?")}%</td>
-                <td>${convertProperty(convertAvailability(enemyDataValue.statusEffects.stealth),"","&#8722;")}</td>
+                <td>${convertProperty(convertAvailability(enemyDataValue.stealth),"","&#8722;")}</td>
             </tr>
         </table>
         <table class="statusEffectTable">
