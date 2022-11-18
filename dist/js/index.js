@@ -621,7 +621,7 @@ function setAccordionMenu(className){//アコーディオンメニューを実�
     $(document).on("click",className,function(){
         const target=$(this).data("target")//[data-target]の属性値を代入する
         const idName="#"+target//[target]と同じ名前のID
-        $(idName).slideToggle()//[target]と同じ名前のIDを持つ要素に[slideToggle()]を実行する
+        $(idName).slideToggle(0)//[target]と同じ名前のIDを持つ要素に[slideToggle()]を実行する
         const arrowIcon=$(`#${target}Arrow`)//矢印アイコンの要素
         toggleArrowIcon(arrowIcon,target)//トグルを記憶して矢印アイコンを切り替える
     })
