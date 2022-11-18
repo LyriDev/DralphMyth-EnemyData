@@ -12,6 +12,7 @@ function getQuery(name){//クエリ文字列(URLパラメータ)を取得する�
 const Page=getQuery("page")//開いているページの種類
 const Index=getQuery("index")//開いているページの項目
 const isOpenList={ability:true,move:true,note:true}//アコーディオンメニューが開いているかどうか
+let jsonDataFile//jsonデータ
 
 function convertProperty(value,target,alt){//null値などを代替テキストに変換する関数
     if(value===target){
@@ -75,53 +76,6 @@ function deleteValueInArray(array,value){//配列から特定の要素を削除�
     return resultArray
 }
 
-function sortAsc(array){//配列を昇順でソートする関数
-    const cloneArray=array.slice()//引数の配列を値渡しでコピーする
-    function quickSort(start,end){
-        const pivot=cloneArray[Math.floor((start+end)/2)]//配列の真ん中辺りをピボットとして設定する
-        let left=start
-        let right=end
-
-        //ピポットより小さい値を左側へ、大きい値を右側へ分割する
-        while(true){
-            //leftの値がpivotより小さければleftを一つ右へ移動する
-            //基準値(pivot)以上の値を左から探す
-            while(cloneArray[left]<pivot){
-                left++;
-            }
-            //rightの値がpivotより小さければrightを一つ左へ移動する
-            //基準値(pivot)未満の値を右から探す
-            while(pivot<cloneArray[right]){
-                right--;
-            }
-            //leftとrightの値がぶつかったら、そこでグループ分けの処理を止める。
-            if(right <= left){
-                break;
-            }
-    
-            //rightとrightの値がぶつかっていない場合、leftとrightを交換
-            //交換後にleftを後ろへ、rightを前へ一つ移動する
-            let tmp =cloneArray[left];
-            cloneArray[left] =cloneArray[right];
-            cloneArray[right] =tmp;
-            left++;
-            right--;
-        }
-
-        //左側に分割できるデータがある場合、quickSort関数を呼び出して再帰的に処理を繰り返す。
-        if(start < left-1){
-            quickSort(start,left-1);
-        }
-        //右側に分割できるデータがある場合、quickSort関数を呼び出して再帰的に処理を繰り返す。
-        if(right+1 < end){
-            quickSort(right+1,end);
-        }
-    }
-
-    quickSort(0,cloneArray.length-1)
-    return cloneArray
-}
-
 function getTypeArray(array){//数値と空白文字を含む配列から要素の種類を抜き出してソートする関数
     let valueList=new Array//要素の種類を保存する配列
     for(let i in array){
@@ -131,10 +85,10 @@ function getTypeArray(array){//数値と空白文字を含む配列から要素�
     }
     if(valueList.includes("")){//空白文字を含む場合
         valueList=deleteValueInArray(valueList,"")//一旦空白文字を消して、
-        valueList=sortAsc(valueList)//ソートして、
+        valueList=valueList.sort()//ソートして、
         valueList.push("")//消した空白文字を追加する
     }else{//空白文字を含まない場合
-        valueList=sortAsc(valueList)
+        valueList=valueList.sort()
     }
     return valueList
 }
@@ -435,7 +389,7 @@ function createEnemyElement(enemyData){//表示する敵データの要素を作
         exportEnemyPiece(enemyData.value)//出力ボタン処理を適用する
     })
     $(document).on("click",`#deleteButton${key}`,function(){
-        deleteEnemyPiece(enemyData)//削除ボタン処理を適用する
+        deleteEnemyPiece(key)//削除ボタン処理を適用する
     })
     return result
 }
@@ -756,14 +710,23 @@ function saveJson(data){//更新されたjsonファイルを保存する関数
 function exportEnemyPiece(enemyData){//敵コマをクリップボードに出力する関数
     let result=""
     alert("敵データをクリップボードに出力しました。")
-    //TODO 敵コマをクリップボードに出力する処理
-    /* 仮処理 */
-    result+=JSON.stringify(enemyData)
-    console.log(result)
+    result=JSON.stringify(enemyData)//仮処理
+    //TODO 敵コマをココフォリアデータに変換する処理
+    if(navigator.clipboard){//サポートしているかを確認
+        navigator.clipboard.writeText(result)//クリップボードに出力
+    }
 }
-function deleteEnemyPiece(enemyData){//jsonのデータを削除する関数
-    alert("消したよ")
-    //TODO jsonのデータを削除する処理
+function deleteEnemyPiece(key){//jsonのデータを削除する関数
+    let result=getJsonDataFile()
+    result.enemy.splice(key,1)//削除する
+    //TODO jsonのデータを保存する処理
+    alert("消したよ"+"\n"+key)
+    updateHTML(result)//HTMLを更新する
+    location.reload()
+}
+
+function getJsonDataFile(){//jsonDataFileを取得する関数
+    return jsonDataFile
 }
 
 /* ここから実際の処理 */
@@ -773,6 +736,7 @@ $(function(){
         dataType:"json",// json形式でデータを取得
     })
     .done(function(data){
+        jsonDataFile=data//変数にjsonデータを保存する
         updateHTML(data)//HTMLを更新する
     })
 })
