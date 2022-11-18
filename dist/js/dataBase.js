@@ -1,22 +1,19 @@
-const dataBaseUrl="https://dralphmyth-enemydata-default-rtdb.firebaseio.com/boards.json"
+const user="user0"
+const dataBaseUrl=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/${user}/data.json`
 
-function dataBass_delete(){//データベースのデータを全て削除する関数
+function dataBass_delete(reloadOption=false){//データベースのデータを全て削除する関数
     fetch(dataBaseUrl,{
         method: 'DELETE'
     }).then(res=>{
-        //console.log(res.statusText)
-        getData(dataBaseUrl)
+        console.log("From delete\n"+res.statusText)
+        if(reloadOption===true){
+            location.reload()//削除し終えたら画面を再読み込みする
+        }
     })
 }
-async function dataBass_get(url){//データベースのデータを取得する関数
-    await fetch(url).then(response=>response.json()).then(respondedData=>{
-        console.log(JSON.stringify(respondedData))
-        return respondedData
-    })
-}
-function dataBass_update(url,data){//データベースのデータを更新する関数
+function dataBass_update(url,data,reloadOption=false){//データベースのデータを更新する関数
     fetch(url,{
-        method:'POST',
+        method:'PUT',
         mode:'cors',
         headers:{
         'Content-Type':'application/json'
@@ -24,6 +21,17 @@ function dataBass_update(url,data){//データベースのデータを更新す�
         body: JSON.stringify(data)
     }).then(res=>{
         console.log("From update\n"+res.statusText)
-        //console.log(JSON.stringify(data))
+        if(reloadOption===true){
+            location.reload()//更新し終えたら画面を再読み込みする
+        }
     })
 }
+
+/* 
+function abstract_dataBass_get(url){//データベースのデータを取得する関数
+    fetch(url).then(response=>response.json()).then(respondedData=>{
+        console.log(JSON.stringify(respondedData))
+        //ここに実際の処理
+    })
+}
+ */

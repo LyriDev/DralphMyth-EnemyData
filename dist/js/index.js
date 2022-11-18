@@ -122,6 +122,7 @@ const attackTypeList=["物理","息","魔法"]
 
 /* ページごとに表示するコンテンツを変更するための関数 */
 function updateHTML(data){//HTMLを更新する関数
+    if((Boolean(data))===false){return}//データが入っていないなら以下の処理はしない
     updateTitle(data)//タイトルを変更する
     switchCssFile()//読み込むCSSファイルを差し替える
     updateHeader(data)//ヘッダーを更新する
@@ -320,10 +321,10 @@ function getEnemyDataByTag(data,tagName,nameFilter){//指定されたタグに�
             }
         }
     })
-    result=getEnemyDataByName(enemyArray)
+    result=getEnemyDataByName(enemyArray,data)
     return result
 }
-function getEnemyDataByName(enemyArray){//敵データを名前別に整理する関数
+function getEnemyDataByName(enemyArray,data){//敵データを名前別に整理する関数
     let result=""
     const enemyNameList=getEnemyNameList(enemyArray)
     for(let i in enemyNameList){
@@ -335,7 +336,7 @@ function getEnemyDataByName(enemyArray){//敵データを名前別に整理す�
                 enemyArraySortedByName.push({key:Key,value:Value})
             }
         }
-        result+=getEnemyDataByLevel(enemyArraySortedByName)
+        result+=getEnemyDataByLevel(enemyArraySortedByName,data)
     }
     return result
 }
@@ -349,13 +350,13 @@ function getEnemyNameList(enemyArray){//敵データの名前一覧を取得す�
     enemyNameList=enemyNameList.sort()//文字コード順に並べ替える
     return enemyNameList
 }
-function getEnemyDataByLevel(enemyArray){//敵データをレベル別に整理する関数
+function getEnemyDataByLevel(enemyArray,data){//敵データをレベル別に整理する関数
     let result=""
     const enemyLevelList=getEnemyLevelList(enemyArray)
     for(let i in enemyLevelList){
         for(let j in enemyArray){
             if(enemyArray[j].value.level===enemyLevelList[i]){
-                result+=createEnemyElement(enemyArray[j])
+                result+=createEnemyElement(enemyArray[j],data)
             }
         }
     }
@@ -369,7 +370,7 @@ function getEnemyLevelList(enemyArray){//敵データのレベル一覧を取得
     let enemyLevelList=getTypeArray(enemyLevelArray)
     return enemyLevelList
 }
-function createEnemyElement(enemyData){//表示する敵データの要素を作成する関数
+function createEnemyElement(enemyData,data){//表示する敵データの要素を作成する関数
     const key=enemyData.key
     const name=enemyData.value.name
     const level=enemyData.value.level
@@ -395,7 +396,7 @@ function createEnemyElement(enemyData){//表示する敵データの要素を作
         exportEnemyPiece(enemyData.value)//出力ボタン処理を適用する
     })
     $(document).on("click",`#deleteButton${key}`,function(){
-        deleteEnemyPiece(key)//削除ボタン処理を適用する
+        deleteEnemyPiece(key,data)//削除ボタン処理を適用する
     })
     return result
 }
@@ -720,26 +721,27 @@ function exportEnemyPiece(enemyData){//敵コマをクリップボードに出�
     //TODO 敵コマをココフォリアデータに変換する処理
     exportToClipboard(result)//クリップボードに出力
 }
-function deleteEnemyPiece(key){//jsonのデータを削除する関数
-    let result=getJsonDataFile()
+function deleteEnemyPiece(key,data){//jsonのデータを削除する関数
+    let result=data
     result.enemy.splice(key,1)//削除する
     //TODO jsonのデータを保存する処理
     alert("消したよ"+"\n"+key)
-    updateHTML(result)//HTMLを更新する
-    location.reload()
-}
-
-function getJsonDataFile(){//jsonDataFileを取得する関数
-    return jsonDataFile
+    dataBass_update(result)//データベースを削除されたデータで上書きする
 }
 
 
 /* デバッグ用処理 */
 document.addEventListener("keyup",keyupEvent);
-function keyupEvent(keyCode){
-    switch(keyCode.code){
-        case "Enter"://エンターキーが押されたとき
+function keyupEvent(event){
+    switch(event.keyCode){
+        case 13://Enterキーが押されたとき
             sendDefaultData()
+            break
+        case 46://Deleteキーが押されたとき
+            dataBass_delete(true)
+            break
+        case 32://Spaceキーが押されたとき
+            useGottenData()
             break
     }
 }
@@ -750,16 +752,34 @@ function sendDefaultData(){//ローカルのjsonデータをサーバーにア�
             dataType:"json",// json形式でデータを取得
         })
         .done(function(data){
-            dataBass_update(dataBaseUrl,data)
-            let hogeData=dataBass_get(dataBaseUrl)
-            console.log(JSON.stringify(hogeData))
+            dataBass_update(dataBaseUrl,data,true)
         })
     })
 }
 
-//updateHTML())//HTMLを更新する
+//
 
 /* ここから実際の処理 */
-window.addEventListener("load",()=>{//windowが読み込まれたとき
+function dataBass_get(url){//データベースのデータを取得する関数
+    fetch(url).then(response=>response.json()).then(respondedData=>{
+        updateHTML(respondedData)//HTMLを更新する
+    })
+}
 
+
+window.addEventListener("load",()=>{//windowが読み込まれたとき
+    dataBass_get(dataBaseUrl)
 })
+
+
+/* 
+$(function(){
+    $.ajax({
+        url:"./../data.json",//jsonファイルの場所
+        dataType:"json",// json形式でデータを取得
+    })
+    .done(function(data){
+        updateHTML(data)//HTMLを更新する
+    })
+})
+ */
