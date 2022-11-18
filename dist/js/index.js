@@ -316,6 +316,7 @@ function getEnemyNameList(enemyArray){//敵データの名前一覧を取得す�
             enemyNameList.push(enemyArray[i].value.name)
         }
     }
+    enemyNameList=enemyNameList.sort()//文字コード順に並べ替える
     return enemyNameList
 }
 function getEnemyDataByLevel(enemyArray){//敵データをレベル別に整理する関数
