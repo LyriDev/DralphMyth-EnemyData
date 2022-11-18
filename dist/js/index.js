@@ -26,6 +26,8 @@ function convertAvailability(value){//有効/無効を〇/×に変換する関�
         return "&#9675;"
     }else if(value==="無効"){
         return "&#10005;"
+    }else if(value===""){
+        return "&#8722;"
     }else{
         return ""
     }
@@ -395,7 +397,7 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
                 <td>${convertProperty(enemyDataValue.statusEffects.confusion,"","?")}%</td>
                 <td>${convertProperty(enemyDataValue.statusEffects.stun,"","?")}%</td>
                 <td>${convertProperty(enemyDataValue.statusEffects.curse,"","?")}%</td>
-                <td>${convertProperty(convertAvailability(enemyDataValue.stealth),"","&#8722;")}</td>
+                <td>${convertAvailability(enemyDataValue.stealth)}</td>
             </tr>
         </table>
         <table class="statusEffectTable">
