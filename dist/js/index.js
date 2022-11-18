@@ -12,7 +12,74 @@ function getQuery(name){//クエリ文字列(URLパラメータ)を取得する�
 const Page=getQuery("page")//開いているページの種類
 const Index=getQuery("index")//開いているページの項目
 const isOpenList={ability:true,move:true,note:true}//アコーディオンメニューが開いているかどうか
-let jsonDataFile//jsonデータ
+const newData={
+    name:"",
+    level:"",
+    tag:"",
+    elements:[
+    ],
+    species:[
+    ],
+    sanCheck:{
+        success:"",
+        failure:""
+    },
+    HP:"",
+    armor:"",
+    initiative:"",
+    actionPoint:"",
+    dodge:"",
+    actionNumber:"",
+    statusEffects:{
+        flame:"",
+        ice:"",
+        dazzle:"",
+        poison:"",
+        sleep:"",
+        confusion:"",
+        stun:"",
+        curse:"",
+        atkDown:"",
+        defDown:{
+            physical:"",
+            breath:"",
+            magic:""
+        },
+        spdDown:""
+    },
+    stealth:"",
+    abilities:[
+        {
+            name:"",
+            effect:""
+        }
+    ],
+    moves:[
+        {
+            index:"",
+            name:"",
+            successRate:"",
+            types:[
+            ],
+            elements:[
+            ],
+            damage:"",
+            attackNumber:"",
+            reach:"",
+            range:"",
+            statusEffects:[
+                {
+                    effectType:"",
+                    level:"",
+                    turn:""
+                }
+            ],
+            effects:[
+            ]
+        }
+    ],
+    note:""
+}//新規データの枠組み
 
 function convertProperty(value,target,alt){//null値などを代替テキストに変換する関数
     if(value===target){
@@ -176,21 +243,7 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             </div>
             `
             $(document).on("mousedown","#createButton",function(event){//新規作成ボタンに処理を適用する
-                const newPageUrl=`./index.html?page=edit&index=${data.enemy.length}`
-                switch(event.button){
-                    case 0://左クリックのときの処理
-                        addJsonData(data)//jsonファイルに新しいデータを追加する
-                        location.href=newPageUrl
-                        break
-                    case 1://中クリックのときの処理
-                        addJsonData(data)//jsonファイルに新しいデータを追加する
-                        window.open(newPageUrl,"_blank")
-                        break
-                    case 2://右クリックのときの処理
-                        break
-                    default:
-                        break
-                }
+                createButton_clickedProcess(data,event)
             })
             $(document).on("input","#searchTag,#searchName",function(){//検索ボックスに処理を適用する
                 const tagFilter=$("#searchTag").val()//タグ検索ボックスに入力された値
@@ -224,22 +277,8 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             </div>
             `
             $(document).on("mousedown","#viewButton",function(event){//閲覧ボタンにクリック処理を適用する
-                switch(event.button){
-                    case 0://左クリックのときの処理
-                        saveJson(data)//jsonファイルを上書き更新する
-                        location.href=viewUrl
-                        break
-                    case 1://中クリックのときの処理
-                        saveJson(data)//jsonファイルを上書き更新する
-                        window.open(viewUrl,"_blank")
-                        break
-                    case 2://右クリックのときの処理
-                        break
-                    default:
-                        break
-                }
+                viewButton_clickedProcess(data,event,viewUrl)
             })
-            setUrl("#viewButton",viewUrl)//閲覧ボタンにクリック処理を適用する
             $(document).on("click","#saveButton",function(){//保存ボタンに処理を適用する
                 saveJson(data)//jsonファイルを上書き更新する
                 alert("保存しました")
@@ -283,6 +322,39 @@ function updateMain(data,_page=Page){//メインを変更する関数
 
 function updateMainContent(content){//メインの中身を上書きする関数
     mainArea.innerHTML=content//メインの中身を変更する
+}
+
+function createButton_clickedProcess(data,event){//新規作成ボタンが押されたときの処理
+    let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
+    result.enemy.push(newData)//データに新規データを追加する
+    const newPageUrl=`./index.html?page=edit&index=${data.enemy.length}`
+    switch(event.button){
+        case 0://左クリックのときの処理
+            dataBass_update(dataBaseUrl,result,"jump",newPageUrl)
+            break
+        case 1://中クリックのときの処理
+            dataBass_update(dataBaseUrl,result,"open",newPageUrl)
+            break
+        case 2://右クリックのときの処理
+            break
+        default:
+            break
+    }
+}
+function viewButton_clickedProcess(data,event,viewUrl){//編集ページの閲覧ボタンが押されたときの処理
+    let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
+    switch(event.button){
+        case 0://左クリックのときの処理
+            dataBass_update(dataBaseUrl,result,"jump",viewUrl)
+            break
+        case 1://中クリックのときの処理
+            dataBass_update(dataBaseUrl,result,"open",viewUrl)
+            break
+        case 2://右クリックのときの処理
+            break
+        default:
+            break
+    }
 }
 
 /* 一覧ページを表示中に使う関数 */
@@ -702,82 +774,8 @@ function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替え�
 /* 編集ページを表示中に使う関数 */
 
 /* データを編集・出力する関数 */
-function addJsonData(data){//jsonにデータを追加する関数
-    const newData={
-        name:"",
-        level:"",
-        tag:"",
-        elements:[
-        ],
-        species:[
-        ],
-        sanCheck:{
-            success:"",
-            failure:""
-        },
-        HP:"",
-        armor:"",
-        initiative:"",
-        actionPoint:"",
-        dodge:"",
-        actionNumber:"",
-        statusEffects:{
-            flame:"",
-            ice:"",
-            dazzle:"",
-            poison:"",
-            sleep:"",
-            confusion:"",
-            stun:"",
-            curse:"",
-            atkDown:"",
-            defDown:{
-                physical:"",
-                breath:"",
-                magic:""
-            },
-            spdDown:""
-        },
-        stealth:"",
-        abilities:[
-            {
-                name:"",
-                effect:""
-            }
-        ],
-        moves:[
-            {
-                index:"",
-                name:"",
-                successRate:"",
-                types:[
-                ],
-                elements:[
-                ],
-                damage:"",
-                attackNumber:"",
-                reach:"",
-                range:"",
-                statusEffects:[
-                    {
-                        effectType:"",
-                        level:"",
-                        turn:""
-                    }
-                ],
-                effects:[
-                ]
-            }
-        ],
-        note:""
-    }
-    let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
-    result.enemy.push(newData)
-    dataBass_update(dataBaseUrl,data,false)
-}
-
 function saveJson(data){//更新されたjsonファイルを保存する関数
-    dataBass_update(dataBaseUrl,data,false)
+    dataBass_update(dataBaseUrl,data)
 }
 
 function exportEnemyPiece(enemyData){//敵コマをクリップボードに出力する関数
@@ -790,7 +788,7 @@ function exportEnemyPiece(enemyData){//敵コマをクリップボードに出�
 function deleteEnemyPiece(key,data){//jsonのデータを削除する関数
     let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
     result.enemy.splice(key,1)//削除する
-    dataBass_update(dataBaseUrl,result,true)//データベースを削除されたデータで上書きする
+    dataBass_update(dataBaseUrl,result,"reload")//データベースを削除されたデータで上書きする
 }
 
 /* デバッグ用処理 */
@@ -801,7 +799,7 @@ function keyupEvent(event){
             sendDefaultData()
             break
         case 46://Deleteキーが押されたとき
-            dataBass_delete(true)
+            dataBass_delete("reload")
             break
         case 32://Spaceキーが押されたとき
             break
@@ -814,7 +812,7 @@ function sendDefaultData(){//ローカルのjsonデータをサーバーにア�
             dataType:"json",// json形式でデータを取得
         })
         .done(function(data){
-            dataBass_update(dataBaseUrl,data,true)
+            dataBass_update(dataBaseUrl,data,"reload")
         })
     })
 }
