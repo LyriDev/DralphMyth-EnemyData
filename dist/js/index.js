@@ -432,7 +432,7 @@ function createEnemyElement(enemyData){//表示する敵データの要素を作
     setUrl(`#editButton${key}`,editUrl)
     setUrl(`#viewButton${key}`,viewUrl)
     $(document).on("click",`#exportButton${key}`,function(){
-        exportEnemyPiece(enemyData)//出力ボタン処理を適用する
+        exportEnemyPiece(enemyData.value)//出力ボタン処理を適用する
     })
     $(document).on("click",`#deleteButton${key}`,function(){
         deleteEnemyPiece(enemyData)//削除ボタン処理を適用する
@@ -443,7 +443,7 @@ function createEnemyElement(enemyData){//表示する敵データの要素を作
 /* 閲覧ページを表示中に使う関数 */
 function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
     let result= `
-        <div id="name">${enemyDataValue.name}&nbsp;Lv${convertProperty(deleteValueInArray(enemyDataValue.level,),"","?")}</div>
+        <div id="name">${enemyDataValue.name}&nbsp;Lv${convertProperty(enemyDataValue.level,"","?")}</div>
         <div id="tag">${enemyDataValue.tag}</div>
         <div class="parameterBox">
             <div>属性<br>${convertProperty(addDotToArray(deleteValueInArray(enemyDataValue.elements,""),"・"),"","?") }</div>
@@ -758,7 +758,7 @@ function exportEnemyPiece(enemyData){//敵コマをクリップボードに出�
     alert("敵データをクリップボードに出力しました。")
     //TODO 敵コマをクリップボードに出力する処理
     /* 仮処理 */
-    result+=JSON.stringify(enemyData.value)
+    result+=JSON.stringify(enemyData)
     console.log(result)
 }
 function deleteEnemyPiece(enemyData){//jsonのデータを削除する関数
