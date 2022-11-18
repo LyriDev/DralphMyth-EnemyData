@@ -272,11 +272,15 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             result=`
             <div id="headerContent">
                 <div id="headerButtonArea">
+                    <button class="headerButton" id="indexButton">一覧</button>
                     <button class="headerButton" id="viewButton">閲覧</button>
                     <button id="saveButton">保存</button>
                 </div>
             </div>
             `
+            $(document).on("mousedown","#indexButton",function(event){//一覧ボタンにクリック処理を適用する
+                viewButton_clickedProcess(data,event,indexUrl)
+            })
             $(document).on("mousedown","#viewButton",function(event){//閲覧ボタンにクリック処理を適用する
                 viewButton_clickedProcess(data,event,viewUrl)
             })
@@ -342,14 +346,14 @@ function createButton_clickedProcess(data,event){//新規作成ボタンが押�
             break
     }
 }
-function viewButton_clickedProcess(data,event,viewUrl){//編集ページの閲覧ボタンが押されたときの処理
+function viewButton_clickedProcess(data,event,url){//編集ページの一覧/閲覧ボタンが押されたときの処理
     let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
     switch(event.button){
         case 0://左クリックのときの処理
-            dataBass_update(dataBaseUrl,result,"jump",viewUrl)
+            dataBass_update(dataBaseUrl,result,"jump",url)
             break
         case 1://中クリックのときの処理
-            dataBass_update(dataBaseUrl,result,"open",viewUrl)
+            dataBass_update(dataBaseUrl,result,"open",url)
             break
         case 2://右クリックのときの処理
             break
