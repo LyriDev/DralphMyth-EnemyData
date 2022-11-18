@@ -473,53 +473,63 @@ function addAbilityBox(enemyDataValue){//閲覧ページの特性欄を作成す
     return result
 }
 function addMoveBox(enemyDataValue){//閲覧ページの技欄を作成する関数
-    let result=""
+    const moveIndexList=new Array//全ての技番号
     for(let i in enemyDataValue.moves){
         const move=enemyDataValue.moves[i]
-        result+=`
-            <div class="cardTable">
-                <div class="clearFix">
-                    <div class="cardTable-move-index">
-                        <div class="cardTableTitle">技番号</div>
-                        <input readonly type="text" class="cardTableContent" value="${move.index}">
+        moveIndexList.push(move.index)
+    }
+    const moveIndexTypeList=getTypeArray(moveIndexList)//技番号の種類一覧
+    let result=""
+    for(let i in moveIndexTypeList){//技番号順に並び変えて表示する
+        for(let j in enemyDataValue.moves){
+            const move=enemyDataValue.moves[j]
+            if(move.index===moveIndexTypeList[i]){
+                result+=`
+                    <div class="cardTable">
+                        <div class="clearFix">
+                            <div class="cardTable-move-index">
+                                <div class="cardTableTitle">技番号</div>
+                                <input readonly type="text" class="cardTableContent" value="${move.index}">
+                            </div>
+                            <div class="cardTable-move-name">
+                                <div class="cardTableTitle">技名</div>
+                                <input readonly type="text" class="cardTableContent" value="${move.name}">
+                            </div>
+                            <div class="cardTable-move-element">
+                                <div class="cardTableTitle">属性</div>
+                                <input readonly type="text" class="cardTableContent" value="${addDotToArray(move.elements,"・")}">
+                            </div>
+                            <div class="cardTable-move-type">
+                                <div class="cardTableTitle">種別</div>
+                                <input readonly type="text" class="cardTableContent" value="${addDotToArray(move.types,"・")}">
+                            </div>
+                            <div class="cardTable-move-reach">
+                                <div class="cardTableTitle">射程</div>
+                                <input readonly type="text" class="cardTableContent" value="${move.reach}">
+                            </div>
+                            <div class="cardTable-move-range">
+                                <div class="cardTableTitle">範囲</div>
+                                <input readonly type="text" class="cardTableContent" value="${move.range}">
+                            </div>
+                            <div class="cardTable-move-successRate">
+                                <div class="cardTableTitle">成功率</div>
+                                <input readonly type="text" class="cardTableContent" value="${addValue(move.successRate,"%","")}">
+                            </div>
+                            <div class="cardTable-move-attackNumber">
+                                <div class="cardTableTitle">攻撃回数</div>
+                                <input readonly type="text" class="cardTableContent" value="${move.attackNumber}">
+                            </div>
+                            <div class="cardTable-move-damage">
+                                <div class="cardTableTitle">ダメージ</div>
+                                <input readonly type="text" class="cardTableContent" value="${move.damage}">
+                            </div>
+                        </div>
+                        ${addMoveBox_statusEffect(move.statusEffects)}
+                        ${addMoveBox_effect(move.effects)}
                     </div>
-                    <div class="cardTable-move-name">
-                        <div class="cardTableTitle">技名</div>
-                        <input readonly type="text" class="cardTableContent" value="${move.name}">
-                    </div>
-                    <div class="cardTable-move-element">
-                        <div class="cardTableTitle">属性</div>
-                        <input readonly type="text" class="cardTableContent" value="${addDotToArray(move.elements,"・")}">
-                    </div>
-                    <div class="cardTable-move-type">
-                        <div class="cardTableTitle">種別</div>
-                        <input readonly type="text" class="cardTableContent" value="${addDotToArray(move.types,"・")}">
-                    </div>
-                    <div class="cardTable-move-reach">
-                        <div class="cardTableTitle">射程</div>
-                        <input readonly type="text" class="cardTableContent" value="${move.reach}">
-                    </div>
-                    <div class="cardTable-move-range">
-                        <div class="cardTableTitle">範囲</div>
-                        <input readonly type="text" class="cardTableContent" value="${move.range}">
-                    </div>
-                    <div class="cardTable-move-successRate">
-                        <div class="cardTableTitle">成功率</div>
-                        <input readonly type="text" class="cardTableContent" value="${addValue(move.successRate,"%","")}">
-                    </div>
-                    <div class="cardTable-move-attackNumber">
-                        <div class="cardTableTitle">攻撃回数</div>
-                        <input readonly type="text" class="cardTableContent" value="${move.attackNumber}">
-                    </div>
-                    <div class="cardTable-move-damage">
-                        <div class="cardTableTitle">ダメージ</div>
-                        <input readonly type="text" class="cardTableContent" value="${move.damage}">
-                    </div>
-                </div>
-                ${addMoveBox_statusEffect(move.statusEffects)}
-                ${addMoveBox_effect(move.effects)}
-            </div>
-        `
+                `
+            }
+        }
     }
     return result
 }
