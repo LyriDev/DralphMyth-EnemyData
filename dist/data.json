@@ -115,10 +115,8 @@
             "level":"",
             "tag":"",
             "elements":[
-
             ],
             "species":[
-
             ],
             "sanCheck":{
                 "success":"",
@@ -159,13 +157,20 @@
                     "index":"",
                     "name":"",
                     "successRate":"",
-                    "types":[""],
-                    "elements":[""],
+                    "types":[
+                    ],
+                    "elements":[
+                    ],
                     "damage":"",
                     "attackNumber":"",
                     "reach":"",
                     "range":"",
                     "statusEffects":[
+                        {
+                            "effectType":"",
+                            "level":"",
+                            "turn":""
+                        }
                     ],
                     "effects":[
                     ]

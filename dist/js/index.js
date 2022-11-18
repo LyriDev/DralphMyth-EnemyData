@@ -62,10 +62,17 @@ function addValue(value,add,negative){//値が否定条件に合致しなけれ�
 }
 
 function deleteValueInArray(array,value){//配列から特定の要素を削除する関数
-    const result=array.slice()//引数の配列を値渡しでコピーする
-    const arrayIndex = result.indexOf(value);
-    result.splice(arrayIndex,1)
-    return result
+    function recursiveProcess(_array,_Value){//要素を1つ消す
+        const result=_array.slice()//引数の配列を値渡しでコピーする
+        const arrayIndex = result.indexOf(_Value);
+        result.splice(arrayIndex,1)
+        return result
+    }
+    let resultArray=array.slice()//引数の配列を値渡しでコピーする
+    while(resultArray.includes(value)===true){//全部消えるまで消す
+        resultArray=recursiveProcess(resultArray,value)
+    }
+    return resultArray
 }
 
 function sortAsc(array){//配列を昇順でソートする関数
@@ -427,11 +434,11 @@ function createEnemyElement(enemyData){//表示する敵データの要素を作
 /* 閲覧ページを表示中に使う関数 */
 function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
     let result= `
-        <div id="name">${enemyDataValue.name}&nbsp;Lv${convertProperty(enemyDataValue.level,"","?")}</div>
+        <div id="name">${enemyDataValue.name}&nbsp;Lv${convertProperty(deleteValueInArray(enemyDataValue.level,),"","?")}</div>
         <div id="tag">${enemyDataValue.tag}</div>
         <div class="parameterBox">
-            <div>属性<br>${convertProperty(addDotToArray(enemyDataValue.elements,"・"),"","?") }</div>
-            <div>系統<br>${convertProperty(addDotToArray(addValueToArray(enemyDataValue.species,"系"),"・"),"","?")}</div>
+            <div>属性<br>${convertProperty(addDotToArray(deleteValueInArray(enemyDataValue.elements,""),"・"),"","?") }</div>
+            <div>系統<br>${convertProperty(addDotToArray(addValueToArray(deleteValueInArray(enemyDataValue.species,""),"系"),"・"),"","?")}</div>
             <div>SANチェック<br>${convertProperty(enemyDataValue.sanCheck.success,"","?")}/${convertProperty(enemyDataValue.sanCheck.failure,"","?")}</div>
         </div>
         <div class="parameterBox">
@@ -565,11 +572,11 @@ function addMoveBox(enemyDataValue){//閲覧ページの技欄を作成する関
                             </div>
                             <div class="cardTable-move-element">
                                 <div class="cardTableTitle">属性</div>
-                                <input readonly type="text" class="cardTableContent" value="${addDotToArray(move.elements,"・")}">
+                                <input readonly type="text" class="cardTableContent" value="${addDotToArray(deleteValueInArray(move.elements,""),"・")}">
                             </div>
                             <div class="cardTable-move-type">
                                 <div class="cardTableTitle">種別</div>
-                                <input readonly type="text" class="cardTableContent" value="${addDotToArray(move.types,"・")}">
+                                <input readonly type="text" class="cardTableContent" value="${addDotToArray(deleteValueInArray(move.types,""),"・")}">
                             </div>
                             <div class="cardTable-move-reach">
                                 <div class="cardTableTitle">射程</div>
