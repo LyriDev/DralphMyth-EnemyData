@@ -733,14 +733,33 @@ function getJsonDataFile(){//jsonDataFileを取得する関数
     return jsonDataFile
 }
 
+
+/* デバッグ用処理 */
+document.addEventListener("keyup",keyupEvent);
+function keyupEvent(keyCode){
+    switch(keyCode.code){
+        case "Enter"://エンターキーが押されたとき
+            sendDefaultData()
+            break
+    }
+}
+function sendDefaultData(){//ローカルのjsonデータをサーバーにアップロードする
+    $(function(){
+        $.ajax({
+            url:"./../data.json",//jsonファイルの場所
+            dataType:"json",// json形式でデータを取得
+        })
+        .done(function(data){
+            dataBass_update(dataBaseUrl,data)
+            let hogeData=dataBass_get(dataBaseUrl)
+            console.log(JSON.stringify(hogeData))
+        })
+    })
+}
+
+//updateHTML())//HTMLを更新する
+
 /* ここから実際の処理 */
-$(function(){
-    $.ajax({
-        url:"./../data.json",//jsonファイルの場所
-        dataType:"json",// json形式でデータを取得
-    })
-    .done(function(data){
-        jsonDataFile=data//変数にjsonデータを保存する
-        updateHTML(data)//HTMLを更新する
-    })
+window.addEventListener("load",()=>{//windowが読み込まれたとき
+
 })
