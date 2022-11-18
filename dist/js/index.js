@@ -1,10 +1,11 @@
 /* 全ページで使用する共通の宣言など */
 const mainArea=document.getElementById("main")//書き換えるHTMLのエリア
-const htmlUrl=window.location.href//index.htmlのパス
+const htmlUrl="./index.html"//htmlのリンク
+const pageUrl=window.location.href//今開いているページのパス
 function getQuery(name){//クエリ文字列(URLパラメータ)を取得する関数
     name=name.replace(/[\[\]]/g,"\\$&");
     const regex=new RegExp("[?&]"+name+"(=([^&#]*)|&|#|$)"),
-        results=regex.exec(htmlUrl)
+        results=regex.exec(pageUrl)
     if(!results){return null}
     if(!results[2]){return ''}
     return decodeURIComponent(results[2].replace(/\+/g," "))
@@ -227,9 +228,9 @@ function switchCssFile(_page=Page){//ページ毎に読み込むCSSファイル�
 }
 
 function updateHeader(data,_page=Page){//ヘッダーを変更する関数
-    const indexUrl="./index.html"
-    const viewUrl=`./index.html?page=view&index=${Index}`
-    const editUrl=`./index.html?page=edit&index=${Index}`
+    const indexUrl=htmlUrl
+    const viewUrl=`${htmlUrl}?page=view&index=${Index}`
+    const editUrl=`${htmlUrl}?page=edit&index=${Index}`
     let result
     switch (_page){
         case null://一覧ページのヘッダー
@@ -327,7 +328,7 @@ function updateMainContent(content){//メインの中身を上書きする関数
 function createButton_clickedProcess(data,event){//新規作成ボタンが押されたときの処理
     let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
     result.enemy.push(newData)//データに新規データを追加する
-    const newPageUrl=`./index.html?page=edit&index=${data.enemy.length}`
+    const newPageUrl=`${htmlUrl}?page=edit&index=${data.enemy.length}`
     switch(event.button){
         case 0://左クリックのときの処理
             dataBass_update(dataBaseUrl,result,"jump",newPageUrl)
@@ -461,8 +462,8 @@ function createEnemyElement(enemyData,data){//表示する敵データの要素�
             </div>
         </div>
     `
-    const editUrl=`./index.html?page=edit&index=${key}`
-    const viewUrl=`./index.html?page=view&index=${key}`
+    const editUrl=`${htmlUrl}?page=edit&index=${key}`
+    const viewUrl=`${htmlUrl}?page=view&index=${key}`
     setUrl(`#editButton${key}`,editUrl)
     setUrl(`#viewButton${key}`,viewUrl)
     $(document).on("click",`#exportButton${key}`,function(){
