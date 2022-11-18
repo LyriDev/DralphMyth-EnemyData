@@ -132,6 +132,13 @@ function getTypeArray(array){//数値と空白文字を含む配列から要素�
     return valueList
 }
 
+function setUrl(url){//クリックしたらurlを開く処理を適用する関数
+    return `
+        onclick="location.href='${url}'" 
+        onmousedown="window.open('${url}','_blank')" 
+    `
+}
+
 /* 種別リスト */
 const elementList=["火","氷","風","土","雷","水","光","闇","無"]
 const attackTypeList=["物理","息","魔法"]
@@ -162,6 +169,9 @@ function switchCssFile(_page=Page){//ページ毎に読み込むCSSファイル�
 }
 
 function updateHeader(data,_page=Page){//ヘッダーを変更する関数
+    const indexUrl="./index.html"
+    const viewUrl=`./index.html?page=view&index=${Index}`
+    const editUrl=`./index.html?page=edit&index=${Index}`
     let result
     switch (_page){
         case null://一覧ページのヘッダー
@@ -188,8 +198,8 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             result=`
             <div id="headerContent">
                 <div id="headerButtonArea">
-                    <button id="headerButton" onclick="location.href='./index.html'">一覧</button>
-                    <button id="headerButton" onclick="location.href='./index.html?page=edit&index=${Index}'">編集</button>
+                    <button id="headerButton" ${setUrl(indexUrl)}>一覧</button>
+                    <button id="headerButton" ${setUrl(editUrl)}>編集</button>
                     <button id="headerButton" onclick="exportEnemyPiece(${Index})">出力</button>
                 </div>
             </div id="headerContent">
@@ -204,9 +214,13 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
                 </div>
             </div>
             `
-            $(document).on("click","#headerButton",function(){//閲覧ボタンに処理を適用する
+            $(document).on("click","#headerButton",function(){//閲覧ボタンにクリック処理を適用する
                 saveJson()//jsonファイルを上書き更新する
-                location.href=`./index.html?page=view&index=${Index}`
+                location.href=viewUrl
+            })
+            $(document).on("mousedown","#headerButton",function(){//閲覧ボタンにホイールクリック処理を適用する
+                saveJson()//jsonファイルを上書き更新する
+                window.open(viewUrl,"_blank")//新しいタブで閲覧ページを開く
             })
             $(document).on("click","#saveButton",function(){//保存ボタンに処理を適用する
                 saveJson()//jsonファイルを上書き更新する
@@ -344,14 +358,16 @@ function createEnemyElement(enemyData){//表示する敵データの要素を作
     const name=enemyData.value.name
     const level=enemyData.value.level
     const tag=enemyData.value.tag
+    const editUrl=`./index.html?page=edit&index=${key}`
+    const viewUrl=`./index.html?page=view&index=${key}`
     let result=`
         <div class="data">
             <div class="name">${name}</div>
             <div class="level">Lv${convertProperty(level,"","?")}</div>
             <div class="tag">${tag}</div>
             <div class="buttonArea">
-                <button class="button" onclick="location.href='./index.html?page=edit&index=${key}'">編集</button>
-                <button class="button" onclick="location.href='./index.html?page=view&index=${key}'">閲覧</button>
+                <button class="button" ${setUrl(editUrl)}>編集</button>
+                <button class="button" ${setUrl(viewUrl)}>閲覧</button>
                 <button class="button" onclick="exportEnemyPiece(${key})">出力</button>
                 <button class="button" onclick="deleteEnemyPiece(${key})">削除</button>
             </div>
