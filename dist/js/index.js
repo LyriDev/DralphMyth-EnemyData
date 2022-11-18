@@ -132,11 +132,21 @@ function getTypeArray(array){//数値と空白文字を含む配列から要素�
     return valueList
 }
 
-function setUrl(url){//クリックしたらurlを開く処理を適用する関数
-    return `
-        onclick="location.href='${url}'" 
-        onmousedown="window.open('${url}','_blank')" 
-    `
+function setUrl(idName,url){//クリックしたらurlを開く処理を適用する関数
+    $(document).on("mousedown",idName,function(event){
+        switch(event.button){
+            case 0://左クリックのときの処理
+                location.href=url
+                break
+            case 1://中クリックのときの処理
+                window.open(url,"_blank")
+                break
+            case 2://右クリックのときの処理
+                break
+            default:
+                break
+        }
+    })
 }
 
 /* 種別リスト */
@@ -145,9 +155,21 @@ const attackTypeList=["物理","息","魔法"]
 
 /* ページごとに表示するコンテンツを変更するための関数 */
 function updateHTML(data){//HTMLを更新する関数
+    updateTitle(data)//タイトルを変更する
     switchCssFile()//読み込むCSSファイルを差し替える
     updateHeader(data)//ヘッダーを更新する
     updateMain(data)//メインを更新する
+}
+
+function updateTitle(data){//タイトルを変更する関数
+    if(Page==="index"){
+        return//一覧ページならタイトルを変更しない
+    }else if((Page==="view")||(Page==="edit")){//閲覧・編集ページならタイトルを変更する
+        const titleArea=document.getElementById("title")
+        const enemyName=data.enemy[Index].name
+        const enemyLevel=data.enemy[Index].level
+        titleArea.innerHTML=`${enemyName}Lv${enemyLevel} - ドラルフ神話`//タイトルを変更する
+    }
 }
 
 function switchCssFile(_page=Page){//ページ毎に読み込むCSSファイルを変更する関数
@@ -180,13 +202,26 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
                 <input type="text" id="searchTag" placeholder="タグ検索">
                 <input type="text" id="searchName" placeholder="名前検索">
                 <div id="headerButtonArea">
-                    <button id="headerButton">新規作成</button>
+                    <button class="headerButton" id="createButton">新規作成</button>
                 </div>
             </div>
             `
-            $(document).on("click","#headerButton",function(){//新規作成ボタンに処理を適用する
-                addJsonData(data)//jsonファイルに新しいデータを追加する
-                location.href=`./index.html?page=edit&index=${data.enemy.length}`
+            $(document).on("mousedown","#createButton",function(event){//新規作成ボタンに処理を適用する
+                const newPageUrl=`./index.html?page=edit&index=${data.enemy.length}`
+                switch(event.button){
+                    case 0://左クリックのときの処理
+                        addJsonData(data)//jsonファイルに新しいデータを追加する
+                        location.href=newPageUrl
+                        break
+                    case 1://中クリックのときの処理
+                        addJsonData(data)//jsonファイルに新しいデータを追加する
+                        window.open(newPageUrl,"_blank")
+                        break
+                    case 2://右クリックのときの処理
+                        break
+                    default:
+                        break
+                }
             })
             $(document).on("input","#searchTag,#searchName",function(){//検索ボックスに処理を適用する
                 const tagFilter=$("#searchTag").val()//タグ検索ボックスに入力された値
@@ -198,30 +233,41 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             result=`
             <div id="headerContent">
                 <div id="headerButtonArea">
-                    <button id="headerButton" ${setUrl(indexUrl)}>一覧</button>
-                    <button id="headerButton" ${setUrl(editUrl)}>編集</button>
-                    <button id="headerButton" onclick="exportEnemyPiece(${Index})">出力</button>
+                    <button class="headerButton" id="indexButton">一覧</button>
+                    <button class="headerButton" id="editButton"}>編集</button>
+                    <button class="headerButton" id="exportButton" onclick="exportEnemyPiece(${Index})">出力</button>
                 </div>
             </div id="headerContent">
             `
+            setUrl("#indexButton",indexUrl)
+            setUrl("#editButton",editUrl)
             break
         case "edit"://編集ページのヘッダー
             result=`
             <div id="headerContent">
                 <div id="headerButtonArea">
-                    <button id="headerButton">閲覧</button>
+                    <button class="headerButton" id="viewButton">閲覧</button>
                     <button id="saveButton">保存</button>
                 </div>
             </div>
             `
-            $(document).on("click","#headerButton",function(){//閲覧ボタンにクリック処理を適用する
-                saveJson()//jsonファイルを上書き更新する
-                location.href=viewUrl
+            $(document).on("mousedown","#viewButton",function(event){//閲覧ボタンにクリック処理を適用する
+                switch(event.button){
+                    case 0://左クリックのときの処理
+                        saveJson()//jsonファイルを上書き更新する
+                        location.href=viewUrl
+                        break
+                    case 1://中クリックのときの処理
+                        saveJson()//jsonファイルを上書き更新する
+                        window.open(viewUrl,"_blank")
+                        break
+                    case 2://右クリックのときの処理
+                        break
+                    default:
+                        break
+                }
             })
-            $(document).on("mousedown","#headerButton",function(){//閲覧ボタンにホイールクリック処理を適用する
-                saveJson()//jsonファイルを上書き更新する
-                window.open(viewUrl,"_blank")//新しいタブで閲覧ページを開く
-            })
+            setUrl("#viewButton",viewUrl)//閲覧ボタンにクリック処理を適用する
             $(document).on("click","#saveButton",function(){//保存ボタンに処理を適用する
                 saveJson()//jsonファイルを上書き更新する
                 alert("保存しました")
@@ -358,21 +404,23 @@ function createEnemyElement(enemyData){//表示する敵データの要素を作
     const name=enemyData.value.name
     const level=enemyData.value.level
     const tag=enemyData.value.tag
-    const editUrl=`./index.html?page=edit&index=${key}`
-    const viewUrl=`./index.html?page=view&index=${key}`
     let result=`
         <div class="data">
             <div class="name">${name}</div>
             <div class="level">Lv${convertProperty(level,"","?")}</div>
             <div class="tag">${tag}</div>
             <div class="buttonArea">
-                <button class="button" ${setUrl(editUrl)}>編集</button>
-                <button class="button" ${setUrl(viewUrl)}>閲覧</button>
+                <button class="button" id="editButton${key}">編集</button>
+                <button class="button" id="viewButton${key}">閲覧</button>
                 <button class="button" onclick="exportEnemyPiece(${key})">出力</button>
                 <button class="button" onclick="deleteEnemyPiece(${key})">削除</button>
             </div>
         </div>
     `
+    const editUrl=`./index.html?page=edit&index=${key}`
+    const viewUrl=`./index.html?page=view&index=${key}`
+    setUrl(`#editButton${key}`,editUrl)
+    setUrl(`#viewButton${key}`,viewUrl)
     return result
 }
 
@@ -677,6 +725,7 @@ function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替え�
 
 /* データを編集・出力する関数 */
 function addJsonData(data){//jsonにデータを追加する関数
+    alert("added JSON data")
     //TODO jsonにデータを追加する処理
 }
 
