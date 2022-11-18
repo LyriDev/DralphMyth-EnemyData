@@ -1,12 +1,5 @@
-#searchTag,#searchName,.level,.tag,.viewButton,.editButton,.exportButton{
+#searchTag,#searchName,.level,.tag,.button{
     font-size: 1.25rem;
-}
-.viewButton,.editButton,.exportButton{
-    border:solid 1px #5D656D;
-    border-radius: 3px;
-    background-color: #3A3F44;
-    color: #F5F5F5;
-    transition: border 0.3s;
 }
 
 #searchTag,#searchName{
@@ -52,16 +45,22 @@
 }
 .tag{
     overflow-wrap: break-word;
-    inline-size: 230px;
+    inline-size: 180px;
     float: left;
 }
-.button{
+
+.buttonArea{
+    margin:0 5px 5px 0;
     float:right;
 }
-.viewButton,.editButton,.exportButton{
-    margin: 0px 5px 5px 0px;
+.button{
+    border:solid 1px #5D656D;
+    border-radius: 3px;
+    background-color: #3A3F44;
+    color: #F5F5F5;
+    transition: border 0.3s;
 }
-.viewButton:hover,.editButton:hover,.exportButton:hover{
+.button:hover{
     border:solid 1px #7A8288;
     cursor: pointer;
 }

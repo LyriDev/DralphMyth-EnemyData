@@ -349,10 +349,11 @@ function createEnemyElement(enemyData){//表示する敵データの要素を作
             <div class="name">${name}</div>
             <div class="level">Lv${convertProperty(level,"","?")}</div>
             <div class="tag">${tag}</div>
-            <div class="button">
-                <button class="viewButton" onclick="location.href='./index.html?page=view&index=${key}'">閲覧</button>
-                <button class="editButton" onclick="location.href='./index.html?page=edit&index=${key}'">編集</button>
-                <button class="exportButton" onclick="exportEnemyPiece(${key})">出力</button>
+            <div class="buttonArea">
+                <button class="button" onclick="location.href='./index.html?page=edit&index=${key}'">編集</button>
+                <button class="button" onclick="location.href='./index.html?page=view&index=${key}'">閲覧</button>
+                <button class="button" onclick="exportEnemyPiece(${key})">出力</button>
+                <button class="button" onclick="deleteEnemyPiece(${key})">削除</button>
             </div>
         </div>
     `
@@ -671,8 +672,10 @@ function exportEnemyPiece(key){//敵コマをクリップボードに出力す�
     alert("敵データをクリップボードに出力しました。"+"\n"+key)
     //TODO 敵コマをクリップボードに出力する処理
 }
-
-
+function deleteEnemyPiece(key){//jsonのデータを削除する関数
+    alert("消したよ"+"\n"+key)
+    //TODO jsonのデータを削除する処理
+}
 
 /* ここから実際の処理 */
 $(function(){
