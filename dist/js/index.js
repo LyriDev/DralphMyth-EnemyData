@@ -722,11 +722,10 @@ function exportEnemyPiece(enemyData){//敵コマをクリップボードに出�
     exportToClipboard(result)//クリップボードに出力
 }
 function deleteEnemyPiece(key,data){//jsonのデータを削除する関数
+    //let result=data.slice()//値渡しでデータを受け取る TODO バグ修正
     let result=data
     result.enemy.splice(key,1)//削除する
-    //TODO jsonのデータを保存する処理
-    alert("消したよ"+"\n"+key)
-    dataBass_update(result)//データベースを削除されたデータで上書きする
+    dataBass_update(dataBaseUrl,result,true)//データベースを削除されたデータで上書きする
 }
 
 
