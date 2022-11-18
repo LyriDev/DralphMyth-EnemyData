@@ -242,12 +242,15 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
                 <div id="headerButtonArea">
                     <button class="headerButton" id="indexButton">一覧</button>
                     <button class="headerButton" id="editButton"}>編集</button>
-                    <button class="headerButton" id="exportButton" onclick="exportEnemyPiece(${Index})">出力</button>
+                    <button class="headerButton" id="exportButton">出力</button>
                 </div>
             </div id="headerContent">
             `
             setUrl("#indexButton",indexUrl)
             setUrl("#editButton",editUrl)
+            $(document).on("click","#exportButton",function(){
+                exportEnemyPiece(data.enemy[Index])//出力ボタン処理を適用する
+            })
             break
         case "edit"://編集ページのヘッダー
             result=`
@@ -261,11 +264,11 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             $(document).on("mousedown","#viewButton",function(event){//閲覧ボタンにクリック処理を適用する
                 switch(event.button){
                     case 0://左クリックのときの処理
-                        saveJson()//jsonファイルを上書き更新する
+                        saveJson(data)//jsonファイルを上書き更新する
                         location.href=viewUrl
                         break
                     case 1://中クリックのときの処理
-                        saveJson()//jsonファイルを上書き更新する
+                        saveJson(data)//jsonファイルを上書き更新する
                         window.open(viewUrl,"_blank")
                         break
                     case 2://右クリックのときの処理
@@ -276,7 +279,7 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             })
             setUrl("#viewButton",viewUrl)//閲覧ボタンにクリック処理を適用する
             $(document).on("click","#saveButton",function(){//保存ボタンに処理を適用する
-                saveJson()//jsonファイルを上書き更新する
+                saveJson(data)//jsonファイルを上書き更新する
                 alert("保存しました")
             })
             break
@@ -419,8 +422,8 @@ function createEnemyElement(enemyData){//表示する敵データの要素を作
             <div class="buttonArea">
                 <button class="button" id="editButton${key}">編集</button>
                 <button class="button" id="viewButton${key}">閲覧</button>
-                <button class="button" onclick="exportEnemyPiece(${key})">出力</button>
-                <button class="button" onclick="deleteEnemyPiece(${key})">削除</button>
+                <button class="button" id="exportButton${key}">出力</button>
+                <button class="button" id="deleteButton${key}")">削除</button>
             </div>
         </div>
     `
@@ -428,6 +431,12 @@ function createEnemyElement(enemyData){//表示する敵データの要素を作
     const viewUrl=`./index.html?page=view&index=${key}`
     setUrl(`#editButton${key}`,editUrl)
     setUrl(`#viewButton${key}`,viewUrl)
+    $(document).on("click",`#exportButton${key}`,function(){
+        exportEnemyPiece(enemyData)//出力ボタン処理を適用する
+    })
+    $(document).on("click",`#deleteButton${key}`,function(){
+        deleteEnemyPiece(enemyData)//削除ボタン処理を適用する
+    })
     return result
 }
 
@@ -736,16 +745,24 @@ function addJsonData(data){//jsonにデータを追加する関数
     //TODO jsonにデータを追加する処理
 }
 
-function saveJson(){//更新されたjsonファイルを保存する関数
+function saveJson(data){//更新されたjsonファイルを保存する関数
+    let result=""
     //TODO jsonファイルを上書き更新する処理
+    /* 仮処理 */
+    result+=JSON.stringify(data)
+    console.log(result)
 }
 
-function exportEnemyPiece(key){//敵コマをクリップボードに出力する関数
-    alert("敵データをクリップボードに出力しました。"+"\n"+key)
+function exportEnemyPiece(enemyData){//敵コマをクリップボードに出力する関数
+    let result=""
+    alert("敵データをクリップボードに出力しました。")
     //TODO 敵コマをクリップボードに出力する処理
+    /* 仮処理 */
+    result+=JSON.stringify(enemyData.value)
+    console.log(result)
 }
-function deleteEnemyPiece(key){//jsonのデータを削除する関数
-    alert("消したよ"+"\n"+key)
+function deleteEnemyPiece(enemyData){//jsonのデータを削除する関数
+    alert("消したよ")
     //TODO jsonのデータを削除する処理
 }
 
