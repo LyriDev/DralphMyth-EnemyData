@@ -63,6 +63,7 @@ function addValue(value,add,negative){//値が否定条件に合致しなけれ�
 }
 
 function deleteValueInArray(array,value){//配列から特定の要素を削除する関数
+    if(Boolean(array)===false){return ""}//渡された配列が定義されていないなら処理止め
     function recursiveProcess(_array,_Value){//要素を1つ消す
         const result=_array.slice()//引数の配列を値渡しでコピーする
         const arrayIndex = result.indexOf(_Value);
@@ -619,7 +620,7 @@ function addMoveBox_statusEffect_content(moveStatusEffectArray,key){//閲覧ペ�
     return result
 }
 function addMoveBox_effect(moveEffectArray){//閲覧ページの技欄の効果欄を作成する関数
-    if(moveEffectArray.length===0){return ""}//効果がないなら欄を作らない
+    if(Boolean(moveEffectArray)===false){return ""}//効果がないなら欄を作らない
     let result=""
     result+=`
         <div class="cardTable-move-effect">
@@ -702,16 +703,81 @@ function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替え�
 
 /* データを編集・出力する関数 */
 function addJsonData(data){//jsonにデータを追加する関数
-    alert("added JSON data")
-    //TODO jsonにデータを追加する処理
+    const newData={
+        name:"",
+        level:"",
+        tag:"",
+        elements:[
+        ],
+        species:[
+        ],
+        sanCheck:{
+            success:"",
+            failure:""
+        },
+        HP:"",
+        armor:"",
+        initiative:"",
+        actionPoint:"",
+        dodge:"",
+        actionNumber:"",
+        statusEffects:{
+            flame:"",
+            ice:"",
+            dazzle:"",
+            poison:"",
+            sleep:"",
+            confusion:"",
+            stun:"",
+            curse:"",
+            atkDown:"",
+            defDown:{
+                physical:"",
+                breath:"",
+                magic:""
+            },
+            spdDown:""
+        },
+        stealth:"",
+        abilities:[
+            {
+                name:"",
+                effect:""
+            }
+        ],
+        moves:[
+            {
+                index:"",
+                name:"",
+                successRate:"",
+                types:[
+                ],
+                elements:[
+                ],
+                damage:"",
+                attackNumber:"",
+                reach:"",
+                range:"",
+                statusEffects:[
+                    {
+                        effectType:"",
+                        level:"",
+                        turn:""
+                    }
+                ],
+                effects:[
+                ]
+            }
+        ],
+        note:""
+    }
+    let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
+    result.enemy.push(newData)
+    dataBass_update(dataBaseUrl,data,false)
 }
 
 function saveJson(data){//更新されたjsonファイルを保存する関数
-    let result=""
-    //TODO jsonファイルを上書き更新する処理
-    /* 仮処理 */
-    result+=JSON.stringify(data)
-    console.log(result)
+    dataBass_update(dataBaseUrl,data,false)
 }
 
 function exportEnemyPiece(enemyData){//敵コマをクリップボードに出力する関数
@@ -722,12 +788,10 @@ function exportEnemyPiece(enemyData){//敵コマをクリップボードに出�
     exportToClipboard(result)//クリップボードに出力
 }
 function deleteEnemyPiece(key,data){//jsonのデータを削除する関数
-    //let result=data.slice()//値渡しでデータを受け取る TODO バグ修正
-    let result=data
+    let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
     result.enemy.splice(key,1)//削除する
     dataBass_update(dataBaseUrl,result,true)//データベースを削除されたデータで上書きする
 }
-
 
 /* デバッグ用処理 */
 document.addEventListener("keyup",keyupEvent);
@@ -740,7 +804,6 @@ function keyupEvent(event){
             dataBass_delete(true)
             break
         case 32://Spaceキーが押されたとき
-            useGottenData()
             break
     }
 }
@@ -769,16 +832,3 @@ function dataBass_get(url){//データベースのデータを取得する関数
 window.addEventListener("load",()=>{//windowが読み込まれたとき
     dataBass_get(dataBaseUrl)
 })
-
-
-/* 
-$(function(){
-    $.ajax({
-        url:"./../data.json",//jsonファイルの場所
-        dataType:"json",// json形式でデータを取得
-    })
-    .done(function(data){
-        updateHTML(data)//HTMLを更新する
-    })
-})
- */
