@@ -191,11 +191,14 @@ const attackTypeList=["物理","息","魔法"]
 
 /* ページごとに表示するコンテンツを変更するための関数 */
 function updateHTML(data){//HTMLを更新する関数
-    if((Boolean(data))===false){return}//データが入っていないなら以下の処理はしない
-    updateTitle(data)//タイトルを変更する
-    switchCssFile()//読み込むCSSファイルを差し替える
-    updateHeader(data)//ヘッダーを更新する
-    updateMain(data)//メインを更新する
+    if((Boolean(data))===true){
+        updateTitle(data)//タイトルを変更する
+        switchCssFile()//読み込むCSSファイルを差し替える
+        updateHeader(data)//ヘッダーを更新する
+        updateMain(data)//メインを更新する
+    }else{//データが入っていないときの処理
+        updateHeader(data,"void")//ヘッダーを更新する
+    }
 }
 
 function updateTitle(data){//タイトルを変更する関数
@@ -289,6 +292,23 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
                 alert("保存しました")
             })
             break
+        case "void"://データが何もない時のヘッダー
+            result=`
+                <div id="headerContent">
+                    <input type="text" id="searchTag" placeholder="タグ検索">
+                    <input type="text" id="searchName" placeholder="名前検索">
+                    <div id="headerButtonArea">
+                        <button class="headerButton" id="createButton">新規作成</button>
+                    </div>
+                </div>
+            `
+            $(document).on("mousedown","#createButton",function(event){//新規作成ボタンに処理を適用する
+                createButton_clickedProcess(data,event)
+            })
+            break
+
+        default:
+            break
     }
     document.getElementById("header").innerHTML=result
 }
@@ -330,9 +350,16 @@ function updateMainContent(content){//メインの中身を上書きする関数
 }
 
 function createButton_clickedProcess(data,event){//新規作成ボタンが押されたときの処理
-    let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
-    result.enemy.push(newData)//データに新規データを追加する
-    const newPageUrl=`${htmlUrl}?page=edit&index=${data.enemy.length}`
+    let result
+    if(Boolean(data)===true){//データが入っているときの処理
+        result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
+        result.enemy.push(newData)//データに新規データを追加する
+    }else{
+        result={enemy:[]}//空データを作詞絵
+        result.enemy.push(newData)//データに新規データを追加する
+    }
+    console.log(JSON.stringify(result))
+    const newPageUrl=`${htmlUrl}?page=edit&index=${result.enemy.length-1}`
     switch(event.button){
         case 0://左クリックのときの処理
             dataBass_update(dataBaseUrl,result,"jump",newPageUrl)
@@ -345,6 +372,7 @@ function createButton_clickedProcess(data,event){//新規作成ボタンが押�
         default:
             break
     }
+
 }
 function viewButton_clickedProcess(data,event,url){//編集ページの一覧/閲覧ボタンが押されたときの処理
     let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
