@@ -358,7 +358,8 @@ function createSideMenu(data){//サイドメニューを作成する関数
             }
         })
         $(document).on("change","#importJson",function(){
-            importJson("#importJson")
+            const importElement=document.getElementById("importJson")
+            importJson(importElement)
         })
     }
 }
@@ -911,9 +912,9 @@ function convertJsonToText(data){//jsonデータをtxt形式に変換する関�
 }
 
 
-function importJson(idName){//受け取ったjsonのデータを読み込む関数
+function importJson(importElement){//受け取ったjsonのデータを読み込む関数
     //TODO jsonファイルをインポートする処理
-    const data=document.getElementById("importJson").files[0]//受け取ったデータ
+    const data=importElement.files[0]//受け取ったデータ
     fileReader.readAsText(data)//テキストデータとして読み込む
     fileReader.onload=function(){//インポートしたファイルを読み込み追えたときの処理
         const data=fileReader.result
