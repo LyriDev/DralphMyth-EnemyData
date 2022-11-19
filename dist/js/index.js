@@ -878,8 +878,6 @@ function convertJsonToPiece(data){//Jsonデータをココフォリアコマ形�
     return result
 }
 
-
-
 function downloadJson(data,idName,convertText=false){//jsonのデータをダウンロードする関数
     let dataString
     let blob
@@ -915,12 +913,21 @@ function convertJsonToText(data){//jsonデータをtxt形式に変換する関�
 
 function importJson(idName){//受け取ったjsonのデータを読み込む関数
     //TODO jsonファイルをインポートする処理
-    console.log("ran")
-    const data=$(idName).val();//受け取ったデータ
-    //const data=document.getElementById("importJson").files[0]
-    console.log(data)
+    const data=document.getElementById("importJson").files[0]//受け取ったデータ
     fileReader.readAsText(data)//テキストデータとして読み込む
-    console.log("hoge")
+    fileReader.onload=function(){//インポートしたファイルを読み込み追えたときの処理
+        const data=fileReader.result
+        let jsonData=null
+        try{
+            jsonData=JSON.parse(data)//jsonデータに変換する
+        }catch(error){//エラー時の処理
+            alert("json形式のデータをインポートしてください。")
+        }finally{
+            if(Boolean(jsonData)===true){//例外が起こらずにデータを正しく受け取れた場合の処理
+                dataBase_update(dataBaseUrl,jsonData,"reload")//データを読み込んで表示する
+            }
+        }
+    }
 }
 
 /* デバッグ用処理 */
@@ -954,7 +961,3 @@ window.addEventListener("load",()=>{//windowが読み込まれたとき
     dataBase_get(dataBaseUrl)
 })
 
-fileReader.onload=function(){//読み込み追えたときの処理
-    console.log("fuga")
-    console.log(fileReader.result)
-}
