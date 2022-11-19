@@ -81,6 +81,7 @@ const newData={
     ],
     note:""
 }//新規データの枠組み
+const fileReader=new FileReader()//File API
 
 function convertProperty(value,target,alt){//null値などを代替テキストに変換する関数
     if(value===target){
@@ -190,6 +191,12 @@ const elementList=["火","氷","風","土","雷","水","光","闇","無"]
 const attackTypeList=["物理","息","魔法"]
 
 /* ページごとに表示するコンテンツを変更するための関数 */
+function dataBase_get(url){//データベースのデータを取得する関数
+    fetch(url).then(response=>response.json()).then(respondedData=>{
+        updateHTML(respondedData)//HTMLを更新する
+    })
+}
+
 function updateHTML(data){//HTMLを更新する関数
     if((Boolean(data))===true){
         updateTitle(data)//タイトルを変更する
@@ -331,7 +338,7 @@ function createSideMenu(data){//サイドメニューを作成する関数
             <a class="headerButton" id="downloadJson" href="#" ${downloadLink["json"]}>ダウンロード<br>(json形式)</a>
             <a class="headerButton" id="downloadText" href="#" ${downloadLink["text"]}>ダウンロード<br>(text形式)</a>
             <label class="headerButton" id="import">
-                <input type="file" accept=".json">
+                <input id="importJson" type="file" accept="application/json">
                 インポート<br>(json形式)
             </label>
         `
@@ -350,9 +357,8 @@ function createSideMenu(data){//サイドメニューを作成する関数
                 alert("データがありません。")
             }
         })
-        $(document).on("click","#import",function(){
-            alert(this)
-            importJson("#import")
+        $(document).on("change","#importJson",function(){
+            importJson("#importJson")
         })
     }
 }
@@ -895,9 +901,7 @@ function downloadJson(data,idName,convertText=false){//jsonのデータをダウ
         window.navigator.msSaveOrOpenBlob(blob,fileName); 
     }else{//Chrome, FireFox
         const downloadUrl=window.URL.createObjectURL(blob)
-        //const downloadUrl=dataBaseUrl
         $(idName).attr("href",downloadUrl)
-        alert(downloadUrl)
     }
 }
 
@@ -909,8 +913,14 @@ function convertJsonToText(data){//jsonデータをtxt形式に変換する関�
 }
 
 
-function importJson(){//受け取ったjsonのデータを読み込む関数
-    //jsonファイルをインポートする処理
+function importJson(idName){//受け取ったjsonのデータを読み込む関数
+    //TODO jsonファイルをインポートする処理
+    console.log("ran")
+    const data=$(idName).val();//受け取ったデータ
+    //const data=document.getElementById("importJson").files[0]
+    console.log(data)
+    fileReader.readAsText(data)//テキストデータとして読み込む
+    console.log("hoge")
 }
 
 /* デバッグ用処理 */
@@ -939,16 +949,12 @@ function sendDefaultData(){//ローカルのjsonデータをサーバーにア�
     })
 }
 
-//
-
 /* ここから実際の処理 */
-function dataBase_get(url){//データベースのデータを取得する関数
-    fetch(url).then(response=>response.json()).then(respondedData=>{
-        updateHTML(respondedData)//HTMLを更新する
-    })
-}
-
-
 window.addEventListener("load",()=>{//windowが読み込まれたとき
     dataBase_get(dataBaseUrl)
 })
+
+fileReader.onload=function(){//読み込み追えたときの処理
+    console.log("fuga")
+    console.log(fileReader.result)
+}
