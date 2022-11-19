@@ -17,6 +17,28 @@ body{
     margin-top:0;
     overflow-x: hidden;
 }
+
+#sideMenu{
+    width: calc((130px + 2px)*3 + (10px)*2);
+    height: 62px;
+    margin: 60px auto 0 auto;
+}
+#sideMenu:empty{
+    height: 0;
+    margin: 0;
+    position: fixed;
+}
+#downloadJson,#downloadText,#import{
+    width: 130px; 
+    height: 60px;
+    float: left;
+    text-decoration: none;
+    text-align: center;
+}
+#downloadJson,#downloadText{
+    margin-right: 10px;
+}
+
 #header{
     height: 50px;
     margin:0 -200%;
@@ -64,14 +86,14 @@ input[type="text"]:focus,textarea:focus{
     outline: 1.5px solid #6A6E72;
 }
 
-textarea {
+textarea{
     resize: none;
     overflow:hidden;
 }
 
 #main{
     width: 490px;
-    margin: 60px auto 10px auto;
+    margin: 10px auto;
     left: 0;
     right: 0;
     border:solid 1px #555555;
@@ -81,7 +103,28 @@ textarea {
 #main:empty{
     border: 0;
 }
+#sideMenu:empty + #main{
+    margin-top: 60px;
+}
 
+@media screen and (min-width: 780px){
+    /** 780px以上で適用されるスタイル */
+    #main{
+        margin-top: 60px;
+    }
+    #sideMenu{
+        top: 0;
+        width: 132px;
+        height: calc((60px + 2px)*3 + (10px)*2);
+        position: fixed;
+    }
+    #downloadJson,#downloadText,#import{
+        clear: left;
+    }
+    #downloadJson,#downloadText{
+        margin-bottom: 10px;
+    }
+}
 /* 矢印アイコン */
 .arrowLeft,.arrowDown{
     display: inline-block;

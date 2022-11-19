@@ -1,7 +1,7 @@
 const user="user0"
 const dataBaseUrl=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/${user}/data.json`
 
-function dataBass_delete(option=""){//データベースのデータを全て削除する関数
+function dataBase_delete(option=""){//データベースのデータを全て削除する関数
     fetch(dataBaseUrl,{
         method: 'DELETE'
     }).then(res=>{
@@ -11,7 +11,7 @@ function dataBass_delete(option=""){//データベースのデータを全て削
         }
     })
 }
-function dataBass_update(url,data,option="",optionUrl=""){//データベースのデータを更新する関数
+function dataBase_update(url,data,option="",optionUrl=""){//データベースのデータを更新する関数
     fetch(url,{
         method:'PUT',
         mode:'cors',
@@ -40,7 +40,7 @@ function dataBass_update(url,data,option="",optionUrl=""){//データベース�
 }
 
 /* 
-function abstract_dataBass_get(url){//データベースのデータを取得する関数
+function abstract_dataBase_get(url){//データベースのデータを取得する関数
     fetch(url).then(response=>response.json()).then(respondedData=>{
         console.log(JSON.stringify(respondedData))
         //ここに実際の処理

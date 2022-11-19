@@ -195,6 +195,7 @@ function updateHTML(data){//HTMLを更新する関数
         updateTitle(data)//タイトルを変更する
         switchCssFile()//読み込むCSSファイルを差し替える
         updateHeader(data)//ヘッダーを更新する
+        createSideMenu(data)//サイドメニューを作成する
         updateMain(data)//メインを更新する
     }else{//データが入っていないときの処理
         updateHeader(data,"void")//ヘッダーを更新する
@@ -281,6 +282,7 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
                 </div>
             </div>
             `
+            //TODO 現在の入力内容を取得する処理
             $(document).on("mousedown","#indexButton",function(event){//一覧ボタンにクリック処理を適用する
                 viewButton_clickedProcess(data,event,indexUrl)
             })
@@ -311,6 +313,27 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             break
     }
     document.getElementById("header").innerHTML=result
+}
+
+function createSideMenu(data){//サイドメニューを作成する関数
+    if(Page===null){//一覧ページのときのみ実行
+        const sideMenu=document.getElementById("sideMenu")
+        const sideMenuContent=`
+            <a class="headerButton" id="downloadJson" href="#" download="data.json">ダウンロード<br>(json形式)</a>
+            <a class="headerButton" id="downloadText" href="#" download="data.txt">ダウンロード<br>(text形式)</a>
+            <a class="headerButton" id="import" href="${dataBaseUrl}" download="data.json">インポート<br>(json形式)</a>
+        `
+        sideMenu.innerHTML=sideMenuContent
+        $(document).on("click","#downloadJson",function(){
+            downloadJson(data,"#downloadJson",false)
+        })
+        $(document).on("click","#downloadText",function(){
+            downloadJson(data,"#downloadText",true)
+        })
+        $(document).on("click","#import",function(){
+            //importJson()
+        })
+    }
 }
 
 function updateMain(data,_page=Page){//メインを変更する関数
@@ -362,10 +385,10 @@ function createButton_clickedProcess(data,event){//新規作成ボタンが押�
     const newPageUrl=`${htmlUrl}?page=edit&index=${result.enemy.length-1}`
     switch(event.button){
         case 0://左クリックのときの処理
-            dataBass_update(dataBaseUrl,result,"jump",newPageUrl)
+            dataBase_update(dataBaseUrl,result,"jump",newPageUrl)
             break
         case 1://中クリックのときの処理
-            dataBass_update(dataBaseUrl,result,"open",newPageUrl)
+            dataBase_update(dataBaseUrl,result,"open",newPageUrl)
             break
         case 2://右クリックのときの処理
             break
@@ -378,10 +401,10 @@ function viewButton_clickedProcess(data,event,url){//編集ページの一覧/�
     let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
     switch(event.button){
         case 0://左クリックのときの処理
-            dataBass_update(dataBaseUrl,result,"jump",url)
+            dataBase_update(dataBaseUrl,result,"jump",url)
             break
         case 1://中クリックのときの処理
-            dataBass_update(dataBaseUrl,result,"open",url)
+            dataBase_update(dataBaseUrl,result,"open",url)
             break
         case 2://右クリックのときの処理
             break
@@ -808,20 +831,66 @@ function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替え�
 
 /* データを編集・出力する関数 */
 function saveJson(data){//更新されたjsonファイルを保存する関数
-    dataBass_update(dataBaseUrl,data)
-}
-
-function exportEnemyPiece(enemyData){//敵コマをクリップボードに出力する関数
-    let result=""
-    alert("敵データをクリップボードに出力しました。")
-    result=JSON.stringify(enemyData)//仮処理
-    //TODO 敵コマをココフォリアデータに変換する処理
-    exportToClipboard(result)//クリップボードに出力
+    dataBase_update(dataBaseUrl,data)
 }
 function deleteEnemyPiece(key,data){//jsonのデータを削除する関数
     let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
     result.enemy.splice(key,1)//削除する
-    dataBass_update(dataBaseUrl,result,"reload")//データベースを削除されたデータで上書きする
+    dataBase_update(dataBaseUrl,result,"reload")//データベースを削除されたデータで上書きする
+}
+
+function exportEnemyPiece(enemyData){//敵コマをクリップボードに出力する関数
+    let result=""
+    result=convertJsonToPiece(enemyData)
+    exportToClipboard(result)//クリップボードに出力
+    alert("敵データをクリップボードに出力しました。")
+}
+function convertJsonToPiece(data){//Jsonデータをココフォリアコマ形式に変換する関数
+    //TODO 敵コマをココフォリアデータに変換する処理
+    let result=""
+    result=JSON.stringify(data)//仮処理
+    return result
+}
+
+
+
+function downloadJson(data,idName,convertText=false){//jsonのデータをダウンロードする関数
+    let dataString
+    let blob
+    let mime
+    let fileName="data"
+    if(convertText===false){//jsonでダウンロード
+        dataString=JSON.stringify(data)
+        mime="application/json"
+        fileName+=".json"
+    }else if(convertText===true){//txtでダウンロードする場合
+        dataString=convertJsonToText(data)//jsonデータをtxt形式に変換する関数
+        mime="text/plain"
+        fileName+=".txt"
+    }else{return}//例外処理
+    blob=new Blob([dataString],{"type":mime})
+    if (window.navigator.msSaveBlob){//IE,Edge
+        window.navigator.msSaveBlob(blob,fileName); 
+        //msSaveOrOpenBlobの場合はファイルを保存せずに開ける
+        window.navigator.msSaveOrOpenBlob(blob,fileName); 
+    }else{//Chrome, FireFox
+        const downloadUrl=window.URL.createObjectURL(blob)
+        //const downloadUrl=dataBaseUrl
+        $(idName).attr("href",downloadUrl)
+        alert(downloadUrl)
+    }
+}
+
+function convertJsonToText(data){//jsonデータをtxt形式に変換する関数
+    //TODO 敵コマをココフォリアデータに変換する処理
+    let result=""
+    result=JSON.stringify(data)//仮処理
+    return result
+}
+
+
+function importJson(){//受け取ったjsonのデータを読み込む関数
+
 }
 
 /* デバッグ用処理 */
@@ -832,7 +901,7 @@ function keyupEvent(event){
             sendDefaultData()
             break
         case 46://Deleteキーが押されたとき
-            dataBass_delete("reload")
+            dataBase_delete("reload")
             break
         case 32://Spaceキーが押されたとき
             break
@@ -845,7 +914,7 @@ function sendDefaultData(){//ローカルのjsonデータをサーバーにア�
             dataType:"json",// json形式でデータを取得
         })
         .done(function(data){
-            dataBass_update(dataBaseUrl,data,"reload")
+            dataBase_update(dataBaseUrl,data,"reload")
         })
     })
 }
@@ -853,7 +922,7 @@ function sendDefaultData(){//ローカルのjsonデータをサーバーにア�
 //
 
 /* ここから実際の処理 */
-function dataBass_get(url){//データベースのデータを取得する関数
+function dataBase_get(url){//データベースのデータを取得する関数
     fetch(url).then(response=>response.json()).then(respondedData=>{
         updateHTML(respondedData)//HTMLを更新する
     })
@@ -861,5 +930,5 @@ function dataBass_get(url){//データベースのデータを取得する関数
 
 
 window.addEventListener("load",()=>{//windowが読み込まれたとき
-    dataBass_get(dataBaseUrl)
+    dataBase_get(dataBaseUrl)
 })
