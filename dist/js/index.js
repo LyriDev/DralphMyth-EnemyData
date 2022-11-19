@@ -357,7 +357,7 @@ function createSideMenu(data){//サイドメニューを作成する関数
                 alert("データがありません。")
             }
         })
-        const setImportProcess=function(){
+        const setImportProcess=function(){//ファイルを受け取ったときの処理
             const importElement=document.getElementById("importJson")
             importJson(importElement)
         }
