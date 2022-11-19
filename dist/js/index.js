@@ -83,7 +83,7 @@ const newData={
 }//新規データの枠組み
 const fileReader=new FileReader()//File API
 
-function convertProperty(value,target,alt){//null値などを代替テキストに変換する関数
+function convertProperty(value,target="",alt="?"){//null値などを代替テキストに変換する関数
     if(value===target){
         return alt
     }else{
@@ -194,6 +194,12 @@ const attackTypeList=["物理","息","魔法"]
 function dataBase_get(url){//データベースのデータを取得する関数
     fetch(url).then(response=>response.json()).then(respondedData=>{
         updateHTML(respondedData)//HTMLを更新する
+
+        const hoge=getSortedEnemyObject(respondedData).enemy
+        for(let i in hoge){
+            console.log(convertJsonToText(hoge[i]))
+        }
+
     })
 }
 
@@ -443,23 +449,24 @@ function viewButton_clickedProcess(data,event,url){//編集ページの一覧/�
 
 /* 一覧ページを表示中に使う関数 */
 function showEnemyData(data,tagFilter="",nameFilter=""){//表示する敵データを作成する関数
-    const sortedEnemyArray=getSortedEnemyObject(data,tagFilter,nameFilter).enemy
+    const sortedEnemyArray=getSortedEnemyObject(data,tagFilter,nameFilter,true).enemy
     let result=""
     for(let i in sortedEnemyArray){
-        result+=createEnemyElement(sortedEnemyArray[i],i,data)
+        console.log(sortedEnemyArray[i].key)
+        result+=createEnemyElement(sortedEnemyArray[i],data)
     }
     return result
 }
-function getSortedEnemyObject(data,tagFilter="",nameFilter=""){//ソートされた敵データを作成する関数
+function getSortedEnemyObject(data,tagFilter="",nameFilter="",keyAddOption=false){//ソートされた敵データを作成する関数
     /* 「タグ>名前>レベル」の順番にソートされる仕様 */
     let result=new Array
     if(tagFilter===""){//タグフィルターなしのとき
         let allEnemyTag=getAllEnemyTag(data)
         for(let i in allEnemyTag){//タグ毎にデータをまとめて出力する
-            result.push(getEnemyDataByTag(data,allEnemyTag[i],nameFilter))
+            result.push(getEnemyDataByTag(data,allEnemyTag[i],nameFilter,keyAddOption))
         }
     }else{//タグフィルターありのとき
-        result.push(getEnemyDataByTag(data,tagFilter,nameFilter))//指定されたタグを持つデータのみを出力する
+        result.push(getEnemyDataByTag(data,tagFilter,nameFilter,keyAddOption))//指定されたタグを持つデータのみを出力する
     }
     return {enemy:result.flat()}
 }
@@ -471,7 +478,7 @@ function getAllEnemyTag(data){//敵データの全タグ種を取得する関数
     let enemyTagList=getTypeArray(enemyTagArray)
     return enemyTagList
 }
-function getEnemyDataByTag(data,tagName,nameFilter){//指定されたタグに合致する敵データを取得する関数
+function getEnemyDataByTag(data,tagName,nameFilter,keyAddOption){//指定されたタグに合致する敵データを取得する関数
     let result=new Array
     let enemyArray=new Array
     $.each(data.enemy,function(key,value){
@@ -486,10 +493,10 @@ function getEnemyDataByTag(data,tagName,nameFilter){//指定されたタグに�
             }
         }
     })
-    result.push(getEnemyDataByName(enemyArray))
+    result.push(getEnemyDataByName(enemyArray,keyAddOption))
     return result.flat()
 }
-function getEnemyDataByName(enemyArray){//敵データを名前別に整理する関数
+function getEnemyDataByName(enemyArray,keyAddOption){//敵データを名前別に整理する関数
     let result=new Array
     const enemyNameList=getEnemyNameList(enemyArray)
     for(let i in enemyNameList){
@@ -501,7 +508,7 @@ function getEnemyDataByName(enemyArray){//敵データを名前別に整理す�
                 enemyArraySortedByName.push({key:Key,value:Value})
             }
         }
-        result.push(getEnemyDataByLevel(enemyArraySortedByName))
+        result.push(getEnemyDataByLevel(enemyArraySortedByName,keyAddOption))
     }
     return result.flat()
 }
@@ -515,13 +522,19 @@ function getEnemyNameList(enemyArray){//敵データの名前一覧を取得す�
     enemyNameList=enemyNameList.sort()//文字コード順に並べ替える
     return enemyNameList
 }
-function getEnemyDataByLevel(enemyArray){//敵データをレベル別に整理する関数
+function getEnemyDataByLevel(enemyArray,keyAddOption){//敵データをレベル別に整理する関数
     let result=new Array
     const enemyLevelList=getEnemyLevelList(enemyArray)
     for(let i in enemyLevelList){
         for(let j in enemyArray){
             if(enemyArray[j].value.level===enemyLevelList[i]){
-                result.push(enemyArray[j].value)
+                if(keyAddOption){
+                    const keyAddedData=enemyArray[j].value
+                    keyAddedData["key"]=enemyArray[j].key//元データのkeyを追加
+                    result.push(keyAddedData)
+                }else{
+                    result.push(enemyArray[j].value)
+                }
             }
         }
     }
@@ -535,7 +548,8 @@ function getEnemyLevelList(enemyArray){//敵データのレベル一覧を取得
     let enemyLevelList=getTypeArray(enemyLevelArray)
     return enemyLevelList
 }
-function createEnemyElement(enemyData,key,data){//表示する敵データの要素を作成する関数
+function createEnemyElement(enemyData,data){//表示する敵データの要素を作成する関数
+    const key=enemyData.key
     const name=enemyData.name
     const level=enemyData.level
     const tag=enemyData.tag
@@ -743,7 +757,7 @@ function addMoveBox(enemyDataValue){//閲覧ページの技欄を作成する関
     return result
 }
 function addMoveBox_statusEffect(moveStatusEffectArray){//閲覧ページの技欄の状態異常欄を作成する関数
-    if(moveStatusEffectArray.length===0){return ""}//状態異常がないなら欄を作らない
+    if(Boolean(moveStatusEffectArray)===false){return ""}//状態異常がないなら欄を作らない
     let result=""
     result+=`
         <div class="cardTable-move-statusEffect clearFix">
@@ -889,7 +903,7 @@ function convertJsonToPiece(data){//Jsonデータをココフォリアコマ形�
 
 function downloadJson(data,idName,convertText=false){//jsonのデータをダウンロードする関数
     const sortedData=getSortedEnemyObject(data)
-    let dataString
+    let dataString=""
     let blob
     let mime
     let fileName="data"
@@ -898,7 +912,9 @@ function downloadJson(data,idName,convertText=false){//jsonのデータをダウ
         mime="application/json"
         fileName+=".json"
     }else if(convertText===true){//txtでダウンロードする場合
-        dataString=convertJsonToText(sortedData)//jsonデータをtxt形式に変換する関数
+        for(let i in sortedData.enemy){//jsonデータをtxt形式に変換する
+            dataString+=convertJsonToText(sortedData.enemy[i])+"\n\n"
+        }
         mime="text/plain"
         fileName+=".txt"
     }else{return}//例外処理
@@ -913,16 +929,17 @@ function downloadJson(data,idName,convertText=false){//jsonのデータをダウ
     }
 }
 
-function convertJsonToText(data){//jsonデータをtxt形式に変換する関数
+function convertJsonToText(enemyData){//jsonデータをtxt形式に変換する関数
     //TODO 敵コマをテキストデータに変換する処理
     let result=""
-    result=JSON.stringify(data)//仮処理
+    result=
+`${convertProperty(enemyData.name)}Lv${convertProperty(enemyData.level)}
+HP${convertProperty(enemyData.HP)},装甲${convertProperty(enemyData.armor)},回避${convertProperty(enemyData.dodge)}%
+`
     return result
 }
 
-
 function importJson(importElement){//受け取ったjsonのデータを読み込む関数
-    //TODO jsonファイルをインポートする処理
     const data=importElement.files[0]//受け取ったデータ
     fileReader.readAsText(data)//テキストデータとして読み込む
     fileReader.onload=function(){//インポートしたファイルを読み込み追えたときの処理
