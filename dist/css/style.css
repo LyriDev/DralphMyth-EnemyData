@@ -71,6 +71,9 @@ body{
     transition: border 0.3s;
     cursor: pointer;
 }
+.caption{
+    color: #AAAAAA;
+}
 input[type="text"],textarea{
     padding: 5px;
     border: 2px solid #52575C;

@@ -335,11 +335,11 @@ function createSideMenu(data){//サイドメニューを作成する関数
             downloadLink["text"]='download="data.txt"'
         }
         const sideMenuContent=`
-            <a class="headerButton" id="downloadJson" href="#" ${downloadLink["json"]}>ダウンロード<br>(json形式)</a>
-            <a class="headerButton" id="downloadText" href="#" ${downloadLink["text"]}>ダウンロード<br>(text形式)</a>
+            <a class="headerButton" id="downloadJson" href="#" ${downloadLink["json"]}>ダウンロード<br><div class="caption">(json形式)</div></a>
+            <a class="headerButton" id="downloadText" href="#" ${downloadLink["text"]}>ダウンロード<br><div class="caption">(text形式)</div></a>
             <label class="headerButton" id="import">
                 <input id="importJson" type="file" accept="application/json">
-                インポート<br>(json形式)
+                インポート<br><div class="caption">(json形式)</div>
             </label>
         `
         sideMenu.innerHTML=sideMenuContent
@@ -357,6 +357,9 @@ function createSideMenu(data){//サイドメニューを作成する関数
                 alert("データがありません。")
             }
         })
+        function importData(){
+
+        }
         $(document).on("change","#importJson",function(){
             const importElement=document.getElementById("importJson")
             importJson(importElement)
