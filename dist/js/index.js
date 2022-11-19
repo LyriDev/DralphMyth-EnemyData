@@ -91,6 +91,13 @@ function convertProperty(value,target="",alt="?"){//null値などを代替テキ
     }
 }
 
+function convertString(value,target,alt=""){//文字列から特定の文字を変換する関数
+    const regularExpression=new RegExp(target,"g")
+    let result=""
+    result=value.replace(regularExpression,alt)
+    return result
+}
+
 function convertAvailability(value){//有効/無効を〇/×に変換する関数
     if(value==="有効"){
         return "&#9675;"
@@ -101,6 +108,34 @@ function convertAvailability(value){//有効/無効を〇/×に変換する関�
     }else{
         return ""
     }
+}
+
+function convertPercent(value,propertyName="",hideEffectiveProperty=false){//100を有効,0を無効,50を半減に変換する関数
+    let result=""
+    switch(String(value)){
+        case "100":
+            if(hideEffectiveProperty===true){return ""}//「有効」を隠す
+            result="有効"
+            break
+        case "50":
+            result="半減"
+            break
+        case "0":
+            result="無効"
+            break
+        case "":
+            if(hideEffectiveProperty===true){return ""}//「不明」も隠す
+            result="不明"
+            break
+        default:
+            if(Boolean(Number(value))===true){//数値に変換できるかどうか
+                if((value>=0)&&(value<=100)){
+                    result=`${100-Number(value)}%無効`
+                }
+            }
+            break
+    }
+    return `${propertyName}${result}`
 }
 
 function addDotToArray(array,value){//配列の間に要素を追加して文字列として返す関数
@@ -452,7 +487,6 @@ function showEnemyData(data,tagFilter="",nameFilter=""){//表示する敵デー�
     const sortedEnemyArray=getSortedEnemyObject(data,tagFilter,nameFilter,true).enemy
     let result=""
     for(let i in sortedEnemyArray){
-        console.log(sortedEnemyArray[i].key)
         result+=createEnemyElement(sortedEnemyArray[i],data)
     }
     return result
@@ -585,7 +619,7 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
         <div id="name">${enemyDataValue.name}&nbsp;Lv${convertProperty(enemyDataValue.level,"","?")}</div>
         <div id="tag">${enemyDataValue.tag}</div>
         <div class="parameterBox">
-            <div>属性<br>${convertProperty(addDotToArray(deleteValueInArray(enemyDataValue.elements,""),"・"),"","?") }</div>
+            <div>属性<br>${convertProperty(addDotToArray(deleteValueInArray(enemyDataValue.elements,""),"・"),"","?")}</div>
             <div>系統<br>${convertProperty(addDotToArray(addValueToArray(deleteValueInArray(enemyDataValue.species,""),"系"),"・"),"","?")}</div>
             <div>SANチェック<br>${convertProperty(enemyDataValue.sanCheck.success,"","?")}/${convertProperty(enemyDataValue.sanCheck.failure,"","?")}</div>
         </div>
@@ -624,15 +658,17 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
         <table class="statusEffectTable">
             <tr>
                 <th>攻撃力低下</th>
-                <th>物理防御力低下</th>
-                <th>息防御力低下</th>
-                <th>魔法防御力低下</th>
+                <th>物理防御力<br>低下</th>
+                <th>息防御力<br>低下</th>
+                <th>魔法防御力<br>低下</th>
+                <th>素早さ低下</th>
             </tr>
             <tr>
                 <td>${convertProperty(enemyDataValue.statusEffects.atkDown,"","?")}%</td>
                 <td>${convertProperty(enemyDataValue.statusEffects.defDown.physical,"","?")}%</td>
                 <td>${convertProperty(enemyDataValue.statusEffects.defDown.breath,"","?")}%</td>
                 <td>${convertProperty(enemyDataValue.statusEffects.defDown.magic,"","?")}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.spdDown,"","?")}%</td>
             </tr>
         </table>
         <div class="cardBox">
@@ -666,7 +702,7 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
         </div>
         <div id="note" class="cardBody">
             <div class="cardTable">
-                <textarea readonly id="note0" class="cardTableContent" rows="1"></textarea>
+                <textarea readonly id="note0" class="cardTableContent" rows="1">${enemyDataValue.note}</textarea>
             </div>
         </div>
     </div>
@@ -932,10 +968,56 @@ function downloadJson(data,idName,convertText=false){//jsonのデータをダウ
 function convertJsonToText(enemyData){//jsonデータをtxt形式に変換する関数
     //TODO 敵コマをテキストデータに変換する処理
     let result=""
-    result=
-`${convertProperty(enemyData.name)}Lv${convertProperty(enemyData.level)}
-HP${convertProperty(enemyData.HP)},装甲${convertProperty(enemyData.armor)},回避${convertProperty(enemyData.dodge)}%
-`
+    const row0=[//名前・レベル
+        `${convertProperty(enemyData.name)}`,
+        `Lv${convertProperty(enemyData.level)}`
+    ]
+    const row1=[//SAN喪失
+        `SANチェック${convertProperty(enemyData.sanCheck.success)}/${convertProperty(enemyData.sanCheck.failure)}`
+    ]
+    const row2=[//属性・種族
+        `${convertProperty(addDotToArray(deleteValueInArray(enemyData.elements,""),"・"),"","?")}属性`,
+        `${addDotToArray(addValueToArray(deleteValueInArray(enemyData.species,""),"系"),"・")}`
+    ]
+    const row3=[//パラメータ
+        `HP${convertProperty(enemyData.HP)}`,
+        `装甲${convertProperty(enemyData.armor)}`,
+        `DEX${convertProperty(enemyData.initiative)}`,
+        `行動p${convertProperty(enemyData.actionPoint)}`,
+        `回避${convertProperty(enemyData.dodge)}%`,
+        `行動回数${convertProperty(enemyData.actionNumber)}回`,
+        `隠密${convertProperty(enemyData.stealth,"","不明")}`
+    ]
+    const row4=[//状態異常耐性
+        `${convertPercent(enemyData.statusEffects.flame,"炎")}`,
+        `${convertPercent(enemyData.statusEffects.ice,"氷")}`,
+        `${convertPercent(enemyData.statusEffects.dazzle,"幻惑")}`,
+        `${convertPercent(enemyData.statusEffects.poison,"毒")}`,
+        `${convertPercent(enemyData.statusEffects.sleep,"眠り")}`,
+        `${convertPercent(enemyData.statusEffects.confusion,"混乱")}`,
+        `${convertPercent(enemyData.statusEffects.stun,"スタン")}`,
+        `${convertPercent(enemyData.statusEffects.curse,"呪い")}`
+    ]
+    const row5=[//パラメータ低下耐性
+    `${convertPercent(enemyData.statusEffects.atkDown,"攻撃力低下")}`,
+    `${convertPercent(enemyData.statusEffects.defDown.physical,"物理防御力低下")}`,
+    `${convertPercent(enemyData.statusEffects.defDown.breath,"息防御力低下")}`,
+    `${convertPercent(enemyData.statusEffects.defDown.magic,"魔法防御力低下")}`,
+    `${convertPercent(enemyData.statusEffects.spdDown,"素早さ低下")}`,
+    ]
+    const row6=new Array//特性
+    for(let i in enemyData.abilities){
+        row6.push(`${convertProperty(enemyData.abilities[i].name)}[${convertProperty(convertString(enemyData.abilities[i].effect,"\n"))}]`)
+    }
+    const rowAll=[row0,row1,row2,row3,row4,row5,row6]
+    for(let i in rowAll){
+        if(i==6){//特性のときの処理
+            //ちなみにiはstring型なので「=」は2つじゃないと合致しない
+            result+=addDotToArray(deleteValueInArray(rowAll[i],""),"\n")+"\n"
+        }else{
+            result+=addDotToArray(deleteValueInArray(rowAll[i],""),",")+"\n"
+        }
+    }
     return result
 }
 
@@ -987,4 +1069,3 @@ function sendDefaultData(){//ローカルのjsonデータをサーバーにア�
 window.addEventListener("load",()=>{//windowが読み込まれたとき
     dataBase_get(dataBaseUrl)
 })
-
