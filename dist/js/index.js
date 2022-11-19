@@ -331,7 +331,7 @@ function createSideMenu(data){//サイドメニューを作成する関数
             downloadJson(data,"#downloadText",true)
         })
         $(document).on("click","#import",function(){
-            //importJson()
+            importJson()
         })
     }
 }
@@ -381,7 +381,6 @@ function createButton_clickedProcess(data,event){//新規作成ボタンが押�
         result={enemy:[]}//空データを作詞絵
         result.enemy.push(newData)//データに新規データを追加する
     }
-    console.log(JSON.stringify(result))
     const newPageUrl=`${htmlUrl}?page=edit&index=${result.enemy.length-1}`
     switch(event.button){
         case 0://左クリックのときの処理
@@ -882,7 +881,7 @@ function downloadJson(data,idName,convertText=false){//jsonのデータをダウ
 }
 
 function convertJsonToText(data){//jsonデータをtxt形式に変換する関数
-    //TODO 敵コマをココフォリアデータに変換する処理
+    //TODO 敵コマをテキストデータに変換する処理
     let result=""
     result=JSON.stringify(data)//仮処理
     return result
@@ -890,7 +889,7 @@ function convertJsonToText(data){//jsonデータをtxt形式に変換する関�
 
 
 function importJson(){//受け取ったjsonのデータを読み込む関数
-
+    //jsonファイルをインポートする処理
 }
 
 /* デバッグ用処理 */

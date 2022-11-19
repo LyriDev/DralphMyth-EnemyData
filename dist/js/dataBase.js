@@ -5,7 +5,7 @@ function dataBase_delete(option=""){//データベースのデータを全て削
     fetch(dataBaseUrl,{
         method: 'DELETE'
     }).then(res=>{
-        console.log("From delete\n"+res.statusText)
+        //console.log("From delete\n"+res.statusText)
         if(option==="reload"){
             location.reload()//削除し終えたら画面を再読み込みする
         }
@@ -20,7 +20,7 @@ function dataBase_update(url,data,option="",optionUrl=""){//データベース�
         },
         body: JSON.stringify(data)
     }).then(res=>{
-        console.log("From update\n"+res.statusText)
+        //console.log("From update\n"+res.statusText)
         switch(option){
             case "reload":
                 location.reload()//更新し終えたら画面を再読み込みする
