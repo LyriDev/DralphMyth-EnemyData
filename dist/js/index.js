@@ -442,18 +442,26 @@ function viewButton_clickedProcess(data,event,url){//編集ページの一覧/�
 }
 
 /* 一覧ページを表示中に使う関数 */
-//タグ>名前>レベル、の順番にソートされる仕様
 function showEnemyData(data,tagFilter="",nameFilter=""){//表示する敵データを作成する関数
+    const sortedEnemyArray=getSortedEnemyObject(data,tagFilter,nameFilter).enemy
     let result=""
+    for(let i in sortedEnemyArray){
+        result+=createEnemyElement(sortedEnemyArray[i],i,data)
+    }
+    return result
+}
+function getSortedEnemyObject(data,tagFilter="",nameFilter=""){//ソートされた敵データを作成する関数
+    /* 「タグ>名前>レベル」の順番にソートされる仕様 */
+    let result=new Array
     if(tagFilter===""){//タグフィルターなしのとき
         let allEnemyTag=getAllEnemyTag(data)
         for(let i in allEnemyTag){//タグ毎にデータをまとめて出力する
-            result+=getEnemyDataByTag(data,allEnemyTag[i],nameFilter)
+            result.push(getEnemyDataByTag(data,allEnemyTag[i],nameFilter))
         }
     }else{//タグフィルターありのとき
-        result+=getEnemyDataByTag(data,tagFilter,nameFilter)//指定されたタグを持つデータのみを出力する
+        result.push(getEnemyDataByTag(data,tagFilter,nameFilter))//指定されたタグを持つデータのみを出力する
     }
-    return result
+    return {enemy:result.flat()}
 }
 function getAllEnemyTag(data){//敵データの全タグ種を取得する関数
     let enemyTagArray=new Array
@@ -464,7 +472,7 @@ function getAllEnemyTag(data){//敵データの全タグ種を取得する関数
     return enemyTagList
 }
 function getEnemyDataByTag(data,tagName,nameFilter){//指定されたタグに合致する敵データを取得する関数
-    let result=""
+    let result=new Array
     let enemyArray=new Array
     $.each(data.enemy,function(key,value){
         if(tagName===value.tag){
@@ -478,11 +486,11 @@ function getEnemyDataByTag(data,tagName,nameFilter){//指定されたタグに�
             }
         }
     })
-    result=getEnemyDataByName(enemyArray,data)
-    return result
+    result.push(getEnemyDataByName(enemyArray))
+    return result.flat()
 }
-function getEnemyDataByName(enemyArray,data){//敵データを名前別に整理する関数
-    let result=""
+function getEnemyDataByName(enemyArray){//敵データを名前別に整理する関数
+    let result=new Array
     const enemyNameList=getEnemyNameList(enemyArray)
     for(let i in enemyNameList){
         const enemyArraySortedByName=new Array
@@ -493,9 +501,9 @@ function getEnemyDataByName(enemyArray,data){//敵データを名前別に整理
                 enemyArraySortedByName.push({key:Key,value:Value})
             }
         }
-        result+=getEnemyDataByLevel(enemyArraySortedByName,data)
+        result.push(getEnemyDataByLevel(enemyArraySortedByName))
     }
-    return result
+    return result.flat()
 }
 function getEnemyNameList(enemyArray){//敵データの名前一覧を取得する関数
     let enemyNameList=new Array
@@ -507,13 +515,13 @@ function getEnemyNameList(enemyArray){//敵データの名前一覧を取得す�
     enemyNameList=enemyNameList.sort()//文字コード順に並べ替える
     return enemyNameList
 }
-function getEnemyDataByLevel(enemyArray,data){//敵データをレベル別に整理する関数
-    let result=""
+function getEnemyDataByLevel(enemyArray){//敵データをレベル別に整理する関数
+    let result=new Array
     const enemyLevelList=getEnemyLevelList(enemyArray)
     for(let i in enemyLevelList){
         for(let j in enemyArray){
             if(enemyArray[j].value.level===enemyLevelList[i]){
-                result+=createEnemyElement(enemyArray[j],data)
+                result.push(enemyArray[j].value)
             }
         }
     }
@@ -527,11 +535,10 @@ function getEnemyLevelList(enemyArray){//敵データのレベル一覧を取得
     let enemyLevelList=getTypeArray(enemyLevelArray)
     return enemyLevelList
 }
-function createEnemyElement(enemyData,data){//表示する敵データの要素を作成する関数
-    const key=enemyData.key
-    const name=enemyData.value.name
-    const level=enemyData.value.level
-    const tag=enemyData.value.tag
+function createEnemyElement(enemyData,key,data){//表示する敵データの要素を作成する関数
+    const name=enemyData.name
+    const level=enemyData.level
+    const tag=enemyData.tag
     let result=`
         <div class="data">
             <div class="name">${name}</div>
@@ -881,16 +888,17 @@ function convertJsonToPiece(data){//Jsonデータをココフォリアコマ形�
 }
 
 function downloadJson(data,idName,convertText=false){//jsonのデータをダウンロードする関数
+    const sortedData=getSortedEnemyObject(data)
     let dataString
     let blob
     let mime
     let fileName="data"
     if(convertText===false){//jsonでダウンロード
-        dataString=JSON.stringify(data)
+        dataString=JSON.stringify(sortedData)
         mime="application/json"
         fileName+=".json"
     }else if(convertText===true){//txtでダウンロードする場合
-        dataString=convertJsonToText(data)//jsonデータをtxt形式に変換する関数
+        dataString=convertJsonToText(sortedData)//jsonデータをtxt形式に変換する関数
         mime="text/plain"
         fileName+=".txt"
     }else{return}//例外処理
