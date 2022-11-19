@@ -199,6 +199,7 @@ function updateHTML(data){//HTMLを更新する関数
         updateMain(data)//メインを更新する
     }else{//データが入っていないときの処理
         updateHeader(data,"void")//ヘッダーを更新する
+        createSideMenu()//サイドメニューを作成する
     }
 }
 
@@ -318,20 +319,40 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
 function createSideMenu(data){//サイドメニューを作成する関数
     if(Page===null){//一覧ページのときのみ実行
         const sideMenu=document.getElementById("sideMenu")
+        const downloadLink={
+            json:"",
+            text:""
+        }
+        if(Boolean(data)===true){
+            downloadLink["json"]='download="data.json"'
+            downloadLink["text"]='download="data.txt"'
+        }
         const sideMenuContent=`
-            <a class="headerButton" id="downloadJson" href="#" download="data.json">ダウンロード<br>(json形式)</a>
-            <a class="headerButton" id="downloadText" href="#" download="data.txt">ダウンロード<br>(text形式)</a>
-            <a class="headerButton" id="import" href="${dataBaseUrl}" download="data.json">インポート<br>(json形式)</a>
+            <a class="headerButton" id="downloadJson" href="#" ${downloadLink["json"]}>ダウンロード<br>(json形式)</a>
+            <a class="headerButton" id="downloadText" href="#" ${downloadLink["text"]}>ダウンロード<br>(text形式)</a>
+            <label class="headerButton" id="import">
+                <input type="file" accept=".json">
+                インポート<br>(json形式)
+            </label>
         `
         sideMenu.innerHTML=sideMenuContent
         $(document).on("click","#downloadJson",function(){
-            downloadJson(data,"#downloadJson",false)
+            if(Boolean(data)===true){
+                downloadJson(data,"#downloadJson",false)
+            }else{
+                alert("データがありません。")
+            }
         })
         $(document).on("click","#downloadText",function(){
-            downloadJson(data,"#downloadText",true)
+            if(Boolean(data)===true){
+                downloadJson(data,"#downloadText",true)
+            }else{
+                alert("データがありません。")
+            }
         })
         $(document).on("click","#import",function(){
-            importJson()
+            alert(this)
+            importJson("#import")
         })
     }
 }

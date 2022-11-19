@@ -85,6 +85,9 @@ input[type="text"]:hover,textarea:hover{
 input[type="text"]:focus,textarea:focus{
     outline: 1.5px solid #6A6E72;
 }
+input[type="file"]{
+    display: none;
+}
 
 textarea{
     resize: none;
