@@ -357,13 +357,11 @@ function createSideMenu(data){//サイドメニューを作成する関数
                 alert("データがありません。")
             }
         })
-        function importData(){
-
-        }
-        $(document).on("change","#importJson",function(){
+        const setImportProcess=function(){
             const importElement=document.getElementById("importJson")
             importJson(importElement)
-        })
+        }
+        $(document).on("change","#importJson",setImportProcess)
     }
 }
 
