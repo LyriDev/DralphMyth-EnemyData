@@ -1,3 +1,4 @@
+const isLogin=true
 const user="user0"
 const dataBaseUrl=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/${user}/data.json`
 

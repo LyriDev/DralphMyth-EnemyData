@@ -223,15 +223,19 @@ function dataBase_get(url){//データベースのデータを取得する関数
     })
 }
 function updateHTML(data){//HTMLを更新する関数
-    if((Boolean(data))===true){
-        updateTitle(data)//タイトルを変更する
-        switchCssFile()//読み込むCSSファイルを差し替える
-        updateHeader(data)//ヘッダーを更新する
-        createSideMenu(data)//サイドメニューを作成する
-        updateMain(data)//メインを更新する
-    }else{//データが入っていないときの処理
-        updateHeader(data,"void")//ヘッダーを更新する
-        createSideMenu()//サイドメニューを作成する
+    try{
+        if((Boolean(data))===true){
+            updateTitle(data)//タイトルを変更する
+            switchCssFile()//読み込むCSSファイルを差し替える
+            updateHeader(data)//ヘッダーを更新する
+            createSideMenu(data)//サイドメニューを作成する
+            updateMain(data)//メインを更新する
+        }else{//データが入っていないときの処理
+            updateHeader(data,"void")//ヘッダーを更新する
+            createSideMenu()//サイドメニューを作成する
+        }
+    }catch(exception){//存在しない敵データを閲覧・編集等しようとしたときの例外処理
+        location.href=htmlUrl//一覧ページに送る
     }
 }
 function updateTitle(data){//タイトルを変更する関数
