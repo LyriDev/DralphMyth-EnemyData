@@ -228,13 +228,15 @@ function updateHTML(data){//HTMLを更新する関数
             updateTitle(data)//タイトルを変更する
             switchCssFile()//読み込むCSSファイルを差し替える
             updateHeader(data)//ヘッダーを更新する
+            createUserMenu()//ユーザーメニューを作成する
             createSideMenu(data)//サイドメニューを作成する
             updateMain(data)//メインを更新する
         }else{//データが入っていないときの処理
             updateHeader(data,"void")//ヘッダーを更新する
+            createUserMenu()//ユーザーメニューを作成する
             createSideMenu()//サイドメニューを作成する
         }
-    }catch(exception){//存在しない敵データを閲覧・編集等しようとしたときの例外処理
+    }catch(exception){//存在しない敵データを閲覧・編集しようとしたとき等の例外処理
         location.href=htmlUrl//一覧ページに送る
     }
 }
@@ -277,7 +279,7 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
                 <input type="text" id="searchTag" placeholder="タグ検索">
                 <input type="text" id="searchName" placeholder="名前検索">
                 <div id="headerButtonArea">
-                    <button class="headerButton" id="createButton">新規作成</button>
+                    <button class="button" id="createButton">新規作成</button>
                 </div>
             </div>
             `
@@ -294,9 +296,9 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             result=`
             <div id="headerContent">
                 <div id="headerButtonArea">
-                    <button class="headerButton" id="indexButton">一覧</button>
-                    <button class="headerButton" id="editButton"}>編集</button>
-                    <button class="headerButton" id="exportButton">出力</button>
+                    <button class="button" id="indexButton">一覧</button>
+                    <button class="button" id="editButton"}>編集</button>
+                    <button class="button" id="exportButton">出力</button>
                 </div>
             </div id="headerContent">
             `
@@ -310,8 +312,8 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             result=`
             <div id="headerContent">
                 <div id="headerButtonArea">
-                    <button class="headerButton" id="indexButton">一覧</button>
-                    <button class="headerButton" id="viewButton">閲覧</button>
+                    <button class="button" id="indexButton">一覧</button>
+                    <button class="button" id="viewButton">閲覧</button>
                     <button id="saveButton">保存</button>
                 </div>
             </div>
@@ -334,7 +336,7 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
                     <input type="text" id="searchTag" placeholder="タグ検索">
                     <input type="text" id="searchName" placeholder="名前検索">
                     <div id="headerButtonArea">
-                        <button class="headerButton" id="createButton">新規作成</button>
+                        <button class="button" id="createButton">新規作成</button>
                     </div>
                 </div>
             `
@@ -348,6 +350,21 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
     }
     document.getElementById("header").innerHTML=result
 }
+function createUserMenu(){//ユーザーメニューを作成する関数
+    if(isLogin){//ログイン時のみ実行
+        const userMenu=document.getElementById("userMenu")
+        const userMenuContent=`
+            <div id="userMenuContent">
+                <div class="button" id="userButton">${user}</div>
+                <button id="logoutButton" onclick="logout()">ログアウト</button>
+            </div>
+        `
+        userMenu.innerHTML=userMenuContent
+
+    }else{
+        location.href=loginPage
+    }
+}
 function createSideMenu(data){//サイドメニューを作成する関数
     if(Page===null){//一覧ページのときのみ実行
         const sideMenu=document.getElementById("sideMenu")
@@ -360,12 +377,14 @@ function createSideMenu(data){//サイドメニューを作成する関数
             downloadLink["text"]='download="data.txt"'
         }
         const sideMenuContent=`
-            <a class="headerButton" id="downloadJson" href="#" ${downloadLink["json"]}>ダウンロード<br><div class="caption">(json形式)</div></a>
-            <a class="headerButton" id="downloadText" href="#" ${downloadLink["text"]}>ダウンロード<br><div class="caption">(text形式)</div></a>
-            <label class="headerButton" id="import">
-                <input id="importJson" type="file" accept="application/json">
-                インポート<br><div class="caption">(json形式)</div>
-            </label>
+            <div id="sideMenuContent">
+                <a class="button" id="downloadJson" href="#" ${downloadLink["json"]}>ダウンロード<br><div class="caption">(json形式)</div></a>
+                <a class="button" id="downloadText" href="#" ${downloadLink["text"]}>ダウンロード<br><div class="caption">(text形式)</div></a>
+                <label class="button" id="import">
+                    <input id="importJson" type="file" accept="application/json">
+                    インポート<br><div class="caption">(json形式)</div>
+                </label>
+            </div>
         `
         sideMenu.innerHTML=sideMenuContent
         $(document).on("click","#downloadJson",function(){

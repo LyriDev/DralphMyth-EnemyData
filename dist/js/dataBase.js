@@ -1,7 +1,14 @@
 const isLogin=true
+const loginPage=""//TODO ログインページの作成
 const user="user0"
 const dataBaseUrl=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/${user}/data.json`
 
+/* ユーザーデータを管理する関数 */
+function logout(){
+    alert("ログアウトしました。")
+}
+
+/* データベースを管理する関数 */
 function dataBase_delete(option=""){//データベースのデータを全て削除する関数
     fetch(dataBaseUrl,{
         method: 'DELETE'
