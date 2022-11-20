@@ -90,14 +90,12 @@ function convertProperty(value,target="",alt="?"){//null値などを代替テキ
         return value
     }
 }
-
 function convertString(value,target,alt=""){//文字列から特定の文字を変換する関数
     const regularExpression=new RegExp(target,"g")
     let result=""
     result=value.replace(regularExpression,alt)
     return result
 }
-
 function convertAvailability(value){//有効/無効を〇/×に変換する関数
     if(value==="有効"){
         return "&#9675;"
@@ -109,7 +107,6 @@ function convertAvailability(value){//有効/無効を〇/×に変換する関�
         return ""
     }
 }
-
 function convertPercent(value,propertyName="",hideEffectiveProperty=false){//100を有効,0を無効,50を半減に変換する関数
     let result=""
     switch(String(value)){
@@ -137,7 +134,6 @@ function convertPercent(value,propertyName="",hideEffectiveProperty=false){//100
     }
     return `${propertyName}${result}`
 }
-
 function addDotToArray(array,value){//配列の間に要素を追加して文字列として返す関数
     let result=""
     if(array.length<2){//配列の"間"がないなら処理を終了
@@ -149,7 +145,6 @@ function addDotToArray(array,value){//配列の間に要素を追加して文字
     result+=array[array.length-1]
     return result
 }
-
 function addValueToArray(array,value){//配列の値の後ろにそれぞれ要素を追加して返す関数
     let addedArray=new Array
     for(let i in array){
@@ -157,7 +152,6 @@ function addValueToArray(array,value){//配列の値の後ろにそれぞれ要�
     }
     return addedArray
 }
-
 function addValue(value,add,negative){//値が否定条件に合致しなければ、値の後ろに要素を追加して返す関数
     if(value===negative){
         return value
@@ -165,7 +159,6 @@ function addValue(value,add,negative){//値が否定条件に合致しなけれ�
         return `${value}${add}`
     }
 }
-
 function deleteValueInArray(array,value){//配列から特定の要素を削除する関数
     if(Boolean(array)===false){return ""}//渡された配列が定義されていないなら処理止め
     function recursiveProcess(_array,_Value){//要素を1つ消す
@@ -180,7 +173,6 @@ function deleteValueInArray(array,value){//配列から特定の要素を削除�
     }
     return resultArray
 }
-
 function getTypeArray(array){//数値と空白文字を含む配列から要素の種類を抜き出してソートする関数
     let valueList=new Array//要素の種類を保存する配列
     for(let i in array){
@@ -197,7 +189,6 @@ function getTypeArray(array){//数値と空白文字を含む配列から要素�
     }
     return valueList
 }
-
 function setUrl(idName,url){//クリックしたらurlを開く処理を適用する関数
     $(document).on("mousedown",idName,function(event){
         switch(event.button){
@@ -214,7 +205,6 @@ function setUrl(idName,url){//クリックしたらurlを開く処理を適用�
         }
     })
 }
-
 function exportToClipboard(value){
     if(navigator.clipboard){//サポートしているかを確認
         navigator.clipboard.writeText(value)//クリップボードに出力
@@ -229,15 +219,8 @@ const attackTypeList=["物理","息","魔法"]
 function dataBase_get(url){//データベースのデータを取得する関数
     fetch(url).then(response=>response.json()).then(respondedData=>{
         updateHTML(respondedData)//HTMLを更新する
-
-        const hoge=getSortedEnemyObject(respondedData).enemy
-        for(let i in hoge){
-            console.log(convertJsonToText(hoge[i]))
-        }
-
     })
 }
-
 function updateHTML(data){//HTMLを更新する関数
     if((Boolean(data))===true){
         updateTitle(data)//タイトルを変更する
@@ -250,7 +233,6 @@ function updateHTML(data){//HTMLを更新する関数
         createSideMenu()//サイドメニューを作成する
     }
 }
-
 function updateTitle(data){//タイトルを変更する関数
     if(Page==="index"){
         return//一覧ページならタイトルを変更しない
@@ -261,7 +243,6 @@ function updateTitle(data){//タイトルを変更する関数
         titleArea.innerHTML=`${enemyName}Lv${enemyLevel} - ドラルフ神話`//タイトルを変更する
     }
 }
-
 function switchCssFile(_page=Page){//ページ毎に読み込むCSSファイルを変更する関数
     let cssUrl//cssファイルのパス
     switch(_page){
@@ -279,7 +260,6 @@ function switchCssFile(_page=Page){//ページ毎に読み込むCSSファイル�
     }
     $("#styleSwitch").attr("href",cssUrl)//CSSファイルを差し替える
 }
-
 function updateHeader(data,_page=Page){//ヘッダーを変更する関数
     const indexUrl=htmlUrl
     const viewUrl=`${htmlUrl}?page=view&index=${Index}`
@@ -363,7 +343,6 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
     }
     document.getElementById("header").innerHTML=result
 }
-
 function createSideMenu(data){//サイドメニューを作成する関数
     if(Page===null){//一覧ページのときのみ実行
         const sideMenu=document.getElementById("sideMenu")
@@ -405,7 +384,6 @@ function createSideMenu(data){//サイドメニューを作成する関数
         $(document).on("change","#importJson",setImportProcess)
     }
 }
-
 function updateMain(data,_page=Page){//メインを変更する関数
     let result=""
     switch(_page){//Mainの中身を更新する処理
@@ -437,11 +415,9 @@ function updateMain(data,_page=Page){//メインを変更する関数
             break
     }
 }
-
 function updateMainContent(content){//メインの中身を上書きする関数
     mainArea.innerHTML=content//メインの中身を変更する
 }
-
 function createButton_clickedProcess(data,event){//新規作成ボタンが押されたときの処理
     let result
     if(Boolean(data)===true){//データが入っているときの処理
@@ -590,7 +566,7 @@ function createEnemyElement(enemyData,data){//表示する敵データの要素�
     let result=`
         <div class="data">
             <div class="name">${name}</div>
-            <div class="level">Lv${convertProperty(level,"","?")}</div>
+            <div class="level">Lv${convertProperty(level)}</div>
             <div class="tag">${tag}</div>
             <div class="buttonArea">
                 <button class="button" id="editButton${key}">編集</button>
@@ -612,24 +588,90 @@ function createEnemyElement(enemyData,data){//表示する敵データの要素�
     })
     return result
 }
+function getMovesAsText(enemyData){//技一覧をテキストで取得する関数
+    const moveIndexList=new Array//全ての技番号
+    for(let i in enemyData.moves){
+        const move=enemyData.moves[i]
+        moveIndexList.push(move.index)
+    }
+    const moveIndexTypeList=getTypeArray(moveIndexList)//技番号の種類一覧
+    let returnArray=new Array
+    const indent="  "
+    for(let i in moveIndexTypeList){//技番号順に並び変えて表示する
+        for(let j in enemyData.moves){
+            const move=enemyData.moves[j]
+            if(move.index===moveIndexTypeList[i]){
+                let moveData=""
+                const content=[
+                    `${convertProperty(move.index)}.${convertProperty(move.name)}`,//技番号,技名,属性,攻撃種別
+                    [],//成功率,攻撃回数,ダメージ
+                    [],//射程,範囲
+                    [],//状態異常
+                    []//効果
+                ]
+                /* 属性,攻撃種別の表示 */
+                if((Number(move.damage)!==0)||(move.damage==="")){//属性と攻撃種別の表示
+                    content[0]+=`(${convertProperty(addDotToArray(deleteValueInArray(move.elements,""),"・"))}属性,${convertProperty(addDotToArray(deleteValueInArray(move.types,""),"・"))})`
+                }
+                /* 成功率,攻撃回数,ダメージの表示 */
+                if((Number(move.successRate)<100)||(move.successRate==="")){//成功率の表示
+                    content[1].push(`成功率${convertProperty(move.successRate)}%`)
+                }
+                if((String(move.attackNumber)!=="1")&&(String(move.attackNumber)!=="0")){//攻撃回数の表示
+                    content[1].push(`攻撃回数${convertProperty(move.attackNumber)}回`)
+                }
+                if((Number(move.damage)!==0)||(move.damage==="")){//ダメージの表示
+                    content[1].push(`ダメージ${convertProperty(move.damage)}`)
+                }
+                content[1]=addDotToArray(content[1],",")
+                /* 射程,範囲の表示 */
+                if((Number(move.reach)!==0)||(move.reach==="")){//射程の表示
+                    content[2].push(`射程${convertProperty(move.reach)}`)
+                }
+                if(move.range!==""){//範囲の表示
+                    content[2].push(move.range)
+                }
+                content[2]=addDotToArray(content[2],",")
+                /* 状態異常の表示 */
+                for(let k in move.statusEffects){
+                    content[3].push(`${convertProperty(move.statusEffects[k].effectType)}Lv${convertProperty(move.statusEffects[k].level)}(${convertProperty(move.statusEffects[k].turn)}ターン)`)
+                }
+                content[3]=addDotToArray(content[3],"\n"+indent)
+                /* 効果の表示 */
+                for(let k in move.effects){
+                    content[4].push(`${convertProperty(move.effects[k])}`)
+                }
+                content[4]=addDotToArray(content[4],"\n"+indent)
+                /* 表示加工処理 */
+                for(let k in content){
+                    if(content[k]===""){continue}//行に何もないなら処理をしない
+                    if(Number(k)!==0){moveData+="\n"+indent}
+                    moveData+=content[k]
+                }
+                returnArray.push(moveData)
+            }
+        }
+    }
+    return returnArray
+}
 
 /* 閲覧ページを表示中に使う関数 */
 function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
     let result= `
-        <div id="name">${enemyDataValue.name}&nbsp;Lv${convertProperty(enemyDataValue.level,"","?")}</div>
+        <div id="name">${enemyDataValue.name}&nbsp;Lv${convertProperty(enemyDataValue.level)}</div>
         <div id="tag">${enemyDataValue.tag}</div>
         <div class="parameterBox">
-            <div>属性<br>${convertProperty(addDotToArray(deleteValueInArray(enemyDataValue.elements,""),"・"),"","?")}</div>
-            <div>系統<br>${convertProperty(addDotToArray(addValueToArray(deleteValueInArray(enemyDataValue.species,""),"系"),"・"),"","?")}</div>
-            <div>SANチェック<br>${convertProperty(enemyDataValue.sanCheck.success,"","?")}/${convertProperty(enemyDataValue.sanCheck.failure,"","?")}</div>
+            <div>属性<br>${convertProperty(addDotToArray(deleteValueInArray(enemyDataValue.elements,""),"・"))}</div>
+            <div>系統<br>${convertProperty(addDotToArray(addValueToArray(deleteValueInArray(enemyDataValue.species,""),"系"),"・"))}</div>
+            <div>SANチェック<br>${convertProperty(enemyDataValue.sanCheck.success)}/${convertProperty(enemyDataValue.sanCheck.failure)}</div>
         </div>
         <div class="parameterBox">
-            <div>HP<br>${convertProperty(enemyDataValue.HP,"","?")}</div>
-            <div>装甲<br>${convertProperty(enemyDataValue.armor,"","?")}</div>
-            <div>イニシアチブ<br>${convertProperty(enemyDataValue.initiative,"","?")}</div>
-            <div>行動P<br>${convertProperty(enemyDataValue.actionPoint,"","?")}</div>
-            <div>回避<br>${convertProperty(enemyDataValue.dodge,"","?")}%</div>
-            <div>行動回数<br>${convertProperty(enemyDataValue.actionNumber,"","?")}回</div>
+            <div>HP<br>${convertProperty(enemyDataValue.HP)}</div>
+            <div>装甲<br>${convertProperty(enemyDataValue.armor)}</div>
+            <div>イニシアチブ<br>${convertProperty(enemyDataValue.initiative)}</div>
+            <div>行動P<br>${convertProperty(enemyDataValue.actionPoint)}</div>
+            <div>回避<br>${convertProperty(enemyDataValue.dodge)}%</div>
+            <div>行動回数<br>${convertProperty(enemyDataValue.actionNumber)}回</div>
         </div>
         <table class="statusEffectTable">
             <tr>
@@ -644,14 +686,14 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
                 <th>隠密</th>
             </tr>
             <tr>
-                <td>${convertProperty(enemyDataValue.statusEffects.flame,"","?")}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.ice,"","?")}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.dazzle,"","?")}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.poison,"","?")}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.sleep,"","?")}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.confusion,"","?")}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.stun,"","?")}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.curse,"","?")}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.flame)}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.ice)}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.dazzle)}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.poison)}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.sleep)}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.confusion)}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.stun)}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.curse)}%</td>
                 <td>${convertAvailability(enemyDataValue.stealth)}</td>
             </tr>
         </table>
@@ -664,11 +706,11 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
                 <th>素早さ低下</th>
             </tr>
             <tr>
-                <td>${convertProperty(enemyDataValue.statusEffects.atkDown,"","?")}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.defDown.physical,"","?")}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.defDown.breath,"","?")}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.defDown.magic,"","?")}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.spdDown,"","?")}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.atkDown)}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.defDown.physical)}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.defDown.breath)}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.defDown.magic)}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.spdDown)}%</td>
             </tr>
         </table>
         <div class="cardBox">
@@ -709,7 +751,6 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
     `
     return result
 }
-
 function addAbilityBox(enemyDataValue){//閲覧ページの特性欄を作成する関数
     let result=""
     let textareaNumber=0//textareaのidへ順番にインデックスをつける
@@ -854,7 +895,6 @@ function addMoveBox_effect_content(moveEffectArray){//閲覧ページの技欄�
     }
     return result
 }
-
 function updateAllTextarea(idName){//全てのtextareaの初期値に合わせてそれぞれ高さを自動調整する関数
     const textareaList = $(`textarea[id^="${idName}"]`);
     for(let i=0;i<textareaList.length;i++){
@@ -890,7 +930,6 @@ function getArrowIcon(toggle){//アコーディオンメニューに使う矢印
     }
     return result
 }
-
 function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替える関数
     switch(target){
         case "ability":
@@ -923,7 +962,6 @@ function deleteEnemyPiece(key,data){//jsonのデータを削除する関数
     result.enemy.splice(key,1)//削除する
     dataBase_update(dataBaseUrl,result,"reload")//データベースを削除されたデータで上書きする
 }
-
 function exportEnemyPiece(enemyData){//敵コマをクリップボードに出力する関数
     let result=""
     result=convertJsonToPiece(enemyData)
@@ -936,7 +974,6 @@ function convertJsonToPiece(data){//Jsonデータをココフォリアコマ形�
     result=JSON.stringify(data)//仮処理
     return result
 }
-
 function downloadJson(data,idName,convertText=false){//jsonのデータをダウンロードする関数
     const sortedData=getSortedEnemyObject(data)
     let dataString=""
@@ -964,9 +1001,7 @@ function downloadJson(data,idName,convertText=false){//jsonのデータをダウ
         $(idName).attr("href",downloadUrl)
     }
 }
-
 function convertJsonToText(enemyData){//jsonデータをtxt形式に変換する関数
-    //TODO 敵コマをテキストデータに変換する処理
     let result=""
     const row0=[//名前・レベル
         `${convertProperty(enemyData.name)}`,
@@ -976,7 +1011,7 @@ function convertJsonToText(enemyData){//jsonデータをtxt形式に変換する
         `SANチェック${convertProperty(enemyData.sanCheck.success)}/${convertProperty(enemyData.sanCheck.failure)}`
     ]
     const row2=[//属性・種族
-        `${convertProperty(addDotToArray(deleteValueInArray(enemyData.elements,""),"・"),"","?")}属性`,
+        `${convertProperty(addDotToArray(deleteValueInArray(enemyData.elements,""),"・"))}属性`,
         `${addDotToArray(addValueToArray(deleteValueInArray(enemyData.species,""),"系"),"・")}`
     ]
     const row3=[//パラメータ
@@ -999,28 +1034,33 @@ function convertJsonToText(enemyData){//jsonデータをtxt形式に変換する
         `${convertPercent(enemyData.statusEffects.curse,"呪い")}`
     ]
     const row5=[//パラメータ低下耐性
-    `${convertPercent(enemyData.statusEffects.atkDown,"攻撃力低下")}`,
-    `${convertPercent(enemyData.statusEffects.defDown.physical,"物理防御力低下")}`,
-    `${convertPercent(enemyData.statusEffects.defDown.breath,"息防御力低下")}`,
-    `${convertPercent(enemyData.statusEffects.defDown.magic,"魔法防御力低下")}`,
-    `${convertPercent(enemyData.statusEffects.spdDown,"素早さ低下")}`,
+        `${convertPercent(enemyData.statusEffects.atkDown,"攻撃力低下")}`,
+        `${convertPercent(enemyData.statusEffects.defDown.physical,"物理防御力低下")}`,
+        `${convertPercent(enemyData.statusEffects.defDown.breath,"息防御力低下")}`,
+        `${convertPercent(enemyData.statusEffects.defDown.magic,"魔法防御力低下")}`,
+        `${convertPercent(enemyData.statusEffects.spdDown,"素早さ低下")}`,
     ]
-    const row6=new Array//特性
+    const row6=[//備考
+        enemyData.note
+    ]
+    const row7=new Array//特性
     for(let i in enemyData.abilities){
-        row6.push(`${convertProperty(enemyData.abilities[i].name)}[${convertProperty(convertString(enemyData.abilities[i].effect,"\n"))}]`)
+        row7.push(`${convertProperty(enemyData.abilities[i].name)}[${convertProperty(convertString(enemyData.abilities[i].effect,"\n"))}]`)
     }
-    const rowAll=[row0,row1,row2,row3,row4,row5,row6]
+    const row8=getMovesAsText(enemyData)//技
+    const rowAll=[row0,row1,row2,row3,row4,row5,row6,row7,row8]
     for(let i in rowAll){
-        if(i==6){//特性のときの処理
-            //ちなみにiはstring型なので「=」は2つじゃないと合致しない
-            result+=addDotToArray(deleteValueInArray(rowAll[i],""),"\n")+"\n"
+        const row=deleteValueInArray(rowAll[i],"")
+        if(row.length<1){continue}//行に何もないなら処理をしない
+        if(Number(i)!==0){result+="\n"}
+        if((JSON.stringify(rowAll[i])===JSON.stringify(row7))||(JSON.stringify(rowAll[i])===JSON.stringify(row8))){//特性や技のときの処理
+            result+=addDotToArray(row,"\n")
         }else{
-            result+=addDotToArray(deleteValueInArray(rowAll[i],""),",")+"\n"
+            result+=addDotToArray(row,",")
         }
     }
     return result
 }
-
 function importJson(importElement){//受け取ったjsonのデータを読み込む関数
     const data=importElement.files[0]//受け取ったデータ
     fileReader.readAsText(data)//テキストデータとして読み込む

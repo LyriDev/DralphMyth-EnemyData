@@ -108,6 +108,65 @@
                     ]
                 }
             ],
+            "note":"hoge"
+        },
+        {
+            "name":"",
+            "level":"",
+            "tag":"",
+            "elements":[
+            ],
+            "species":[
+            ],
+            "sanCheck":{
+                "success":"",
+                "failure":""
+            },
+            "HP":"",
+            "armor":"",
+            "initiative":"",
+            "actionPoint":"",
+            "dodge":"",
+            "actionNumber":"",
+            "statusEffects":{
+                "flame":"",
+                "ice":"",
+                "dazzle":"",
+                "poison":"",
+                "sleep":"",
+                "confusion":"",
+                "stun":"",
+                "curse":"",
+                "atkDown":"",
+                "defDown":{
+                    "physical":"",
+                    "breath":"",
+                    "magic":""
+                },
+                "spdDown":""
+            },
+            "stealth":"",
+            "abilities":[
+            ],
+            "moves":[
+                {
+                    "index":"",
+                    "name":"",
+                    "successRate":"",
+                    "types":[
+                    ],
+                    "elements":[
+                    ],
+                    "damage":"",
+                    "attackNumber":"",
+                    "reach":"",
+                    "range":"",
+                    "statusEffects":[
+                    ],
+                    "effects":[
+                    ]
+                }
+            ],
             "note":""
         },
         {
@@ -173,6 +232,7 @@
                         }
                     ],
                     "effects":[
+                        ""
                     ]
                 }
             ],
@@ -602,7 +662,7 @@
                 {
                     "index":3,
                     "name":"剣攻撃",
-                    "elements":["無属性"],
+                    "elements":["無"],
                     "types":["物理"],
                     "successRate":80,
                     "attackNumber":"2",
@@ -622,7 +682,7 @@
                     "successRate":100,
                     "attackNumber":"1",
                     "damage":"0",
-                    "reach":"",
+                    "reach":"なし",
                     "range":"",
                     "statusEffects":[
                     ],
@@ -631,7 +691,7 @@
                     ]
                 }
             ],
-            "note":"氷属性かも？"
+            "note":"他Lvと同じで氷属性かも？\n爬虫類だから土属性かも"
         }
     ]
 }
