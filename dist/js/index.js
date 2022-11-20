@@ -13,6 +13,7 @@ function getQuery(name){//クエリ文字列(URLパラメータ)を取得する�
 const Page=getQuery("page")//開いているページの種類
 const Index=getQuery("index")//開いているページの項目
 const isOpenList={ability:true,move:true,note:true}//アコーディオンメニューが開いているかどうか
+let isAlertBrowserBack=false//ブラウザバックを警告するかどうか
 const newData={
     name:"",
     level:"",
@@ -1108,4 +1109,11 @@ function sendDefaultData(){//ローカルのjsonデータをサーバーにア�
 /* ここから実際の処理 */
 window.addEventListener("load",()=>{//windowが読み込まれたとき
     dataBase_get(dataBaseUrl)
+})
+
+window.addEventListener('beforeunload',function(event){//編集内容が消えて困るページに離脱前の確認をはさむ
+    if(isAlertBrowserBack){
+        event.preventDefault()
+        event.returnValue=''
+    }
 })
