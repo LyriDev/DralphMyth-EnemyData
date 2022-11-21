@@ -319,14 +319,15 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             </div>
             `
             //TODO 現在の入力内容を取得する処理
+            const gottenData=data
             $(document).on("mousedown","#indexButton",function(event){//一覧ボタンにクリック処理を適用する
-                viewButton_clickedProcess(data,event,indexUrl)
+                viewButton_clickedProcess(gottenData,event,indexUrl)
             })
             $(document).on("mousedown","#viewButton",function(event){//閲覧ボタンにクリック処理を適用する
-                viewButton_clickedProcess(data,event,viewUrl)
+                viewButton_clickedProcess(gottenData,event,viewUrl)
             })
             $(document).on("click","#saveButton",function(){//保存ボタンに処理を適用する
-                saveJson(data)//jsonファイルを上書き更新する
+                dataBase_update(dataBaseUrl,gottenData)//jsonファイルを上書き更新する
                 alert("保存しました")
             })
             break
@@ -978,9 +979,6 @@ function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替え�
 /* 編集ページを表示中に使う関数 */
 
 /* データを編集・出力する関数 */
-function saveJson(data){//更新されたjsonファイルを保存する関数
-    dataBase_update(dataBaseUrl,data)
-}
 function deleteEnemyPiece(key,data){//jsonのデータを削除する関数
     let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
     result.enemy.splice(key,1)//削除する
