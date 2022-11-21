@@ -1,5 +1,10 @@
 const isLogin=true
 const loginPage=""//TODO ログインページの作成
+const newUser={//ユーザーデータの枠組み
+    key:null,
+    name:null,
+    password:null
+}
 let user="user0"//ユーザー名ではなくディレクトリ名 ユーザーのインデックスを登録する仕様
 let dataBaseUrl=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/${user}/data.json`
 
