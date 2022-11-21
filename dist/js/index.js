@@ -13,7 +13,6 @@ function getQuery(name){//クエリ文字列(URLパラメータ)を取得する�
 const Page=getQuery("page")//開いているページの種類
 const Index=getQuery("index")//開いているページの項目
 const isOpenList={ability:true,move:true,note:true}//アコーディオンメニューが開いているかどうか
-let isAlertBrowserBack=false//ブラウザバックを警告するかどうか
 const newData={
     name:"",
     level:"",
@@ -318,16 +317,17 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
                 </div>
             </div>
             `
-            //TODO 現在の入力内容を取得する処理
-            const gottenData=data
             $(document).on("mousedown","#indexButton",function(event){//一覧ボタンにクリック処理を適用する
-                viewButton_clickedProcess(gottenData,event,indexUrl)
+                const gottenEnemyData=getInputData()
+                viewButton_clickedProcess(gottenEnemyData,event,indexUrl)
             })
             $(document).on("mousedown","#viewButton",function(event){//閲覧ボタンにクリック処理を適用する
-                viewButton_clickedProcess(gottenData,event,viewUrl)
+                const gottenEnemyData=getInputData()
+                viewButton_clickedProcess(gottenEnemyData,event,viewUrl)
             })
             $(document).on("click","#saveButton",function(){//保存ボタンに処理を適用する
-                dataBase_update(dataBaseUrl,gottenData)//jsonファイルを上書き更新する
+                const gottenEnemyData=getInputData()
+                dataBase_update(dataBaseUrl,gottenEnemyData)//jsonファイルを上書き更新する
                 alert("保存しました")
             })
             break
@@ -345,7 +345,6 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
                 createButton_clickedProcess(data,event)
             })
             break
-
         default:
             break
     }
@@ -494,16 +493,18 @@ function showEnemyData(data,tagFilter="",nameFilter=""){//表示する敵デー�
 }
 function getSortedEnemyObject(data,tagFilter="",nameFilter="",keyAddOption=false){//ソートされた敵データを作成する関数
     /* 「タグ>名前>レベル」の順番にソートされる仕様 */
-    let result=new Array
+    const gottenData=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
+    const enemyArray=new Array
     if(tagFilter===""){//タグフィルターなしのとき
-        let allEnemyTag=getAllEnemyTag(data)
+        let allEnemyTag=getAllEnemyTag(gottenData)
         for(let i in allEnemyTag){//タグ毎にデータをまとめて出力する
-            result.push(getEnemyDataByTag(data,allEnemyTag[i],nameFilter,keyAddOption))
+            enemyArray.push(getEnemyDataByTag(gottenData,allEnemyTag[i],nameFilter,keyAddOption))
         }
     }else{//タグフィルターありのとき
-        result.push(getEnemyDataByTag(data,tagFilter,nameFilter,keyAddOption))//指定されたタグを持つデータのみを出力する
+        enemyArray.push(getEnemyDataByTag(gottenData,tagFilter,nameFilter,keyAddOption))//指定されたタグを持つデータのみを出力する
     }
-    return {enemy:result.flat()}
+    gottenData["enemy"]=enemyArray.flat()
+    return gottenData
 }
 function getAllEnemyTag(data){//敵データの全タグ種を取得する関数
     let enemyTagArray=new Array
@@ -977,6 +978,16 @@ function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替え�
 }
 
 /* 編集ページを表示中に使う関数 */
+function getInputEnemyData(){//入力フォームからデータを取得する関数
+    //TODO 現在の入力内容を取得する処理
+    if(Page!=="edit"){return}
+    return {}
+}
+function getReplacedData(data,key,enemyData){//データの一部を置換する関数
+    const result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
+    result.enemy.splice(key,1,enemyData)//指定されたデータを置換する
+    return result
+}
 
 /* データを編集・出力する関数 */
 function deleteEnemyPiece(key,data){//jsonのデータを削除する関数
@@ -1132,11 +1143,4 @@ function sendDefaultData(){//ローカルのjsonデータをサーバーにア�
 /* ここから実際の処理 */
 window.addEventListener("load",()=>{//windowが読み込まれたとき
     dataBase_get(dataBaseUrl)
-})
-
-window.addEventListener('beforeunload',function(event){//編集内容が消えて困るページに離脱前の確認をはさむ
-    if(isAlertBrowserBack){
-        event.preventDefault()
-        event.returnValue=''
-    }
 })
