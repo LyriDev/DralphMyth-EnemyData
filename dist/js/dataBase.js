@@ -1,10 +1,18 @@
 const isLogin=true
 const loginPage=""//TODO ログインページの作成
-const user="user0"//ユーザー名に「/」,「.」,「"」,「`」などの記号は使用できないようにする
-const dataBaseUrl=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/${user}/data.json`
+let user="user0"//ユーザー名に「/」,「.」,「"」,「`」などの記号は使用できないようにする
+let dataBaseUrl=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/${user}/data.json`
 
 /* ユーザーデータを管理する関数 */
+function setUser(){//ユーザーを設定する関数
+    //TODO ログイン処理
+    user=window.prompt("ユーザー名を入力してください", "");
+    dataBaseUrl=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/${user}/data.json`
+}
+
+
 function logout(){//ログアウトする関数
+    //TODO ログアウト処理
     alert("ログアウトしました。")
 }
 

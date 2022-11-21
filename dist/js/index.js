@@ -1114,6 +1114,7 @@ function keyupEvent(event){
             dataBase_delete("reload")
             break
         case 32://Spaceキーが押されたとき
+            setUser()
             break
     }
 }
