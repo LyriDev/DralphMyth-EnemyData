@@ -318,16 +318,16 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             </div>
             `
             $(document).on("mousedown","#indexButton",function(event){//一覧ボタンにクリック処理を適用する
-                const gottenEnemyData=getInputData()
-                viewButton_clickedProcess(gottenEnemyData,event,indexUrl)
+                const inputData=getInputData(data)
+                viewButton_clickedProcess(inputData,event,indexUrl)
             })
             $(document).on("mousedown","#viewButton",function(event){//閲覧ボタンにクリック処理を適用する
-                const gottenEnemyData=getInputData()
-                viewButton_clickedProcess(gottenEnemyData,event,viewUrl)
+                const inputData=getInputData(data)
+                viewButton_clickedProcess(inputData,event,viewUrl)
             })
             $(document).on("click","#saveButton",function(){//保存ボタンに処理を適用する
-                const gottenEnemyData=getInputData()
-                dataBase_update(dataBaseUrl,gottenEnemyData)//jsonファイルを上書き更新する
+                const inputData=getInputData(data)
+                dataBase_update(dataBaseUrl,inputData)//jsonファイルを上書き更新する
                 alert("保存しました")
             })
             break
@@ -981,12 +981,17 @@ function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替え�
 function getInputEnemyData(){//入力フォームからデータを取得する関数
     //TODO 現在の入力内容を取得する処理
     if(Page!=="edit"){return}
-    return {}
+    return newData
 }
 function getReplacedData(data,key,enemyData){//データの一部を置換する関数
     const result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
     result.enemy.splice(key,1,enemyData)//指定されたデータを置換する
     return result
+}
+function getInputData(data){//入力されたデータを含む全体のデータをを取得する関数
+    const gottenEnemyData=getInputEnemyData()
+    const replacedData=getReplacedData(data,Index,gottenEnemyData)
+    return replacedData
 }
 
 /* データを編集・出力する関数 */
