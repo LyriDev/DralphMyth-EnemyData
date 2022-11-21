@@ -1115,6 +1115,7 @@ function keyupEvent(event){
             break
         case 32://Spaceキーが押されたとき
             setUser()
+            dataBase_get(dataBaseUrl)
             break
     }
 }
