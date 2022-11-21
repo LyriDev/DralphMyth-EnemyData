@@ -14,8 +14,6 @@ function setUser(){//ユーザーを設定する関数
     user=window.prompt("ユーザー名を入力してください", "");
     dataBaseUrl=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/${user}/data.json`
 }
-
-
 function logout(){//ログアウトする関数
     //TODO ログアウト処理
     alert("ログアウトしました。")

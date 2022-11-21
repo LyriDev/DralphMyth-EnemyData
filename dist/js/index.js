@@ -152,12 +152,18 @@ function addValueToArray(array,value){//配列の値の後ろにそれぞれ要�
     }
     return addedArray
 }
-function addValue(value,add,negative){//値が否定条件に合致しなければ、値の後ろに要素を追加して返す関数
+function addValue(value,add,negative,position=1){//値が否定条件に合致しなければ、値の後ろに要素を追加して返す関数
+    let result=""
     if(value===negative){
-        return value
+        result=value
     }else{
-        return `${value}${add}`
+        if(position===1){//要素を後ろに追加する
+            result=`${value}${add}`
+        }else if(position===0){//要素を前に追加する
+            result=`${add}${value}`
+        }
     }
+    return result
 }
 function deleteValueInArray(array,value){//配列から特定の要素を削除する関数
     if(Boolean(array)===false){return ""}//渡された配列が定義されていないなら処理止め
@@ -607,76 +613,85 @@ function createEnemyElement(enemyData,data){//表示する敵データの要素�
     setUrl(`#editButton${key}`,editUrl)
     setUrl(`#viewButton${key}`,viewUrl)
     $(document).on("click",`#exportButton${key}`,function(){
-        exportEnemyPiece(enemyData.value)//出力ボタン処理を適用する
+        exportEnemyPiece(enemyData)//出力ボタン処理を適用する
     })
     $(document).on("click",`#deleteButton${key}`,function(){
         deleteEnemyPiece(key,data)//削除ボタン処理を適用する
     })
     return result
 }
-function getMovesAsText(enemyData){//技一覧をテキストで取得する関数
+function getSortedMoves(moves){//ソートされた技配列を取得する関数
     const moveIndexList=new Array//全ての技番号
-    for(let i in enemyData.moves){
-        const move=enemyData.moves[i]
+    for(let i in moves){
+        const move=moves[i]
         moveIndexList.push(move.index)
     }
     const moveIndexTypeList=getTypeArray(moveIndexList)//技番号の種類一覧
-    let returnArray=new Array
-    const indent="  "
-    for(let i in moveIndexTypeList){//技番号順に並び変えて表示する
-        for(let j in enemyData.moves){
-            const move=enemyData.moves[j]
+    const result=new Array
+    for(let i in moveIndexTypeList){//技番号順に並び変える
+        for(let j in moves){
+            const move=moves[j]
             if(move.index===moveIndexTypeList[i]){
-                let moveData=""
-                const content=[
-                    `${convertProperty(move.index)}.${convertProperty(move.name)}`,//技番号,技名,属性,攻撃種別
-                    [],//成功率,攻撃回数,ダメージ
-                    [],//射程,範囲
-                    [],//状態異常
-                    []//効果
-                ]
-                /* 属性,攻撃種別の表示 */
-                if((Number(move.damage)!==0)||(move.damage==="")){//属性と攻撃種別の表示
-                    content[0]+=`(${convertProperty(addDotToArray(deleteValueInArray(move.elements,""),"・"))}属性,${convertProperty(addDotToArray(deleteValueInArray(move.types,""),"・"))})`
-                }
-                /* 成功率,攻撃回数,ダメージの表示 */
-                if((Number(move.successRate)<100)||(move.successRate==="")){//成功率の表示
-                    content[1].push(`成功率${convertProperty(move.successRate)}%`)
-                }
-                if((String(move.attackNumber)!=="1")&&(String(move.attackNumber)!=="0")){//攻撃回数の表示
-                    content[1].push(`攻撃回数${convertProperty(move.attackNumber)}回`)
-                }
-                if((Number(move.damage)!==0)||(move.damage==="")){//ダメージの表示
-                    content[1].push(`ダメージ${convertProperty(move.damage)}`)
-                }
-                content[1]=addDotToArray(content[1],",")
-                /* 射程,範囲の表示 */
-                if((Number(move.reach)!==0)||(move.reach==="")){//射程の表示
-                    content[2].push(`射程${convertProperty(move.reach)}`)
-                }
-                if(move.range!==""){//範囲の表示
-                    content[2].push(move.range)
-                }
-                content[2]=addDotToArray(content[2],",")
-                /* 状態異常の表示 */
-                for(let k in move.statusEffects){
-                    content[3].push(`${convertProperty(move.statusEffects[k].effectType)}Lv${convertProperty(move.statusEffects[k].level)}(${convertProperty(move.statusEffects[k].turn)}ターン)`)
-                }
-                content[3]=addDotToArray(content[3],"\n"+indent)
-                /* 効果の表示 */
-                for(let k in move.effects){
-                    content[4].push(`${convertProperty(move.effects[k])}`)
-                }
-                content[4]=addDotToArray(content[4],"\n"+indent)
-                /* 表示加工処理 */
-                for(let k in content){
-                    if(content[k]===""){continue}//行に何もないなら処理をしない
-                    if(Number(k)!==0){moveData+="\n"+indent}
-                    moveData+=content[k]
-                }
-                returnArray.push(moveData)
+                result.push(move)
             }
         }
+    }
+    return result
+}
+function getMovesAsText(enemyData){//技一覧をテキストで取得する関数
+    let returnArray=new Array
+    const indent="  "
+    const sortedMoves=getSortedMoves(enemyData.moves)
+    for(let i in sortedMoves){//技番号順に並び変えて表示する
+        let moveData=""
+        const move=sortedMoves[i]
+        const content=[
+            `${convertProperty(move.index)}.${convertProperty(move.name)}`,//技番号,技名,属性,攻撃種別
+            [],//成功率,攻撃回数,ダメージ
+            [],//射程,範囲
+            [],//状態異常
+            []//効果
+        ]
+        /* 属性,攻撃種別の表示 */
+        if((Number(move.damage)!==0)||(move.damage==="")){//属性と攻撃種別の表示
+            content[0]+=`(${convertProperty(addDotToArray(deleteValueInArray(move.elements,""),"・"))}属性,${convertProperty(addDotToArray(deleteValueInArray(move.types,""),"・"))})`
+        }
+        /* 成功率,攻撃回数,ダメージの表示 */
+        if((Number(move.successRate)<100)||(move.successRate==="")){//成功率の表示
+            content[1].push(`成功率${convertProperty(move.successRate)}%`)
+        }
+        if((String(move.attackNumber)!=="1")&&(String(move.attackNumber)!=="0")){//攻撃回数の表示
+            content[1].push(`攻撃回数${convertProperty(move.attackNumber)}回`)
+        }
+        if((Number(move.damage)!==0)||(move.damage==="")){//ダメージの表示
+            content[1].push(`ダメージ${convertProperty(move.damage)}`)
+        }
+        content[1]=addDotToArray(content[1],",")
+        /* 射程,範囲の表示 */
+        if((Number(move.reach)!==0)||(move.reach==="")){//射程の表示
+            content[2].push(`射程${convertProperty(move.reach)}`)
+        }
+        if(move.range!==""){//範囲の表示
+            content[2].push(move.range)
+        }
+        content[2]=addDotToArray(content[2],",")
+        /* 状態異常の表示 */
+        for(let k in move.statusEffects){
+            content[3].push(`${convertProperty(move.statusEffects[k].effectType)}Lv${convertProperty(move.statusEffects[k].level)}(${convertProperty(move.statusEffects[k].turn)}ターン)`)
+        }
+        content[3]=addDotToArray(content[3],"\n"+indent)
+        /* 効果の表示 */
+        for(let k in move.effects){
+            content[4].push(`${convertProperty(move.effects[k])}`)
+        }
+        content[4]=addDotToArray(content[4],"\n"+indent)
+        /* 表示加工処理 */
+        for(let k in content){
+            if(content[k]===""){continue}//行に何もないなら処理をしない
+            if(Number(k)!==0){moveData+="\n"+indent}
+            moveData+=content[k]
+        }
+        returnArray.push(moveData)
     }
     return returnArray
 }
@@ -798,64 +813,54 @@ function addAbilityBox(enemyDataValue){//閲覧ページの特性欄を作成す
     }
     return result
 }
-function addMoveBox(enemyDataValue){//閲覧ページの技欄を作成する関数
-    const moveIndexList=new Array//全ての技番号
-    for(let i in enemyDataValue.moves){
-        const move=enemyDataValue.moves[i]
-        moveIndexList.push(move.index)
-    }
-    const moveIndexTypeList=getTypeArray(moveIndexList)//技番号の種類一覧
+function addMoveBox(enemyData){//閲覧ページの技欄を作成する関数
     let result=""
-    for(let i in moveIndexTypeList){//技番号順に並び変えて表示する
-        for(let j in enemyDataValue.moves){
-            const move=enemyDataValue.moves[j]
-            if(move.index===moveIndexTypeList[i]){
-                result+=`
-                    <div class="cardTable">
-                        <div class="clearFix">
-                            <div class="cardTable-move-index">
-                                <div class="cardTableTitle">技番号</div>
-                                <input readonly type="text" class="cardTableContent" value="${move.index}">
-                            </div>
-                            <div class="cardTable-move-name">
-                                <div class="cardTableTitle">技名</div>
-                                <input readonly type="text" class="cardTableContent" value="${move.name}">
-                            </div>
-                            <div class="cardTable-move-element">
-                                <div class="cardTableTitle">属性</div>
-                                <input readonly type="text" class="cardTableContent" value="${addDotToArray(deleteValueInArray(move.elements,""),"・")}">
-                            </div>
-                            <div class="cardTable-move-type">
-                                <div class="cardTableTitle">種別</div>
-                                <input readonly type="text" class="cardTableContent" value="${addDotToArray(deleteValueInArray(move.types,""),"・")}">
-                            </div>
-                            <div class="cardTable-move-reach">
-                                <div class="cardTableTitle">射程</div>
-                                <input readonly type="text" class="cardTableContent" value="${move.reach}">
-                            </div>
-                            <div class="cardTable-move-range">
-                                <div class="cardTableTitle">範囲</div>
-                                <input readonly type="text" class="cardTableContent" value="${move.range}">
-                            </div>
-                            <div class="cardTable-move-successRate">
-                                <div class="cardTableTitle">成功率</div>
-                                <input readonly type="text" class="cardTableContent" value="${addValue(move.successRate,"%","")}">
-                            </div>
-                            <div class="cardTable-move-attackNumber">
-                                <div class="cardTableTitle">攻撃回数</div>
-                                <input readonly type="text" class="cardTableContent" value="${move.attackNumber}">
-                            </div>
-                            <div class="cardTable-move-damage">
-                                <div class="cardTableTitle">ダメージ</div>
-                                <input readonly type="text" class="cardTableContent" value="${move.damage}">
-                            </div>
-                        </div>
-                        ${addMoveBox_statusEffect(move.statusEffects)}
-                        ${addMoveBox_effect(move.effects)}
+    const sortedMoves=getSortedMoves(enemyData.moves)
+    for(let i in sortedMoves){//技番号順に並び変えて表示する
+        result+=`
+            <div class="cardTable">
+                <div class="clearFix">
+                    <div class="cardTable-move-index">
+                        <div class="cardTableTitle">技番号</div>
+                        <input readonly type="text" class="cardTableContent" value="${sortedMoves[i].index}">
                     </div>
-                `
-            }
-        }
+                    <div class="cardTable-move-name">
+                        <div class="cardTableTitle">技名</div>
+                        <input readonly type="text" class="cardTableContent" value="${sortedMoves[i].name}">
+                    </div>
+                    <div class="cardTable-move-element">
+                        <div class="cardTableTitle">属性</div>
+                        <input readonly type="text" class="cardTableContent" value="${addDotToArray(deleteValueInArray(sortedMoves[i].elements,""),"・")}">
+                    </div>
+                    <div class="cardTable-move-type">
+                        <div class="cardTableTitle">種別</div>
+                        <input readonly type="text" class="cardTableContent" value="${addDotToArray(deleteValueInArray(sortedMoves[i].types,""),"・")}">
+                    </div>
+                    <div class="cardTable-move-reach">
+                        <div class="cardTableTitle">射程</div>
+                        <input readonly type="text" class="cardTableContent" value="${sortedMoves[i].reach}">
+                    </div>
+                    <div class="cardTable-move-range">
+                        <div class="cardTableTitle">範囲</div>
+                        <input readonly type="text" class="cardTableContent" value="${sortedMoves[i].range}">
+                    </div>
+                    <div class="cardTable-move-successRate">
+                        <div class="cardTableTitle">成功率</div>
+                        <input readonly type="text" class="cardTableContent" value="${addValue(sortedMoves[i].successRate,"%","")}">
+                    </div>
+                    <div class="cardTable-move-attackNumber">
+                        <div class="cardTableTitle">攻撃回数</div>
+                        <input readonly type="text" class="cardTableContent" value="${sortedMoves[i].attackNumber}">
+                    </div>
+                    <div class="cardTable-move-damage">
+                        <div class="cardTableTitle">ダメージ</div>
+                        <input readonly type="text" class="cardTableContent" value="${sortedMoves[i].damage}">
+                    </div>
+                </div>
+                ${addMoveBox_statusEffect(sortedMoves[i].statusEffects)}
+                ${addMoveBox_effect(sortedMoves[i].effects)}
+            </div>
+        `
     }
     return result
 }
@@ -1009,8 +1014,148 @@ function exportEnemyPiece(enemyData){//敵コマをクリップボードに出�
 function convertJsonToPiece(enemyData){//Jsonデータをココフォリアコマ形式に変換する関数
     //TODO 敵コマをココフォリアデータに変換する処理
     let result=""
-    result=JSON.stringify(enemyData)//仮処理
+    const ccfoliaPiece={//ココフォリアコマの枠組み
+        kind:"character",
+        data:{
+            name:"",
+            memo:"",
+            initiative:0,
+            externalUrl:"",
+            status:[
+                {label:"HP",value:0,max:0},
+                {label:"行動P",value:0,max:0},
+                {label:"装甲",value:0,max:0}
+            ],
+            params:[
+                {label:"",value:""}
+            ],
+            iconUrl:"",
+            faces:[],
+            x:0,y:0,angle:0,width:4,height:4,
+            active:true,secret:false,invisible:false,hideStatus:false,
+            color:"#888888",
+            commands:"",
+            owner:""
+        }
+    }
+    //ccfoliaPieceにデータを代入していく
+    ccfoliaPiece["data"]["name"]=(enemyData.name+addValue(enemyData.level," レベル","",0)).trimStart()
+    ccfoliaPiece["data"]["status"][0]["value"]=ccfoliaPiece["data"]["status"][0]["max"]=enemyData.HP
+    ccfoliaPiece["data"]["status"][1]["value"]=enemyData.actionPoint
+    ccfoliaPiece["data"]["status"][2]["value"]=enemyData.armor
+    ccfoliaPiece["data"]["commands"]=getChatPalette(enemyData)
+    //代入したデータを出力する
+    result=JSON.stringify(ccfoliaPiece)
     return result
+}
+function getChatPalette(enemyData){//出力するココフォリアコマのチャットパレットを作成する関数
+    let result=""
+    const separateBar="―――――――――――――――――"
+    const subSeparateBar="― ― ― ― ― ― ― ― ― ― ― ― ―"
+    const chatPalette={
+        sanCheck:[`SANチェック ${convertProperty(enemyData.sanCheck.success)}/${convertProperty(enemyData.sanCheck.failure)}`],
+        ability:getAbilitiesAsCcfoliaData(enemyData,subSeparateBar),
+        controller:[
+            ":HP+",
+            ":HP-",
+            `CCB<=${convertProperty(enemyData.dodge)} 【回避】`,
+            `1d${enemyData.moves.length-1} 攻撃方法`
+        ],
+        move:getMovesAsCcfoliaData(enemyData.moves,subSeparateBar)
+    }
+    const sections=new Array
+    for(let key in chatPalette){
+        if(chatPalette[key]===""){continue}//セクションに何もないなら処理をしない
+        sections.push(addDotToArray(chatPalette[key],"\n"))
+    }
+    result=addDotToArray(deleteValueInArray(sections,""),"\n"+separateBar+"\n")
+    return result
+}
+function getAbilitiesAsCcfoliaData(enemyData,subSeparateBar){//ココフォリアコマの特性欄を作成する関数
+    const result=new Array
+    const abilities={
+        feature:[
+            `${convertProperty(addDotToArray(deleteValueInArray(enemyData.elements,""),"・"))}属性`,
+            `${addDotToArray(addValueToArray(deleteValueInArray(enemyData.species,""),"系"),"・")}`,
+            `AI${convertProperty(enemyData.actionNumber)}回行動`
+        ],
+        resistance_statusEffect:[
+            `${convertPercent(enemyData.statusEffects.flame,"炎",true)}`,
+            `${convertPercent(enemyData.statusEffects.ice,"氷",true)}`,
+            `${convertPercent(enemyData.statusEffects.dazzle,"幻惑",true)}`,
+            `${convertPercent(enemyData.statusEffects.poison,"毒",true)}`,
+            `${convertPercent(enemyData.statusEffects.sleep,"眠り",true)}`,
+            `${convertPercent(enemyData.statusEffects.confusion,"混乱",true)}`,
+            `${convertPercent(enemyData.statusEffects.stun,"スタン",true)}`,
+            `${convertPercent(enemyData.statusEffects.curse,"呪い",true)}`
+        ],
+        resistance_parameterDown:[
+            `${convertPercent(enemyData.statusEffects.atkDown,"攻撃力低下",true)}`,
+            `${convertPercent(enemyData.statusEffects.defDown.physical,"物理防御力低下",true)}`,
+            `${convertPercent(enemyData.statusEffects.defDown.breath,"息防御力低下",true)}`,
+            `${convertPercent(enemyData.statusEffects.defDown.magic,"魔法防御力低下",true)}`,
+            `${convertPercent(enemyData.statusEffects.spdDown,"素早さ低下",true)}`
+        ]
+    }
+    if(enemyData.stealth==="無効"){
+        abilities["feature"].push("隠密無効")
+    }
+    for(let key in abilities){
+        result.push(addDotToArray(deleteValueInArray(abilities[key],""),","))
+    }
+    if(Boolean(enemyData.abilities)===true){//特性があるときの処理
+        for(let i in enemyData.abilities){
+            result.push(subSeparateBar)
+            result.push(`『${convertProperty(enemyData.abilities[i].name)}』`)
+            result.push(convertProperty(enemyData.abilities[i].effect))
+        }
+    }
+    return deleteValueInArray(result,"")
+}
+function getMovesAsCcfoliaData(moves,subSeparateBar){//ココフォリアコマの技欄を作成する関数
+    const result=new Array
+    const sortedMoves=getSortedMoves(moves)
+    for(let i in sortedMoves){
+        //間を区切る
+        if(Number(i)!==0){result.push(subSeparateBar)}
+        //技番号と名前
+        result.push(`【${convertProperty(sortedMoves[i].index)}】『${convertProperty(sortedMoves[i].name)}』`)
+        //射程と範囲
+        const reachRange=new Array
+        if((Number(sortedMoves[i].reach)!==0)||(sortedMoves[i].reach==="")){
+            reachRange.push(`射程${convertProperty(sortedMoves[i].reach)}`)
+        }
+        if(sortedMoves[i].range!==""){
+            reachRange.push(sortedMoves[i].range)
+        }
+        result.push(addDotToArray(reachRange,","))
+        //状態異常
+        for(let j in sortedMoves[i].statusEffects){
+            result.push(`${convertProperty(sortedMoves[i].statusEffects[j].effectType)}Lv${convertProperty(sortedMoves[i].statusEffects[j].level)}(${convertProperty(sortedMoves[i].statusEffects[j].turn)}ターン)`)
+        }
+        //技効果
+        for(let j in sortedMoves[i].effects){
+            result.push(convertProperty(sortedMoves[i].effects[j]))
+        }
+        //攻撃ロール
+            if(isNaN(Number(sortedMoves[i].attackNumber))===true){//"2d3"など、攻撃回数が数値ではないとき
+                result.push(`${convertProperty(sortedMoves[i].attackNumber)} 【攻撃回数(${convertProperty(sortedMoves[i].name)})】`)
+                result.push(`B100<=${convertProperty(sortedMoves[i].successRate)} 【${convertProperty(sortedMoves[i].name)}】`)
+            }else{//攻撃回数が純粋な数値のとき
+                if((Number(sortedMoves[i].attackNumber)>0)&&((Number(sortedMoves[i].successRate)<100))){//攻撃回数が1未満や成功率が100%のとき、攻撃ロールは表示しない
+                    if(Number(sortedMoves[i].attackNumber)>1){//攻撃回数が1回ならCCBで判定
+                        result.push(`${convertProperty(sortedMoves[i].attackNumber)}B100<=${convertProperty(sortedMoves[i].successRate)} 【${convertProperty(sortedMoves[i].name)}】`)
+                    }else{//攻撃回数が複数ならxB100で判定
+                        result.push(`CCB<=${convertProperty(sortedMoves[i].successRate)} 【${convertProperty(sortedMoves[i].name)}】`)
+                    }
+                }
+            }
+        //ダメージロール
+        if(Number(sortedMoves[i].damage)!==0){
+            result.push(`${convertProperty(sortedMoves[i].damage)} 【ダメージ(${convertProperty(sortedMoves[i].name)})】`)
+        }
+    }
+    return deleteValueInArray(result,"")
 }
 function downloadJson(data,idName,convertText=false){//jsonのデータをダウンロードする関数
     const sortedData=getSortedEnemyObject(data)
@@ -1076,7 +1221,7 @@ function convertJsonToText(enemyData){//jsonデータをtxt形式に変換する
         `${convertPercent(enemyData.statusEffects.defDown.physical,"物理防御力低下")}`,
         `${convertPercent(enemyData.statusEffects.defDown.breath,"息防御力低下")}`,
         `${convertPercent(enemyData.statusEffects.defDown.magic,"魔法防御力低下")}`,
-        `${convertPercent(enemyData.statusEffects.spdDown,"素早さ低下")}`,
+        `${convertPercent(enemyData.statusEffects.spdDown,"素早さ低下")}`
     ]
     const row6=[//備考
         enemyData.note
