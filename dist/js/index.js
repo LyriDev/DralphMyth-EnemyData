@@ -206,7 +206,7 @@ function setUrl(idName,url){//クリックしたらurlを開く処理を適用�
         }
     })
 }
-function exportToClipboard(value){
+function exportToClipboard(value){//テキストデータをクリップボードに出力する関数
     if(navigator.clipboard){//サポートしているかを確認
         navigator.clipboard.writeText(value)//クリップボードに出力
     }
@@ -992,10 +992,10 @@ function exportEnemyPiece(enemyData){//敵コマをクリップボードに出�
     exportToClipboard(result)//クリップボードに出力
     alert("敵データをクリップボードに出力しました。")
 }
-function convertJsonToPiece(data){//Jsonデータをココフォリアコマ形式に変換する関数
+function convertJsonToPiece(enemyData){//Jsonデータをココフォリアコマ形式に変換する関数
     //TODO 敵コマをココフォリアデータに変換する処理
     let result=""
-    result=JSON.stringify(data)//仮処理
+    result=JSON.stringify(enemyData)//仮処理
     return result
 }
 function downloadJson(data,idName,convertText=false){//jsonのデータをダウンロードする関数

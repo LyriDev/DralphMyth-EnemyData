@@ -1,10 +1,10 @@
 const isLogin=true
 const loginPage=""//TODO ログインページの作成
-const user="user0"
+const user="user0"//ユーザー名に「/」,「.」,「"」,「`」などの記号は使用できないようにする
 const dataBaseUrl=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/${user}/data.json`
 
 /* ユーザーデータを管理する関数 */
-function logout(){
+function logout(){//ログアウトする関数
     alert("ログアウトしました。")
 }
 
