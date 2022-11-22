@@ -1147,7 +1147,7 @@ function getChatPalette(enemyData){//出力するココフォリアコマのチ�
             ":HP+",
             ":HP-",
             `CCB<=${convertProperty(enemyData.dodge)} 【回避】`,
-            `1d${enemyData.moves.length-1} 攻撃方法`
+            `1d${enemyData.moves.length} 攻撃方法`
         ],
         move:getMovesAsCcfoliaData(enemyData.moves,subSeparateBar)
     }
