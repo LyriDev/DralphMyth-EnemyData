@@ -17,6 +17,8 @@
 #symbol .cardTableContent{
     display: flex;
     margin-bottom: 10px;
+
+
 }
 #symbol .cardTableContent:last-child{
     margin-bottom: 0;
@@ -54,6 +56,31 @@
     border-color: #7A8288;
     outline: 1.5px solid #7A8288;
 }
-#symbol input[name="symbol-name"]{
+#symbol #symbol-name{
     width: 300px;
+}
+#symbol #symbol-element{
+    width: 100px;
+    height: 30px;
+    margin: auto 0;
+    border-radius: 3px;
+    line-height: 30px;
+    text-align: center;
+}
+#symbol .symbol-element{
+    width: 50px;
+    margin-left: 10px;
+
+}
+#symbol .symbol-element label{
+    display: block;
+    padding: 0;
+    text-align: center;
+    background-color: transparent;
+    font-size: 1.25rem;
+
+}
+#symbol .symbol-element input[type="checkBox"]{
+    display: block;
+    margin:5px auto;
 }

@@ -218,7 +218,7 @@ function exportToClipboard(value){//テキストデータをクリップボー�
 }
 
 /* 種別リスト */
-const elementList=["火","氷","風","土","雷","水","光","闇","無"]
+
 const attackTypeList=["物理","息","魔法"]
 
 /* ページごとに表示するコンテンツを変更するための関数 */
@@ -1007,11 +1007,15 @@ function getEditPage(enemyData){
                 <div class="cardTable">
                     <div class="cardTableContent">
                         <label for="symbol-name">名前</label>
-                        <input type="text" name="symbol-name" id="symbol-name" placeholder="おなまえ" value="${0}">
+                        <input type="text" id="symbol-name" placeholder="おなまえ" value="${0}">
                     </div>
                     <div class="cardTableContent">
                         <label for="symbol-tag">タグ</label>
-                        <input type="text" name="symbol-tag" id="symbol-tag" value="${0}">
+                        <input type="text" id="symbol-tag" value="${0}">
+                    </div>
+                    <div class="cardTableContent">
+                        <label id="symbol-element">属性</label>
+                        ${createElementCheckBox(enemyData,"symbol-element")}
                     </div>
                 </div>
             </div>
@@ -1051,6 +1055,19 @@ function getEditPage(enemyData){
             </div>
         </div>
     `
+    return result
+}
+function createElementCheckBox(enemyData,boxName){//9属性のチェックボックスを作成する関数
+    const elementList=["無","火","氷","風","土","雷","水","光","闇"]
+    let result=""
+    for(let i in elementList){
+        result+=`
+            <div class="${boxName}">
+                <label for="${boxName}-${i}">${elementList[i]}</label>
+                <input type="checkbox" id="${boxName}-${i}">
+            </div>
+        `
+    }
     return result
 }
 
