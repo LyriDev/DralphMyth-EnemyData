@@ -13,62 +13,6 @@
 
 }
 
-.cardBox{
-    width:470px;
-    margin:0 auto 10px auto;
-    border: solid 1px #555555;
-    border-radius: 3px;
-    background-color: #272B30;
-}
-.cardBox:first-child{
-    margin-top: 10px;
-}
-
-.cardHeader{
-    width:470px;
-    background-color: #23262A;
-}
-.cardHeaderTitle{
-    display:flex;
-    align-items: center;
-    float:left;
-    height:50px;
-    margin-top: 0;
-    padding: 0 10px;
-    font-size: 1.25rem;
-    font-weight: bolder;
-}
-.cardHeaderIcon{
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height:50px;
-    margin-right: 0;
-    margin-left: auto;
-    cursor: pointer;
-}
-.cardHeaderIcon:hover .arrowLeft,.cardHeaderIcon:hover .arrowDown{
-    color: #F5F5F5;
-}
-
-.cardBody{
-    margin: 5px 0;
-    color:#F5F5F5;
-}
-.cardTable{
-    clear: left;
-    width: 440px;
-    margin:0 auto;
-    padding: 10px;
-}
-.cardTable:nth-child(2n+1){
-    background-color: #3A3F44;
-}
-.cardTable:nth-child(2n){
-    background-color: #272B30;
-}
-
 /* 名前 タグなど */
 #symbol .cardTableContent{
     display: flex;
@@ -81,6 +25,7 @@
     font-size: 1.25rem;
 }
 #symbol label{
+    z-index: 2;
     padding: 3px;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
@@ -91,6 +36,7 @@
     background-color: #1A1D21;
 }
 #symbol input[type="text"]{
+    z-index: 1;
     border-left: 0;
     border-width:1px;
     border-top-left-radius: 0;
@@ -107,4 +53,7 @@
 #symbol input[type="text"]:focus{
     border-color: #7A8288;
     outline: 1.5px solid #7A8288;
+}
+#symbol input[name="symbol-name"]{
+    width: 300px;
 }
