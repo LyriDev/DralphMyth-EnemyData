@@ -994,64 +994,8 @@ function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替え�
 }
 
 /* 編集ページを表示中に使う関数 */
-function getEditPage(enemyDataValue){
-    $("#styleSwitch").attr("href","./css/view.css")//CSSファイルを差し替える
+function getEditPage(enemyData){
     let result=`
-        <div id="name">${enemyDataValue.name}&nbsp;Lv${convertProperty(enemyDataValue.level)}</div>
-        <div id="tag">${enemyDataValue.tag}</div>
-        <div class="parameterBox">
-            <div>属性<br>${convertProperty(addDotToArray(deleteValueInArray(enemyDataValue.elements,""),"・"))}</div>
-            <div>系統<br>${convertProperty(addDotToArray(addValueToArray(deleteValueInArray(enemyDataValue.species,""),"系"),"・"))}</div>
-            <div>SANチェック<br>${convertProperty(enemyDataValue.sanCheck.success)}/${convertProperty(enemyDataValue.sanCheck.failure)}</div>
-        </div>
-        <div class="parameterBox">
-            <div>HP<br>${convertProperty(enemyDataValue.HP)}</div>
-            <div>装甲<br>${convertProperty(enemyDataValue.armor)}</div>
-            <div>イニシアチブ<br>${convertProperty(enemyDataValue.initiative)}</div>
-            <div>行動P<br>${convertProperty(enemyDataValue.actionPoint)}</div>
-            <div>回避<br>${convertProperty(enemyDataValue.dodge)}%</div>
-            <div>行動回数<br>${convertProperty(enemyDataValue.actionNumber)}回</div>
-        </div>
-        <table class="statusEffectTable">
-            <tr>
-                <th>炎</th>
-                <th>氷</th>
-                <th>幻惑</th>
-                <th>毒</th>
-                <th>眠り</th>
-                <th>混乱</th>
-                <th>スタン</th>
-                <th>呪い</th>
-                <th>隠密</th>
-            </tr>
-            <tr>
-                <td>${convertProperty(enemyDataValue.statusEffects.flame)}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.ice)}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.dazzle)}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.poison)}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.sleep)}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.confusion)}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.stun)}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.curse)}%</td>
-                <td>${convertAvailability(enemyDataValue.stealth)}</td>
-            </tr>
-        </table>
-        <table class="statusEffectTable">
-            <tr>
-                <th>攻撃力低下</th>
-                <th>物理防御力<br>低下</th>
-                <th>息防御力<br>低下</th>
-                <th>魔法防御力<br>低下</th>
-                <th>素早さ低下</th>
-            </tr>
-            <tr>
-                <td>${convertProperty(enemyDataValue.statusEffects.atkDown)}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.defDown.physical)}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.defDown.breath)}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.defDown.magic)}%</td>
-                <td>${convertProperty(enemyDataValue.statusEffects.spdDown)}%</td>
-            </tr>
-        </table>
         <div class="cardBox">
             <div class="cardHeader" data-target="symbol">
                 <div class="cardHeaderTitle">基本情報</div>
@@ -1060,9 +1004,15 @@ function getEditPage(enemyDataValue){
                 </a>
             </div>
             <div id="symbol" class="cardBody">
-                <div>
-                    <label>
-                    <input>
+                <div class="cardTable">
+                    <div class="cardTableContent">
+                        <label for="symbol-name">名前</label>
+                        <input type="text" name="symbol-name" id="symbol-name" placeholder="おなまえ" value="${0}">
+                    </div>
+                    <div class="cardTableContent">
+                        <label for="symbol-tag">タグ</label>
+                        <input type="text" name="symbol-tag" id="symbol-tag" value="${0}">
+                    </div>
                 </div>
             </div>
         </div>
@@ -1074,7 +1024,7 @@ function getEditPage(enemyDataValue){
                 </a>
             </div>
             <div id="ability" class="cardBody">
-                ${addAbilityBox(enemyDataValue)}
+                ${addAbilityBox(enemyData)}
             </div>
         </div>
         <div class="cardBox">
@@ -1085,7 +1035,7 @@ function getEditPage(enemyDataValue){
                 </a>
             </div>
             <div id="move" class="cardBody">
-                ${addMoveBox(enemyDataValue)}
+                ${addMoveBox(enemyData)}
             </div>
         </div>
         <div class="cardBox">
@@ -1097,7 +1047,7 @@ function getEditPage(enemyDataValue){
         </div>
         <div id="note" class="cardBody">
             <div class="cardTable">
-                <textarea readonly id="note0" class="cardTableContent" rows="1">${enemyDataValue.note}</textarea>
+                <textarea readonly id="note0" class="cardTableContent" rows="1">${enemyData.note}</textarea>
             </div>
         </div>
     `
