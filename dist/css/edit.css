@@ -10,15 +10,13 @@
     border:solid 1px #59C159;
     background-color: #59C159;
     cursor: pointer;
-
 }
 
 /* 名前 タグなど */
 #symbol .cardTableContent{
     display: flex;
     margin-bottom: 10px;
-
-
+    align-items: center;
 }
 #symbol .cardTableContent:last-child{
     margin-bottom: 0;
@@ -26,7 +24,7 @@
 #symbol label,#symbol input[type="text"]{
     font-size: 1.25rem;
 }
-#symbol label{
+#symbol .cardTableContent > label{
     z-index: 2;
     padding: 3px;
     border-top-left-radius: 3px;
@@ -34,7 +32,7 @@
     background-color: #202328;
     transition: background-color 0.3s;
 }
-#symbol label:hover{
+#symbol > .cardTable > .cardTableContent > label:hover{
     background-color: #1A1D21;
 }
 #symbol input[type="text"]{
@@ -56,21 +54,51 @@
     border-color: #7A8288;
     outline: 1.5px solid #7A8288;
 }
+#symbol .cardTableContent-add{
+    margin-left: 5px;
+    font-size: 1.25rem;
+}
+.fluctuateButtons{
+    float: right;
+}
+#addButton-symbol-species,#deleteButton-symbol-species{
+    font-size: 1rem;
+}
+
 #symbol #symbol-name{
     width: 300px;
 }
-#symbol #symbol-element{
-    width: 100px;
-    height: 30px;
+#symbol #symbol-tag{
+    width: 300px;
+}
+
+#symbol #symbol-element-label{
+    width: 40px;
+    height: 50px;
     margin: auto 0;
-    border-radius: 3px;
-    line-height: 30px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    line-height: 50px;
     text-align: center;
+}
+#symbol #symbol-element-content{
+    display: flex;
+    width: 390px;
+    border: 1px solid #52575C;
+    border-left: 0;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background-color: #656D75;
+}
+#symbol #symbol-element-content:hover,#symbol-element-label:hover + #symbol-element-content{
+    border-color: #7A8288;
 }
 #symbol .symbol-element{
     width: 50px;
     margin-left: 10px;
-
+}
+#symbol .symbol-element:last-child{
+    margin-right: 10px;
 }
 #symbol .symbol-element label{
     display: block;
@@ -78,9 +106,12 @@
     text-align: center;
     background-color: transparent;
     font-size: 1.25rem;
-
 }
 #symbol .symbol-element input[type="checkBox"]{
     display: block;
     margin:5px auto;
+}
+
+#symbol #symbol-species input[type="text"]{
+    width: 200px;
 }

@@ -441,6 +441,7 @@ function updateMain(data,_page=Page){//メインを変更する関数
             setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
             break
         case "edit"://編集ページの際の処理
+            setFluctuateButtonProcess("symbol-species",createSpeciesBox())//種族に追加・削除ボタンの処理を適用する
             setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
             break
         default:
@@ -927,6 +928,8 @@ function addMoveBox_effect_content(moveEffectArray){//閲覧ページの技欄�
     }
     return result
 }
+
+/* htmlのふるまいを適用する関数 */
 function updateAllTextarea(idName){//全てのtextareaの初期値に合わせてそれぞれ高さを自動調整する関数
     const textareaList = $(`textarea[id^="${idName}"]`);
     for(let i=0;i<textareaList.length;i++){
@@ -1014,8 +1017,17 @@ function getEditPage(enemyData){
                         <input type="text" id="symbol-tag" value="${0}">
                     </div>
                     <div class="cardTableContent">
-                        <label id="symbol-element">属性</label>
-                        ${createElementCheckBox(enemyData,"symbol-element")}
+                        <label id="symbol-element-label">属性</label>
+                        <div id="symbol-element-content">
+                            ${createElementCheckBox(enemyData,"symbol-element")}
+                        </div>
+                    </div>
+                    <div id="symbol-species">
+                        <div class="fluctuateButtons">
+                            <button id="addButton-symbol-species">追加</button>
+                            <button id="deleteButton-symbol-species">削除</button>
+                        </div>
+                        ${addSpecieBox(enemyData.species)}
                     </div>
                 </div>
             </div>
@@ -1069,6 +1081,44 @@ function createElementCheckBox(enemyData,boxName){//9属性のチェックボッ
         `
     }
     return result
+}
+
+function addSpecieBox(speciesArray){//種族を取得して、追加する関数
+    let result=""
+    if(Boolean(speciesArray)===true){
+        for(let i in speciesArray){
+            result+=createSpeciesBox(speciesArray[i])
+        }
+    }else{
+        result+=createSpeciesBox()
+    }
+    return result
+}
+
+function createSpeciesBox(species=""){//追加する種族を作成する関数
+    const idName="symbol-species-"
+    const speciesBoxList = $(`input[id^="${idName}"]`)
+    let result=""
+    result=`
+        <div class="cardTableContent">
+            <label for="symbol-species-${speciesBoxList.length}">種族</label>
+            <input type="text" id="symbol-species-${speciesBoxList.length}" value="${species}">
+            <div class=cardTableContent-add>系</div>
+        </div>
+    `
+    return result
+}
+
+function setFluctuateButtonProcess(boxName,content){//プロパティの追加・削除ボタンの処理を適用する処理
+    const boxId=document.getElementById(boxName)
+    $(document).on("click",`#addButton-${boxName}`,function(){//追加ボタンの処理
+        boxId.innerHTML+=content
+    })
+    $(document).on("click",`#deleteButton-${boxName}`,function(){//削除ボタンの処理
+        if(boxId.childElementCount>=3){//子要素が最低1個(追加・削除ボタンを除いて)以上あるなら、一番下の子要素を削除する
+            boxId.removeChild(boxId.lastElementChild)
+        }
+    })
 }
 
 function getInputEnemyData(){//入力フォームからデータを取得する関数
