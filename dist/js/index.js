@@ -1010,7 +1010,7 @@ function getEditPage(enemyData){
                 <div class="cardTable">
                     <div class="cardTableContent">
                         <label for="symbol-name">名前</label>
-                        <input type="text" id="symbol-name" placeholder="おなまえ" value="${enemyData.name}">
+                        <input type="text" id="symbol-name" value="${enemyData.name}">
                     </div>
                     <div class="cardTableContent">
                         <label for="symbol-tag">タグ</label>
@@ -1025,6 +1025,163 @@ function getEditPage(enemyData){
                     <div id="symbol-species">
                         <button id="addButton-symbol-species" class="button">追加</button>
                         ${addSpecieBox(enemyData.species)}
+                    </div>
+                    <div class="cardTableContent">
+                        <table id="symbol-parameter">
+                            <tr>
+                                <td>SANチェック</td>
+                                <td>
+                                    <input type="text" id="symbol-parameter-sanCheck-success" value="${enemyData.sanCheck.success}">
+                                    <div class=cardTableContent-add>/</div>
+                                    <input type="text" id="symbol-parameter-sanCheck-success" value="${enemyData.sanCheck.failure}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>HP</td>
+                                <td><input type="number" id="symbol-parameter-HP" value="${enemyData.HP}"></td>
+                            </tr>
+                            <tr>
+                                <td>装甲</td>
+                                <td><input type="number" id="symbol-parameter-armor" value="${enemyData.armor}"></td>
+                            </tr>
+                            <tr>
+                                <td>イニシアチブ</td>
+                                <td><input type="number" id="symbol-parameter-initiative" value="${enemyData.initiative}"></td>
+                            </tr>
+                            <tr>
+                                <td>行動P</td>
+                                <td><input type="number" id="symbol-parameter-actionPoint" value="${enemyData.actionPoint}"></td>
+                            </tr>
+                            <tr>
+                                <td>回避</td>
+                                <td>
+                                <input type="number" id="symbol-parameter-dodge" value="${enemyData.dodge}">
+                                <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>行動回数</td>
+                                <td>
+                                <input type="number" id="symbol-parameter-actionPoint" value="${enemyData.actionPoint}">
+                                <div class=cardTableContent-add>回</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cardBox">
+            <div class="cardHeader" data-target="statusEffects">
+                <div class="cardHeaderTitle">耐性</div>
+                <a class="cardHeaderIcon">
+                    <span id="statusEffectsArrow" class="arrowDown"></span>
+                </a>
+            </div>
+            <div id="statusEffects" class="cardBody">
+                <div class="cardTable">
+                    <div class="cardTableContent">
+                        <table>
+                            <tr>
+                                <td>炎</td>
+                                <td>
+                                    <input type="number" id="statusEffects-flame" value="${enemyData.statusEffects.flame}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>氷</td>
+                                <td>
+                                    <input type="number" id="statusEffects-ice" value="${enemyData.statusEffects.ice}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>幻惑</td>
+                                <td>
+                                    <input type="number" id="statusEffects-dazzle" value="${enemyData.statusEffects.dazzle}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>毒</td>
+                                <td>
+                                    <input type="number" id="statusEffects-poison" value="${enemyData.statusEffects.poison}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>眠り</td>
+                                <td>
+                                    <input type="number" id="statusEffects-sleep" value="${enemyData.statusEffects.sleep}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>混乱</td>
+                                <td>
+                                    <input type="number" id="statusEffects-confusion" value="${enemyData.statusEffects.confusion}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>スタン</td>
+                                <td>
+                                    <input type="number" id="statusEffects-stun" value="${enemyData.statusEffects.stun}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>呪い</td>
+                                <td>
+                                    <input type="number" id="statusEffects-curse" value="${enemyData.statusEffects.curse}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>隠密</td>
+                                <td>
+                                    <select id="statusEffects-stealth">
+                                        ${createStealthSelect(enemyData.stealth)}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>攻撃力低下</td>
+                                <td>
+                                    <input type="number" id="statusEffects-atkDown" value="${enemyData.statusEffects.atkDown}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>物理防御力低下</td>
+                                <td>
+                                    <input type="number" id="statusEffects-defDown-physical" value="${enemyData.statusEffects.defDown.physical}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>息防御力低下</td>
+                                <td>
+                                    <input type="number" id="statusEffects-defDown-breath" value="${enemyData.statusEffects.defDown.breath}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>魔法防御力低下</td>
+                                <td>
+                                    <input type="number" id="statusEffects-defDown-magic" value="${enemyData.statusEffects.defDown.magic}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>素早さ低下</td>
+                                <td>
+                                    <input type="number" id="statusEffects-spdDown" value="${enemyData.statusEffects.spdDown}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -1154,12 +1311,36 @@ function setDeleteButtonProcess(boxName,index){//プロパティの削除ボタ�
         contentId.parentNode.remove()//親要素(.cardTableContent)ごと削除する
         $(document).off("click",`#deleteButton-${contentName}`)//削除ボタンの削除処理(イベント)も削除する
         if(cardTableContentCount<=2){//親の親要素(#boxName)の中身(.cardTableContent)が一つもなくなってしまう(追加ボタンは除く)場合、
-            console.log(cardTableContentCount)
             createAddContent(boxName)//空の要素を作成する
             return
         }
     })
 }
+function createStealthSelect(stealth){//隠密のセレクトボックスのoptionを作成する関数
+    const selection=["","",""]
+    switch(stealth){
+        case "不明":
+        case "":
+            selection[0]="selected"
+            break
+        case "有効":
+            selection[1]="selected"
+            break
+        case "無効":
+            selection[2]="selected"
+            break
+        default:
+            break
+    }
+    let result=""
+    result=`
+        <option value="不明" ${selection[0]}>不明</option>
+        <option value="有効" ${selection[1]}>有効</option>
+        <option value="無効" ${selection[2]}>無効</option>
+    `
+    return result
+}
+
 function getInputEnemyData(){//入力フォームからデータを取得する関数
     //TODO 現在の入力内容を取得する処理
     if(Page!=="edit"){return}

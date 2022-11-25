@@ -12,16 +12,77 @@
     cursor: pointer;
 }
 
-/* 名前 タグなど */
+.cardTableContent-add{
+    margin:auto 5px;
+    font-size: 1.25rem;
+}
+
+/* 操作ボタン */
+#addButton-symbol-species,.deleteButton{
+    font-size: 1.25rem;
+}
+#addButton-symbol-species{
+    float: right;
+}
+
+/* 表 */
+table{
+    color: #F5F5F5;
+    border: solid 1px #555555;
+    border-collapse: separate;
+    border-spacing: 0px;
+    text-align: center;
+    font-size: 1.25rem;
+}
+tr:nth-child(2n+1){
+    background-color: #3A3F44;
+}
+tr:nth-child(2n+1):hover{
+    background-color: #272B30;
+}
+tr:nth-child(2n){
+    background-color: #272B30;
+}
+tr:nth-child(2n):hover{
+    background-color: #30353B;
+}
+td:nth-child(1){
+    z-index: 2;
+    padding: 3px;
+    border-radius: 0px;
+    background-color: #202328;
+    color:#F5F5F5;
+    transition: background-color 0.3s;
+}
+td:nth-child(1):hover{
+    background-color: #1A1D21;
+}
+td:nth-child(2){
+    display: flex;
+}
+td{
+    border: solid 1px #555555;
+}
+td input,td select{
+    width: 100px;
+    border: solid 1px #555555;
+    border-radius: 3px;
+}
+td input:hover{
+    border-color: #7A8288;
+}
+
+/* 基本情報・耐性 */
 #symbol .cardTableContent{
     display: flex;
     margin-bottom: 10px;
     align-items: center;
+/*     border: solid 1px red; */
 }
 #symbol .cardTableContent:last-child{
     margin-bottom: 0;
 }
-#symbol label,#symbol input[type="text"]{
+#symbol label,#symbol input[type="text"],#symbol input[type="number"],#statusEffects input[type="number"],#statusEffects select{
     font-size: 1.25rem;
 }
 #symbol .cardTableContent > label{
@@ -35,45 +96,37 @@
 #symbol > .cardTable > .cardTableContent > label:hover{
     background-color: #1A1D21;
 }
-#symbol input[type="text"]{
+#symbol input[type="text"],#symbol input[type="number"],#statusEffects input[type="number"],#statusEffects select{
     z-index: 1;
     border-left: 0;
     border-width:1px;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
     background-color: #656D75;
     color:#F5F5F5;
 }
-#symbol input[type="text"]::placeholder{
+#symbol input[type="text"]{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+#symbol input[type="text"]::placeholder,#symbol input[type="number"]::placeholder,#statusEffects input[type="number"]::placeholder,#statusEffects select::placeholder{
     color: #767B81;
 }
-#symbol input[type="text"]:hover{
+#symbol input[type="text"]:hover,#symbol input[type="number"]:hover,#statusEffects input[type="number"]:hover,#statusEffects select:hover{
     border-color: #7A8288;
 }
-#symbol input[type="text"]:focus{
+#symbol input[type="text"]:focus,#symbol input[type="number"]:focus,#statusEffects input[type="number"]:focus,#statusEffects select:focus{
     border-color: #7A8288;
     outline: 1.5px solid #7A8288;
 }
-#symbol .cardTableContent-add{
-    margin:auto 5px;
-    font-size: 1.25rem;
-}
 
-#addButton-symbol-species,.deleteButton{
-    font-size: 1.25rem;
-}
-#addButton-symbol-species{
-    float: right;
-}
-
-#symbol #symbol-name{
+/* 基本情報 */
+#symbol-name{
     width: 300px;
 }
-#symbol #symbol-tag{
+#symbol-tag{
     width: 300px;
 }
 
-#symbol #symbol-element-label{
+#symbol-element-label{
     width: 40px;
     height: 50px;
     margin: auto 0;
@@ -82,7 +135,7 @@
     line-height: 50px;
     text-align: center;
 }
-#symbol #symbol-element-content{
+#symbol-element-content{
     display: flex;
     width: 390px;
     border: 1px solid #52575C;
@@ -91,39 +144,41 @@
     border-bottom-right-radius: 3px;
     background-color: #656D75;
 }
-#symbol #symbol-element-content:hover,#symbol-element-label:hover + #symbol-element-content{
+#symbol-element-content:hover,#symbol-element-label:hover + #symbol-element-content{
     border-color: #7A8288;
 }
-#symbol .symbol-element{
+.symbol-element{
     width: 50px;
     margin-left: 10px;
 }
-#symbol .symbol-element:last-child{
+.symbol-element:last-child{
     margin-right: 10px;
 }
-#symbol .symbol-element label{
+.symbol-element label{
     display: block;
     padding: 0;
     text-align: center;
     background-color: transparent;
     font-size: 1.25rem;
 }
-#symbol .symbol-element input[type="checkBox"]{
+.symbol-element input[type="checkBox"]{
     display: block;
     margin:5px auto;
 }
-
-#symbol #symbol-species input[type="text"]{
+#symbol-species input[type="text"]{
     width: 200px;
     border-right: 0;
     border-left: 0;
     border-radius: 0;
 }
-#symbol #symbol-species .cardTableContent{
+#symbol-species .cardTableContent{
     display: flex;
     align-items: normal;
 }
-#symbol #symbol-species .deleteButton{
+#symbol-species .cardTableContent:last-child{
+    margin-bottom: 10px;
+}
+#symbol-species .deleteButton{
     z-index: 2;
     padding: 0;
     border-top-left-radius: 0;
