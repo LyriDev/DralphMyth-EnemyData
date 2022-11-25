@@ -441,7 +441,7 @@ function updateMain(data,_page=Page){//メインを変更する関数
             setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
             break
         case "edit"://編集ページの際の処理
-            setFluctuateButtonProcess("symbol-species",createSpeciesBox())//種族に追加・削除ボタンの処理を適用する
+            setAddButtonProcess("symbol-species")//種族に追加ボタンの処理を適用する
             setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
             break
         default:
@@ -1023,10 +1023,7 @@ function getEditPage(enemyData){
                         </div>
                     </div>
                     <div id="symbol-species">
-                        <div class="fluctuateButtons">
-                            <button id="addButton-symbol-species">追加</button>
-                            <button id="deleteButton-symbol-species">削除</button>
-                        </div>
+                        <button id="addButton-symbol-species" class="button">追加</button>
                         ${addSpecieBox(enemyData.species)}
                     </div>
                 </div>
@@ -1082,45 +1079,79 @@ function createElementCheckBox(enemyData,boxName){//9属性のチェックボッ
     }
     return result
 }
-
 function addSpecieBox(speciesArray){//種族を取得して、追加する関数
     let result=""
     if(Boolean(speciesArray)===true){
         for(let i in speciesArray){
-            result+=createSpeciesBox(speciesArray[i])
+            result+=createSpeciesBox(speciesArray[i],i).content
+            setDeleteButtonProcess("symbol-species",i)//削除ボタンに処理を適用する
         }
     }else{
-        result+=createSpeciesBox()
+        result+=createSpeciesBox().content
+        setDeleteButtonProcess("symbol-species",0)//削除ボタンに処理を適用する
     }
     return result
 }
-
-function createSpeciesBox(species=""){//追加する種族を作成する関数
+function createSpeciesBox(species="",index=null){//追加する種族を作成する関数
     const idName="symbol-species-"
-    const speciesBoxList = $(`input[id^="${idName}"]`)
-    let result=""
-    result=`
+    let speciesIndex=0
+    if(Boolean(index)===true){
+        speciesIndex=index
+    }else{//index引数が指定されていないなら、要素の最後の数をindexとして設定する
+        const speciesBoxList=$(`input[id^="${idName}"]`)
+        speciesIndex=speciesBoxList.length
+    }
+    let content=""
+    content=`
         <div class="cardTableContent">
-            <label for="symbol-species-${speciesBoxList.length}">種族</label>
-            <input type="text" id="symbol-species-${speciesBoxList.length}" value="${species}">
+            <label for="symbol-species-${speciesIndex}">種族</label>
+            <input type="text" id="symbol-species-${speciesIndex}" value="${species}">
+            <button id="deleteButton-symbol-species-${speciesIndex}" class="button deleteButton">削除</button>
             <div class=cardTableContent-add>系</div>
         </div>
     `
+    const result={
+        content:content,
+        index:speciesIndex
+    }
     return result
 }
-
-function setFluctuateButtonProcess(boxName,content){//プロパティの追加・削除ボタンの処理を適用する処理
+function createAddContent(boxName){//boxNameに応じて追加する中身を作成する関数
     const boxId=document.getElementById(boxName)
+    let gottenObject=new Object
+    let content=""
+    let index=0
+    switch(boxName){//boxNameに合わせて追加する中身を変更する
+        case "symbol-species":
+            gottenObject=createSpeciesBox()
+            content=gottenObject.content
+            index=gottenObject.index
+            break
+        default:
+            break
+    }
+    boxId.innerHTML+=content
+    setDeleteButtonProcess(boxName,index)//削除ボタンの処理を適用する
+}
+function setAddButtonProcess(boxName){//プロパティの追加ボタン処理を適用する処理
     $(document).on("click",`#addButton-${boxName}`,function(){//追加ボタンの処理
-        boxId.innerHTML+=content
+        createAddContent(boxName)
     })
-    $(document).on("click",`#deleteButton-${boxName}`,function(){//削除ボタンの処理
-        if(boxId.childElementCount>=3){//子要素が最低1個(追加・削除ボタンを除いて)以上あるなら、一番下の子要素を削除する
-            boxId.removeChild(boxId.lastElementChild)
+}
+function setDeleteButtonProcess(boxName,index){//プロパティの削除ボタン処理を適用する処理
+    const contentName=`${boxName}-${index}`
+    $(document).on("click",`#deleteButton-${contentName}`,function(){//削除ボタンの処理
+        const contentId=document.getElementById(contentName)
+        const cardTableContentCount=contentId.parentNode.parentNode.childElementCount
+        contentId.parentNode.remove()//親要素(.cardTableContent)ごと削除する
+        $(document).off("click",`#deleteButton-${contentName}`)//削除ボタンの削除処理(イベント)も削除する
+        if(cardTableContentCount<=2){//親の親要素(#boxName)の中身(.cardTableContent)が一つもなくなってしまう(追加ボタンは除く)場合、
+            console.log(cardTableContentCount)
+            createAddContent(boxName)//空の要素を作成する
+            return
         }
     })
 }
-
 function getInputEnemyData(){//入力フォームからデータを取得する関数
     //TODO 現在の入力内容を取得する処理
     if(Page!=="edit"){return}
@@ -1131,7 +1162,7 @@ function getReplacedData(data,key,enemyData){//データの一部を置換する
     result.enemy.splice(key,1,enemyData)//指定されたデータを置換する
     return result
 }
-function getInputData(data){//入力されたデータを含む全体のデータをを取得する関数
+function getInputData(data){//入力されたデータを含む全体のデータを取得する関数
     const gottenEnemyData=getInputEnemyData()
     const replacedData=getReplacedData(data,Index,gottenEnemyData)
     return replacedData

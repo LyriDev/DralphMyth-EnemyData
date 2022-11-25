@@ -55,14 +55,15 @@
     outline: 1.5px solid #7A8288;
 }
 #symbol .cardTableContent-add{
-    margin-left: 5px;
+    margin:auto 5px;
     font-size: 1.25rem;
 }
-.fluctuateButtons{
-    float: right;
+
+#addButton-symbol-species,.deleteButton{
+    font-size: 1.25rem;
 }
-#addButton-symbol-species,#deleteButton-symbol-species{
-    font-size: 1rem;
+#addButton-symbol-species{
+    float: right;
 }
 
 #symbol #symbol-name{
@@ -114,4 +115,18 @@
 
 #symbol #symbol-species input[type="text"]{
     width: 200px;
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+}
+#symbol #symbol-species .cardTableContent{
+    display: flex;
+    align-items: normal;
+}
+#symbol #symbol-species .deleteButton{
+    z-index: 2;
+    padding: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    font-size: 1rem;
 }
