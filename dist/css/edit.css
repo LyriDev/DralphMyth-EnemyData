@@ -47,7 +47,7 @@ tr:nth-child(2n):hover{
     background-color: #30353B;
 }
 td:nth-child(1){
-    z-index: 2;
+    z-index: 1;
     padding: 3px;
     border-radius: 0px;
     background-color: #202328;
@@ -72,22 +72,25 @@ td input:hover{
     border-color: #7A8288;
 }
 
+
 /* 基本情報・耐性 */
 #symbol .cardTableContent{
     display: flex;
     margin-bottom: 10px;
-    align-items: center;
-/*     border: solid 1px red; */
 }
 #symbol .cardTableContent:last-child{
     margin-bottom: 0;
 }
 #symbol label,#symbol input[type="text"],#symbol input[type="number"],#statusEffects input[type="number"],#statusEffects select{
+    height: auto;
     font-size: 1.25rem;
 }
 #symbol .cardTableContent > label{
-    z-index: 2;
+    display: flex;
+    align-items: center;
+    z-index: 1;
     padding: 3px;
+    border:0;
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     background-color: #202328;
@@ -96,17 +99,17 @@ td input:hover{
 #symbol > .cardTable > .cardTableContent > label:hover{
     background-color: #1A1D21;
 }
-#symbol input[type="text"],#symbol input[type="number"],#statusEffects input[type="number"],#statusEffects select{
-    z-index: 1;
-    border-left: 0;
+#symbol input[type="text"],#symbol input[type="number"],#statusEffects input[type="number"]{
+    z-index: 2;
     border-width:1px;
     background-color: #656D75;
     color:#F5F5F5;
 }
-#symbol input[type="text"]{
+#symbol input[type="text"]:not(#symbol-parameter input[type="text"]){
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
+
 #symbol input[type="text"]::placeholder,#symbol input[type="number"]::placeholder,#statusEffects input[type="number"]::placeholder,#statusEffects select::placeholder{
     color: #767B81;
 }
@@ -114,7 +117,7 @@ td input:hover{
     border-color: #7A8288;
 }
 #symbol input[type="text"]:focus,#symbol input[type="number"]:focus,#statusEffects input[type="number"]:focus,#statusEffects select:focus{
-    border-color: #7A8288;
+    border-color: white;
     outline: 1.5px solid #7A8288;
 }
 
@@ -139,7 +142,6 @@ td input:hover{
     display: flex;
     width: 390px;
     border: 1px solid #52575C;
-    border-left: 0;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
     background-color: #656D75;
@@ -167,8 +169,6 @@ td input:hover{
 }
 #symbol-species input[type="text"]{
     width: 200px;
-    border-right: 0;
-    border-left: 0;
     border-radius: 0;
 }
 #symbol-species .cardTableContent{
@@ -179,9 +179,15 @@ td input:hover{
     margin-bottom: 10px;
 }
 #symbol-species .deleteButton{
-    z-index: 2;
+    z-index: 1;
     padding: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     font-size: 1rem;
+}
+
+select{
+    width: 100px;
+    background-color: white;
+    color: black;
 }
