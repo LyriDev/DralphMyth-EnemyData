@@ -1010,11 +1010,11 @@ function getEditPage(enemyData){
                 <div class="cardTable">
                     <div class="cardTableContent">
                         <label for="symbol-name">名前</label>
-                        <input type="text" id="symbol-name" placeholder="おなまえ" value="${0}">
+                        <input type="text" id="symbol-name" placeholder="おなまえ" value="${enemyData.name}">
                     </div>
                     <div class="cardTableContent">
                         <label for="symbol-tag">タグ</label>
-                        <input type="text" id="symbol-tag" value="${0}">
+                        <input type="text" id="symbol-tag" value="${enemyData.tag}">
                     </div>
                     <div class="cardTableContent">
                         <label id="symbol-element-label">属性</label>
@@ -1069,11 +1069,19 @@ function getEditPage(enemyData){
 function createElementCheckBox(enemyData,boxName){//9属性のチェックボックスを作成する関数
     const elementList=["無","火","氷","風","土","雷","水","光","闇"]
     let result=""
+    let isChecked=""
     for(let i in elementList){
+        if(Boolean(enemyData.elements)===true){
+            if(enemyData.elements.includes(elementList[i])){
+                isChecked="checked"
+            }else{
+                isChecked=""
+            }
+        }
         result+=`
             <div class="${boxName}">
                 <label for="${boxName}-${i}">${elementList[i]}</label>
-                <input type="checkbox" id="${boxName}-${i}">
+                <input type="checkbox" id="${boxName}-${i}" ${isChecked}>
             </div>
         `
     }
