@@ -1388,7 +1388,6 @@ function exportEnemyPiece(enemyData){//敵コマをクリップボードに出�
     alert("敵データをクリップボードに出力しました。")
 }
 function convertJsonToPiece(enemyData){//Jsonデータをココフォリアコマ形式に変換する関数
-    //TODO 敵コマをココフォリアデータに変換する処理
     let result=""
     const ccfoliaPiece={//ココフォリアコマの枠組み
         kind:"character",
