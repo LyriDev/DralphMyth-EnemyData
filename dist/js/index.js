@@ -620,9 +620,11 @@ function createEnemyElement(enemyData,data){//表示する敵データの要素�
     const viewUrl=`${htmlUrl}?page=view&index=${key}`
     setUrl(`#editButton${key}`,editUrl)
     setUrl(`#viewButton${key}`,viewUrl)
+    $(document).off("click",`#exportButton${key}`)
     $(document).on("click",`#exportButton${key}`,function(){
         exportEnemyPiece(enemyData)//出力ボタン処理を適用する
     })
+    $(document).off("click",`#deleteButton${key}`)
     $(document).on("click",`#deleteButton${key}`,function(){
         deleteEnemyPiece(key,data)//削除ボタン処理を適用する
     })
