@@ -443,6 +443,11 @@ function updateMain(data,_page=Page){//メインを変更する関数
         case "edit"://編集ページの際の処理
             setAddButtonProcess("symbol-species")//種族に追加ボタンの処理を適用する
             setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
+
+            updateAllTextarea("ability-effect")
+            updateAllTextarea("move-effect")
+            updateTextarea("#note0")
+            //textareaの初期値に合わせて高さを自動調整する
             break
         default:
             break
