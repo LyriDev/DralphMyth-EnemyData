@@ -934,73 +934,6 @@ function addMoveBox_effect_content(moveEffectArray){//閲覧ページの技欄�
     return result
 }
 
-/* htmlのふるまいを適用する関数 */
-function updateAllTextarea(idName){//全てのtextareaの初期値に合わせてそれぞれ高さを自動調整する関数
-    const textareaList = $(`textarea[id^="${idName}"]`);
-    for(let i=0;i<textareaList.length;i++){
-        updateTextarea(`#${idName}${i}`)
-    }
-}
-function updateTextarea(textareaId){//textareaの初期値に合わせて高さを自動調整する関数
-    $(function() {
-        const targetArea = $(textareaId);
-        const rawTarget = targetArea.get(0);
-        let lineHeight = Number(targetArea.attr("rows"));
-        while (rawTarget.scrollHeight > rawTarget.offsetHeight){
-            lineHeight++;
-            targetArea.attr("rows", lineHeight);
-        }
-    });
-}
-function setAccordionMenu(className){//アコーディオンメニューを実装する関数
-    $(document).on("click",className,function(){
-        const target=$(this).data("target")//[data-target]の属性値を代入する
-        const idName="#"+target//[target]と同じ名前のID
-        $(idName).slideToggle(0)//[target]と同じ名前のIDを持つ要素に[slideToggle()]を実行する
-        const arrowIcon=$(`#${target}Arrow`)//矢印アイコンの要素
-        toggleArrowIcon(arrowIcon,target)//トグルを記憶して矢印アイコンを切り替える
-    })
-}
-function getArrowIcon(toggle){//アコーディオンメニューに使う矢印アイコンを表示する関数
-    let result=""
-    if(toggle){//アコーディオンメニューが開いているとき
-        result="arrowDown"
-    }else{//アコーディオンメニューが閉じているとき
-        result="arrowLeft"
-    }
-    return result
-}
-function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替える関数
-    switch(target){
-        case "symbol":
-            $(arrowIcon).addClass(getArrowIcon(!isOpenList.symbol))
-            $(arrowIcon).removeClass(getArrowIcon(isOpenList.symbol))
-            isOpenList.symbol=!isOpenList.symbol
-            break
-        case "resistance":
-            $(arrowIcon).addClass(getArrowIcon(!isOpenList.resistance))
-            $(arrowIcon).removeClass(getArrowIcon(isOpenList.resistance))
-            isOpenList.resistance=!isOpenList.resistance
-            break
-        case "ability":
-            $(arrowIcon).addClass(getArrowIcon(!isOpenList.ability))
-            $(arrowIcon).removeClass(getArrowIcon(isOpenList.ability))
-            isOpenList.ability=!isOpenList.ability
-            break
-        case "move":
-            $(arrowIcon).addClass(getArrowIcon(!isOpenList.move))
-            $(arrowIcon).removeClass(getArrowIcon(isOpenList.move))
-            isOpenList.move=!isOpenList.move
-            break
-        case "note":
-            $(arrowIcon).addClass(getArrowIcon(!isOpenList.note))
-            $(arrowIcon).removeClass(getArrowIcon(isOpenList.note))
-            isOpenList.note=!isOpenList.note
-            break
-    }
-
-}
-
 /* 編集ページを表示中に使う関数 */
 function getEditPage(enemyData){
     let result=`
@@ -1360,6 +1293,72 @@ function getInputData(data){//入力されたデータを含む全体のデー�
     const gottenEnemyData=getInputEnemyData()
     const replacedData=getReplacedData(data,Index,gottenEnemyData)
     return replacedData
+}
+
+/* htmlのふるまいを適用する関数 */
+function updateAllTextarea(idName){//全てのtextareaの初期値に合わせてそれぞれ高さを自動調整する関数
+    const textareaList = $(`textarea[id^="${idName}"]`);
+    for(let i=0;i<textareaList.length;i++){
+        updateTextarea(`#${idName}${i}`)
+    }
+}
+function updateTextarea(textareaId){//textareaの初期値に合わせて高さを自動調整する関数
+    $(function() {
+        const targetArea = $(textareaId);
+        const rawTarget = targetArea.get(0);
+        let lineHeight = Number(targetArea.attr("rows"));
+        while (rawTarget.scrollHeight > rawTarget.offsetHeight){
+            lineHeight++;
+            targetArea.attr("rows", lineHeight);
+        }
+    });
+}
+function setAccordionMenu(className){//アコーディオンメニューを実装する関数
+    $(document).on("click",className,function(){
+        const target=$(this).data("target")//[data-target]の属性値を代入する
+        const idName="#"+target//[target]と同じ名前のID
+        $(idName).slideToggle(0)//[target]と同じ名前のIDを持つ要素に[slideToggle()]を実行する
+        const arrowIcon=$(`#${target}Arrow`)//矢印アイコンの要素
+        toggleArrowIcon(arrowIcon,target)//トグルを記憶して矢印アイコンを切り替える
+    })
+}
+function getArrowIcon(toggle){//アコーディオンメニューに使う矢印アイコンを表示する関数
+    let result=""
+    if(toggle){//アコーディオンメニューが開いているとき
+        result="arrowDown"
+    }else{//アコーディオンメニューが閉じているとき
+        result="arrowLeft"
+    }
+    return result
+}
+function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替える関数
+    switch(target){
+        case "symbol":
+            $(arrowIcon).addClass(getArrowIcon(!isOpenList.symbol))
+            $(arrowIcon).removeClass(getArrowIcon(isOpenList.symbol))
+            isOpenList.symbol=!isOpenList.symbol
+            break
+        case "resistance":
+            $(arrowIcon).addClass(getArrowIcon(!isOpenList.resistance))
+            $(arrowIcon).removeClass(getArrowIcon(isOpenList.resistance))
+            isOpenList.resistance=!isOpenList.resistance
+            break
+        case "ability":
+            $(arrowIcon).addClass(getArrowIcon(!isOpenList.ability))
+            $(arrowIcon).removeClass(getArrowIcon(isOpenList.ability))
+            isOpenList.ability=!isOpenList.ability
+            break
+        case "move":
+            $(arrowIcon).addClass(getArrowIcon(!isOpenList.move))
+            $(arrowIcon).removeClass(getArrowIcon(isOpenList.move))
+            isOpenList.move=!isOpenList.move
+            break
+        case "note":
+            $(arrowIcon).addClass(getArrowIcon(!isOpenList.note))
+            $(arrowIcon).removeClass(getArrowIcon(isOpenList.note))
+            isOpenList.note=!isOpenList.note
+            break
+    }
 }
 
 /* データを編集・出力する関数 */
