@@ -704,6 +704,38 @@ function getMovesAsText(enemyData){//技一覧をテキストで取得する関�
     return returnArray
 }
 
+/* 閲覧・編集ページを表示中に使う関数 */
+function addAbilityBox(enemyDataValue,page=Page){//閲覧ページの特性欄を作成する関数
+    let result=""
+    let textareaNumber=0//textareaのidへ順番にインデックスをつける
+    let isReadOnly=""
+    if(page==="view"){
+        isReadOnly="readonly"
+    }
+    for(let i in enemyDataValue.abilities){
+        const ability=enemyDataValue.abilities[i]
+        result+=`<div class="cardTable">`
+        if(page==="edit"){
+            result+=`
+                <button id="deleteButton-ability" class="button">削除</button>
+            `
+        }
+        result+=`
+            <div class="cardTable-ability-name">
+                <div class="cardTableTitle">特性名</div>
+                <input ${isReadOnly} type="text" class="cardTableContent" value="${ability.name}">
+            </div>
+            <div class="cardTable-ability-effect">
+                <div class="cardTableTitle">効果</div>
+                <textarea ${isReadOnly} id="ability-effect${textareaNumber}" class="cardTableContent" rows="1">${ability.effect}</textarea>
+            </div>
+        `
+        result+=`</div>`
+        textareaNumber++
+    }
+    return result
+}
+
 /* 閲覧ページを表示中に使う関数 */
 function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
     let result= `
@@ -797,27 +829,6 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
             </div>
         </div>
     `
-    return result
-}
-function addAbilityBox(enemyDataValue){//閲覧ページの特性欄を作成する関数
-    let result=""
-    let textareaNumber=0//textareaのidへ順番にインデックスをつける
-    for(let i in enemyDataValue.abilities){
-        const ability=enemyDataValue.abilities[i]
-        result+=`
-        <div class="cardTable">
-            <div class="cardTable-ability-name">
-                <div class="cardTableTitle">特性名</div>
-                <input readonly type="text" class="cardTableContent" value="${ability.name}">
-            </div>
-            <div class="cardTable-ability-effect">
-                <div class="cardTableTitle">効果</div>
-                <textarea readonly id="ability-effect${textareaNumber}" class="cardTableContent" rows="1">${ability.effect}</textarea>
-            </div>
-        </div>
-        `
-        textareaNumber++
-    }
     return result
 }
 function addMoveBox(enemyData){//閲覧ページの技欄を作成する関数
@@ -1133,7 +1144,9 @@ function getEditPage(enemyData){
             </div>
             <div id="ability" class="cardBody">
                 ${addAbilityBox(enemyData)}
+                <button id="addButton-ability" class="button">追加</button>
             </div>
+            
         </div>
         <div class="cardBox">
             <div class="cardHeader" data-target="move">
@@ -1278,7 +1291,6 @@ function createStealthSelect(stealth){//隠密のセレクトボックスのopti
     `
     return result
 }
-
 function getInputEnemyData(){//入力フォームからデータを取得する関数
     //TODO 現在の入力内容を取得する処理
     if(Page!=="edit"){return}
@@ -1303,7 +1315,7 @@ function updateAllTextarea(idName){//全てのtextareaの初期値に合わせ�
     }
 }
 function updateTextarea(textareaId){//textareaの初期値に合わせて高さを自動調整する関数
-    $(function() {
+    $(function(){
         const targetArea = $(textareaId);
         const rawTarget = targetArea.get(0);
         let lineHeight = Number(targetArea.attr("rows"));
@@ -1629,7 +1641,7 @@ document.addEventListener("keyup",keyupEvent);
 function keyupEvent(event){
     switch(event.keyCode){
         case 13://Enterキーが押されたとき
-            sendDefaultData()
+            //sendDefaultData()
             break
         case 46://Deleteキーが押されたとき
             dataBase_delete("reload")
