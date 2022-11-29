@@ -25,8 +25,8 @@
     float: right;
 }
 #addButton-ability{
+    margin: 10px;
     margin-bottom: 5px;
-    margin-left: 10px;
 }
 .button-ability-effect{
     margin-left: 10px;

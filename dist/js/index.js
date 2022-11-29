@@ -242,7 +242,7 @@ function updateHTML(data){//HTMLを更新する関数
             createSideMenu()//サイドメニューを作成する
         }
     }catch(exception){//存在しない敵データを閲覧・編集しようとしたとき等の例外処理
-        location.href=htmlUrl//一覧ページに送る
+        //location.href=htmlUrl//一覧ページに送る
     }
 }
 function updateTitle(data){//タイトルを変更する関数
@@ -441,7 +441,6 @@ function updateMain(data,_page=Page){//メインを変更する関数
             setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
             break
         case "edit"://編集ページの際の処理
-            setAddButtonProcess("symbol-species")//種族に追加ボタンの処理を適用する
             setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
 
             updateAllTextarea("ability-effect")
@@ -744,6 +743,59 @@ function addAbilityBox(enemyDataValue,page=Page){//閲覧ページの特性欄�
         `
         result+=`</div>`
         textareaNumber++
+    }
+    return result
+}
+
+
+function _addAbilityBox(abilitiesArray){//特性を取得して、追加する関数
+    const boxName="ability"
+    let result=""
+    if(Boolean(abilitiesArray)===true){
+        for(let i in abilitiesArray){
+            result+=createAbilityBox(abilitiesArray[i],i).content
+            setDeleteButtonProcess("ability",i)//削除ボタンに処理を適用する
+        }
+    }else{
+        result+=createAbilityBox().content
+        setDeleteButtonProcess("ability",0)//削除ボタンに処理を適用する
+    }
+    setAddButtonProcess(boxName)//特性に追加ボタンの処理を適用する
+    return result
+}
+function createAbilityBox(ability={name:"",effect:""},index=null){//追加する特性を作成する関数
+    const idName="ability-"
+    let abilityIndex=0
+    if(Boolean(index)===true){
+        abilityIndex=index
+    }else{//index引数が指定されていないなら、要素の最後の数をindexとして設定する
+        const abilityBoxList=$(`input[id^="${idName}"]`)
+        abilityIndex=abilityBoxList.length
+    }
+    let content=""
+    let isReadOnly="readonly"
+    content=`
+        <div class="cardTable">
+            <button id="deleteButton-ability-${abilityIndex}" class="button deleteButton-ability">削除</button>
+            <div class="cardTable-ability-name">
+                <div class="cardTableTitle">特性名</div>
+                <input ${isReadOnly} type="text" class="cardTableContent" value="${ability.name}">
+            </div>
+            <div class="cardTable-ability-effect">
+                <div class="cardTableTitle">
+                    <div>効果</div>
+                    <div class="button-ability-effect">
+                        <button class="button addButton">追加</button>
+                        <button class="button deleteButton">削除</button>
+                    </div>
+                </div>
+                <textarea ${isReadOnly} id="ability-effect${abilityIndex}" class="cardTableContent" rows="1">${ability.effect}</textarea>
+            </div>
+        </div>
+    `
+    const result={
+        content:content,
+        index:abilityIndex
     }
     return result
 }
@@ -1154,11 +1206,12 @@ function getEditPage(enemyData){
                     <span id="abilityArrow" class="arrowDown"></span>
                 </a>
             </div>
-            <div id="ability" class="cardBody">
-                ${addAbilityBox(enemyData)}
+            <div class="cardBody">
+                <div id="ability">
+                    ${_addAbilityBox(enemyData.abilities)}
+                </div>
                 <button id="addButton-ability" class="button">追加</button>
             </div>
-            
         </div>
         <div class="cardBox">
             <div class="cardHeader" data-target="move">
@@ -1208,16 +1261,18 @@ function createElementCheckBox(enemyData,boxName){//9属性のチェックボッ
     return result
 }
 function addSpecieBox(speciesArray){//種族を取得して、追加する関数
+    const boxName="symbol-species"
     let result=""
     if(Boolean(speciesArray)===true){
         for(let i in speciesArray){
             result+=createSpeciesBox(speciesArray[i],i).content
-            setDeleteButtonProcess("symbol-species",i)//削除ボタンに処理を適用する
+            setDeleteButtonProcess(boxName,i)//削除ボタンに処理を適用する
         }
     }else{
         result+=createSpeciesBox().content
-        setDeleteButtonProcess("symbol-species",0)//削除ボタンに処理を適用する
+        setDeleteButtonProcess(boxName,0)//削除ボタンに処理を適用する
     }
+    setAddButtonProcess(boxName)//種族に追加ボタンの処理を適用する
     return result
 }
 function createSpeciesBox(species="",index=null){//追加する種族を作成する関数
@@ -1252,12 +1307,15 @@ function createAddContent(boxName){//boxNameに応じて追加する中身を作
     switch(boxName){//boxNameに合わせて追加する中身を変更する
         case "symbol-species":
             gottenObject=createSpeciesBox()
-            content=gottenObject.content
-            index=gottenObject.index
+            break
+        case "ability":
+            gottenObject=createAbilityBox()
             break
         default:
             break
     }
+    content=gottenObject.content
+    index=gottenObject.index
     boxId.innerHTML+=content
     setDeleteButtonProcess(boxName,index)//削除ボタンの処理を適用する
 }
@@ -1271,7 +1329,7 @@ function setDeleteButtonProcess(boxName,index){//プロパティの削除ボタ�
     $(document).on("click",`#deleteButton-${contentName}`,function(){//削除ボタンの処理
         const contentId=document.getElementById(contentName)
         const cardTableContentCount=contentId.parentNode.parentNode.childElementCount
-        contentId.parentNode.remove()//親要素(.cardTableContent)ごと削除する
+        contentId.parentNode.remove()//親要素(.cardTableContentや.cardTable)ごと削除する
         $(document).off("click",`#deleteButton-${contentName}`)//削除ボタンの削除処理(イベント)も削除する
         if(cardTableContentCount<=2){//親の親要素(#boxName)の中身(.cardTableContent)が一つもなくなってしまう(追加ボタンは除く)場合、
             createAddContent(boxName)//空の要素を作成する
@@ -1652,7 +1710,7 @@ document.addEventListener("keyup",keyupEvent);
 function keyupEvent(event){
     switch(event.keyCode){
         case 13://Enterキーが押されたとき
-            //sendDefaultData()
+            sendDefaultData()
             break
         case 46://Deleteキーが押されたとき
             dataBase_delete("reload")
