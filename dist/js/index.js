@@ -706,77 +706,50 @@ function getMovesAsText(enemyData){//技一覧をテキストで取得する関�
 }
 
 /* 閲覧・編集ページを表示中に使う関数 */
-function addAbilityBox(enemyDataValue,page=Page){//閲覧ページの特性欄を作成する関数
-    let result=""
-    let textareaNumber=0//textareaのidへ順番にインデックスをつける
-    let isReadOnly=""
-    if(page==="view"){
-        isReadOnly="readonly"
-    }
-    for(let i in enemyDataValue.abilities){
-        const ability=enemyDataValue.abilities[i]
-        result+=`<div class="cardTable">`
-        if(page==="edit"){
-            result+=`<button class="button deleteButton-ability">削除</button>`
-        }
-        result+=`
-            <div class="cardTable-ability-name">
-                <div class="cardTableTitle">特性名</div>
-                <input ${isReadOnly} type="text" class="cardTableContent" value="${ability.name}">
-            </div>
-            <div class="cardTable-ability-effect">
-                <div class="cardTableTitle">
-                    <div>効果</div>
-        `
-        if(page==="edit"){
-            result+=`
-                <div class="button-ability-effect">
-                    <button class="button addButton">追加</button>
-                    <button class="button deleteButton">削除</button>
-                </div>
-            `
-        }
-        result+=`
-                </div>
-                <textarea ${isReadOnly} id="ability-effect${textareaNumber}" class="cardTableContent" rows="1">${ability.effect}</textarea>
-            </div>
-        `
-        result+=`</div>`
-        textareaNumber++
-    }
-    return result
-}
-
-
-function _addAbilityBox(abilitiesArray){//特性を取得して、追加する関数
+function addAbilityBox(abilitiesArray,page=Page){//特性を取得して、追加する関数
     const boxName="ability"
     let result=""
     if(Boolean(abilitiesArray)===true){
         for(let i in abilitiesArray){
-            result+=createAbilityBox(abilitiesArray[i],i).content
-            setDeleteButtonProcess("ability",i)//削除ボタンに処理を適用する
+            result+=createAbilityBox(abilitiesArray[i],i,page).content
+            if(page==="edit"){setDeleteButtonProcess("ability",i)}//削除ボタンに処理を適用する
         }
     }else{
         result+=createAbilityBox().content
-        setDeleteButtonProcess("ability",0)//削除ボタンに処理を適用する
+        if(page==="edit"){setDeleteButtonProcess("ability",0)}//削除ボタンに処理を適用する
     }
-    setAddButtonProcess(boxName)//特性に追加ボタンの処理を適用する
+    if(page==="edit"){setAddButtonProcess(boxName)}//特性に追加ボタンの処理を適用する
     return result
 }
-function createAbilityBox(ability={name:"",effect:""},index=null){//追加する特性を作成する関数
+function createAbilityBox(ability={name:"",effect:""},index=null,page=Page){//追加する特性を作成する関数
     const idName="ability-"
     let abilityIndex=0
     if(Boolean(index)===true){
         abilityIndex=index
     }else{//index引数が指定されていないなら、要素の最後の数をindexとして設定する
-        const abilityBoxList=$(`input[id^="${idName}"]`)
+        const abilityBoxList=$(`div[id^="${idName}"]`)
         abilityIndex=abilityBoxList.length
     }
     let content=""
-    let isReadOnly="readonly"
+    let isReadOnly=""
+    let buttons={
+        ability:"",
+        ability_effect:""
+    }
+    if(page==="view"){
+        isReadOnly="readonly"
+    }else if(page==="edit"){
+        buttons["ability"]=`<button id="deleteButton-ability-${abilityIndex}" class="button deleteButton-ability">削除</button>`
+        buttons["ability_effect"]=`
+            <div class="button-ability-effect">
+                <button class="button addButton">追加</button>
+                <button class="button deleteButton">削除</button>
+            </div>
+        `
+    }
     content=`
-        <div class="cardTable">
-            <button id="deleteButton-ability-${abilityIndex}" class="button deleteButton-ability">削除</button>
+        <div id="ability-${abilityIndex}" class="cardTable">
+            ${buttons.ability}
             <div class="cardTable-ability-name">
                 <div class="cardTableTitle">特性名</div>
                 <input ${isReadOnly} type="text" class="cardTableContent" value="${ability.name}">
@@ -784,10 +757,7 @@ function createAbilityBox(ability={name:"",effect:""},index=null){//追加する
             <div class="cardTable-ability-effect">
                 <div class="cardTableTitle">
                     <div>効果</div>
-                    <div class="button-ability-effect">
-                        <button class="button addButton">追加</button>
-                        <button class="button deleteButton">削除</button>
-                    </div>
+                    ${buttons.ability_effect}
                 </div>
                 <textarea ${isReadOnly} id="ability-effect${abilityIndex}" class="cardTableContent" rows="1">${ability.effect}</textarea>
             </div>
@@ -866,7 +836,7 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
                 </a>
             </div>
             <div id="ability" class="cardBody">
-                ${addAbilityBox(enemyDataValue)}
+                ${addAbilityBox(enemyDataValue.abilities)}
             </div>
         </div>
         <div class="cardBox">
@@ -1208,7 +1178,7 @@ function getEditPage(enemyData){
             </div>
             <div class="cardBody">
                 <div id="ability">
-                    ${_addAbilityBox(enemyData.abilities)}
+                    ${addAbilityBox(enemyData.abilities)}
                 </div>
                 <button id="addButton-ability" class="button">追加</button>
             </div>
@@ -1327,11 +1297,26 @@ function setAddButtonProcess(boxName){//プロパティの追加ボタン処理�
 function setDeleteButtonProcess(boxName,index){//プロパティの削除ボタン処理を適用する処理
     const contentName=`${boxName}-${index}`
     $(document).on("click",`#deleteButton-${contentName}`,function(){//削除ボタンの処理
+        console.log(contentName)
+        let minElementNumber=0//追加ボタンなどを含めた要素の最低数
+        let cardTableContentCount=0
+        let deleteTarget
         const contentId=document.getElementById(contentName)
-        const cardTableContentCount=contentId.parentNode.parentNode.childElementCount
-        contentId.parentNode.remove()//親要素(.cardTableContentや.cardTable)ごと削除する
+        if(boxName==="symbol-species"){
+            minElementNumber=2
+            cardTableContentCount=contentId.parentNode.parentNode.childElementCount
+            deleteTarget=contentId.parentNode//親要素(.cardTableContent)ごと削除する
+        }else{
+            minElementNumber=1
+            const boxId=document.getElementById(boxName)
+            cardTableContentCount=boxId.childElementCount
+            deleteTarget=contentId
+
+            console.log(cardTableContentCount)
+        }
+        deleteTarget.remove()
         $(document).off("click",`#deleteButton-${contentName}`)//削除ボタンの削除処理(イベント)も削除する
-        if(cardTableContentCount<=2){//親の親要素(#boxName)の中身(.cardTableContent)が一つもなくなってしまう(追加ボタンは除く)場合、
+        if(cardTableContentCount<=minElementNumber){//親の親要素(#boxName)の中身(.cardTableContent)が一つもなくなってしまう(追加ボタンは除く)場合、
             createAddContent(boxName)//空の要素を作成する
             return
         }
