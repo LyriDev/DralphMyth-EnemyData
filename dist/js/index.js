@@ -718,9 +718,7 @@ function addAbilityBox(enemyDataValue,page=Page){//閲覧ページの特性欄�
         const ability=enemyDataValue.abilities[i]
         result+=`<div class="cardTable">`
         if(page==="edit"){
-            result+=`
-                <button id="deleteButton-ability" class="button">削除</button>
-            `
+            result+=`<button class="button deleteButton-ability">削除</button>`
         }
         result+=`
             <div class="cardTable-ability-name">
@@ -728,7 +726,19 @@ function addAbilityBox(enemyDataValue,page=Page){//閲覧ページの特性欄�
                 <input ${isReadOnly} type="text" class="cardTableContent" value="${ability.name}">
             </div>
             <div class="cardTable-ability-effect">
-                <div class="cardTableTitle">効果</div>
+                <div class="cardTableTitle">
+                    <div>効果</div>
+        `
+        if(page==="edit"){
+            result+=`
+                <div class="button-ability-effect">
+                    <button class="button addButton">追加</button>
+                    <button class="button deleteButton">削除</button>
+                </div>
+            `
+        }
+        result+=`
+                </div>
                 <textarea ${isReadOnly} id="ability-effect${textareaNumber}" class="cardTableContent" rows="1">${ability.effect}</textarea>
             </div>
         `

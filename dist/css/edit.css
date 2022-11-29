@@ -21,8 +21,18 @@
 #addButton-symbol-species,.deleteButton{
     font-size: 1.25rem;
 }
-#addButton-symbol-species{
+#addButton-symbol-species,.deleteButton-ability{
     float: right;
+}
+#addButton-ability{
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
+.button-ability-effect{
+    margin-left: 10px;
+}
+.button-ability-effect button{
+    font-size: 1rem;
 }
 
 /* 表 */
@@ -194,21 +204,29 @@ select{
 
 
 
-
+/* 特性 */
 .cardTable-ability-name,.cardTable-ability-name .cardTableTitle{
     width: calc(440px/2);
 }
 .cardTable-ability-name .cardTableContent{
     width: calc((440px/2 - (2px + 10px + 2px)));
 }
-.cardTable-ability-effect,.cardTable-ability-effect .cardTableTitle{
+.cardTable-ability-effect{
     width: 440px;
+}
+.cardTable-ability-effect .cardTableTitle{
+    display: flex;
+    align-items: center;
 }
 .cardTable-ability-effect .cardTableContent{
     width: calc((440px - (2px + 10px + 2px)));
     /* これがないと謎の隙間がある */
     margin-bottom: calc((5px + 2px)*-1);
 }
+
+
+
+
 
 .cardTableTitle,.cardTableContent{
     font-size: 1rem;
