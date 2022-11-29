@@ -732,24 +732,15 @@ function createAbilityBox(ability={name:"",effect:""},index=null,page=Page){//�
     }
     let content=""
     let isReadOnly=""
-    let buttons={
-        ability:"",
-        ability_effect:""
-    }
+    let deleteButton=""
     if(page==="view"){
         isReadOnly="readonly"
     }else if(page==="edit"){
-        buttons["ability"]=`<button id="deleteButton-ability-${abilityIndex}" class="button deleteButton-ability">削除</button>`
-        buttons["ability_effect"]=`
-            <div class="button-ability-effect">
-                <button class="button addButton">追加</button>
-                <button class="button deleteButton">削除</button>
-            </div>
-        `
+        deleteButton=`<button id="deleteButton-ability-${abilityIndex}" class="button deleteButton-ability">削除</button>`
     }
     content=`
         <div id="ability-${abilityIndex}" class="cardTable">
-            ${buttons.ability}
+            ${deleteButton}
             <div class="cardTable-ability-name">
                 <div class="cardTableTitle">特性名</div>
                 <input ${isReadOnly} type="text" class="cardTableContent" value="${ability.name}">
@@ -757,7 +748,6 @@ function createAbilityBox(ability={name:"",effect:""},index=null,page=Page){//�
             <div class="cardTable-ability-effect">
                 <div class="cardTableTitle">
                     <div>効果</div>
-                    ${buttons.ability_effect}
                 </div>
                 <textarea ${isReadOnly} id="ability-effect${abilityIndex}" class="cardTableContent" rows="1">${ability.effect}</textarea>
             </div>
