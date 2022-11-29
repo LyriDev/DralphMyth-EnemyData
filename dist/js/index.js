@@ -179,6 +179,18 @@ function deleteValueInArray(array,value){//配列から特定の要素を削除�
     }
     return resultArray
 }
+function getFinalNumber(array){//受け取った数値型配列に存在しない数値の中での最大値を取得する関数
+    let result=null
+    let i=0
+    while(true){
+        if(array.includes(i)===false){
+            result=i
+            break
+        }
+        i++
+    }
+    return result
+}
 function getTypeArray(array){//数値と空白文字を含む配列から要素の種類を抜き出してソートする関数
     let valueList=new Array//要素の種類を保存する配列
     for(let i in array){
@@ -218,7 +230,6 @@ function exportToClipboard(value){//テキストデータをクリップボー�
 }
 
 /* 種別リスト */
-
 const attackTypeList=["物理","息","魔法"]
 
 /* ページごとに表示するコンテンツを変更するための関数 */
@@ -722,14 +733,13 @@ function addAbilityBox(abilitiesArray,page=Page){//特性を取得して、追�
     return result
 }
 function createAbilityBox(ability={name:"",effect:""},index=null,page=Page){//追加する特性を作成する関数
-    const idName="ability-"
     let abilityIndex=0
     if(Boolean(index)===true){
         abilityIndex=index
     }else{//index引数が指定されていないなら、要素の最後の数をindexとして設定する
-        const abilityBoxList=$(`div[id^="${idName}"]`)
-        abilityIndex=abilityBoxList.length
+        abilityIndex=getFinalNumber(addedElementsIndex.ability)
     }
+    addedElementsIndex.ability.push(Number(abilityIndex))
     let content=""
     let isReadOnly=""
     let deleteButton=""
@@ -970,6 +980,16 @@ function addMoveBox_effect_content(moveEffectArray){//閲覧ページの技欄�
 }
 
 /* 編集ページを表示中に使う関数 */
+const addedElementsIndex={//編集ページで、追加ボタンで追加する要素のindex
+    species:[],
+    ability:[],
+    moves:{
+        move:[],
+        statusEffect:[],
+        effect:[]
+    }
+}
+
 function getEditPage(enemyData){
     let result=`
         <div class="cardBox">
@@ -1241,9 +1261,9 @@ function createSpeciesBox(species="",index=null){//追加する種族を作成�
     if(Boolean(index)===true){
         speciesIndex=index
     }else{//index引数が指定されていないなら、要素の最後の数をindexとして設定する
-        const speciesBoxList=$(`input[id^="${idName}"]`)
-        speciesIndex=speciesBoxList.length
+        speciesIndex=getFinalNumber(addedElementsIndex.species)
     }
+    addedElementsIndex.species.push(Number(speciesIndex))
     let content=""
     content=`
         <div class="cardTableContent">
@@ -1287,7 +1307,6 @@ function setAddButtonProcess(boxName){//プロパティの追加ボタン処理�
 function setDeleteButtonProcess(boxName,index){//プロパティの削除ボタン処理を適用する処理
     const contentName=`${boxName}-${index}`
     $(document).on("click",`#deleteButton-${contentName}`,function(){//削除ボタンの処理
-        console.log(contentName)
         let minElementNumber=0//追加ボタンなどを含めた要素の最低数
         let cardTableContentCount=0
         let deleteTarget
@@ -1301,8 +1320,6 @@ function setDeleteButtonProcess(boxName,index){//プロパティの削除ボタ�
             const boxId=document.getElementById(boxName)
             cardTableContentCount=boxId.childElementCount
             deleteTarget=contentId
-
-            console.log(cardTableContentCount)
         }
         deleteTarget.remove()
         $(document).off("click",`#deleteButton-${contentName}`)//削除ボタンの削除処理(イベント)も削除する
