@@ -13,6 +13,48 @@ function getQuery(name){//クエリ文字列(URLパラメータ)を取得する�
 const Page=getQuery("page")//開いているページの種類
 const Index=getQuery("index")//開いているページの項目
 const isOpenList={symbol:true,resistance:true,ability:true,move:true,note:true}//アコーディオンメニューが開いているかどうか
+const emptyData={
+    name:"",
+    level:"",
+    tag:"",
+    elements:[
+    ],
+    species:[
+    ],
+    sanCheck:{
+        success:"",
+        failure:""
+    },
+    HP:"",
+    armor:"",
+    initiative:"",
+    actionPoint:"",
+    dodge:"",
+    actionNumber:"",
+    statusEffects:{
+        flame:"",
+        ice:"",
+        dazzle:"",
+        poison:"",
+        sleep:"",
+        confusion:"",
+        stun:"",
+        curse:"",
+        atkDown:"",
+        defDown:{
+            physical:"",
+            breath:"",
+            magic:""
+        },
+        spdDown:""
+    },
+    stealth:"",
+    abilities:[
+    ],
+    moves:[
+    ],
+    note:""
+}//新規データの枠組み(技・特性欄は空)
 const newData={
     name:"",
     level:"",
@@ -76,11 +118,12 @@ const newData={
                 }
             ],
             effects:[
+                ""
             ]
         }
     ],
     note:""
-}//新規データの枠組み
+}//新規データの枠組み(技・特性欄に空要素を1つ入れたもの)
 const fileReader=new FileReader()//File API
 
 function convertProperty(value,target="",alt="?"){//null値などを代替テキストに変換する関数
@@ -470,10 +513,10 @@ function createButton_clickedProcess(data,event){//新規作成ボタンが押�
     let result
     if(Boolean(data)===true){//データが入っているときの処理
         result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
-        result.enemy.push(newData)//データに新規データを追加する
+        result.enemy.push(emptyData)//データに新規データを追加する
     }else{
         result={enemy:[]}//空データを作詞絵
-        result.enemy.push(newData)//データに新規データを追加する
+        result.enemy.push(emptyData)//データに新規データを追加する
     }
     const newPageUrl=`${htmlUrl}?page=edit&index=${result.enemy.length-1}`
     switch(event.button){
@@ -725,9 +768,9 @@ function addAbilityBox(abilitiesArray,page=Page){//特性を取得して、追�
             result+=createAbilityBox(abilitiesArray[i],i,page).content
             if(page==="edit"){setDeleteButtonProcess("ability",i)}//削除ボタンに処理を適用する
         }
-    }else{
-        result+=createAbilityBox().content
-        if(page==="edit"){setDeleteButtonProcess("ability",0)}//削除ボタンに処理を適用する
+    }else{//データがないときの処理
+/*         result+=createAbilityBox().content
+        if(page==="edit"){setDeleteButtonProcess("ability",0)}//削除ボタンに処理を適用する */
     }
     if(page==="edit"){setAddButtonProcess(boxName)}//特性に追加ボタンの処理を適用する
     return result
@@ -1251,9 +1294,9 @@ function addSpecieBox(speciesArray){//種族を取得して、追加する関数
             result+=createSpeciesBox(speciesArray[i],i).content
             setDeleteButtonProcess(boxName,i)//削除ボタンに処理を適用する
         }
-    }else{
-        result+=createSpeciesBox().content
-        setDeleteButtonProcess(boxName,0)//削除ボタンに処理を適用する
+    }else{//データがないときの処理
+/*         result+=createSpeciesBox().content
+        setDeleteButtonProcess(boxName,0)//削除ボタンに処理を適用する */
     }
     setAddButtonProcess(boxName)//種族に追加ボタンの処理を適用する
     return result
@@ -1351,7 +1394,7 @@ function createStealthSelect(stealth){//隠密のセレクトボックスのopti
 function getInputEnemyData(){//入力フォームからデータを取得する関数
     //TODO 現在の入力内容を取得する処理
     if(Page!=="edit"){return}
-    return newData
+    return emptyData
 }
 function getReplacedData(data,key,enemyData){//データの一部を置換する関数
     const result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
