@@ -19,7 +19,7 @@ body{
 }
 
 #userMenu{
-    width: 490px;
+    width: 480px;
     margin: 60px auto 0 auto;
 }
 #userMenuContent{
@@ -27,7 +27,7 @@ body{
 }
 
 #sideMenu{
-    width: 490px;
+    width: 480px;
     margin: 10px auto 0 auto;
     text-align: center;
 }
@@ -63,8 +63,8 @@ body{
 }
 #headerContent{
     height: 50px;
-    width: 490px;
-    left:calc(50% - 490px/2);
+    width: 480px;
+    left:calc(50% - 480px/2);
     position: fixed;
     z-index: 15;
 }
@@ -151,7 +151,7 @@ textarea{
 }
 
 #main{
-    width: 490px;
+    width: 480px;
     margin: 10px auto;
     left: 0;
     right: 0;
@@ -187,7 +187,7 @@ textarea{
     }
     #userButton{
         position: fixed;
-        left: calc((100% + 490px)/2 + 10px);
+        left: calc((100% + 480px)/2 + 10px);
     }
     #sideMenu{
         top: 50px;

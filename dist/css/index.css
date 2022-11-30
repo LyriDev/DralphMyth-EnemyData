@@ -8,10 +8,10 @@
     width:170px;
 }
 #searchTag{
-    left:calc(50% - 490px/2);
+    left:calc(50% - 480px/2);
 }
 #searchName{
-    left:calc((50% - 490px/2) + 170px + 20px);
+    left:calc((50% - 480px/2) + 170px + 20px);
 }
 
 .data{
