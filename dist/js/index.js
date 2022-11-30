@@ -1439,6 +1439,11 @@ function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替え�
             break
     }
 }
+function setAutoAdjustTextarea(target){//textareaの入力時に縦幅を自動調整する処理を適用する関数
+    $(document).on("keyup",target,function(){
+        $(this).height(0).innerHeight(this.scrollHeight)
+    })
+}
 
 /* データを編集・出力する関数 */
 function deleteEnemyPiece(key,data){//jsonのデータを削除する関数
