@@ -501,6 +501,7 @@ function updateMain(data,_page=Page){//メインを変更する関数
             updateAllTextarea("move-effect")
             updateTextarea("#note0")
             //textareaの初期値に合わせて高さを自動調整する
+            setAutoAdjustTextarea("textarea")//textareaの入力時に縦幅を自動調整する
             break
         default:
             break
