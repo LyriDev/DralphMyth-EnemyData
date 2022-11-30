@@ -1311,15 +1311,20 @@ function setDeleteButtonProcess(boxName,index){//プロパティの削除ボタ�
         let cardTableContentCount=0
         let deleteTarget
         const contentId=document.getElementById(contentName)
-        if(boxName==="symbol-species"){
-            minElementNumber=2
-            cardTableContentCount=contentId.parentNode.parentNode.childElementCount
-            deleteTarget=contentId.parentNode//親要素(.cardTableContent)ごと削除する
-        }else{
-            minElementNumber=1
-            const boxId=document.getElementById(boxName)
-            cardTableContentCount=boxId.childElementCount
-            deleteTarget=contentId
+        switch(boxName){
+            case "symbol-species":
+                minElementNumber=2
+                cardTableContentCount=contentId.parentNode.parentNode.childElementCount
+                deleteTarget=contentId.parentNode//親要素(.cardTableContent)ごと削除する
+                break
+            case "ability":
+                minElementNumber=1
+                const boxId=document.getElementById(boxName)
+                cardTableContentCount=boxId.childElementCount
+                deleteTarget=contentId
+                break
+            default:
+                break
         }
         deleteTarget.remove()
         $(document).off("click",`#deleteButton-${contentName}`)//削除ボタンの削除処理(イベント)も削除する
