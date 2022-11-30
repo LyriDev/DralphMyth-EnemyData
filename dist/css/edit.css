@@ -89,7 +89,7 @@ td input:hover{
     height: auto;
     font-size: 1.25rem;
 }
-#symbol .cardTableContent > label{
+#symbol .cardTableContent > label,#symbol-species > label{
     display: flex;
     align-items: center;
     z-index: 1;
@@ -100,7 +100,7 @@ td input:hover{
     background-color: #202328;
     transition: background-color 0.3s;
 }
-#symbol > .cardTable > .cardTableContent > label:hover{
+#symbol > .cardTable > .cardTableContent > label:hover,#symbol-species > label:hover{
     background-color: #1A1D21;
 }
 #symbol input[type="text"],#symbol input[type="number"],#statusEffects input[type="number"]{
@@ -109,7 +109,7 @@ td input:hover{
     background-color: #656D75;
     color:#F5F5F5;
 }
-#symbol input[type="text"]:not(#symbol-parameter input[type="text"]){
+#symbol input[type="text"]:not(#symbol-parameter input[type="text"],#symbol-species input[type="text"]){
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
@@ -171,9 +171,20 @@ td input:hover{
     display: block;
     margin:5px auto;
 }
+#symbol-species > label{
+    float: left;
+    margin-bottom: 10px;
+    width: fit-content;
+    border-radius: 3px;
+}
+#symbol-species > #symbol-species-content{
+    float: left;
+    width: fit-content;
+}
 #symbol-species input[type="text"]{
     width: 200px;
-    border-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 #symbol-species .cardTableContent{
     display: flex;

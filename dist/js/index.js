@@ -1015,9 +1015,10 @@ function getEditPage(enemyData){
                             ${createElementCheckBox(enemyData,"symbol-element")}
                         </div>
                     </div>
-                    <div id="symbol-species">
+                    <div id="symbol-species" class="clearFix">
                         <button id="addButton-symbol-species" class="button">追加</button>
-                        ${addSpecieBox(enemyData.species)}
+                        <label>種族</label>
+                        <div id="symbol-species-content">${addSpecieBox(enemyData.species)}</div>
                     </div>
                     <div class="cardTableContent">
                         <table id="symbol-parameter">
@@ -1188,9 +1189,11 @@ function getEditPage(enemyData){
             </div>
             <div class="cardBody">
                 <div id="ability">
-                    ${addAbilityBox(enemyData.abilities)}
+                    <div id="ability-content">
+                        ${addAbilityBox(enemyData.abilities)}
+                    </div>
+                    <button id="addButton-ability" class="button">追加</button>
                 </div>
-                <button id="addButton-ability" class="button">追加</button>
             </div>
         </div>
         <div class="cardBox">
@@ -1267,7 +1270,6 @@ function createSpeciesBox(species="",index=null){//追加する種族を作成�
     let content=""
     content=`
         <div class="cardTableContent">
-            <label for="symbol-species-${speciesIndex}">種族</label>
             <input type="text" id="symbol-species-${speciesIndex}" value="${species}">
             <button id="deleteButton-symbol-species-${speciesIndex}" class="button deleteButton">削除</button>
             <div class=cardTableContent-add>系</div>
@@ -1280,7 +1282,7 @@ function createSpeciesBox(species="",index=null){//追加する種族を作成�
     return result
 }
 function createAddContent(boxName){//boxNameに応じて追加する中身を作成する関数
-    const boxId=document.getElementById(boxName)
+    const boxId=document.getElementById(`${boxName}-content`)
     let gottenObject=new Object
     let content=""
     let index=0
@@ -1307,31 +1309,19 @@ function setAddButtonProcess(boxName){//プロパティの追加ボタン処理�
 function setDeleteButtonProcess(boxName,index){//プロパティの削除ボタン処理を適用する処理
     const contentName=`${boxName}-${index}`
     $(document).on("click",`#deleteButton-${contentName}`,function(){//削除ボタンの処理
-        let minElementNumber=0//追加ボタンなどを含めた要素の最低数
-        let cardTableContentCount=0
         let deleteTarget
         const contentId=document.getElementById(contentName)
         switch(boxName){
             case "symbol-species":
-                minElementNumber=2
-                cardTableContentCount=contentId.parentNode.parentNode.childElementCount
                 deleteTarget=contentId.parentNode//親要素(.cardTableContent)ごと削除する
                 break
             case "ability":
-                minElementNumber=1
-                const boxId=document.getElementById(boxName)
-                cardTableContentCount=boxId.childElementCount
                 deleteTarget=contentId
                 break
             default:
                 break
         }
         deleteTarget.remove()
-        $(document).off("click",`#deleteButton-${contentName}`)//削除ボタンの削除処理(イベント)も削除する
-        if(cardTableContentCount<=minElementNumber){//親の親要素(#boxName)の中身(.cardTableContent)が一つもなくなってしまう(追加ボタンは除く)場合、
-            createAddContent(boxName)//空の要素を作成する
-            return
-        }
     })
 }
 function createStealthSelect(stealth){//隠密のセレクトボックスのoptionを作成する関数
