@@ -813,6 +813,9 @@ function createAbilityBox(ability={name:"",effect:""},index=null,page=Page){//�
     }
     return result
 }
+//TODO 技欄作成
+//TODO 技欄(状態異常)作成
+//TODO 技欄(効果)作成
 
 /* 閲覧ページを表示中に使う関数 */
 function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
