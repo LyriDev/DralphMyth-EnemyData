@@ -177,7 +177,7 @@ textarea{
         position: fixed;
         width: 100%;
         height: 0;
-        margin: 0 auto;
+        margin: 0 auto 0 10px;
         z-index: 12;
     }
     #userMenuContent{
@@ -194,6 +194,7 @@ textarea{
         top: 50px;
         width: 132px;
         height: calc((60px + 2px)*3 + (10px)*2);
+        margin-left: 10px;
         position: fixed;
     }
     #downloadJson,#downloadText,#import{
