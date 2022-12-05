@@ -6,13 +6,13 @@ const newUser={//ユーザーデータの枠組み
     password:null
 }
 let user="user0"//ユーザー名ではなくディレクトリ名 ユーザーのインデックスを登録する仕様
-let dataBaseUrl=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/${user}/data.json`
+let dataBaseUrl=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/users/${user}/data.json`
 
 /* ユーザーデータを管理する関数 */
 function setUser(){//ユーザーを設定する関数
     //TODO ログイン処理
     user=window.prompt("ユーザー名を入力してください", "");
-    dataBaseUrl=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/${user}/data.json`
+    dataBaseUrl=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/users/${user}/data.json`
 }
 function logout(){//ログアウトする関数
     //TODO ログアウト処理
