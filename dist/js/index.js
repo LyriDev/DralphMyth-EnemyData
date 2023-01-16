@@ -271,6 +271,15 @@ function exportToClipboard(value){//テキストデータをクリップボー�
         navigator.clipboard.writeText(value)//クリップボードに出力
     }
 }
+function createDataList(dataListId,list){//datalistタグを作成する関数
+    if(Array.isArray(list) === false){return}//例外処理
+    let result=`<datalist id="${dataListId}">`
+    for(let i in list){
+        result+=`<option value="${list[i]}">`
+    }
+    result+="</datalist>"
+    return result
+}
 
 /* 種別リスト */
 const attackTypeList=[//攻撃種別リスト
@@ -1333,7 +1342,8 @@ function createSpeciesBox(species="",index=null){//追加する種族を作成�
     let content=""
     content=`
         <div class="cardTableContent">
-            <input type="text" id="symbol-species-${speciesIndex}" value="${species}">
+            <input type="text" id="symbol-species-${speciesIndex}" list="speciesList" value="${species}" autocomplete="off">
+            ${createDataList("speciesList",speciesList)}
             <button id="deleteButton-symbol-species-${speciesIndex}" class="button deleteButton">削除</button>
             <div class=cardTableContent-add>系</div>
         </div>
@@ -1344,6 +1354,7 @@ function createSpeciesBox(species="",index=null){//追加する種族を作成�
     }
     return result
 }
+
 function createAddContent(boxName){//boxNameに応じて追加する中身を作成する関数
     const boxId=document.getElementById(`${boxName}-content`)
     let gottenObject=new Object
