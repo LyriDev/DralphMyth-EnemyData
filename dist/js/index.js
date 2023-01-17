@@ -274,7 +274,6 @@ function exportToClipboard(value){//テキストデータをクリップボー�
 function createDataList(dataListId,list){//datalistタグを作成する関数
     if(Array.isArray(list) === false){return}//例外処理
     let result=`<datalist id="${dataListId}">`
-    result+=`<option value="">`
     for(let i in list){
         result+=`<option value="${list[i]}">`
     }
