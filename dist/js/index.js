@@ -1275,8 +1275,13 @@ function getEditPage(enemyData){
                     <span id="moveArrow" class="arrowDown"></span>
                 </a>
             </div>
-            <div id="move" class="cardBody">
-                ${addMoveBox(enemyData)}
+            <div class="cardBody">
+                <div id="move">
+                    <div id="move-content">
+                    ${addMoveBox(enemyData)}
+                    </div>
+                    <button id="addButton-move" class="button">追加</button>
+                </div>
             </div>
         </div>
         <div class="cardBox">

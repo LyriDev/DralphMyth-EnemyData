@@ -24,7 +24,7 @@
 #addButton-symbol-species,.deleteButton-ability{
     float: right;
 }
-#addButton-ability{
+#addButton-ability,#addButton-move{
     margin: 10px;
     margin-bottom: 5px;
 }
