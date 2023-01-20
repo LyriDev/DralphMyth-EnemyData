@@ -801,7 +801,7 @@ function addAbilityBox(abilitiesArray,page=Page){//特性を取得して、追�
     if(page==="edit"){setAddButtonProcess(boxName)}//特性に追加ボタンの処理を適用する
     return result
 }
-function createAbilityBox(ability={name:"",effect:""},index=null,page=Page){//追加する特性を作成する関数
+function createAbilityBox(ability=newData.abilities[0],index=null,page=Page){//追加する特性を作成する関数
     let abilityIndex=0
     if(Boolean(index)===true){
         abilityIndex=index
@@ -841,6 +841,11 @@ function createAbilityBox(ability={name:"",effect:""},index=null,page=Page){//�
 //TODO 技欄作成
 //TODO 技欄(状態異常)作成
 //TODO 技欄(効果)作成
+function _addMoveBox(moveArray,page=Page){//技を取得して、追加する関数
+}
+function _createMoveBox(move=newData.moves[0],index=null,page=Page){//追加する技を作成する関数
+}
+
 
 /* 閲覧ページを表示中に使う関数 */
 function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
