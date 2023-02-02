@@ -1083,6 +1083,10 @@ function getEditPage(enemyData){
                         <input type="text" id="symbol-name" value="${enemyData.name}">
                     </div>
                     <div class="cardTableContent">
+                        <label for="symbol-level">Lv</label>
+                        <input type="number" id="symbol-level" value="${enemyData.level}">
+                    </div>
+                    <div class="cardTableContent">
                         <label for="symbol-tag">タグ</label>
                         <input type="text" id="symbol-tag" value="${enemyData.tag}">
                     </div>
@@ -1433,8 +1437,59 @@ function createStealthSelect(stealth){//隠密のセレクトボックスのopti
 }
 function getInputEnemyData(){//入力フォームからデータを取得する関数
     //TODO 現在の入力内容を取得する処理
+    const result=JSON.parse(JSON.stringify(emptyData))//値渡しでデータを受け取る
     if(Page!=="edit"){return}
-    return emptyData
+    result.name=document.getElementById("symbol-name").value
+
+    result.tag=document.getElementById("symbol-tag").value
+
+
+/*     name:"",
+    level:"",
+    tag:"",
+    elements:[
+    ],
+    species:[
+    ],
+    sanCheck:{
+        success:"",
+        failure:""
+    },
+    HP:"",
+    armor:"",
+    initiative:"",
+    actionPoint:"",
+    dodge:"",
+    actionNumber:"",
+    statusEffects:{
+        flame:"",
+        ice:"",
+        dazzle:"",
+        poison:"",
+        sleep:"",
+        confusion:"",
+        stun:"",
+        curse:"",
+        atkDown:"",
+        defDown:{
+            physical:"",
+            breath:"",
+            magic:""
+        },
+        spdDown:""
+    },
+    stealth:"",
+    abilities:[
+        {
+            name:"",
+            effect:""
+        }
+    ],
+    note */
+
+
+
+    return result
 }
 function getReplacedData(data,key,enemyData){//データの一部を置換する関数
     const result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る

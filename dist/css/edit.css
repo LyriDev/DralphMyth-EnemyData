@@ -82,6 +82,12 @@ td input:hover{
     display: flex;
     margin-bottom: 10px;
 }
+#symbol .cardTableContent:has(#symbol-name){
+    float: left;
+}
+#symbol .cardTableContent:has(#symbol-level){
+    padding-left: 10px;
+}
 #symbol .cardTableContent:last-child{
     margin-bottom: 0;
 }
@@ -127,7 +133,10 @@ td input:hover{
 
 /* 基本情報 */
 #symbol-name{
-    width: 300px;
+    width: 250px;
+}
+#symbol-level{
+    width: 50px;
 }
 #symbol-tag{
     width: 300px;
