@@ -1298,7 +1298,7 @@ function getEditPage(enemyData){
         </div>
         <div id="note" class="cardBody">
             <div class="cardTable">
-                <textarea readonly id="note0" class="cardTableContent" rows="1">${enemyData.note}</textarea>
+                <textarea id="note0" class="cardTableContent" rows="1">${enemyData.note}</textarea>
             </div>
         </div>
     `
@@ -1364,7 +1364,6 @@ function createSpeciesBox(species="",index=null){//追加する種族を作成�
     }
     return result
 }
-
 function createAddContent(boxName){//boxNameに応じて追加する中身を作成する関数
     const boxId=document.getElementById(`${boxName}-content`)
     let gottenObject=new Object
