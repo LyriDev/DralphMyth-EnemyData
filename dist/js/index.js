@@ -1148,7 +1148,7 @@ function getEditPage(enemyData){
                             <tr>
                                 <td>行動回数</td>
                                 <td>
-                                <input type="number" id="symbol-parameter-actionPoint" value="${enemyData.actionPoint}">
+                                <input type="number" id="symbol-parameter-actionNumber" value="${enemyData.actionPoint}">
                                 <div class=cardTableContent-add>回</div>
                                 </td>
                             </tr>
@@ -1454,7 +1454,7 @@ function getInputEnemyData(){//入力フォームからデータを取得する�
     result.tag=document.getElementById("symbol-tag").value
     result.elements=getElements()
     result.species=getSpecies()
-    result.sanCheck.success=document.getElementById("symbol-parameter-sanCheck-success").
+    result.sanCheck.success=document.getElementById("symbol-parameter-sanCheck-success").value
     result.sanCheck.failure=document.getElementById("symbol-parameter-sanCheck-failure").value
     result.HP=document.getElementById("symbol-parameter-HP").value
     result.initiative=document.getElementById("symbol-parameter-initiative").value
