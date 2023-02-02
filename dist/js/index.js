@@ -1783,17 +1783,22 @@ function importJson(importElement){//受け取ったjsonのデータを読み込
 /* デバッグ用処理 */
 document.addEventListener("keyup",keyupEvent);
 function keyupEvent(event){
-    switch(event.keyCode){
-        case 13://Enterキーが押されたとき
-            sendDefaultData()
-            break
-        case 46://Deleteキーが押されたとき
-            dataBase_delete("reload")
-            break
-        case 32://Spaceキーが押されたとき
-            setUser()
-            dataBase_get(dataBaseUrl)
-            break
+    if(event.ctrlKey){//Ctrlキー同時押し
+        switch(event.keyCode){
+            case 13://Enterキーが押されたとき
+                //デフォルトデータをぶちこむ
+                sendDefaultData()
+                break
+            case 46://Deleteキーが押されたとき
+                //データを全消ししてリロード
+                dataBase_delete("reload")
+                break
+            case 32://Spaceキーが押されたとき
+                //ユーザー選択(未実装)
+                setUser()
+                dataBase_get(dataBaseUrl)
+                break
+        }
     }
 }
 function sendDefaultData(){//ローカルのjsonデータをサーバーにアップロードする
