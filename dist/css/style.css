@@ -2,6 +2,7 @@ html{
     background-color: #272B30;
     color: #AAAAAA;
     font-size: 16px;
+    font-family: "sans-serif";
     /*上下方向にはみ出した要素ををスクロールさせる*/
     overflow-y: scroll;
     /*スクロールバー非表示（IE・Edge）*/
@@ -14,12 +15,12 @@ html::-webkit-scrollbar{
     display:none;
 }
 body{
-    margin-top:0;
+    margin:0;
     overflow-x: hidden;
 }
 
 #userMenu{
-    width: 490px;
+    width: 480px;
     margin: 60px auto 0 auto;
 }
 #userMenuContent{
@@ -27,7 +28,7 @@ body{
 }
 
 #sideMenu{
-    width: 490px;
+    width: 480px;
     margin: 10px auto 0 auto;
     text-align: center;
 }
@@ -63,8 +64,8 @@ body{
 }
 #headerContent{
     height: 50px;
-    width: 490px;
-    left:calc(50% - 490px/2);
+    width: 480px;
+    left:calc(50% - 480px/2);
     position: fixed;
     z-index: 15;
 }
@@ -126,18 +127,18 @@ body{
     cursor: pointer;
 }
 
-input[type="text"],textarea{
+input[type="text"],input[type="number"],textarea,select{
     padding: 5px;
     border: 2px solid #52575C;
     border-radius: 3px;
 }
-input[type="text"]::placeholder{
+input[type="text"]::placeholder,input[type="number"]::placeholder,select::placeholder{
     color: #E1E1E1;
 }
-input[type="text"]:hover,textarea:hover{
+input[type="text"]:hover,input[type="number"]:hover,textarea:hover,select:hover{
     border-color: #6A6E72;
 }
-input[type="text"]:focus,textarea:focus{
+input[type="text"]:focus,input[type="number"]:focus,textarea:focus,select:focus{
     border-color: #6A6E72;
     outline: 1.5px solid #6A6E72;
 }
@@ -151,7 +152,7 @@ textarea{
 }
 
 #main{
-    width: 490px;
+    width: 480px;
     margin: 10px auto;
     left: 0;
     right: 0;
@@ -176,7 +177,7 @@ textarea{
         position: fixed;
         width: 100%;
         height: 0;
-        margin: 0 auto;
+        margin: 0 auto 0 10px;
         z-index: 12;
     }
     #userMenuContent{
@@ -187,12 +188,13 @@ textarea{
     }
     #userButton{
         position: fixed;
-        left: calc((100% + 490px)/2 + 10px);
+        left: calc((100% + 480px)/2 + 10px);
     }
     #sideMenu{
         top: 50px;
         width: 132px;
         height: calc((60px + 2px)*3 + (10px)*2);
+        margin-left: 10px;
         position: fixed;
     }
     #downloadJson,#downloadText,#import{
@@ -258,6 +260,13 @@ textarea{
 }
 .cardTable:nth-child(2n){
     background-color: #272B30;
+}
+
+/* スピンボタンを消す */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    appearance: none;
+    -moz-appearance:textfield;
 }
 
 /* 矢印アイコン */

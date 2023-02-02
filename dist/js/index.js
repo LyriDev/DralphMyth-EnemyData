@@ -13,7 +13,49 @@ function getQuery(name){//クエリ文字列(URLパラメータ)を取得する�
 const Page=getQuery("page")//開いているページの種類
 const Index=getQuery("index")//開いているページの項目
 const isOpenList={symbol:true,resistance:true,ability:true,move:true,note:true}//アコーディオンメニューが開いているかどうか
-const newData={
+const emptyData={//新規データの枠組み(技・特性欄は空)
+    name:"",
+    level:"",
+    tag:"",
+    elements:[
+    ],
+    species:[
+    ],
+    sanCheck:{
+        success:"",
+        failure:""
+    },
+    HP:"",
+    armor:"",
+    initiative:"",
+    actionPoint:"",
+    dodge:"",
+    actionNumber:"",
+    statusEffects:{
+        flame:"",
+        ice:"",
+        dazzle:"",
+        poison:"",
+        sleep:"",
+        confusion:"",
+        stun:"",
+        curse:"",
+        atkDown:"",
+        defDown:{
+            physical:"",
+            breath:"",
+            magic:""
+        },
+        spdDown:""
+    },
+    stealth:"",
+    abilities:[
+    ],
+    moves:[
+    ],
+    note:""
+}
+const newData={//新規データの枠組み(技・特性欄に空要素を1つ入れたもの)
     name:"",
     level:"",
     tag:"",
@@ -76,11 +118,12 @@ const newData={
                 }
             ],
             effects:[
+                ""
             ]
         }
     ],
     note:""
-}//新規データの枠組み
+}
 const fileReader=new FileReader()//File API
 
 function convertProperty(value,target="",alt="?"){//null値などを代替テキストに変換する関数
@@ -179,6 +222,18 @@ function deleteValueInArray(array,value){//配列から特定の要素を削除�
     }
     return resultArray
 }
+function getFinalNumber(array){//受け取った数値型配列に存在しない数値の中での最大値を取得する関数
+    let result=null
+    let i=0
+    while(true){
+        if(array.includes(i)===false){
+            result=i
+            break
+        }
+        i++
+    }
+    return result
+}
 function getTypeArray(array){//数値と空白文字を含む配列から要素の種類を抜き出してソートする関数
     let valueList=new Array//要素の種類を保存する配列
     for(let i in array){
@@ -216,10 +271,45 @@ function exportToClipboard(value){//テキストデータをクリップボー�
         navigator.clipboard.writeText(value)//クリップボードに出力
     }
 }
+function createDataList(dataListId,list){//datalistタグを作成する関数
+    if(Array.isArray(list) === false){return}//例外処理
+    let result=`<datalist id="${dataListId}">`
+    for(let i in list){
+        result+=`<option value="${list[i]}">`
+    }
+    result+="</datalist>"
+    return result
+}
 
 /* 種別リスト */
-
-const attackTypeList=["物理","息","魔法"]
+const attackTypeList=[//攻撃種別リスト
+    "物理",
+    "息",
+    "魔法"
+]
+const speciesList=[//種族リスト
+    "人間",
+    "亜人",
+    "悪魔",
+    "ドラゴン",
+    "スライム",
+    "自然",
+    "ゾンビ",
+    "魔獣",
+    "物質",
+    "？？？"
+]
+const elementList=[//属性リスト
+    "無",
+    "火",
+    "氷",
+    "風",
+    "土",
+    "雷",
+    "水",
+    "光",
+    "闇"
+]
 
 /* ページごとに表示するコンテンツを変更するための関数 */
 function dataBase_get(url){//データベースのデータを取得する関数
@@ -242,7 +332,7 @@ function updateHTML(data){//HTMLを更新する関数
             createSideMenu()//サイドメニューを作成する
         }
     }catch(exception){//存在しない敵データを閲覧・編集しようとしたとき等の例外処理
-        location.href=htmlUrl//一覧ページに送る
+        //location.href=htmlUrl//一覧ページに送る
     }
 }
 function updateTitle(data){//タイトルを変更する関数
@@ -441,8 +531,13 @@ function updateMain(data,_page=Page){//メインを変更する関数
             setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
             break
         case "edit"://編集ページの際の処理
-            setFluctuateButtonProcess("symbol-species",createSpeciesBox())//種族に追加・削除ボタンの処理を適用する
             setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
+
+            updateAllTextarea("ability-effect")
+            updateAllTextarea("move-effect")
+            updateTextarea("#note0")
+            //textareaの初期値に合わせて高さを自動調整する
+            setAutoAdjustTextarea("textarea")//textareaの入力時に縦幅を自動調整する
             break
         default:
             break
@@ -455,10 +550,10 @@ function createButton_clickedProcess(data,event){//新規作成ボタンが押�
     let result
     if(Boolean(data)===true){//データが入っているときの処理
         result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
-        result.enemy.push(newData)//データに新規データを追加する
+        result.enemy.push(emptyData)//データに新規データを追加する
     }else{
         result={enemy:[]}//空データを作詞絵
-        result.enemy.push(newData)//データに新規データを追加する
+        result.enemy.push(emptyData)//データに新規データを追加する
     }
     const newPageUrl=`${htmlUrl}?page=edit&index=${result.enemy.length-1}`
     switch(event.button){
@@ -615,9 +710,11 @@ function createEnemyElement(enemyData,data){//表示する敵データの要素�
     const viewUrl=`${htmlUrl}?page=view&index=${key}`
     setUrl(`#editButton${key}`,editUrl)
     setUrl(`#viewButton${key}`,viewUrl)
+    $(document).off("click",`#exportButton${key}`)
     $(document).on("click",`#exportButton${key}`,function(){
         exportEnemyPiece(enemyData)//出力ボタン処理を適用する
     })
+    $(document).off("click",`#deleteButton${key}`)
     $(document).on("click",`#deleteButton${key}`,function(){
         deleteEnemyPiece(key,data)//削除ボタン処理を適用する
     })
@@ -699,6 +796,68 @@ function getMovesAsText(enemyData){//技一覧をテキストで取得する関�
     return returnArray
 }
 
+/* 閲覧・編集ページを表示中に使う関数 */
+function addAbilityBox(abilitiesArray,page=Page){//特性を取得して、追加する関数
+    const boxName="ability"
+    let result=""
+    if(Boolean(abilitiesArray)===true){
+        for(let i in abilitiesArray){
+            result+=createAbilityBox(abilitiesArray[i],i,page).content
+            if(page==="edit"){setDeleteButtonProcess("ability",i)}//削除ボタンに処理を適用する
+        }
+    }else{//データがないときの処理
+/*         result+=createAbilityBox().content
+        if(page==="edit"){setDeleteButtonProcess("ability",0)}//削除ボタンに処理を適用する */
+    }
+    if(page==="edit"){setAddButtonProcess(boxName)}//特性に追加ボタンの処理を適用する
+    return result
+}
+function createAbilityBox(ability=newData.abilities[0],index=null,page=Page){//追加する特性を作成する関数
+    let abilityIndex=0
+    if(Boolean(index)===true){
+        abilityIndex=index
+    }else{//index引数が指定されていないなら、要素の最後の数をindexとして設定する
+        abilityIndex=getFinalNumber(addedElementsIndex.ability)
+    }
+    addedElementsIndex.ability.push(Number(abilityIndex))
+    let content=""
+    let isReadOnly=""
+    let deleteButton=""
+    if(page==="view"){
+        isReadOnly="readonly"
+    }else if(page==="edit"){
+        deleteButton=`<button id="deleteButton-ability-${abilityIndex}" class="button deleteButton-ability">削除</button>`
+    }
+    content=`
+        <div id="ability-${abilityIndex}" class="cardTable">
+            ${deleteButton}
+            <div class="cardTable-ability-name">
+                <div class="cardTableTitle">特性名</div>
+                <input ${isReadOnly} type="text" class="cardTableContent" value="${ability.name}">
+            </div>
+            <div class="cardTable-ability-effect">
+                <div class="cardTableTitle">
+                    <div>効果</div>
+                </div>
+                <textarea ${isReadOnly} id="ability-effect${abilityIndex}" class="cardTableContent" rows="1">${ability.effect}</textarea>
+            </div>
+        </div>
+    `
+    const result={
+        content:content,
+        index:abilityIndex
+    }
+    return result
+}
+//TODO 技欄作成
+//TODO 技欄(状態異常)作成
+//TODO 技欄(効果)作成
+function _addMoveBox(moveArray,page=Page){//技を取得して、追加する関数
+}
+function _createMoveBox(move=newData.moves[0],index=null,page=Page){//追加する技を作成する関数
+}
+
+
 /* 閲覧ページを表示中に使う関数 */
 function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
     let result= `
@@ -765,7 +924,7 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
                 </a>
             </div>
             <div id="ability" class="cardBody">
-                ${addAbilityBox(enemyDataValue)}
+                ${addAbilityBox(enemyDataValue.abilities)}
             </div>
         </div>
         <div class="cardBox">
@@ -792,27 +951,6 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
             </div>
         </div>
     `
-    return result
-}
-function addAbilityBox(enemyDataValue){//閲覧ページの特性欄を作成する関数
-    let result=""
-    let textareaNumber=0//textareaのidへ順番にインデックスをつける
-    for(let i in enemyDataValue.abilities){
-        const ability=enemyDataValue.abilities[i]
-        result+=`
-        <div class="cardTable">
-            <div class="cardTable-ability-name">
-                <div class="cardTableTitle">特性名</div>
-                <input readonly type="text" class="cardTableContent" value="${ability.name}">
-            </div>
-            <div class="cardTable-ability-effect">
-                <div class="cardTableTitle">効果</div>
-                <textarea readonly id="ability-effect${textareaNumber}" class="cardTableContent" rows="1">${ability.effect}</textarea>
-            </div>
-        </div>
-        `
-        textareaNumber++
-    }
     return result
 }
 function addMoveBox(enemyData){//閲覧ページの技欄を作成する関数
@@ -929,6 +1067,465 @@ function addMoveBox_effect_content(moveEffectArray){//閲覧ページの技欄�
     return result
 }
 
+/* 編集ページを表示中に使う関数 */
+const addedElementsIndex={//編集ページで、追加ボタンで追加する要素のindex
+    species:[],
+    ability:[],
+    moves:{
+        move:[],
+        statusEffect:[],
+        effect:[]
+    }
+}
+
+function getEditPage(enemyData){
+    let result=`
+        <div class="cardBox">
+            <div class="cardHeader" data-target="symbol">
+                <div class="cardHeaderTitle">基本情報</div>
+                <a class="cardHeaderIcon">
+                    <span id="symbolArrow" class="arrowDown"></span>
+                </a>
+            </div>
+            <div id="symbol" class="cardBody">
+                <div class="cardTable">
+                    <div class="cardTableContent">
+                        <label for="symbol-name">名前</label>
+                        <input type="text" id="symbol-name" value="${enemyData.name}">
+                    </div>
+                    <div class="cardTableContent">
+                        <label for="symbol-level">Lv</label>
+                        <input type="number" id="symbol-level" value="${enemyData.level}">
+                    </div>
+                    <div class="cardTableContent">
+                        <label for="symbol-tag">タグ</label>
+                        <input type="text" id="symbol-tag" value="${enemyData.tag}">
+                    </div>
+                    <div class="cardTableContent">
+                        <label id="symbol-element-label">属性</label>
+                        <div id="symbol-element-content">
+                            ${createElementCheckBox(enemyData,"symbol-element")}
+                        </div>
+                    </div>
+                    <div id="symbol-species" class="clearFix">
+                        <button id="addButton-symbol-species" class="button">追加</button>
+                        <label>種族</label>
+                        <div id="symbol-species-content">${addSpecieBox(enemyData.species)}</div>
+                    </div>
+                    <div class="cardTableContent">
+                        <table id="symbol-parameter">
+                            <tr>
+                                <td>SANチェック</td>
+                                <td>
+                                    <input type="text" id="symbol-parameter-sanCheck-success" value="${enemyData.sanCheck.success}">
+                                    <div class=cardTableContent-add>/</div>
+                                    <input type="text" id="symbol-parameter-sanCheck-failure" value="${enemyData.sanCheck.failure}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>HP</td>
+                                <td><input type="number" id="symbol-parameter-HP" value="${enemyData.HP}"></td>
+                            </tr>
+                            <tr>
+                                <td>装甲</td>
+                                <td><input type="number" id="symbol-parameter-armor" value="${enemyData.armor}"></td>
+                            </tr>
+                            <tr>
+                                <td>イニシアチブ</td>
+                                <td><input type="number" id="symbol-parameter-initiative" value="${enemyData.initiative}"></td>
+                            </tr>
+                            <tr>
+                                <td>行動P</td>
+                                <td><input type="number" id="symbol-parameter-actionPoint" value="${enemyData.actionPoint}"></td>
+                            </tr>
+                            <tr>
+                                <td>回避</td>
+                                <td>
+                                <input type="number" id="symbol-parameter-dodge" value="${enemyData.dodge}">
+                                <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>行動回数</td>
+                                <td>
+                                <input type="number" id="symbol-parameter-actionNumber" value="${enemyData.actionPoint}">
+                                <div class=cardTableContent-add>回</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cardBox">
+            <div class="cardHeader" data-target="statusEffects">
+                <div class="cardHeaderTitle">耐性</div>
+                <a class="cardHeaderIcon">
+                    <span id="statusEffectsArrow" class="arrowDown"></span>
+                </a>
+            </div>
+            <div id="statusEffects" class="cardBody">
+                <div class="cardTable">
+                    <div class="cardTableContent">
+                        <table>
+                            <tr>
+                                <td>炎</td>
+                                <td>
+                                    <input type="number" id="statusEffects-flame" value="${enemyData.statusEffects.flame}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>氷</td>
+                                <td>
+                                    <input type="number" id="statusEffects-ice" value="${enemyData.statusEffects.ice}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>幻惑</td>
+                                <td>
+                                    <input type="number" id="statusEffects-dazzle" value="${enemyData.statusEffects.dazzle}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>毒</td>
+                                <td>
+                                    <input type="number" id="statusEffects-poison" value="${enemyData.statusEffects.poison}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>眠り</td>
+                                <td>
+                                    <input type="number" id="statusEffects-sleep" value="${enemyData.statusEffects.sleep}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>混乱</td>
+                                <td>
+                                    <input type="number" id="statusEffects-confusion" value="${enemyData.statusEffects.confusion}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>スタン</td>
+                                <td>
+                                    <input type="number" id="statusEffects-stun" value="${enemyData.statusEffects.stun}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>呪い</td>
+                                <td>
+                                    <input type="number" id="statusEffects-curse" value="${enemyData.statusEffects.curse}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>隠密</td>
+                                <td>
+                                    <select id="statusEffects-stealth">
+                                        ${createStealthSelect(enemyData.stealth)}
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>攻撃力低下</td>
+                                <td>
+                                    <input type="number" id="statusEffects-atkDown" value="${enemyData.statusEffects.atkDown}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>物理防御力低下</td>
+                                <td>
+                                    <input type="number" id="statusEffects-defDown-physical" value="${enemyData.statusEffects.defDown.physical}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>息防御力低下</td>
+                                <td>
+                                    <input type="number" id="statusEffects-defDown-breath" value="${enemyData.statusEffects.defDown.breath}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>魔法防御力低下</td>
+                                <td>
+                                    <input type="number" id="statusEffects-defDown-magic" value="${enemyData.statusEffects.defDown.magic}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>素早さ低下</td>
+                                <td>
+                                    <input type="number" id="statusEffects-spdDown" value="${enemyData.statusEffects.spdDown}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cardBox">
+            <div class="cardHeader" data-target="ability">
+                <div class="cardHeaderTitle">特性</div>
+                <a class="cardHeaderIcon">
+                    <span id="abilityArrow" class="arrowDown"></span>
+                </a>
+            </div>
+            <div class="cardBody">
+                <div id="ability">
+                    <div id="ability-content">
+                        ${addAbilityBox(enemyData.abilities)}
+                    </div>
+                    <button id="addButton-ability" class="button">追加</button>
+                </div>
+            </div>
+        </div>
+        <div class="cardBox">
+            <div class="cardHeader" data-target="move">
+                <div class="cardHeaderTitle">技</div>
+                <a class="cardHeaderIcon">
+                    <span id="moveArrow" class="arrowDown"></span>
+                </a>
+            </div>
+            <div class="cardBody">
+                <div id="move">
+                    <div id="move-content">
+                    ${addMoveBox(enemyData)}
+                    </div>
+                    <button id="addButton-move" class="button">追加</button>
+                </div>
+            </div>
+        </div>
+        <div class="cardBox">
+        <div class="cardHeader" data-target="note">
+            <div class="cardHeaderTitle">備考</div>
+            <a class="cardHeaderIcon">
+                <span id="noteArrow" class="arrowDown"></span>
+            </a>
+        </div>
+        <div id="note" class="cardBody">
+            <div class="cardTable">
+                <textarea id="note0" class="cardTableContent" rows="1">${enemyData.note}</textarea>
+            </div>
+        </div>
+    `
+    return result
+}
+function createElementCheckBox(enemyData,boxName){//9属性のチェックボックスを作成する関数
+    let result=""
+    let isChecked=""
+    for(let i in elementList){
+        if(Boolean(enemyData.elements)===true){
+            if(enemyData.elements.includes(elementList[i])){
+                isChecked="checked"
+            }else{
+                isChecked=""
+            }
+        }
+        result+=`
+            <div class="${boxName}">
+                <label for="${boxName}-${i}">${elementList[i]}</label>
+                <input type="checkbox" id="${boxName}-${i}" ${isChecked}>
+            </div>
+        `
+    }
+    return result
+}
+function addSpecieBox(speciesArray){//種族を取得して、追加する関数
+    const boxName="symbol-species"
+    let result=""
+    if(Boolean(speciesArray)===true){
+        for(let i in speciesArray){
+            result+=createSpeciesBox(speciesArray[i],i).content
+            setDeleteButtonProcess(boxName,i)//削除ボタンに処理を適用する
+        }
+    }else{//データがないときの処理
+/*         result+=createSpeciesBox().content
+        setDeleteButtonProcess(boxName,0)//削除ボタンに処理を適用する */
+    }
+    setAddButtonProcess(boxName)//種族に追加ボタンの処理を適用する
+    return result
+}
+function createSpeciesBox(species="",index=null){//追加する種族を作成する関数
+    const idName="symbol-species-"
+    let speciesIndex=0
+    if(Boolean(index)===true){
+        speciesIndex=index
+    }else{//index引数が指定されていないなら、要素の最後の数をindexとして設定する
+        speciesIndex=getFinalNumber(addedElementsIndex.species)
+    }
+    addedElementsIndex.species.push(Number(speciesIndex))
+    let content=""
+    content=`
+        <div class="cardTableContent">
+            <input type="text" id="symbol-species-${speciesIndex}" list="speciesList" value="${species}" autocomplete="off">
+            ${createDataList("speciesList",speciesList)}
+            <button id="deleteButton-symbol-species-${speciesIndex}" class="button deleteButton">削除</button>
+            <div class=cardTableContent-add>系</div>
+        </div>
+    `
+    const result={
+        content:content,
+        index:speciesIndex
+    }
+    return result
+}
+function createAddContent(boxName){//boxNameに応じて追加する中身を作成する関数
+    const boxId=document.getElementById(`${boxName}-content`)
+    let gottenObject=new Object
+    let content=""
+    let index=0
+    switch(boxName){//boxNameに合わせて追加する中身を変更する
+        case "symbol-species":
+            gottenObject=createSpeciesBox()
+            break
+        case "ability":
+            gottenObject=createAbilityBox()
+            break
+        default:
+            break
+    }
+    content=gottenObject.content
+    index=gottenObject.index
+    boxId.innerHTML+=content
+    setDeleteButtonProcess(boxName,index)//削除ボタンの処理を適用する
+}
+function setAddButtonProcess(boxName){//プロパティの追加ボタン処理を適用する処理
+    $(document).on("click",`#addButton-${boxName}`,function(){//追加ボタンの処理
+        createAddContent(boxName)
+    })
+}
+function setDeleteButtonProcess(boxName,index){//プロパティの削除ボタン処理を適用する処理
+    const contentName=`${boxName}-${index}`
+    $(document).on("click",`#deleteButton-${contentName}`,function(){//削除ボタンの処理
+        let deleteTarget
+        const contentId=document.getElementById(contentName)
+        switch(boxName){
+            case "symbol-species":
+                deleteTarget=contentId.parentNode//親要素(.cardTableContent)ごと削除する
+                break
+            case "ability":
+                deleteTarget=contentId
+                break
+            default:
+                break
+        }
+        deleteTarget.remove()
+    })
+}
+function createStealthSelect(stealth){//隠密のセレクトボックスのoptionを作成する関数
+    const selection=["","",""]
+    switch(stealth){
+        case "不明":
+        case "":
+            selection[0]="selected"
+            break
+        case "有効":
+            selection[1]="selected"
+            break
+        case "無効":
+            selection[2]="selected"
+            break
+        default:
+            break
+    }
+    let result=""
+    result=`
+        <option value="不明" ${selection[0]}>不明</option>
+        <option value="有効" ${selection[1]}>有効</option>
+        <option value="無効" ${selection[2]}>無効</option>
+    `
+    return result
+}
+function getInputEnemyData(){//入力フォームからデータを取得する関数
+    //TODO 現在の入力内容を取得する処理
+    const result=JSON.parse(JSON.stringify(emptyData))//値渡しでデータを受け取る
+    if(Page!=="edit"){return}
+    result.name=document.getElementById("symbol-name").value
+    result.level=document.getElementById("symbol-level").value
+    result.tag=document.getElementById("symbol-tag").value
+    result.elements=getElements()
+    result.species=getSpecies()
+    result.sanCheck.success=document.getElementById("symbol-parameter-sanCheck-success").value
+    result.sanCheck.failure=document.getElementById("symbol-parameter-sanCheck-failure").value
+    result.HP=document.getElementById("symbol-parameter-HP").value
+    result.initiative=document.getElementById("symbol-parameter-initiative").value
+    result.actionPoint=document.getElementById("symbol-parameter-actionPoint").value
+    result.dodge=document.getElementById("symbol-parameter-dodge").value
+    result.actionNumber=document.getElementById("symbol-parameter-actionNumber").value
+    result.statusEffects.flame=document.getElementById("statusEffects-flame").value
+    result.statusEffects.ice=document.getElementById("statusEffects-ice").value
+    result.statusEffects.dazzle=document.getElementById("statusEffects-dazzle").value
+    result.statusEffects.poison=document.getElementById("statusEffects-poison").value
+    result.statusEffects.sleep=document.getElementById("statusEffects-sleep").value
+    result.statusEffects.confusion=document.getElementById("statusEffects-confusion").value
+    result.statusEffects.stun=document.getElementById("statusEffects-stun").value
+    result.statusEffects.curse=document.getElementById("statusEffects-curse").value
+    result.statusEffects.atkDown=document.getElementById("statusEffects-atkDown").value
+    result.statusEffects.defDown.physical=document.getElementById("statusEffects-defDown-physical").value
+    result.statusEffects.defDown.breath=document.getElementById("statusEffects-defDown-breath").value
+    result.statusEffects.defDown.magic=document.getElementById("statusEffects-defDown-magic").value
+    result.statusEffects.spdDown=document.getElementById("statusEffects-spdDown").value
+    result.statusEffects.spdDown=document.getElementById("statusEffects-spdDown").value
+    result.stealth=document.getElementById("statusEffects-stealth").value
+    result.abilities=getAbilities()
+    //TODO movesの取得
+    result.note=document.getElementById("note0").value
+
+
+
+    function getElements(){//入力フォームから敵の属性データを取得する関数
+        const result=new Array
+        for(let i=0;i<elementList.length;i++){
+            if(document.getElementById(`symbol-element-${i}`).checked){
+                result.push(elementList[i])
+            }
+        }
+        return result
+    }
+    function getSpecies(){//入力フォームから敵の種族データを取得する関数
+        const result=new Array
+        const speciesElements=$('input[id^="symbol-species-"]')
+        for(let i=0;i<speciesElements.length;i++){
+            result.push(speciesElements[i].value);
+        }
+        return result
+    }
+    function getAbilities(){//入力フォームから敵の特性データを取得する関数
+        const result=new Array
+        const abilitiesElements=$('textarea[id^="ability-effect"]')
+        for(let i=0;i<abilitiesElements.length;i++){
+            const newAbility={
+                name:"",
+                effect:""
+            }
+            newAbility.name=abilitiesElements[i].parentNode.parentNode.querySelector(".cardTable-ability-name").querySelector(".cardTableContent").value
+            newAbility.effect=abilitiesElements[i].value
+            result.push(newAbility);
+        }
+        return result
+    }
+    return result
+}
+function getReplacedData(data,key,enemyData){//データの一部を置換する関数
+    const result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
+    result.enemy.splice(key,1,enemyData)//指定されたデータを置換する
+    return result
+}
+function getInputData(data){//入力されたデータを含む全体のデータを取得する関数
+    const gottenEnemyData=getInputEnemyData()
+    const replacedData=getReplacedData(data,Index,gottenEnemyData)
+    return replacedData
+}
+
 /* htmlのふるまいを適用する関数 */
 function updateAllTextarea(idName){//全てのtextareaの初期値に合わせてそれぞれ高さを自動調整する関数
     const textareaList = $(`textarea[id^="${idName}"]`);
@@ -937,7 +1534,7 @@ function updateAllTextarea(idName){//全てのtextareaの初期値に合わせ�
     }
 }
 function updateTextarea(textareaId){//textareaの初期値に合わせて高さを自動調整する関数
-    $(function() {
+    $(function(){
         const targetArea = $(textareaId);
         const rawTarget = targetArea.get(0);
         let lineHeight = Number(targetArea.attr("rows"));
@@ -993,148 +1590,11 @@ function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替え�
             isOpenList.note=!isOpenList.note
             break
     }
-
 }
-
-/* 編集ページを表示中に使う関数 */
-function getEditPage(enemyData){
-    let result=`
-        <div class="cardBox">
-            <div class="cardHeader" data-target="symbol">
-                <div class="cardHeaderTitle">基本情報</div>
-                <a class="cardHeaderIcon">
-                    <span id="symbolArrow" class="arrowDown"></span>
-                </a>
-            </div>
-            <div id="symbol" class="cardBody">
-                <div class="cardTable">
-                    <div class="cardTableContent">
-                        <label for="symbol-name">名前</label>
-                        <input type="text" id="symbol-name" placeholder="おなまえ" value="${0}">
-                    </div>
-                    <div class="cardTableContent">
-                        <label for="symbol-tag">タグ</label>
-                        <input type="text" id="symbol-tag" value="${0}">
-                    </div>
-                    <div class="cardTableContent">
-                        <label id="symbol-element-label">属性</label>
-                        <div id="symbol-element-content">
-                            ${createElementCheckBox(enemyData,"symbol-element")}
-                        </div>
-                    </div>
-                    <div id="symbol-species">
-                        <div class="fluctuateButtons">
-                            <button id="addButton-symbol-species">追加</button>
-                            <button id="deleteButton-symbol-species">削除</button>
-                        </div>
-                        ${addSpecieBox(enemyData.species)}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="cardBox">
-            <div class="cardHeader" data-target="ability">
-                <div class="cardHeaderTitle">特性</div>
-                <a class="cardHeaderIcon">
-                    <span id="abilityArrow" class="arrowDown"></span>
-                </a>
-            </div>
-            <div id="ability" class="cardBody">
-                ${addAbilityBox(enemyData)}
-            </div>
-        </div>
-        <div class="cardBox">
-            <div class="cardHeader" data-target="move">
-                <div class="cardHeaderTitle">技</div>
-                <a class="cardHeaderIcon">
-                    <span id="moveArrow" class="arrowDown"></span>
-                </a>
-            </div>
-            <div id="move" class="cardBody">
-                ${addMoveBox(enemyData)}
-            </div>
-        </div>
-        <div class="cardBox">
-        <div class="cardHeader" data-target="note">
-            <div class="cardHeaderTitle">備考</div>
-            <a class="cardHeaderIcon">
-                <span id="noteArrow" class="arrowDown"></span>
-            </a>
-        </div>
-        <div id="note" class="cardBody">
-            <div class="cardTable">
-                <textarea readonly id="note0" class="cardTableContent" rows="1">${enemyData.note}</textarea>
-            </div>
-        </div>
-    `
-    return result
-}
-function createElementCheckBox(enemyData,boxName){//9属性のチェックボックスを作成する関数
-    const elementList=["無","火","氷","風","土","雷","水","光","闇"]
-    let result=""
-    for(let i in elementList){
-        result+=`
-            <div class="${boxName}">
-                <label for="${boxName}-${i}">${elementList[i]}</label>
-                <input type="checkbox" id="${boxName}-${i}">
-            </div>
-        `
-    }
-    return result
-}
-
-function addSpecieBox(speciesArray){//種族を取得して、追加する関数
-    let result=""
-    if(Boolean(speciesArray)===true){
-        for(let i in speciesArray){
-            result+=createSpeciesBox(speciesArray[i])
-        }
-    }else{
-        result+=createSpeciesBox()
-    }
-    return result
-}
-
-function createSpeciesBox(species=""){//追加する種族を作成する関数
-    const idName="symbol-species-"
-    const speciesBoxList = $(`input[id^="${idName}"]`)
-    let result=""
-    result=`
-        <div class="cardTableContent">
-            <label for="symbol-species-${speciesBoxList.length}">種族</label>
-            <input type="text" id="symbol-species-${speciesBoxList.length}" value="${species}">
-            <div class=cardTableContent-add>系</div>
-        </div>
-    `
-    return result
-}
-
-function setFluctuateButtonProcess(boxName,content){//プロパティの追加・削除ボタンの処理を適用する処理
-    const boxId=document.getElementById(boxName)
-    $(document).on("click",`#addButton-${boxName}`,function(){//追加ボタンの処理
-        boxId.innerHTML+=content
+function setAutoAdjustTextarea(target){//textareaの入力時に縦幅を自動調整する処理を適用する関数
+    $(document).on("keyup",target,function(){
+        $(this).height(0).innerHeight(this.scrollHeight)
     })
-    $(document).on("click",`#deleteButton-${boxName}`,function(){//削除ボタンの処理
-        if(boxId.childElementCount>=3){//子要素が最低1個(追加・削除ボタンを除いて)以上あるなら、一番下の子要素を削除する
-            boxId.removeChild(boxId.lastElementChild)
-        }
-    })
-}
-
-function getInputEnemyData(){//入力フォームからデータを取得する関数
-    //TODO 現在の入力内容を取得する処理
-    if(Page!=="edit"){return}
-    return newData
-}
-function getReplacedData(data,key,enemyData){//データの一部を置換する関数
-    const result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
-    result.enemy.splice(key,1,enemyData)//指定されたデータを置換する
-    return result
-}
-function getInputData(data){//入力されたデータを含む全体のデータをを取得する関数
-    const gottenEnemyData=getInputEnemyData()
-    const replacedData=getReplacedData(data,Index,gottenEnemyData)
-    return replacedData
 }
 
 /* データを編集・出力する関数 */
@@ -1150,7 +1610,6 @@ function exportEnemyPiece(enemyData){//敵コマをクリップボードに出�
     alert("敵データをクリップボードに出力しました。")
 }
 function convertJsonToPiece(enemyData){//Jsonデータをココフォリアコマ形式に変換する関数
-    //TODO 敵コマをココフォリアデータに変換する処理
     let result=""
     const ccfoliaPiece={//ココフォリアコマの枠組み
         kind:"character",
@@ -1403,17 +1862,22 @@ function importJson(importElement){//受け取ったjsonのデータを読み込
 /* デバッグ用処理 */
 document.addEventListener("keyup",keyupEvent);
 function keyupEvent(event){
-    switch(event.keyCode){
-        case 13://Enterキーが押されたとき
-            sendDefaultData()
-            break
-        case 46://Deleteキーが押されたとき
-            dataBase_delete("reload")
-            break
-        case 32://Spaceキーが押されたとき
-            setUser()
-            dataBase_get(dataBaseUrl)
-            break
+    if(event.ctrlKey){//Ctrlキー同時押し
+        switch(event.keyCode){
+            case 13://Enterキーが押されたとき
+                //デフォルトデータをぶちこむ
+                sendDefaultData()
+                break
+            case 46://Deleteキーが押されたとき
+                //データを全消ししてリロード
+                dataBase_delete("reload")
+                break
+            case 32://Spaceキーが押されたとき
+                //ユーザー選択(未実装)
+                setUser()
+                dataBase_get(dataBaseUrl)
+                break
+        }
     }
 }
 function sendDefaultData(){//ローカルのjsonデータをサーバーにアップロードする
