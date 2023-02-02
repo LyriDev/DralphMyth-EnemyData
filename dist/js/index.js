@@ -299,6 +299,17 @@ const speciesList=[//種族リスト
     "物質",
     "？？？"
 ]
+const elementList=[//属性リスト
+    "無",
+    "火",
+    "氷",
+    "風",
+    "土",
+    "雷",
+    "水",
+    "光",
+    "闇"
+]
 
 /* ページごとに表示するコンテンツを変更するための関数 */
 function dataBase_get(url){//データベースのデータを取得する関数
@@ -1108,7 +1119,7 @@ function getEditPage(enemyData){
                                 <td>
                                     <input type="text" id="symbol-parameter-sanCheck-success" value="${enemyData.sanCheck.success}">
                                     <div class=cardTableContent-add>/</div>
-                                    <input type="text" id="symbol-parameter-sanCheck-success" value="${enemyData.sanCheck.failure}">
+                                    <input type="text" id="symbol-parameter-sanCheck-failure" value="${enemyData.sanCheck.failure}">
                                 </td>
                             </tr>
                             <tr>
@@ -1309,7 +1320,6 @@ function getEditPage(enemyData){
     return result
 }
 function createElementCheckBox(enemyData,boxName){//9属性のチェックボックスを作成する関数
-    const elementList=["無","火","氷","風","土","雷","水","光","闇"]
     let result=""
     let isChecked=""
     for(let i in elementList){
@@ -1440,55 +1450,69 @@ function getInputEnemyData(){//入力フォームからデータを取得する�
     const result=JSON.parse(JSON.stringify(emptyData))//値渡しでデータを受け取る
     if(Page!=="edit"){return}
     result.name=document.getElementById("symbol-name").value
-
+    result.level=document.getElementById("symbol-level").value
     result.tag=document.getElementById("symbol-tag").value
+    result.elements=getElements()
+    result.species=getSpecies()
+    result.sanCheck.success=document.getElementById("symbol-parameter-sanCheck-success").
+    result.sanCheck.failure=document.getElementById("symbol-parameter-sanCheck-failure").value
+    result.HP=document.getElementById("symbol-parameter-HP").value
+    result.initiative=document.getElementById("symbol-parameter-initiative").value
+    result.actionPoint=document.getElementById("symbol-parameter-actionPoint").value
+    result.dodge=document.getElementById("symbol-parameter-dodge").value
+    result.actionNumber=document.getElementById("symbol-parameter-actionNumber").value
+    result.statusEffects.flame=document.getElementById("statusEffects-flame").value
+    result.statusEffects.ice=document.getElementById("statusEffects-ice").value
+    result.statusEffects.dazzle=document.getElementById("statusEffects-dazzle").value
+    result.statusEffects.poison=document.getElementById("statusEffects-poison").value
+    result.statusEffects.sleep=document.getElementById("statusEffects-sleep").value
+    result.statusEffects.confusion=document.getElementById("statusEffects-confusion").value
+    result.statusEffects.stun=document.getElementById("statusEffects-stun").value
+    result.statusEffects.curse=document.getElementById("statusEffects-curse").value
+    result.statusEffects.atkDown=document.getElementById("statusEffects-atkDown").value
+    result.statusEffects.defDown.physical=document.getElementById("statusEffects-defDown-physical").value
+    result.statusEffects.defDown.breath=document.getElementById("statusEffects-defDown-breath").value
+    result.statusEffects.defDown.magic=document.getElementById("statusEffects-defDown-magic").value
+    result.statusEffects.spdDown=document.getElementById("statusEffects-spdDown").value
+    result.statusEffects.spdDown=document.getElementById("statusEffects-spdDown").value
+    result.stealth=document.getElementById("statusEffects-stealth").value
+    result.abilities=getAbilities()
+    //TODO movesの取得
+    result.note=document.getElementById("note0").value
 
 
-/*     name:"",
-    level:"",
-    tag:"",
-    elements:[
-    ],
-    species:[
-    ],
-    sanCheck:{
-        success:"",
-        failure:""
-    },
-    HP:"",
-    armor:"",
-    initiative:"",
-    actionPoint:"",
-    dodge:"",
-    actionNumber:"",
-    statusEffects:{
-        flame:"",
-        ice:"",
-        dazzle:"",
-        poison:"",
-        sleep:"",
-        confusion:"",
-        stun:"",
-        curse:"",
-        atkDown:"",
-        defDown:{
-            physical:"",
-            breath:"",
-            magic:""
-        },
-        spdDown:""
-    },
-    stealth:"",
-    abilities:[
-        {
-            name:"",
-            effect:""
+
+    function getElements(){//入力フォームから敵の属性データを取得する関数
+        const result=new Array
+        for(let i=0;i<elementList.length;i++){
+            if(document.getElementById(`symbol-element-${i}`).checked){
+                result.push(elementList[i])
+            }
         }
-    ],
-    note */
-
-
-
+        return result
+    }
+    function getSpecies(){//入力フォームから敵の種族データを取得する関数
+        const result=new Array
+        const speciesElements=$('input[id^="symbol-species-"]')
+        for(let i=0;i<speciesElements.length;i++){
+            result.push(speciesElements[i].value);
+        }
+        return result
+    }
+    function getAbilities(){//入力フォームから敵の特性データを取得する関数
+        const result=new Array
+        const abilitiesElements=$('textarea[id^="ability-effect"]')
+        for(let i=0;i<abilitiesElements.length;i++){
+            const newAbility={
+                name:"",
+                effect:""
+            }
+            newAbility.name=abilitiesElements[i].parentNode.parentNode.querySelector(".cardTable-ability-name").querySelector(".cardTableContent").value
+            newAbility.effect=abilitiesElements[i].value
+            result.push(newAbility);
+        }
+        return result
+    }
     return result
 }
 function getReplacedData(data,key,enemyData){//データの一部を置換する関数
