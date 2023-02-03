@@ -1348,8 +1348,8 @@ function addSpecieBox(speciesArray){//種族を取得して、追加する関数
             setDeleteButtonProcess(boxName,i)//削除ボタンに処理を適用する
         }
     }else{//データがないときの処理
-/*         result+=createSpeciesBox().content
-        setDeleteButtonProcess(boxName,0)//削除ボタンに処理を適用する */
+        result+=createSpeciesBox().content//データがないとき、デフォルトで1枠作成しておく
+        setDeleteButtonProcess(boxName,0)//削除ボタンに処理を適用する
     }
     setAddButtonProcess(boxName)//種族に追加ボタンの処理を適用する
     return result
