@@ -797,6 +797,7 @@ function getMovesAsText(enemyData){//技一覧をテキストで取得する関�
 }
 
 /* 閲覧・編集ページを表示中に使う関数 */
+//TODO 編集ページの特性追加時に、既存の入力内容が消去される問題の解決
 function addAbilityBox(abilitiesArray,page=Page){//特性を取得して、追加する関数
     const boxName="ability"
     let result=""
@@ -849,6 +850,7 @@ function createAbilityBox(ability=newData.abilities[0],index=null,page=Page){//�
     }
     return result
 }
+
 //TODO 技欄作成
 //TODO 技欄(状態異常)作成
 //TODO 技欄(効果)作成
@@ -1395,7 +1397,11 @@ function createAddContent(boxName){//boxNameに応じて追加する中身を作
     }
     content=gottenObject.content
     index=gottenObject.index
-    boxId.innerHTML+=content
+    /* 文字列をhtml要素に変換していく */
+    const contentElement = document.createElement('div');
+    contentElement.style.display = 'none';
+    contentElement.innerHTML = content; //html要素に変換
+    boxId.appendChild(contentElement)//要素を追加する
     setDeleteButtonProcess(boxName,index)//削除ボタンの処理を適用する
 }
 function setAddButtonProcess(boxName){//プロパティの追加ボタン処理を適用する処理
