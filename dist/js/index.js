@@ -280,6 +280,13 @@ function createDataList(dataListId,list){//datalistタグを作成する関数
     result+="</datalist>"
     return result
 }
+function stringToHTML (str){//文字列をhtmlの要素に変換する関数
+    var dom = document.createElement('div');
+    dom.innerHTML = str;
+    console.log(dom)
+    const domChild=dom.firstElementChild
+    return domChild;
+}
 
 /* 種別リスト */
 const attackTypeList=[//攻撃種別リスト
@@ -1397,10 +1404,9 @@ function createAddContent(boxName){//boxNameに応じて追加する中身を作
     }
     content=gottenObject.content
     index=gottenObject.index
-    /* 文字列をhtml要素に変換していく */
-    const contentElement = document.createElement('div');
-    contentElement.style.display = 'none';
-    contentElement.innerHTML = content; //html要素に変換
+    const contentElement=stringToHTML(content)
+    console.log(content)
+    console.log(contentElement)
     boxId.appendChild(contentElement)//要素を追加する
     setDeleteButtonProcess(boxName,index)//削除ボタンの処理を適用する
 }
