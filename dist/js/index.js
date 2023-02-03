@@ -1466,6 +1466,7 @@ function getInputEnemyData(){//入力フォームからデータを取得する�
     result.sanCheck.success=document.getElementById("symbol-parameter-sanCheck-success").value
     result.sanCheck.failure=document.getElementById("symbol-parameter-sanCheck-failure").value
     result.HP=document.getElementById("symbol-parameter-HP").value
+    result.armor=document.getElementById("symbol-parameter-armor").value
     result.initiative=document.getElementById("symbol-parameter-initiative").value
     result.actionPoint=document.getElementById("symbol-parameter-actionPoint").value
     result.dodge=document.getElementById("symbol-parameter-dodge").value
