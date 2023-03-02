@@ -278,7 +278,8 @@ select{
     margin: 0 2px;
 }
 .move-element label{
-    margin: auto 0;
+    display: inline-block;
+    margin: 0 auto;
 }
 .move-element input[type="checkBox"]{
     display: block;
@@ -286,13 +287,30 @@ select{
 }
 /* 技 種別 */
 .cardTable-move-type{
-    float: left;
-}
-.cardTable-move-type,.cardTable-move-type .cardTableTitle{
-    width: 70px;
+    clear: left;
+    width:fit-content;
+
 }
 .cardTable-move-type .cardTableContent{
-    width: calc((70px - (2px + 10px + 2px)));
+    display: block;
+    padding: 2px;
+    border: solid 2px #7A8288;
+    border-radius: 3px;
+    background-color: #656D75;
+}
+.move-type{
+    display: inline-block;
+    width: 2rem;
+    margin: 0 2px;
+    text-align: center;
+}
+.move-type label{
+    display: inline-block;
+    margin: 0 auto;
+}
+.move-type input[type="checkBox"]{
+    display: block;
+    margin:0 auto;
 }
 /* 技 射程 */
 .cardTable-move-reach{
