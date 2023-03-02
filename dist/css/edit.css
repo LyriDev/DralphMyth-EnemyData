@@ -262,12 +262,27 @@ select{
 /* 技 属性 */
 .cardTable-move-element{
     clear: left;
-}
-.cardTable-move-element,.cardTable-move-element .cardTableTitle{
-    width: auto;
+    width:fit-content;
+
 }
 .cardTable-move-element .cardTableContent{
-    width: calc((70px - (2px + 10px + 2px)));
+    display: block;
+    padding: 2px;
+    border: solid 2px #7A8288;
+    border-radius: 3px;
+    background-color: #656D75;
+}
+.move-element{
+    display: inline-block;
+    width: 1rem;
+    margin: 0 2px;
+}
+.move-element label{
+    margin: auto 0;
+}
+.move-element input[type="checkBox"]{
+    display: block;
+    margin:0 auto;
 }
 /* 技 種別 */
 .cardTable-move-type{
@@ -307,7 +322,12 @@ select{
     width: 70px;
 }
 .cardTable-move-successRate .cardTableContent{
-    width: calc((70px - (2px + 10px + 2px)));
+    width: calc(((70px - 1rem - 2px) - (2px + 10px + 2px)));
+}
+.cardTable-move-successRate .move-add{
+    float: right;
+    height: calc(2px + 5px + 1rem + 5px + 2px + 2px);
+    line-height: calc(2px + 5px + 1rem + 5px + 2px + 2px);
 }
 /* 技 攻撃回数 */
 .cardTable-move-attackNumber{
@@ -388,40 +408,3 @@ select{
     /* これがないと謎の隙間がある */
     margin-bottom: calc((5px + 2px)*-1);
 }
-
-
-
-
-
-
-
-/* とりあえず仮置きで使ってるCSS */
-/* #move-element-content{
-    display: flex;
-    width: 390px;
-    border: 1px solid #52575C;
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
-    background-color: #656D75;
-}
-#move-element-content:hover,#move-element-label:hover + #move-element-content{
-    border-color: #7A8288;
-}
-.move-element{
-    width: 50px;
-    margin-left: 10px;
-}
-.move-element:last-child{
-    margin-right: 10px;
-}
-.move-element label{
-    display: block;
-    padding: 0;
-    text-align: center;
-    background-color: transparent;
-    font-size: 1.25rem;
-}
-.move-element input[type="checkBox"]{
-    display: block;
-    margin:5px auto;
-} */

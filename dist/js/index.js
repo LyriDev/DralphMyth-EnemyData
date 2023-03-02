@@ -860,7 +860,7 @@ function createAbilityBox(ability=newData.abilities[0],index=null,page=Page){//�
 //TODO 技欄作成
 //TODO 技欄(状態異常)作成
 //TODO 技欄(効果)作成
-
+let uniqueKeyElement=0//属性欄を作製するためのユニークキー
 function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加する技を作成する関数
     const moveBoxMaster=document.getElementById("move")//技欄の親要素を入れるための親要素
     function createMoveElements(move){//技欄を1つ作成する関数
@@ -876,12 +876,15 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                         isChecked=""
                     }
                 }
+                const uniqueKey=uniqueKeyElement
                 result+=`
                     <div class="${boxName}">
-                        <label for="${boxName}-${i}">${elementList[i]}</label>
-                        <input type="checkbox" id="${boxName}-${i}" ${isChecked}>
+                        <label for="element-${uniqueKey}">${elementList[i]}</label>
+                        <br>
+                        <input type="checkbox" id="element-${uniqueKey}" class="${boxName}-${i}" ${isChecked}>
                     </div>
                 `
+                uniqueKeyElement++
             }
             return result
         }
@@ -902,7 +905,9 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                 </div>
                 <div class="cardTable-move-element">
                     <div class="cardTableTitle">属性</div>
-                    ${createMoveElementCheckBox()}
+                    <div class="cardTableContent">
+                        ${createMoveElementCheckBox()}
+                    </div>
                 </div>
                 <div class="cardTable-move-type">
                     <div class="cardTableTitle">種別</div>
@@ -918,7 +923,8 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                 </div>
                 <div class="cardTable-move-successRate">
                     <div class="cardTableTitle">成功率</div>
-                    <input type="text" class="cardTableContent" value="${addValue(move.successRate,"%","")}">
+                    <input type="text" class="cardTableContent" value="${move.successRate}">
+                    <div class="move-add">%</div>
                 </div>
                 <div class="cardTable-move-attackNumber">
                     <div class="cardTableTitle">攻撃回数</div>
