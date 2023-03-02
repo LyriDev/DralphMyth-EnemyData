@@ -537,8 +537,8 @@ function updateMain(data,_page=Page){//メインを変更する関数
             setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
             break
         case "edit"://編集ページの際の処理
+            createMoveBox(data.enemy[Index].moves,Index)//技欄を作成する
             setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
-
             updateAllTextarea("ability-effect")
             updateAllTextarea("move-effect")
             updateTextarea("#note0")
@@ -860,9 +860,90 @@ function createAbilityBox(ability=newData.abilities[0],index=null,page=Page){//�
 //TODO 技欄作成
 //TODO 技欄(状態異常)作成
 //TODO 技欄(効果)作成
-function _addMoveBox(moveArray,page=Page){//技を取得して、追加する関数
+
+/* 
+function addMoveBoxEdit(moveArray,page=Page){//技を取得して、追加する関数
 }
-function _createMoveBox(move=newData.moves[0],index=null,page=Page){//追加する技を作成する関数
+ */
+
+function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加する技を作成する関数
+
+
+    const moveBoxMaster=document.getElementById("move")//技欄の親要素を入れるための親要素
+    function createMoveElements(move){//技欄を1つ作成する関数
+        const newMoveBox=document.createElement("div")
+        newMoveBox.classList.add("cardTable")
+        newMoveBox.innerHTML=`
+            <div class="clearFix">
+                <div class="cardTable-move-index">
+                    <div class="cardTableTitle">技番号</div>
+                    <input type="text" class="cardTableContent" value="${move.index}">
+                </div>
+                <div class="cardTable-move-name">
+                    <div class="cardTableTitle">技名</div>
+                    <input type="text" class="cardTableContent" value="${move.name}">
+                </div>
+                <div class="cardTable-move-element">
+                    <div class="cardTableTitle">属性</div>
+                    <input type="text" class="cardTableContent" value="${addDotToArray(deleteValueInArray(move.elements,""),"・")}">
+                </div>
+                <div class="cardTable-move-type">
+                    <div class="cardTableTitle">種別</div>
+                    <input type="text" class="cardTableContent" value="${addDotToArray(deleteValueInArray(move.types,""),"・")}">
+                </div>
+                <div class="cardTable-move-reach">
+                    <div class="cardTableTitle">射程</div>
+                    <input type="text" class="cardTableContent" value="${move.reach}">
+                </div>
+                <div class="cardTable-move-range">
+                    <div class="cardTableTitle">範囲</div>
+                    <input type="text" class="cardTableContent" value="${move.range}">
+                </div>
+                <div class="cardTable-move-successRate">
+                    <div class="cardTableTitle">成功率</div>
+                    <input type="text" class="cardTableContent" value="${addValue(move.successRate,"%","")}">
+                </div>
+                <div class="cardTable-move-attackNumber">
+                    <div class="cardTableTitle">攻撃回数</div>
+                    <input type="text" class="cardTableContent" value="${move.attackNumber}">
+                </div>
+                <div class="cardTable-move-damage">
+                    <div class="cardTableTitle">ダメージ</div>
+                    <input type="text" class="cardTableContent" value="${move.damage}">
+                </div>
+            </div>
+        `
+        //削除ボタンを作成する
+        const deleteButtonMove=document.createElement("button")
+        deleteButtonMove.classList.add("deleteButton")
+        deleteButtonMove.textContent="削除"
+        deleteButtonMove.addEventListener("click",function(){
+            //削除ボタンの親要素を削除する
+            deleteButtonMove.parentNode.remove()
+        },false)
+        newMoveBox.appendChild(deleteButtonMove)
+        //
+        return newMoveBox
+    }
+    //技欄の親要素を作成
+    const moveBoxContent=document.createElement("div")
+    moveBoxContent.classList.add("move-content")
+    //1つずつ技欄を作成する
+    const sortedMoves=getSortedMoves(moves)
+    for(let i in sortedMoves){
+        moveBoxContent.appendChild(createMoveElements(sortedMoves[i]))
+    }
+    //技欄追加ボタンを作成
+    const addButtonMove=document.createElement("button")
+    addButtonMove.classList.add("addButton")
+    addButtonMove.textContent="追加"
+    addButtonMove.addEventListener("click",function(){
+        //新しい技欄を追加する
+        moveBoxContent.appendChild(createMoveElements(newData.moves[0]))
+    },false)
+    //完成した技欄を入れるための親要素と追加ボタンを技欄の親要素を入れるための親要素に追加
+    moveBoxMaster.appendChild(moveBoxContent)
+    moveBoxMaster.appendChild(addButtonMove)
 }
 
 
@@ -1305,10 +1386,7 @@ function getEditPage(enemyData){
             </div>
             <div class="cardBody">
                 <div id="move">
-                    <div id="move-content">
-                    ${addMoveBox(enemyData)}
-                    </div>
-                    <button id="addButton-move" class="button">追加</button>
+
                 </div>
             </div>
         </div>
@@ -1326,6 +1404,7 @@ function getEditPage(enemyData){
         </div>
     `
     return result
+    //技欄は後で作成する(クソ設計でごめん)
 }
 function createElementCheckBox(enemyData,boxName){//9属性のチェックボックスを作成する関数
     let result=""
