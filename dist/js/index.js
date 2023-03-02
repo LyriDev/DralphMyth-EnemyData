@@ -861,11 +861,6 @@ function createAbilityBox(ability=newData.abilities[0],index=null,page=Page){//�
 //TODO 技欄(状態異常)作成
 //TODO 技欄(効果)作成
 
-/* 
-function addMoveBoxEdit(moveArray,page=Page){//技を取得して、追加する関数
-}
- */
-
 function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加する技を作成する関数
     const moveBoxMaster=document.getElementById("move")//技欄の親要素を入れるための親要素
     function createMoveElements(move){//技欄を1つ作成する関数

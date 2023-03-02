@@ -261,10 +261,10 @@ select{
 }
 /* 技 属性 */
 .cardTable-move-element{
-    float: left;
+    clear: left;
 }
 .cardTable-move-element,.cardTable-move-element .cardTableTitle{
-    width: 300px;
+    width: auto;
 }
 .cardTable-move-element .cardTableContent{
     width: calc((70px - (2px + 10px + 2px)));
@@ -396,9 +396,9 @@ select{
 
 
 /* とりあえず仮置きで使ってるCSS */
-#move-element-content{
+/* #move-element-content{
     display: flex;
-/*     width: 390px; */
+    width: 390px;
     border: 1px solid #52575C;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
@@ -424,4 +424,4 @@ select{
 .move-element input[type="checkBox"]{
     display: block;
     margin:5px auto;
-}
+} */
