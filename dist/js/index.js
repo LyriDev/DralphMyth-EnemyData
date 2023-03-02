@@ -860,36 +860,32 @@ function createAbilityBox(ability=newData.abilities[0],index=null,page=Page){//�
 //TODO 技欄作成
 //TODO 技欄(状態異常)作成
 //TODO 技欄(効果)作成
-let uniqueKeyElement=0//属性欄を作製するためのユニークキー
+let uniqueKeyMove=0//属性欄を作製するためのユニークキー
 function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加する技を作成する関数
     const moveBoxMaster=document.getElementById("move")//技欄の親要素を入れるための親要素
     function createMoveElements(move){//技欄を1つ作成する関数
-        function createMoveElementCheckBox(){//9属性のチェックボックスを作成する関数
+        function createMoveCheckBox(list,boxName){//チェックボックスを作成する関数
             let result=""
             let isChecked=""
-            const boxName="move-element"
-            for(let i in elementList){
+            for(let i in list){
                 if(Boolean(move.elements)===true){
-                    if(move.elements.includes(elementList[i])){
+                    if(move.elements.includes(list[i])){
                         isChecked="checked"
                     }else{
                         isChecked=""
                     }
                 }
-                const uniqueKey=uniqueKeyElement
+                const uniqueKey=uniqueKeyMove
                 result+=`
                     <div class="${boxName}">
-                        <label for="element-${uniqueKey}">${elementList[i]}</label>
+                        <label for="move-checkBox-${uniqueKey}">${list[i]}</label>
                         <br>
-                        <input type="checkbox" id="element-${uniqueKey}" class="${boxName}-${i}" ${isChecked}>
+                        <input type="checkbox" id="move-checkBox-${uniqueKey}" class="${boxName}-${i}" ${isChecked}>
                     </div>
                 `
-                uniqueKeyElement++
+                uniqueKeyMove++
             }
             return result
-        }
-        function createMoveTypeCheckBox(){//3種の攻撃種別のチェックボックスを作成する関数
-
         }
         const newMoveBox=document.createElement("div")
         newMoveBox.classList.add("cardTable")
@@ -906,12 +902,14 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                 <div class="cardTable-move-element">
                     <div class="cardTableTitle">属性</div>
                     <div class="cardTableContent">
-                        ${createMoveElementCheckBox()}
+                        ${createMoveCheckBox(elementList,"move-element")}
                     </div>
                 </div>
                 <div class="cardTable-move-type">
                     <div class="cardTableTitle">種別</div>
-                    <input type="text" class="cardTableContent" value="${addDotToArray(deleteValueInArray(move.types,""),"・")}">
+                    <div class="cardTableContent">
+                        ${createMoveCheckBox(attackTypeList,"move-type")}
+                    </div>
                 </div>
                 <div class="cardTable-move-reach">
                     <div class="cardTableTitle">射程</div>
