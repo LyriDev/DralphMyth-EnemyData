@@ -924,20 +924,22 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
         elementBoxes[1]=document.createElement("div")
         elementBoxes[1].classList.add("clearFix")
         const freeSpace=new Array
-        freeSpace[0]=document.createElement("div")//属性欄
+        freeSpace[0]=document.createElement("div")//属性欄を作成する
         freeSpace[0].classList.add("cardTable-move-element")
         freeSpace[1]=document.createElement("div")
         freeSpace[1].classList.add("cardTableTitle")
         freeSpace[1].textContent="属性"
         freeSpace[0].appendChild(freeSpace[1])
         freeSpace[0].appendChild(createMoveCheckBox(elementList,"move-element"))
-        freeSpace[2]=document.createElement("div")//種別欄
+        elementBoxes[1].appendChild(freeSpace[0])//属性欄を追加する
+        freeSpace[2]=document.createElement("div")//種別欄を作成する
         freeSpace[2].classList.add("cardTable-move-type")
         freeSpace[3]=document.createElement("div")
         freeSpace[3].classList.add("cardTableTitle")
         freeSpace[3].textContent="種別"
         freeSpace[2].appendChild(freeSpace[3])
         freeSpace[2].appendChild(createMoveCheckBox(attackTypeList,"move-type"))
+        elementBoxes[1].appendChild(freeSpace[2])//種別欄を追加する
         //射程欄と範囲欄の作成
         elementBoxes[2]=document.createElement("div")
         elementBoxes[2].classList.add("clearFix")
