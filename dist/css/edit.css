@@ -261,7 +261,7 @@ select{
 }
 /* 技 属性 */
 .cardTable-move-element{
-    clear: left;
+    float: left;
     width:fit-content;
 
 }
@@ -287,7 +287,7 @@ select{
 }
 /* 技 種別 */
 .cardTable-move-type{
-    clear: left;
+    float: left;
     width:fit-content;
 
 }

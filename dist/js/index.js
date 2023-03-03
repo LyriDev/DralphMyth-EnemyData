@@ -867,9 +867,15 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
         function createMoveCheckBox(list,boxName){//チェックボックスを作成する関数
             let result=""
             let isChecked=""
+            let property=undefined
+            if(boxName==="move-element"){
+                property=move.elements
+            }else if(boxName==="move-type"){
+                property=move.types
+            }
             for(let i in list){
-                if(Boolean(move.elements)===true){
-                    if(move.elements.includes(list[i])){
+                if(Boolean(property)===true){
+                    if(property.includes(list[i])){
                         isChecked="checked"
                     }else{
                         isChecked=""
@@ -899,16 +905,18 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                     <div class="cardTableTitle">技名</div>
                     <input type="text" class="cardTableContent" value="${move.name}">
                 </div>
-                <div class="cardTable-move-element">
-                    <div class="cardTableTitle">属性</div>
-                    <div class="cardTableContent">
-                        ${createMoveCheckBox(elementList,"move-element")}
+                <div class="clearFix">
+                    <div class="cardTable-move-element">
+                        <div class="cardTableTitle">属性</div>
+                        <div class="cardTableContent">
+                            ${createMoveCheckBox(elementList,"move-element")}
+                        </div>
                     </div>
-                </div>
-                <div class="cardTable-move-type">
-                    <div class="cardTableTitle">種別</div>
-                    <div class="cardTableContent">
-                        ${createMoveCheckBox(attackTypeList,"move-type")}
+                    <div class="cardTable-move-type">
+                        <div class="cardTableTitle">種別</div>
+                        <div class="cardTableContent">
+                            ${createMoveCheckBox(attackTypeList,"move-type")}
+                        </div>
                     </div>
                 </div>
                 <div class="cardTable-move-reach">
