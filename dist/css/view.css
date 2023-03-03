@@ -142,10 +142,15 @@
     float: left;
 }
 .cardTable-move-successRate,.cardTable-move-successRate .cardTableTitle{
-    width: 70px;
+    width: calc(70px + 1rem + 10px);
 }
 .cardTable-move-successRate .cardTableContent{
-    width: calc((70px - (2px + 10px + 2px)));
+    float: left;
+    width: calc(((70px) - (2px + 10px + 2px)));
+}
+.cardTable-move-successRate .move-add{
+    height: calc(2px + 5px + 1rem + 5px + 2px + 2px);
+    line-height: calc(2px + 5px + 1rem + 5px + 2px + 2px);
 }
 /* 技 攻撃回数 */
 .cardTable-move-attackNumber{
@@ -162,10 +167,10 @@
     float: left;
 }
 .cardTable-move-damage,.cardTable-move-damage .cardTableTitle{
-    width: 70px;
+    width: calc(440px - ((70px + 1rem + 10px) + 70px));
 }
 .cardTable-move-damage .cardTableContent{
-    width: calc(((440px - 70px*2) - (2px + 10px + 2px)));
+    width: calc((440px - ((70px + 1rem + 10px) + 70px)) - (2px + 10px + 2px));
 }
 /* 技 状態異常 */
 .cardTable-move-statusEffect{
