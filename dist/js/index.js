@@ -903,6 +903,27 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
             checkBoxElement.innerHTML=result
             return checkBoxElement
         }
+        function createMoveStatusEffectBox(statusEffect){//状態異常欄を作成する関数
+            const freeSpace=new Array
+            freeSpace[0]=document.createElement("div")//状態異常欄を入れるための親要素
+            freeSpace[0].classList.add("cardTable-move-statusEffect","clearFix")
+            freeSpace[1]=document.createElement("div")//種別欄を入れるための親要素
+            freeSpace[1].classList.add("cardTable-move-statusEffect-type")
+            freeSpace[2]=document.createElement("div")//種別欄のタイトル
+            freeSpace[2].classList.add("cardTableTitle")
+            freeSpace[2].textContent="状態異常"
+            freeSpace[1].appendChild(freeSpace[2])
+            freeSpace[3]=document.createElement("input")//種別欄の値
+            freeSpace[3].type="text"
+            freeSpace[3].classList.add("cardTableContent")
+            freeSpace[3].value=statusEffect.effectType
+            freeSpace[1].appendChild(freeSpace[3])
+            freeSpace[0].appendChild(freeSpace[1])
+            return freeSpace[0]
+        }
+        function createMoveEffectBox(effect){
+
+        }
         //技欄を1つ作成する
         const newMoveBox=document.createElement("div")
         newMoveBox.classList.add("cardTable","clearFix")
