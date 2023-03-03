@@ -24,7 +24,7 @@
 #addButton-symbol-species,.deleteButton-ability{
     float: right;
 }
-#addButton-ability,#addButton-move{
+#addButton-ability{
     margin: 10px;
     margin-bottom: 5px;
 }
@@ -239,6 +239,29 @@ select{
 
 
 /* 技 */
+/* 技 ボタン関係全部 */
+#move .addButton,#move .deleteButton{
+    border:solid 1px #5D656D;
+    border-radius: 3px;
+    background-color: #3A3F44;
+    color: #F5F5F5;
+    transition: border 0.3s;
+}
+#move .addButton:hover,#move .deleteButton:hover{
+    border:solid 1px #7A8288;
+    cursor: pointer;
+}
+#move > .addButton,#move > .cardTable > .deleteButton{
+    font-size: 1.25rem;
+}
+#move > .addButton{
+    margin: 10px;
+    margin-bottom: 5px;
+}
+#move .cardTable .deleteButton{
+    float: right;
+    margin-right: 0;
+}
 /* 技 技番号 */
 .cardTable-move-index{
     float: left;
@@ -254,16 +277,15 @@ select{
     float: left;
 }
 .cardTable-move-name,.cardTable-move-name .cardTableTitle{
-    width: calc(440px - 70px);
+    width: calc(440px - 70px*2);
 }
 .cardTable-move-name .cardTableContent{
-    width: calc(((440px - 70px) - (2px + 10px + 2px)));
+    width: calc(((440px - 70px*2) - (2px + 10px + 2px)));
 }
 /* 技 属性 */
 .cardTable-move-element{
     float: left;
     width:fit-content;
-
 }
 .cardTable-move-element .cardTableContent{
     display: block;
@@ -419,8 +441,6 @@ select{
     /* これがないと謎の隙間がある */
     margin-bottom: calc((5px + 2px)*-1);
 }
-
-
 .cardTableTitle,.cardTableContent{
     font-size: 1rem;
 }

@@ -872,6 +872,9 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
     const moveBoxMaster=document.getElementById("move")//技欄の親要素を入れるための親要素
     function createMoveElements(move){//技欄を1つ作成する関数
         function createMoveCheckBox(list,boxName){//チェックボックスを作成する関数
+            //チェックボックスの親要素を作成
+            const checkBoxElement=document.createElement("div")
+            checkBoxElement.classList.add("cardTableContent")
             let result=""
             let isChecked=""
             let property=undefined
@@ -897,61 +900,73 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                     </div>
                 `
             }
-            return result
+            checkBoxElement.innerHTML=result
+            return checkBoxElement
         }
+        //技欄を1つ作成する
         const newMoveBox=document.createElement("div")
-        newMoveBox.classList.add("cardTable")
-        newMoveBox.innerHTML=`
-            <div class="clearFix">
-                <div class="clearFix">
-                    <div class="cardTable-move-index">
-                        <div class="cardTableTitle">技番号</div>
-                        <input type="number" class="cardTableContent" value="${move.index}">
-                    </div>
-                    <div class="cardTable-move-name">
-                        <div class="cardTableTitle">技名</div>
-                        <input type="text" class="cardTableContent" value="${move.name}">
-                    </div>
-                </div>
-                <div class="clearFix">
-                    <div class="cardTable-move-element">
-                        <div class="cardTableTitle">属性</div>
-                        <div class="cardTableContent">
-                            ${createMoveCheckBox(elementList,"move-element")}
-                        </div>
-                    </div>
-                    <div class="cardTable-move-type">
-                        <div class="cardTableTitle">種別</div>
-                        <div class="cardTableContent">
-                            ${createMoveCheckBox(attackTypeList,"move-type")}
-                        </div>
-                    </div>
-                </div>
-                <div class="clearFix">
-                    <div class="cardTable-move-reach">
-                        <div class="cardTableTitle">射程</div>
-                        <input type="number" class="cardTableContent" value="${move.reach}">
-                    </div>
-                    <div class="cardTable-move-range">
-                        <div class="cardTableTitle">範囲</div>
-                        <input type="text" class="cardTableContent" value="${move.range}">
-                    </div>
-                </div>
-                <div class="clearFix">
-                    <div class="cardTable-move-successRate">
-                        <div class="cardTableTitle">成功率</div>
-                        <input type="number" class="cardTableContent" value="${move.successRate}">
-                        <div class="move-add">%</div>
-                    </div>
-                    <div class="cardTable-move-attackNumber">
-                        <div class="cardTableTitle">攻撃回数</div>
-                        <input type="text" class="cardTableContent" value="${move.attackNumber}">
-                    </div>
-                    <div class="cardTable-move-damage">
-                        <div class="cardTableTitle">ダメージ</div>
-                        <input type="text" class="cardTableContent" value="${move.damage}">
-                    </div>
-                </div>
+        newMoveBox.classList.add("cardTable","clearFix")
+        const elementBoxes=new Array
+        //技番号欄と技名欄の作成
+        elementBoxes[0]=document.createElement("div")
+        elementBoxes[0].classList.add("clearFix")
+        elementBoxes[0].innerHTML=`
+            <div class="cardTable-move-index">
+                <div class="cardTableTitle">技番号</div>
+                <input type="number" class="cardTableContent" value="${move.index}">
+            </div>
+            <div class="cardTable-move-name">
+                <div class="cardTableTitle">技名</div>
+                <input type="text" class="cardTableContent" value="${move.name}">
+            </div>
+        `
+        //属性欄と種別欄の作成
+        elementBoxes[1]=document.createElement("div")
+        elementBoxes[1].classList.add("clearFix")
+        const freeSpace=new Array
+        freeSpace[0]=document.createElement("div")//属性欄
+        freeSpace[0].classList.add("cardTable-move-element")
+        freeSpace[1]=document.createElement("div")
+        freeSpace[1].classList.add("cardTableTitle")
+        freeSpace[1].textContent="属性"
+        freeSpace[0].appendChild(freeSpace[1])
+        freeSpace[0].appendChild(createMoveCheckBox(elementList,"move-element"))
+        freeSpace[2]=document.createElement("div")//種別欄
+        freeSpace[2].classList.add("cardTable-move-type")
+        freeSpace[3]=document.createElement("div")
+        freeSpace[3].classList.add("cardTableTitle")
+        freeSpace[3].textContent="種別"
+        freeSpace[2].appendChild(freeSpace[3])
+        freeSpace[2].appendChild(createMoveCheckBox(attackTypeList,"move-type"))
+        //射程欄と範囲欄の作成
+        elementBoxes[2]=document.createElement("div")
+        elementBoxes[2].classList.add("clearFix")
+        elementBoxes[2].innerHTML=`
+            <div class="cardTable-move-reach">
+                <div class="cardTableTitle">射程</div>
+                <input type="number" class="cardTableContent" value="${move.reach}">
+            </div>
+            <div class="cardTable-move-range">
+                <div class="cardTableTitle">範囲</div>
+                <input type="text" class="cardTableContent" value="${move.range}">
+            </div>
+        `
+        //成功率欄と攻撃回数欄とダメージ欄の作成
+        elementBoxes[3]=document.createElement("div")
+        elementBoxes[3].classList.add("clearFix")
+        elementBoxes[3].innerHTML=`
+            <div class="cardTable-move-successRate">
+                <div class="cardTableTitle">成功率</div>
+                <input type="number" class="cardTableContent" value="${move.successRate}">
+                <div class="move-add">%</div>
+            </div>
+            <div class="cardTable-move-attackNumber">
+                <div class="cardTableTitle">攻撃回数</div>
+                <input type="text" class="cardTableContent" value="${move.attackNumber}">
+            </div>
+            <div class="cardTable-move-damage">
+                <div class="cardTableTitle">ダメージ</div>
+                <input type="text" class="cardTableContent" value="${move.damage}">
             </div>
         `
         //削除ボタンを作成する
@@ -960,10 +975,13 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
         deleteButtonMove.textContent="削除"
         deleteButtonMove.addEventListener("click",function(){
             //削除ボタンの親要素を削除する
-            deleteButtonMove.parentNode.remove()
+            deleteButtonMove.parentNode.parentNode.remove()
         },false)
-        newMoveBox.appendChild(deleteButtonMove)
-        //
+        elementBoxes[0].appendChild(deleteButtonMove)//作成した削除ボタンを技欄に追加する
+        //作成した複数の欄を技欄に追加する
+        for(let i in elementBoxes){
+            newMoveBox.appendChild(elementBoxes[i])
+        }
         return newMoveBox
     }
     //技欄の親要素を作成
