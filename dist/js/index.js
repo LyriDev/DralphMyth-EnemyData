@@ -286,6 +286,14 @@ function stringToHTML (str){//文字列をhtmlの要素に変換する関数
     const domChild=dom.firstElementChild
     return domChild;
 }
+function* getUniqueKey(){//一意キーを取得する関数
+    let count=0
+    while(true){
+        yield count.toString(16)
+        count++
+    }
+}
+const uniqueKey=getUniqueKey()//一意キー
 
 /* 種別リスト */
 const attackTypeList=[//攻撃種別リスト
@@ -860,7 +868,6 @@ function createAbilityBox(ability=newData.abilities[0],index=null,page=Page){//�
 //TODO 技欄作成
 //TODO 技欄(状態異常)作成
 //TODO 技欄(効果)作成
-let uniqueKeyMove=0//属性欄を作製するためのユニークキー
 function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加する技を作成する関数
     const moveBoxMaster=document.getElementById("move")//技欄の親要素を入れるための親要素
     function createMoveElements(move){//技欄を1つ作成する関数
@@ -881,15 +888,14 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                         isChecked=""
                     }
                 }
-                const uniqueKey=uniqueKeyMove
+                const checkBoxKey=uniqueKey.next().value
                 result+=`
                     <div class="${boxName}">
-                        <label for="move-checkBox-${uniqueKey}">${list[i]}</label>
+                        <label for="move-checkBox-${checkBoxKey}">${list[i]}</label>
                         <br>
-                        <input type="checkbox" id="move-checkBox-${uniqueKey}" class="${boxName}-${i}" ${isChecked}>
+                        <input type="checkbox" id="move-checkBox-${checkBoxKey}" class="${boxName}-${i}" ${isChecked}>
                     </div>
                 `
-                uniqueKeyMove++
             }
             return result
         }
@@ -897,13 +903,15 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
         newMoveBox.classList.add("cardTable")
         newMoveBox.innerHTML=`
             <div class="clearFix">
-                <div class="cardTable-move-index">
-                    <div class="cardTableTitle">技番号</div>
-                    <input type="text" class="cardTableContent" value="${move.index}">
-                </div>
-                <div class="cardTable-move-name">
-                    <div class="cardTableTitle">技名</div>
-                    <input type="text" class="cardTableContent" value="${move.name}">
+                <div class="clearFix">
+                    <div class="cardTable-move-index">
+                        <div class="cardTableTitle">技番号</div>
+                        <input type="number" class="cardTableContent" value="${move.index}">
+                    </div>
+                    <div class="cardTable-move-name">
+                        <div class="cardTableTitle">技名</div>
+                        <input type="text" class="cardTableContent" value="${move.name}">
+                    </div>
                 </div>
                 <div class="clearFix">
                     <div class="cardTable-move-element">
@@ -919,26 +927,30 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                         </div>
                     </div>
                 </div>
-                <div class="cardTable-move-reach">
-                    <div class="cardTableTitle">射程</div>
-                    <input type="text" class="cardTableContent" value="${move.reach}">
+                <div class="clearFix">
+                    <div class="cardTable-move-reach">
+                        <div class="cardTableTitle">射程</div>
+                        <input type="number" class="cardTableContent" value="${move.reach}">
+                    </div>
+                    <div class="cardTable-move-range">
+                        <div class="cardTableTitle">範囲</div>
+                        <input type="text" class="cardTableContent" value="${move.range}">
+                    </div>
                 </div>
-                <div class="cardTable-move-range">
-                    <div class="cardTableTitle">範囲</div>
-                    <input type="text" class="cardTableContent" value="${move.range}">
-                </div>
-                <div class="cardTable-move-successRate">
-                    <div class="cardTableTitle">成功率</div>
-                    <input type="text" class="cardTableContent" value="${move.successRate}">
-                    <div class="move-add">%</div>
-                </div>
-                <div class="cardTable-move-attackNumber">
-                    <div class="cardTableTitle">攻撃回数</div>
-                    <input type="text" class="cardTableContent" value="${move.attackNumber}">
-                </div>
-                <div class="cardTable-move-damage">
-                    <div class="cardTableTitle">ダメージ</div>
-                    <input type="text" class="cardTableContent" value="${move.damage}">
+                <div class="clearFix">
+                    <div class="cardTable-move-successRate">
+                        <div class="cardTableTitle">成功率</div>
+                        <input type="number" class="cardTableContent" value="${move.successRate}">
+                        <div class="move-add">%</div>
+                    </div>
+                    <div class="cardTable-move-attackNumber">
+                        <div class="cardTableTitle">攻撃回数</div>
+                        <input type="text" class="cardTableContent" value="${move.attackNumber}">
+                    </div>
+                    <div class="cardTable-move-damage">
+                        <div class="cardTableTitle">ダメージ</div>
+                        <input type="text" class="cardTableContent" value="${move.damage}">
+                    </div>
                 </div>
             </div>
         `
