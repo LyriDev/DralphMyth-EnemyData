@@ -1136,7 +1136,7 @@ function addMoveBox(enemyData){//閲覧ページの技欄を作成する関数
                     </div>
                     <div class="cardTable-move-successRate">
                         <div class="cardTableTitle">成功率</div>
-                        <input readonly type="text" class="cardTableContent" value="${addValue(sortedMoves[i].successRate,"%","")}">
+                        <input readonly type="text" class="cardTableContent" value="${sortedMoves[i].successRate}">
                         <div class="move-add">%</div>
                     </div>
                     <div class="cardTable-move-attackNumber">
