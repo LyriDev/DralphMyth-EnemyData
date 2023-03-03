@@ -538,20 +538,20 @@ function updateMain(data,_page=Page){//メインを変更する関数
         case null://一覧ページの際の処理
             break
         case "view"://閲覧ページの際の処理
+            //textareaの初期値に合わせて高さを自動調整する
             updateAllTextarea("ability-effect")
             updateAllTextarea("move-effect")
             updateTextarea("#note0")
-            //textareaの初期値に合わせて高さを自動調整する
             setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
             break
         case "edit"://編集ページの際の処理
             createMoveBox(data.enemy[Index].moves,Index)//技欄を作成する
-            setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
+            //textareaの初期値に合わせて高さを自動調整する
             updateAllTextarea("ability-effect")
             updateAllTextarea("move-effect")
             updateTextarea("#note0")
-            //textareaの初期値に合わせて高さを自動調整する
             setAutoAdjustTextarea("textarea")//textareaの入力時に縦幅を自動調整する
+            setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
             break
         default:
             break
@@ -1430,13 +1430,11 @@ function getEditPage(enemyData){
                     <span id="abilityArrow" class="arrowDown"></span>
                 </a>
             </div>
-            <div class="cardBody">
-                <div id="ability">
-                    <div id="ability-content">
-                        ${addAbilityBox(enemyData.abilities)}
-                    </div>
-                    <button id="addButton-ability" class="button">追加</button>
+            <div id="ability" class="cardBody">
+                <div id="ability-content">
+                    ${addAbilityBox(enemyData.abilities)}
                 </div>
+                <button id="addButton-ability" class="button">追加</button>
             </div>
         </div>
         <div class="cardBox">
@@ -1446,10 +1444,8 @@ function getEditPage(enemyData){
                     <span id="moveArrow" class="arrowDown"></span>
                 </a>
             </div>
-            <div class="cardBody">
-                <div id="move">
+            <div id="move" class="cardBody">
 
-                </div>
             </div>
         </div>
         <div class="cardBox">
@@ -1720,7 +1716,7 @@ function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替え�
             $(arrowIcon).removeClass(getArrowIcon(isOpenList.symbol))
             isOpenList.symbol=!isOpenList.symbol
             break
-        case "resistance":
+        case "statusEffects":
             $(arrowIcon).addClass(getArrowIcon(!isOpenList.resistance))
             $(arrowIcon).removeClass(getArrowIcon(isOpenList.resistance))
             isOpenList.resistance=!isOpenList.resistance
