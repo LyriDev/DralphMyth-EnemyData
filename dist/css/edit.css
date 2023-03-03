@@ -268,14 +268,17 @@ select{
 .cardTable-move-element .cardTableContent{
     display: block;
     padding: 2px;
-    border: solid 2px #7A8288;
+    border: solid 2px #52575C;
     border-radius: 3px;
     background-color: #656D75;
+}
+.cardTable-move-element .cardTableContent:hover{
+    border-color: #6A6E72;
 }
 .move-element{
     display: inline-block;
     width: 1rem;
-    margin: 0 2px;
+    margin: 0 5px;
 }
 .move-element label{
     display: inline-block;
@@ -294,9 +297,12 @@ select{
 .cardTable-move-type .cardTableContent{
     display: block;
     padding: 2px;
-    border: solid 2px #7A8288;
+    border: solid 2px #52575C;
     border-radius: 3px;
     background-color: #656D75;
+}
+.cardTable-move-type .cardTableContent:hover{
+    border-color: #6A6E72;
 }
 .move-type{
     display: inline-block;
