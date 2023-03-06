@@ -85,6 +85,9 @@ body{
     border:solid 1px #7A8288;
     cursor: pointer;
 }
+#import.ddefect{
+    border:solid 1px #F5F5F5;
+}
 .caption{
     color: #AAAAAA;
 }

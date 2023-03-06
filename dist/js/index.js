@@ -460,7 +460,7 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
     }
     document.getElementById("header").innerHTML=result
 }
-function createUserMenu(){//ユーザーメニューを作成する関数
+function createUserMenu(){//ユーザーメニューを作成する関数 //TODO ログイン処理の確認
     if(isLogin){//ログイン時のみ実行
         const userMenu=document.getElementById("userMenu")
         const userMenuContent=`
@@ -516,6 +516,7 @@ function createSideMenu(data){//サイドメニューを作成する関数
             importJson(importElement)
         }
         $(document).on("change","#importJson",setImportProcess)
+        fileDrop()//jsonファイルのドラッグ&ドロップ処理を実装する
     }
 }
 function updateMain(data,_page=Page){//メインを変更する関数
@@ -811,7 +812,6 @@ function getMovesAsText(enemyData){//技一覧をテキストで取得する関�
 }
 
 /* 閲覧・編集ページを表示中に使う関数 */
-//TODO 編集ページの特性追加時に、既存の入力内容が消去される問題の解決
 function addAbilityBox(abilitiesArray,page=Page){//特性を取得して、追加する関数
     const boxName="ability"
     let result=""
@@ -865,7 +865,6 @@ function createAbilityBox(ability=newData.abilities[0],index=null,page=Page){//�
     return result
 }
 
-//TODO 技欄作成
 //TODO 技欄(状態異常)作成
 //TODO 技欄(効果)作成
 function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加する技を作成する関数
@@ -1613,7 +1612,6 @@ function createStealthSelect(stealth){//隠密のセレクトボックスのopti
     return result
 }
 function getInputEnemyData(){//入力フォームからデータを取得する関数
-    //TODO 現在の入力内容を取得する処理
     const result=JSON.parse(JSON.stringify(emptyData))//値渡しでデータを受け取る
     if(Page!=="edit"){return}
     result.name=document.getElementById("symbol-name").value
@@ -2025,6 +2023,52 @@ function importJson(importElement){//受け取ったjsonのデータを読み込
             }
         }
     }
+}
+function fileDrop(){//ファイルのドラッグ&ドロップ処理を実装する関数
+    const ddarea = document.getElementById("import");
+
+        // ドラッグされたデータが有効かどうかチェック
+    const isValid = e => e.dataTransfer.types.indexOf("Files") >= 0;
+
+    const ddEvent = {
+        "dragover" : e=>{
+            e.preventDefault(); // 既定の処理をさせない
+            if( !e.currentTarget.isEqualNode( ddarea ) ) {
+                    // ドロップエリア外ならドロップを無効にする
+                e.dataTransfer.dropEffect = "none";return;
+            }
+            e.stopPropagation(); // イベント伝播を止める
+
+            if( !isValid(e) ){
+                    // 無効なデータがドラッグされたらドロップを無効にする
+                e.dataTransfer.dropEffect = "none";return;
+            }
+                    // ドロップのタイプを変更
+            e.dataTransfer.dropEffect = "copy";
+            ddarea.classList.add("ddefect");
+        },
+        "dragleave" : e=>{
+            if( !e.currentTarget.isEqualNode( ddarea ) ) {
+                return;
+            }
+            e.stopPropagation(); // イベント伝播を止める
+            ddarea.classList.remove("ddefect");
+        },
+        "drop":e=>{
+            e.preventDefault(); // 既定の処理をさせない
+            e.stopPropagation(); // イベント伝播を止める
+
+            const files = e.dataTransfer;
+            importJson(files)//ファイルを読み込む処理
+
+            ddarea.classList.remove("ddefect");
+        }
+    };
+
+    Object.keys( ddEvent ).forEach( e=>{
+        ddarea.addEventListener(e,ddEvent[e]);
+        document.body.addEventListener(e,ddEvent[e])
+    });
 }
 
 /* デバッグ用処理 */
