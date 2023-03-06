@@ -92,10 +92,10 @@
     float: left;
 }
 .cardTable-move-name,.cardTable-move-name .cardTableTitle{
-    width: calc(440px - 70px);
+    width: calc(440px - 70px*3);
 }
 .cardTable-move-name .cardTableContent{
-    width: calc(((440px - 70px) - (2px + 10px + 2px)));
+    width: calc(((440px - 70px*3) - (2px + 10px + 2px)));
 }
 /* 技 属性 */
 .cardTable-move-element{
@@ -132,10 +132,10 @@
     float: left;
 }
 .cardTable-move-range,.cardTable-move-range .cardTableTitle{
-    width: calc(440px - 70px*3);
+    width: calc(440px - 70px);
 }
 .cardTable-move-range .cardTableContent{
-    width: calc(((440px - 70px*3) - (2px + 10px + 2px)));
+    width: calc(((440px - 70px) - (2px + 10px + 2px)));
 }
 /* 技 成功率 */
 .cardTable-move-successRate{
