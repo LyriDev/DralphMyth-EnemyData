@@ -866,6 +866,14 @@ function createAbilityBox(ability=newData.abilities[0],index=null,page=Page){//�
 }
 function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加する技を作成する関数
     const moveBoxMaster=document.getElementById("move")//技欄の親要素を入れるための親要素
+        //状態異常のリストを作成する
+        const statusEffectList=[
+            "炎","氷","幻惑","毒","眠り","混乱","スタン","呪い","攻撃力低下","物理防御力低下","息防御力低下","魔法防御力低下","素早さ低下"
+        ]
+        const statusEffectListId="statusEffectList"
+        const statusEffectListElement=document.createElement("div")
+        statusEffectListElement.innerHTML=createDataList(statusEffectListId,statusEffectList)
+        moveBoxMaster.appendChild(statusEffectListElement.firstElementChild)
     function createMoveElements(move){//技欄を1つ作成する関数
         function createMoveCheckBox(list,boxName){//チェックボックスを作成する関数
             //チェックボックスの親要素を作成
@@ -939,6 +947,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                 //種別欄の値を作成する
                 newStatusElement[1]=document.createElement("input")
                 newStatusElement[1].type="text"
+                newStatusElement[1].setAttribute("list",statusEffectListId)//datalistを登録する
                 newStatusElement[1].classList.add("cardTableContent","cardTable-move-statusEffect-type")
                 newStatusElement[1].value=statusEffect.effectType
                 newStatusElement[0].appendChild(newStatusElement[1])//種別欄の値を追加する
