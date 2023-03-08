@@ -1766,9 +1766,8 @@ function getInputEnemyData(){//入力フォームからデータを取得する�
     result.statusEffects.spdDown=document.getElementById("statusEffects-spdDown").value
     result.stealth=document.getElementById("statusEffects-stealth").value
     result.abilities=getAbilities()
-    //TODO movesの取得
+    result.moves=getMoves()
     result.note=document.getElementById("note0").value
-
     function getElements(){//入力フォームから敵の属性データを取得する関数
         const result=new Array
         for(let i=0;i<elementList.length;i++){
@@ -1801,7 +1800,50 @@ function getInputEnemyData(){//入力フォームからデータを取得する�
         return result
     }
     function getMoves(){//入力フォームから敵の技データを取得する関数
-
+        function getMoveCheckBox(parentElement,className,list){//技のチェックボックスを取得する関数
+            const listElement=parentElement.querySelectorAll(`${className} input`)
+            const result=new Array
+            if(list.length===listElement.length){
+                for(let j=0;j<listElement.length;j++){
+                    if(listElement[j].checked){
+                        result.push(list[j])
+                    }
+                }
+            }
+            return result
+        }
+        const result=new Array
+        const movesElement=document.querySelector(".move-content").children
+        for(let i=0;i<movesElement.length;i++){//技単位でループ
+            const newMove=new Object
+            newMove.index=movesElement[i].querySelector("div.cardTable-move-index > input").value
+            newMove.name=movesElement[i].querySelector("div.cardTable-move-name > input").value
+            newMove.elements=getMoveCheckBox(movesElement[i],".move-element",elementList)//属性を取得する
+            newMove.types=getMoveCheckBox(movesElement[i],".move-type",attackTypeList)//攻撃種別を取得する
+            newMove.reach=movesElement[i].querySelector("div.cardTable-move-reach > input").value
+            newMove.range=movesElement[i].querySelector("div.cardTable-move-range > input").value
+            newMove.successRate=movesElement[i].querySelector("div.cardTable-move-successRate > input").value
+            newMove.attackNumber=movesElement[i].querySelector("div.cardTable-move-attackNumber > input").value
+            newMove.damage=movesElement[i].querySelector("div.cardTable-move-damage > input").value
+            const statusEffects=new Array
+            const statusEffectsElement=movesElement[i].querySelector(".cardTable-move-statusEffect-value").children
+            for(let j=0;j<statusEffectsElement.length;j++){//状態異常単位でループ
+                const newStatusEffect=new Object
+                newStatusEffect.effectType=statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-type").value
+                newStatusEffect.level=statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-level").value
+                newStatusEffect.turn=statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-turn").value
+                statusEffects.push(newStatusEffect)
+            }
+            newMove.statusEffects=statusEffects
+            const effects=new Array
+            const effectsElement=movesElement[i].querySelectorAll(".cardTable-move-effect textarea.cardTableContent")
+            for(let j=0;j<effectsElement.length;j++){//効果単位でループ
+                effects.push(effectsElement[j].value)
+            }
+            newMove.effects=effects
+            result.push(newMove)
+        }
+        return result
     }
     return result
 }

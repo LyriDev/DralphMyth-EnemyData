@@ -10,6 +10,9 @@ html{
     /*スクロールバー非表示（Firefox）*/
     scrollbar-width: none;
 }
+input, select, button, textarea{
+    font-family: "sans-serif";
+}
 /*スクロールバー非表示（Chrome・Safari）*/
 html::-webkit-scrollbar{
     display:none;
