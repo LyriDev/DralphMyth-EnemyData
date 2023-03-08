@@ -902,22 +902,94 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
             checkBoxElement.innerHTML=result
             return checkBoxElement
         }
-        function createMoveStatusEffectBox(statusEffect){//状態異常欄を作成する関数
+        function createMoveStatusEffectBox(statusEffects=move.statusEffects){//状態異常欄を作成する関数
             const freeSpace=new Array
-            freeSpace[0]=document.createElement("div")//状態異常欄を入れるための親要素
+            //状態異常欄の親要素を作成する
+            freeSpace[0]=document.createElement("div")
             freeSpace[0].classList.add("cardTable-move-statusEffect","clearFix")
-            freeSpace[1]=document.createElement("div")//種別欄を入れるための親要素
-            freeSpace[1].classList.add("cardTable-move-statusEffect-type")
-            freeSpace[2]=document.createElement("div")//種別欄のタイトル
-            freeSpace[2].classList.add("cardTableTitle")
-            freeSpace[2].textContent="状態異常"
-            freeSpace[1].appendChild(freeSpace[2])
-            freeSpace[3]=document.createElement("input")//種別欄の値
-            freeSpace[3].type="text"
-            freeSpace[3].classList.add("cardTableContent")
-            freeSpace[3].value=statusEffect.effectType
-            freeSpace[1].appendChild(freeSpace[3])
-            freeSpace[0].appendChild(freeSpace[1])
+            //タイトル欄を作成する
+            freeSpace[1]=document.createElement("div")
+            freeSpace[1].classList.add("cardTable-move-statusEffect-title","clearFix")
+            //種別のタイトル欄を作成する
+            freeSpace[2]=document.createElement("div")//種別欄を入れるための親要素
+            freeSpace[2].classList.add("cardTable-move-statusEffect-type")
+            freeSpace[3]=document.createElement("div")//種別欄のタイトル
+            freeSpace[3].classList.add("cardTableTitle")
+            freeSpace[3].textContent="状態異常"
+            freeSpace[2].appendChild(freeSpace[3])
+            //レベルのタイトル欄を作成する
+            freeSpace[4]=document.createElement("div")//レベル欄を入れるための親要素
+            freeSpace[4].classList.add("cardTable-move-statusEffect-level")
+            freeSpace[5]=document.createElement("div")//レベル欄のタイトル
+            freeSpace[5].classList.add("cardTableTitle")
+            freeSpace[5].textContent="レベル"
+            freeSpace[4].appendChild(freeSpace[5])
+            //ターンのタイトル欄を作成する
+            freeSpace[6]=document.createElement("div")//ターン欄を入れるための親要素
+            freeSpace[6].classList.add("cardTable-move-statusEffect-turn")
+            freeSpace[7]=document.createElement("div")//ターン欄のタイトル
+            freeSpace[7].classList.add("cardTableTitle")
+            freeSpace[7].textContent="ターン"
+            freeSpace[6].appendChild(freeSpace[7])
+            //値欄を作成する
+            freeSpace[8]=document.createElement("div")
+            freeSpace[8].classList.add("cardTable-move-statusEffect-value","clearFix")
+            function addMoveStatusEffectBox(statusEffect){//状態異常欄の値を1つ追加する関数
+                const newStatusElement=new Array
+                //値の親要素を作成する
+                newStatusElement[0]=document.createElement("div")
+                newStatusElement[0].classList.add("clearFix")
+                //種別欄の値を作成する
+                newStatusElement[1]=document.createElement("input")
+                newStatusElement[1].type="text"
+                newStatusElement[1].classList.add("cardTableContent","cardTable-move-statusEffect-type")
+                newStatusElement[1].value=statusEffect.effectType
+                newStatusElement[0].appendChild(newStatusElement[1])//種別欄の値を追加する
+                //レベル欄の値を作成する
+                newStatusElement[2]=document.createElement("input")
+                newStatusElement[2].type="number"
+                newStatusElement[2].classList.add("cardTableContent","cardTable-move-statusEffect-level")
+                newStatusElement[2].value=statusEffect.level
+                newStatusElement[0].appendChild(newStatusElement[2])//レベル欄の値を追加する
+                //ターン欄の値を作成する
+                newStatusElement[3]=document.createElement("input")
+                newStatusElement[3].type="number"
+                newStatusElement[3].classList.add("cardTableContent","cardTable-move-statusEffect-turn")
+                newStatusElement[3].value=statusEffect.turn
+                newStatusElement[0].appendChild(newStatusElement[3])//ターン欄の値を追加する
+                //削除ボタンを作成する
+                newStatusElement[4]=document.createElement("button")
+                newStatusElement[4].classList.add("deleteButton")
+                newStatusElement[4].textContent="削除"
+                newStatusElement[4].addEventListener("click",function(){
+                    //削除ボタンの親要素を削除する
+                    newStatusElement[0].remove()
+                },false)
+                newStatusElement[0].appendChild(newStatusElement[4])//削除ボタンを追加する
+                return newStatusElement[0]
+            }
+            for(let i in statusEffects){//状態異常欄の値を追加していく
+                freeSpace[8].appendChild(addMoveStatusEffectBox(statusEffects[i]))
+            }
+            //追加ボタンを作成する
+            freeSpace[9]=document.createElement("button")
+            freeSpace[9].classList.add("addButton")
+            freeSpace[9].textContent="追加"
+            freeSpace[9].addEventListener("click",function(){
+                const newStatusEffect={
+                    effectType:"",
+                    level:"",
+                    turn:""
+                }
+                freeSpace[8].appendChild(addMoveStatusEffectBox(newStatusEffect))//新しい状態異常欄を追加する
+            },false)
+            //作成したものを親要素にぶち込んでいく
+            freeSpace[1].appendChild(freeSpace[2])//種別のタイトル欄
+            freeSpace[1].appendChild(freeSpace[4])//レベルのタイトル欄
+            freeSpace[1].appendChild(freeSpace[6])//ターンのタイトル欄
+            freeSpace[0].appendChild(freeSpace[1])//タイトル欄
+            freeSpace[0].appendChild(freeSpace[9])//追加ボタン
+            freeSpace[0].appendChild(freeSpace[8])//値欄
             return freeSpace[0]
         }
         function createMoveEffectBox(effect){
@@ -991,6 +1063,8 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                 <input type="text" class="cardTableContent" value="${move.damage}">
             </div>
         `
+        //状態異常欄の作成
+        elementBoxes[4]=createMoveStatusEffectBox()
         //削除ボタンを作成する
         const deleteButtonMove=document.createElement("button")
         deleteButtonMove.classList.add("deleteButton")

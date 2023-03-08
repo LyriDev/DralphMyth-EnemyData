@@ -18,7 +18,7 @@
 }
 
 /* 操作ボタン */
-#addButton-symbol-species,.deleteButton{
+#addButton-symbol-species,.addButton,.deleteButton{
     font-size: 1.25rem;
 }
 #addButton-symbol-species,.deleteButton-ability{
@@ -258,7 +258,7 @@ select{
     margin: 10px;
     margin-bottom: 5px;
 }
-#move .cardTable .deleteButton{
+#move .cardTable > div > .deleteButton{
     float: right;
     margin-right: 0;
 }
@@ -397,6 +397,7 @@ select{
 }
 /* 技 状態異常 */
 .cardTable-move-statusEffect{
+    position: relative;
     clear: left;
 }
 /* 技 状態異常 種類 */
@@ -406,7 +407,7 @@ select{
 .cardTable-move-statusEffect-type,.cardTable-move-statusEffect-type .cardTableTitle{
     width: 140px;
 }
-.cardTable-move-statusEffect-type .cardTableContent{
+.cardTable-move-statusEffect-type.cardTableContent{
     width: calc((140px - (2px + 10px + 2px)));
 }
 /* 技 状態異常 レベル */
@@ -416,7 +417,7 @@ select{
 .cardTable-move-statusEffect-level,.cardTable-move-statusEffect-level .cardTableTitle{
     width: 70px;
 }
-.cardTable-move-statusEffect-level .cardTableContent{
+.cardTable-move-statusEffect-level.cardTableContent{
     width: calc((70px - (2px + 10px + 2px)));
 }
 /* 技 状態異常 ターン */
@@ -426,8 +427,24 @@ select{
 .cardTable-move-statusEffect-turn,.cardTable-move-statusEffect-turn .cardTableTitle{
     width: 70px;
 }
-.cardTable-move-statusEffect-turn .cardTableContent{
+.cardTable-move-statusEffect-turn.cardTableContent{
     width: calc((70px - (2px + 10px + 2px)));
+}
+/* 技 値欄 */
+.cardTable-move-statusEffect-value{
+    height: fit-content;
+    min-height: calc((2px + 5px + 1rem + 5px + 2px) + 2px);
+}
+/* 技 状態異常 削除ボタン */
+.cardTable-move-statusEffect-value > div > .deleteButton{
+    float: left;
+    margin-left: 10px;
+    padding: 0 5px;
+}
+/* 技 状態異常 追加ボタン */
+.cardTable-move-statusEffect > .addButton{
+    position: absolute;
+    right: 0;
 }
 /* 技 効果 */
 .cardTable-move-effect{
