@@ -864,9 +864,6 @@ function createAbilityBox(ability=newData.abilities[0],index=null,page=Page){//�
     }
     return result
 }
-
-//TODO 技欄(状態異常)作成
-//TODO 技欄(効果)作成
 function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加する技を作成する関数
     const moveBoxMaster=document.getElementById("move")//技欄の親要素を入れるための親要素
     function createMoveElements(move){//技欄を1つ作成する関数
@@ -992,8 +989,51 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
             freeSpace[0].appendChild(freeSpace[8])//値欄
             return freeSpace[0]
         }
-        function createMoveEffectBox(effect){
-
+        function createMoveEffectBox(effects=move.effects){//効果欄を作成する関数
+            const freeSpace=new Array
+            //効果欄の親要素を作成する
+            freeSpace[0]=document.createElement("div")
+            freeSpace[0].classList.add("cardTable-move-effect","clearFix")
+            //タイトル欄を作成する
+            freeSpace[1]=document.createElement("div")
+            freeSpace[1].classList.add("cardTableTitle")
+            freeSpace[1].textContent="効果"
+            freeSpace[0].appendChild(freeSpace[1])
+            function addMoveEffectBox(effect){//効果欄の値を1つ追加する関数
+                const newEffectElement=new Array
+                //値欄の親要素を作成する
+                newEffectElement[0]=document.createElement("div")
+                newEffectElement[0].classList.add("clearFix","move-effect-value")
+                //値欄を作成する
+                newEffectElement[1]=document.createElement("textarea")
+                newEffectElement[1].classList.add("cardTableContent")
+                newEffectElement[1].rows="1"
+                newEffectElement[1].textContent=effect
+                newEffectElement[0].appendChild(newEffectElement[1])
+                //削除ボタンを作成する
+                newEffectElement[2]=document.createElement("button")
+                newEffectElement[2].classList.add("deleteButton")
+                newEffectElement[2].textContent="削除"
+                newEffectElement[2].addEventListener("click",function(){
+                    //削除ボタンの親要素を削除する
+                    newEffectElement[0].remove()
+                },false)
+                newEffectElement[0].appendChild(newEffectElement[2])//削除ボタンを追加する
+                return newEffectElement[0]
+            }
+            //効果欄を作成する
+            for(let i in effects){
+                freeSpace[0].appendChild(addMoveEffectBox(effects[i]))
+            }
+            //追加ボタンを作成する
+            freeSpace[2]=document.createElement("button")
+            freeSpace[2].classList.add("addButton")
+            freeSpace[2].textContent="追加"
+            freeSpace[2].addEventListener("click",function(){
+                freeSpace[0].appendChild(addMoveEffectBox(""))//新しい効果欄を追加する
+            },false)
+            freeSpace[0].appendChild(freeSpace[2])
+            return freeSpace[0]
         }
         //技欄を1つ作成する
         const newMoveBox=document.createElement("div")
@@ -1065,6 +1105,8 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
         `
         //状態異常欄の作成
         elementBoxes[4]=createMoveStatusEffectBox()
+        //効果欄の作成
+        elementBoxes[5]=createMoveEffectBox()
         //削除ボタンを作成する
         const deleteButtonMove=document.createElement("button")
         deleteButtonMove.classList.add("deleteButton")
@@ -1100,7 +1142,6 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
     moveBoxMaster.appendChild(moveBoxContent)
     moveBoxMaster.appendChild(addButtonMove)
 }
-
 
 /* 閲覧ページを表示中に使う関数 */
 function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
@@ -1322,7 +1363,6 @@ const addedElementsIndex={//編集ページで、追加ボタンで追加する�
         effect:[]
     }
 }
-
 function getEditPage(enemyData){
     let result=`
         <div class="cardBox">

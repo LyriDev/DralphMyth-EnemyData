@@ -277,10 +277,10 @@ select{
     float: left;
 }
 .cardTable-move-name,.cardTable-move-name .cardTableTitle{
-    width: calc(440px - 70px*2);
+    width: calc(440px - 70px*3);
 }
 .cardTable-move-name .cardTableContent{
-    width: calc(((440px - 70px*2) - (2px + 10px + 2px)));
+    width: calc(((440px - 70px*3) - (2px + 10px + 2px)));
 }
 /* 技 属性 */
 .cardTable-move-element{
@@ -448,7 +448,13 @@ select{
 }
 /* 技 効果 */
 .cardTable-move-effect{
+    position: relative;
     clear: left;
+    height: fit-content;
+    min-height: calc((2px + 5px + 1rem + 5px + 2px) + 1rem + 2px);
+}
+.move-effect-value{
+    margin-bottom: 10px;
 }
 .cardTable-move-effect,.cardTable-move-effect .cardTableTitle{
     width: 440px;
@@ -460,6 +466,16 @@ select{
 }
 .cardTableTitle,.cardTableContent{
     font-size: 1rem;
+}
+.cardTable-move-effect .deleteButton{
+    float: left;
+    margin-top: 3px;
+    padding: 0 5px;
+}
+.cardTable-move-effect .addButton{
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
 
 /* 備考 */
