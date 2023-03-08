@@ -1769,8 +1769,6 @@ function getInputEnemyData(){//入力フォームからデータを取得する�
     //TODO movesの取得
     result.note=document.getElementById("note0").value
 
-
-
     function getElements(){//入力フォームから敵の属性データを取得する関数
         const result=new Array
         for(let i=0;i<elementList.length;i++){
@@ -1801,6 +1799,9 @@ function getInputEnemyData(){//入力フォームからデータを取得する�
             result.push(newAbility);
         }
         return result
+    }
+    function getMoves(){//入力フォームから敵の技データを取得する関数
+
     }
     return result
 }
