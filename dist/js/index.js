@@ -329,7 +329,6 @@ function updateHTML(data){//HTMLを更新する関数
     try{
         if((Boolean(data))===true){
             updateTitle(data)//タイトルを変更する
-            switchCssFile()//読み込むCSSファイルを差し替える
             updateHeader(data)//ヘッダーを更新する
             createUserMenu()//ユーザーメニューを作成する
             createSideMenu(data)//サイドメニューを作成する
@@ -352,23 +351,6 @@ function updateTitle(data){//タイトルを変更する関数
         const enemyLevel=data.enemy[Index].level
         titleArea.innerHTML=`${enemyName}Lv${enemyLevel} - ドラルフ神話`//タイトルを変更する
     }
-}
-function switchCssFile(_page=Page){//ページ毎に読み込むCSSファイルを変更する関数
-    let cssUrl//cssファイルのパス
-    switch(_page){
-        case null://一覧ページ
-            cssUrl="./css/index.css"
-            break
-        case "view"://閲覧ページ
-            cssUrl="./css/view.css"
-            break
-        case "edit"://編集ページ
-            cssUrl="./css/edit.css"
-            break
-        default:
-            break
-    }
-    $("#styleSwitch").attr("href",cssUrl)//CSSファイルを差し替える
 }
 function updateHeader(data,_page=Page){//ヘッダーを変更する関数
     const indexUrl=htmlUrl

@@ -19,6 +19,26 @@
     <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
     <script src="js/config.js"></script>
     <script src="js/jquery.min.js"></script>
+    <script>
+      function switchCssFile(page){//ページ毎に読み込むCSSファイルを変更する関数
+        let cssUrl//cssファイルのパス
+        switch(page){
+            case null://一覧ページ
+                cssUrl="./css/index.css"
+                break
+            case "view"://閲覧ページ
+                cssUrl="./css/view.css"
+                break
+            case "edit"://編集ページ
+                cssUrl="./css/edit.css"
+                break
+            default:
+                break
+        }
+        $("#styleSwitch").attr("href",cssUrl)//CSSファイルを差し替える
+      }
+      switchCssFile(getQuery("page"))
+    </script>
     <script src="js/dataBase.js"></script>
     <script src="js/index.js"></script>
   </body>
