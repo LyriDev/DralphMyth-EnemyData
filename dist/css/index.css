@@ -4,6 +4,7 @@
 
 #searchTag,#searchName{
     position: fixed;
+    font-size: 1rem;
     top:calc((50px/2) - ((2px + 5px + 1.25rem + 5px + 2px)/2));
     width:170px;
 }
