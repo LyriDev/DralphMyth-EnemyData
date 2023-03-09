@@ -1416,7 +1416,7 @@ function getEditPage(enemyData){
                             <tr>
                                 <td>行動回数</td>
                                 <td>
-                                <input type="number" id="symbol-parameter-actionNumber" value="${enemyData.actionPoint}">
+                                <input type="number" id="symbol-parameter-actionNumber" value="${enemyData.actionNumber}">
                                 <div class=cardTableContent-add>回</div>
                                 </td>
                             </tr>
