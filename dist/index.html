@@ -20,6 +20,14 @@
     <script src="js/config.js"></script>
     <script src="js/jquery.min.js"></script>
     <script>
+      function getQuery(name){//クエリ文字列(URLパラメータ)を取得する関数
+        name=name.replace(/[\[\]]/g,"\\$&");
+        const regex=new RegExp("[?&]"+name+"(=([^&#]*)|&|#|$)"),
+        results=regex.exec(pageUrl)
+        if(!results)return null
+        if(!results[2])return ""
+        return decodeURIComponent(results[2].replace(/\+/g," "))
+      }
       function switchCssFile(page){//ページ毎に読み込むCSSファイルを変更する関数
         let cssUrl//cssファイルのパス
         switch(page){
