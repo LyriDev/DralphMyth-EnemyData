@@ -21,6 +21,7 @@
     <script src="js/jquery.min.js"></script>
     <script>
       function getQuery(name){//クエリ文字列(URLパラメータ)を取得する関数
+        const pageUrl=window.location.href//今開いているページのパス
         name=name.replace(/[\[\]]/g,"\\$&");
         const regex=new RegExp("[?&]"+name+"(=([^&#]*)|&|#|$)"),
         results=regex.exec(pageUrl)
