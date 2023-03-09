@@ -5,13 +5,35 @@
     <title id="title">ドラルフ神話 戦闘データエディタ</title>
     <link rel="icon" href="resource/favicon.ico">
     <link rel="stylesheet" href="css/style.css">
-    <link id="styleSwitch" rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/login.css">
   </head>
   <body>
     <div id="header"></div>
     <div class="clearFix" id="userMenu"></div>
     <div class="clearFix" id="sideMenu"></div>
-    <div id="main"></div>
+    <div id="main">
+      <div class="container-lg px-3 my-5 markdown-body">
+        <h1 id="ドラルフ神話-戦闘データエディタ" class="markdown-title">ドラルフ神話<br>戦闘データエディタ</h1>
+        <h2 id="概要">概要<a class="anchorjs-link " href="#概要" aria-label="Anchor" data-anchorjs-icon="" style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h2>
+        <p>ドラルフ神話に出てくる敵データを管理するシステムです。</p>
+        <h3 id="代表的な機能">代表的な機能<a class="anchorjs-link " href="#代表的な機能" aria-label="Anchor" data-anchorjs-icon="" style="font: 1em / 1 anchorjs-icons; padding-left: 0.375em;"></a></h3>
+        <ul>
+          <li>タグ付け・タグ検索機能</li>
+          <li>ココフォリアへの敵キャラコマ出力機能</li>
+          <li>一括テキストデータダウンロード機能</li>
+          <li>ファイルデータのダウンロード・アップロード機能</li>
+        </ul>
+      </div>
+      <div id="loginArea">
+        <button class="firebaseui-idp-button mdl-button mdl-js-button mdl-button--raised firebaseui-idp-twitter firebaseui-id-idp-button" data-provider-id="twitter.com" data-upgraded=",MaterialButton">
+          <span class="firebaseui-idp-icon-wrapper">
+            <img class="firebaseui-idp-icon" alt="" src="resource/twitter.svg">
+          </span>
+          <span class="firebaseui-idp-text firebaseui-idp-text-long">Twitter でログイン</span>
+          <span class="firebaseui-idp-text firebaseui-idp-text-short">Twitter</span>
+        </button>
+      </div>
+    </div>
     <script src="js/jquery.min.js"></script>
     <script src="js/dataBase.js"></script>
     <script src="js/login.js"></script>
