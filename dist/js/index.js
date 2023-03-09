@@ -458,8 +458,8 @@ function createSideMenu(data){//サイドメニューを作成する関数
         }
         const sideMenuContent=`
             <div id="sideMenuContent">
+            <a class="button" id="downloadText" href="#" ${downloadLink["text"]}>ダウンロード<br><div class="caption">(text形式)</div></a>
                 <a class="button" id="downloadJson" href="#" ${downloadLink["json"]}>ダウンロード<br><div class="caption">(json形式)</div></a>
-                <a class="button" id="downloadText" href="#" ${downloadLink["text"]}>ダウンロード<br><div class="caption">(text形式)</div></a>
                 <label class="button" id="import">
                     <input id="importJson" type="file" accept="application/json">
                     インポート<br><div class="caption">(json形式)</div>
