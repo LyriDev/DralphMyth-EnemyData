@@ -1802,14 +1802,17 @@ function getInputEnemyData(){//入力フォームからデータを取得する�
             newMove.attackNumber=movesElement[i].querySelector("div.cardTable-move-attackNumber > input").value
             newMove.damage=movesElement[i].querySelector("div.cardTable-move-damage > input").value
             const statusEffects=new Array
-            const statusEffectsElement=movesElement[i].querySelector(".cardTable-move-statusEffect-value").children
-            for(let j=0;j<statusEffectsElement.length;j++){//状態異常単位でループ
-                const newStatusEffect=new Object
-                newStatusEffect.effectType=statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-type").value
-                newStatusEffect.level=statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-level").value
-                newStatusEffect.turn=statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-turn").value
-                statusEffects.push(newStatusEffect)
-            }
+            let statusEffectsElement
+            try{
+                statusEffectsElement=movesElement[i].querySelector(".cardTable-move-statusEffect-value").children
+                for(let j=0;j<statusEffectsElement.length;j++){//状態異常単位でループ
+                    const newStatusEffect=new Object
+                    newStatusEffect.effectType=statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-type").value
+                    newStatusEffect.level=statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-level").value
+                    newStatusEffect.turn=statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-turn").value
+                    statusEffects.push(newStatusEffect)
+                }
+            }catch(error){}
             newMove.statusEffects=statusEffects
             const effects=new Array
             const effectsElement=movesElement[i].querySelectorAll(".cardTable-move-effect textarea.cardTableContent")
