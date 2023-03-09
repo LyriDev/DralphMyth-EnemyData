@@ -7,7 +7,7 @@
 }
 
 /* Twitterログインボタン */
-#loginArea{
+#firebaseui-auth-container{
     text-align: center;
 }
 .firebaseui-idp-button{
@@ -110,4 +110,7 @@
     text-transform: none;
     vertical-align: middle;
     display: none;
+}
+#firebaseui-auth-container li{
+    list-style:none;
 }

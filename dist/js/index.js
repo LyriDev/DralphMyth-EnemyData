@@ -346,7 +346,7 @@ function updateHTML(data){//HTMLを更新する関数
             createSideMenu()//サイドメニューを作成する
         }
     }catch(exception){//存在しない敵データを閲覧・編集しようとしたとき等の例外処理
-        //location.href=htmlUrl//一覧ページに送る
+        location.href=htmlUrl//一覧ページに送る
     }
 }
 function updateTitle(data){//タイトルを変更する関数
@@ -459,20 +459,15 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
     }
     document.getElementById("header").innerHTML=result
 }
-function createUserMenu(){//ユーザーメニューを作成する関数 //TODO ログイン処理の確認
-    if(isLogin){//ログイン時のみ実行
-        const userMenu=document.getElementById("userMenu")
-        const userMenuContent=`
-            <div id="userMenuContent">
-                <div class="button" id="userButton">${user}</div>
-                <button id="logoutButton" onclick="logout()">ログアウト</button>
-            </div>
-        `
-        userMenu.innerHTML=userMenuContent
-
-    }else{
-        location.href=loginPage
-    }
+function createUserMenu(){//ユーザーメニューを作成する関数
+    const userMenu=document.getElementById("userMenu")
+    const userMenuContent=`
+        <div id="userMenuContent">
+            <div class="button" id="userButton">${userName}</div>
+            <button id="logoutButton" onclick="logout()">ログアウト</button>
+        </div>
+    `
+    userMenu.innerHTML=userMenuContent
 }
 function createSideMenu(data){//サイドメニューを作成する関数
     if(Page===null){//一覧ページのときのみ実行
@@ -2285,6 +2280,14 @@ function sendDefaultData(){//ローカルのjsonデータをサーバーにア�
 }
 
 /* ここから実際の処理 */
-window.addEventListener("load",()=>{//windowが読み込まれたとき
-    dataBase_get(dataBaseUrl)
+firebase.auth().onAuthStateChanged((user)=>{//認証処理終了後の処理
+    if(user){
+        setUser(user.displayName,user.uid)
+        main()
+    }else{//非ログイン時の処理
+        location.href=loginPage//ログインページにリダイレクトする
+    }
 })
+function main(){
+    dataBase_get(dataBaseUrl)
+}

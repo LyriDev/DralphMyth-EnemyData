@@ -24,18 +24,13 @@
           <li>ファイルデータのダウンロード・アップロード機能</li>
         </ul>
       </div>
-      <div id="loginArea">
-        <button class="firebaseui-idp-button mdl-button mdl-js-button mdl-button--raised firebaseui-idp-twitter firebaseui-id-idp-button" data-provider-id="twitter.com" data-upgraded=",MaterialButton">
-          <span class="firebaseui-idp-icon-wrapper">
-            <img class="firebaseui-idp-icon" alt="" src="resource/twitter.svg">
-          </span>
-          <span class="firebaseui-idp-text firebaseui-idp-text-long">Twitter でログイン</span>
-          <span class="firebaseui-idp-text firebaseui-idp-text-short">Twitter</span>
-        </button>
-      </div>
+      <div id="firebaseui-auth-container"></div>
     </div>
     <script src="js/jquery.min.js"></script>
-    <script src="js/dataBase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/3.5.2/firebase-ui-auth__ja.js"></script>
+    <script src="js/config.js"></script>
     <script src="js/login.js"></script>
   </body>
 </html>
