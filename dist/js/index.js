@@ -111,14 +111,8 @@ const newData={//新規データの枠組み(技・特性欄に空要素を1つ�
             reach:"",
             range:"",
             statusEffects:[
-                {
-                    effectType:"",
-                    level:"",
-                    turn:""
-                }
             ],
             effects:[
-                ""
             ]
         }
     ],
@@ -901,7 +895,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
             checkBoxElement.innerHTML=result
             return checkBoxElement
         }
-        function createMoveStatusEffectBox(statusEffects=move.statusEffects){//状態異常欄を作成する関数
+        function createMoveStatusEffectBox(statusEffects){//状態異常欄を作成する関数
             const freeSpace=new Array
             //状態異常欄の親要素を作成する
             freeSpace[0]=document.createElement("div")
@@ -968,7 +962,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                 newStatusElement[0].appendChild(newStatusElement[4])//削除ボタンを追加する
                 return newStatusElement[0]
             }
-            for(let i in statusEffects){//状態異常欄の値を追加していく
+            for(let i=0;i<statusEffects.length;i++){//状態異常欄の値を追加していく
                 freeSpace[8].appendChild(addMoveStatusEffectBox(statusEffects[i]))
             }
             //追加ボタンを作成する
@@ -992,7 +986,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
             freeSpace[0].appendChild(freeSpace[8])//値欄
             return freeSpace[0]
         }
-        function createMoveEffectBox(effects=move.effects){//効果欄を作成する関数
+        function createMoveEffectBox(effects){//効果欄を作成する関数
             const freeSpace=new Array
             //効果欄の親要素を作成する
             freeSpace[0]=document.createElement("div")
@@ -1025,7 +1019,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                 return newEffectElement[0]
             }
             //効果欄を作成する
-            for(let i in effects){
+            for(let i=0;i<effects.length;i++){
                 freeSpace[0].appendChild(addMoveEffectBox(effects[i]))
             }
             //追加ボタンを作成する
@@ -1107,9 +1101,13 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
             </div>
         `
         //状態異常欄の作成
-        elementBoxes[4]=createMoveStatusEffectBox()
+        if(move.statusEffects){
+            elementBoxes[4]=createMoveStatusEffectBox(move.statusEffects)
+        }
         //効果欄の作成
-        elementBoxes[5]=createMoveEffectBox()
+        if(move.effects){
+            elementBoxes[5]=createMoveEffectBox(move.effects)
+        }
         //削除ボタンを作成する
         const deleteButtonMove=document.createElement("button")
         deleteButtonMove.classList.add("deleteButton")
@@ -1129,9 +1127,11 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
     const moveBoxContent=document.createElement("div")
     moveBoxContent.classList.add("move-content")
     //1つずつ技欄を作成する
-    const sortedMoves=getSortedMoves(moves)
-    for(let i in sortedMoves){
-        moveBoxContent.appendChild(createMoveElements(sortedMoves[i]))
+    if((moves)&&(moves.length>0)){
+        const sortedMoves=getSortedMoves(moves)
+        for(let i=0;i<sortedMoves.length;i++){
+            moveBoxContent.appendChild(createMoveElements(sortedMoves[i]))
+        }
     }
     //技欄追加ボタンを作成
     const addButtonMove=document.createElement("button")
