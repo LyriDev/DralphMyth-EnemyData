@@ -1328,12 +1328,10 @@ function addMoveBox_effect(moveEffectArray){//閲覧ページの技欄の効果�
 }
 function addMoveBox_effect_content(moveEffectArray){//閲覧ページの技欄の効果欄の中身を作成する関数
     let result=""
-    let textareaNumber=0//textareaのidへ順番にインデックスをつける
     for(let i in moveEffectArray){
         result+=`
-            <textarea readonly id="move-effect${textareaNumber}" class="cardTableContent" rows="1">${moveEffectArray[i]}</textarea>
+            <textarea readonly id="move-effect${uniqueKey.next().value}" class="cardTableContent" rows="1">${moveEffectArray[i]}</textarea>
         `
-        textareaNumber++
     }
     return result
 }
