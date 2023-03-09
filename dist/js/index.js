@@ -343,10 +343,9 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
                 viewButton_clickedProcess(inputData,event,viewUrl)
             })
             $(document).on("click","#saveButton",function(){//保存ボタンに処理を適用する
-                const inputData=getInputData(data)
-                dataBase_update(dataBaseUrl,inputData)//jsonファイルを上書き更新する
-                alert("保存しました")
+                saveEditData(data)
             })
+            saveByShortCutKey()//ショートカットキーで保存する処理を適用する
             break
         case "void"://データが何もない時のヘッダー
             result=`
@@ -1362,6 +1361,21 @@ function getInputData(data){//入力されたデータを含む全体のデー�
     const gottenEnemyData=getInputEnemyData()
     const replacedData=getReplacedData(data,Index,gottenEnemyData)
     return replacedData
+}
+function saveEditData(data){//入力したデータを保存する関数
+    const inputData=getInputData(data)
+    dataBase_update(dataBaseUrl,inputData)//jsonファイルを上書き更新する
+    alert("保存しました")
+}
+function saveByShortCutKey(){//ショートカットキーで保存する処理を適用する関数
+    document.addEventListener("keyup",keyupEvent);
+    function keyupEvent(event){
+        switch(event.keyCode){
+            case 13://Ctrl+Sキーが押されたとき
+                sendDefaultData()
+                break
+        }
+    }
 }
 
 /* htmlのふるまいを適用する関数 */
