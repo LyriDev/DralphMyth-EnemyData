@@ -1712,32 +1712,32 @@ function getInputEnemyData(){//入力フォームからデータを取得する�
     const result=JSON.parse(JSON.stringify(emptyData))//値渡しでデータを受け取る
     if(Page!=="edit"){return}
     result.name=document.getElementById("symbol-name").value
-    result.level=document.getElementById("symbol-level").value
+    result.level=Number(document.getElementById("symbol-level").value)
     result.tag=document.getElementById("symbol-tag").value
     result.elements=getElements()
     result.species=getSpecies()
     result.sanCheck.success=document.getElementById("symbol-parameter-sanCheck-success").value
     result.sanCheck.failure=document.getElementById("symbol-parameter-sanCheck-failure").value
-    result.HP=document.getElementById("symbol-parameter-HP").value
-    result.armor=document.getElementById("symbol-parameter-armor").value
-    result.initiative=document.getElementById("symbol-parameter-initiative").value
-    result.actionPoint=document.getElementById("symbol-parameter-actionPoint").value
-    result.dodge=document.getElementById("symbol-parameter-dodge").value
-    result.actionNumber=document.getElementById("symbol-parameter-actionNumber").value
-    result.statusEffects.flame=document.getElementById("statusEffects-flame").value
-    result.statusEffects.ice=document.getElementById("statusEffects-ice").value
-    result.statusEffects.dazzle=document.getElementById("statusEffects-dazzle").value
-    result.statusEffects.poison=document.getElementById("statusEffects-poison").value
-    result.statusEffects.sleep=document.getElementById("statusEffects-sleep").value
-    result.statusEffects.confusion=document.getElementById("statusEffects-confusion").value
-    result.statusEffects.stun=document.getElementById("statusEffects-stun").value
-    result.statusEffects.curse=document.getElementById("statusEffects-curse").value
-    result.statusEffects.atkDown=document.getElementById("statusEffects-atkDown").value
-    result.statusEffects.defDown.physical=document.getElementById("statusEffects-defDown-physical").value
-    result.statusEffects.defDown.breath=document.getElementById("statusEffects-defDown-breath").value
-    result.statusEffects.defDown.magic=document.getElementById("statusEffects-defDown-magic").value
-    result.statusEffects.spdDown=document.getElementById("statusEffects-spdDown").value
-    result.statusEffects.spdDown=document.getElementById("statusEffects-spdDown").value
+    result.HP=Number(document.getElementById("symbol-parameter-HP").value)
+    result.armor=Number(document.getElementById("symbol-parameter-armor").value)
+    result.initiative=Number(document.getElementById("symbol-parameter-initiative").value)
+    result.actionPoint=Number(document.getElementById("symbol-parameter-actionPoint").value)
+    result.dodge=Number(document.getElementById("symbol-parameter-dodge").value)
+    result.actionNumber=Number(document.getElementById("symbol-parameter-actionNumber").value)
+    result.statusEffects.flame=Number(document.getElementById("statusEffects-flame").value)
+    result.statusEffects.ice=Number(document.getElementById("statusEffects-ice").value)
+    result.statusEffects.dazzle=Number(document.getElementById("statusEffects-dazzle").value)
+    result.statusEffects.poison=Number(document.getElementById("statusEffects-poison").value)
+    result.statusEffects.sleep=Number(document.getElementById("statusEffects-sleep").value)
+    result.statusEffects.confusion=Number(document.getElementById("statusEffects-confusion").value)
+    result.statusEffects.stun=Number(document.getElementById("statusEffects-stun").value)
+    result.statusEffects.curse=Number(document.getElementById("statusEffects-curse").value)
+    result.statusEffects.atkDown=Number(document.getElementById("statusEffects-atkDown").value)
+    result.statusEffects.defDown.physical=Number(document.getElementById("statusEffects-defDown-physical").value)
+    result.statusEffects.defDown.breath=Number(document.getElementById("statusEffects-defDown-breath").value)
+    result.statusEffects.defDown.magic=Number(document.getElementById("statusEffects-defDown-magic").value)
+    result.statusEffects.spdDown=Number(document.getElementById("statusEffects-spdDown").value)
+    result.statusEffects.spdDown=Number(document.getElementById("statusEffects-spdDown").value)
     result.stealth=document.getElementById("statusEffects-stealth").value
     result.abilities=getAbilities()
     result.moves=getMoves()
@@ -1790,13 +1790,13 @@ function getInputEnemyData(){//入力フォームからデータを取得する�
         const movesElement=document.querySelector(".move-content").children
         for(let i=0;i<movesElement.length;i++){//技単位でループ
             const newMove=new Object
-            newMove.index=movesElement[i].querySelector("div.cardTable-move-index > input").value
+            newMove.index=Number(movesElement[i].querySelector("div.cardTable-move-index > input").value)
             newMove.name=movesElement[i].querySelector("div.cardTable-move-name > input").value
             newMove.elements=getMoveCheckBox(movesElement[i],".move-element",elementList)//属性を取得する
             newMove.types=getMoveCheckBox(movesElement[i],".move-type",attackTypeList)//攻撃種別を取得する
-            newMove.reach=movesElement[i].querySelector("div.cardTable-move-reach > input").value
+            newMove.reach=Number(movesElement[i].querySelector("div.cardTable-move-reach > input").value)
             newMove.range=movesElement[i].querySelector("div.cardTable-move-range > input").value
-            newMove.successRate=movesElement[i].querySelector("div.cardTable-move-successRate > input").value
+            newMove.successRate=Number(movesElement[i].querySelector("div.cardTable-move-successRate > input").value)
             newMove.attackNumber=movesElement[i].querySelector("div.cardTable-move-attackNumber > input").value
             newMove.damage=movesElement[i].querySelector("div.cardTable-move-damage > input").value
             const statusEffects=new Array
@@ -1806,8 +1806,8 @@ function getInputEnemyData(){//入力フォームからデータを取得する�
                 for(let j=0;j<statusEffectsElement.length;j++){//状態異常単位でループ
                     const newStatusEffect=new Object
                     newStatusEffect.effectType=statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-type").value
-                    newStatusEffect.level=statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-level").value
-                    newStatusEffect.turn=statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-turn").value
+                    newStatusEffect.level=Number(statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-level").value)
+                    newStatusEffect.turn=Number(statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-turn").value)
                     statusEffects.push(newStatusEffect)
                 }
             }catch(error){}
@@ -1961,7 +1961,7 @@ function convertJsonToPiece(enemyData){//Jsonデータをココフォリアコ�
     }
     //ccfoliaPieceにデータを代入していく
     ccfoliaPiece["data"]["name"]=(enemyData.name+addValue(enemyData.level," レベル","",0)).trimStart()
-    ccfoliaPiece["data"]["initiative"]=Number(enemyData.initiative)
+    ccfoliaPiece["data"]["initiative"]=enemyData.initiative
     ccfoliaPiece["data"]["status"][0]["value"]=ccfoliaPiece["data"]["status"][0]["max"]=enemyData.HP
     ccfoliaPiece["data"]["status"][1]["value"]=enemyData.actionPoint
     ccfoliaPiece["data"]["status"][2]["value"]=enemyData.armor
