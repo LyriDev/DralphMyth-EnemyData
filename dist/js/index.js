@@ -438,7 +438,7 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             $(document).on("click","#saveButton",function(){//保存ボタンに処理を適用する
                 saveEditData(data)
             })
-            saveByShortCutKey()//ショートカットキーで保存する処理を適用する
+            saveByShortCutKey(data)//ショートカットキーで保存する処理を適用する
             break
         case "void"://データが何もない時のヘッダー
             result=`
@@ -1861,14 +1861,14 @@ function saveEditData(data){//入力したデータを保存する関数
     dataBase_update(dataBaseUrl,inputData)//jsonファイルを上書き更新する
     alert("保存しました")
 }
-function saveByShortCutKey(){//ショートカットキーで保存する処理を適用する関数
-    document.addEventListener("keyup",keyupEvent);
-    function keyupEvent(event){
-        switch(event.keyCode){
-            case 13://Ctrl+Sキーが押されたとき
-                sendDefaultData()
-                break
-        }
+function saveByShortCutKey(data){//ショートカットキーで保存する処理を適用する関数
+    document.addEventListener("keydown",keydownEvent)
+    function keydownEvent(event){
+        const code=(event.keyCode ? event.keyCode : event.which)
+        if(!((code===83)&&(event.ctrlKey)))return true
+        event.preventDefault()// ctrl+S に割り当てられているデフォルトの機能を無効化します。
+        saveEditData(data)
+        return false
     }
 }
 
@@ -2252,7 +2252,7 @@ function fileDrop(){//ファイルのドラッグ&ドロップ処理を実装す
 }
 
 /* デバッグ用処理 */
-document.addEventListener("keyup",keyupEvent);
+if(true)document.addEventListener("keyup",keyupEvent)
 function keyupEvent(event){
     if(event.ctrlKey){//Ctrlキー同時押し
         switch(event.keyCode){
