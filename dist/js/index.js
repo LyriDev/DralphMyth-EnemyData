@@ -2229,7 +2229,7 @@ function fileDrop(){//ファイルのドラッグ&ドロップ処理を実装す
 }
 
 /* デバッグ用処理 */
-if(true)document.addEventListener("keyup",keyupEvent)
+if(false)document.addEventListener("keyup",keyupEvent)
 function keyupEvent(event){
     if(event.ctrlKey){//Ctrlキー同時押し
         switch(event.keyCode){
