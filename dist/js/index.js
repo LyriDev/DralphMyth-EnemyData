@@ -322,6 +322,12 @@ const elementList=[//属性リスト
 /* ページごとに表示するコンテンツを変更するための関数 */
 function dataBase_get(url){//データベースのデータを取得する関数
     fetch(url).then(response=>response.json()).then(respondedData=>{
+        firebase.auth().onAuthStateChanged((user)=>{//認証処理終了後の処理
+            if(user){
+                console.log(user.uid)
+                console.log(url)
+            }
+        })
         updateHTML(respondedData)//HTMLを更新する
     })
 }
