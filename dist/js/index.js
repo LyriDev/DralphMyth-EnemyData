@@ -13,7 +13,49 @@ function getQuery(name){//クエリ文字列(URLパラメータ)を取得する�
 const Page=getQuery("page")//開いているページの種類
 const Index=getQuery("index")//開いているページの項目
 const isOpenList={symbol:true,resistance:true,ability:true,move:true,note:true}//アコーディオンメニューが開いているかどうか
-const newData={
+const emptyData={//新規データの枠組み(技・特性欄は空)
+    name:"",
+    level:"",
+    tag:"",
+    elements:[
+    ],
+    species:[
+    ],
+    sanCheck:{
+        success:"",
+        failure:""
+    },
+    HP:"",
+    armor:"",
+    initiative:"",
+    actionPoint:"",
+    dodge:"",
+    actionNumber:"",
+    statusEffects:{
+        flame:"",
+        ice:"",
+        dazzle:"",
+        poison:"",
+        sleep:"",
+        confusion:"",
+        stun:"",
+        curse:"",
+        atkDown:"",
+        defDown:{
+            physical:"",
+            breath:"",
+            magic:""
+        },
+        spdDown:""
+    },
+    stealth:"",
+    abilities:[
+    ],
+    moves:[
+    ],
+    note:""
+}
+const newData={//新規データの枠組み(技・特性欄に空要素を1つ入れたもの)
     name:"",
     level:"",
     tag:"",
@@ -76,11 +118,12 @@ const newData={
                 }
             ],
             effects:[
+                ""
             ]
         }
     ],
     note:""
-}//新規データの枠組み
+}
 const fileReader=new FileReader()//File API
 
 function convertProperty(value,target="",alt="?"){//null値などを代替テキストに変換する関数
@@ -228,9 +271,59 @@ function exportToClipboard(value){//テキストデータをクリップボー�
         navigator.clipboard.writeText(value)//クリップボードに出力
     }
 }
+function createDataList(dataListId,list){//datalistタグを作成する関数
+    if(Array.isArray(list) === false){return}//例外処理
+    let result=`<datalist id="${dataListId}">`
+    for(let i in list){
+        result+=`<option value="${list[i]}">`
+    }
+    result+="</datalist>"
+    return result
+}
+function stringToHTML (str){//文字列をhtmlの要素に変換する関数
+    var dom = document.createElement('div');
+    dom.innerHTML = str;
+    const domChild=dom.firstElementChild
+    return domChild;
+}
+function* getUniqueKey(){//一意キーを取得する関数
+    let count=0
+    while(true){
+        yield count.toString(16)
+        count++
+    }
+}
+const uniqueKey=getUniqueKey()//一意キー
 
 /* 種別リスト */
-const attackTypeList=["物理","息","魔法"]
+const attackTypeList=[//攻撃種別リスト
+    "物理",
+    "息",
+    "魔法"
+]
+const speciesList=[//種族リスト
+    "人間",
+    "亜人",
+    "悪魔",
+    "ドラゴン",
+    "スライム",
+    "自然",
+    "ゾンビ",
+    "魔獣",
+    "物質",
+    "？？？"
+]
+const elementList=[//属性リスト
+    "無",
+    "火",
+    "氷",
+    "風",
+    "土",
+    "雷",
+    "水",
+    "光",
+    "闇"
+]
 
 /* ページごとに表示するコンテンツを変更するための関数 */
 function dataBase_get(url){//データベースのデータを取得する関数
@@ -366,7 +459,7 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
     }
     document.getElementById("header").innerHTML=result
 }
-function createUserMenu(){//ユーザーメニューを作成する関数
+function createUserMenu(){//ユーザーメニューを作成する関数 //TODO ログイン処理の確認
     if(isLogin){//ログイン時のみ実行
         const userMenu=document.getElementById("userMenu")
         const userMenuContent=`
@@ -422,6 +515,7 @@ function createSideMenu(data){//サイドメニューを作成する関数
             importJson(importElement)
         }
         $(document).on("change","#importJson",setImportProcess)
+        fileDrop()//jsonファイルのドラッグ&ドロップ処理を実装する
     }
 }
 function updateMain(data,_page=Page){//メインを変更する関数
@@ -444,19 +538,20 @@ function updateMain(data,_page=Page){//メインを変更する関数
         case null://一覧ページの際の処理
             break
         case "view"://閲覧ページの際の処理
+            //textareaの初期値に合わせて高さを自動調整する
             updateAllTextarea("ability-effect")
             updateAllTextarea("move-effect")
             updateTextarea("#note0")
-            //textareaの初期値に合わせて高さを自動調整する
             setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
             break
         case "edit"://編集ページの際の処理
-            setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
-
+            createMoveBox(data.enemy[Index].moves,Index)//技欄を作成する
+            //textareaの初期値に合わせて高さを自動調整する
             updateAllTextarea("ability-effect")
             updateAllTextarea("move-effect")
             updateTextarea("#note0")
-            //textareaの初期値に合わせて高さを自動調整する
+            setAutoAdjustTextarea("textarea")//textareaの入力時に縦幅を自動調整する
+            setAccordionMenu(".cardHeader")//アコーディオンメニューを適用する
             break
         default:
             break
@@ -469,10 +564,10 @@ function createButton_clickedProcess(data,event){//新規作成ボタンが押�
     let result
     if(Boolean(data)===true){//データが入っているときの処理
         result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
-        result.enemy.push(newData)//データに新規データを追加する
+        result.enemy.push(emptyData)//データに新規データを追加する
     }else{
         result={enemy:[]}//空データを作詞絵
-        result.enemy.push(newData)//データに新規データを追加する
+        result.enemy.push(emptyData)//データに新規データを追加する
     }
     const newPageUrl=`${htmlUrl}?page=edit&index=${result.enemy.length-1}`
     switch(event.button){
@@ -724,14 +819,14 @@ function addAbilityBox(abilitiesArray,page=Page){//特性を取得して、追�
             result+=createAbilityBox(abilitiesArray[i],i,page).content
             if(page==="edit"){setDeleteButtonProcess("ability",i)}//削除ボタンに処理を適用する
         }
-    }else{
-        result+=createAbilityBox().content
-        if(page==="edit"){setDeleteButtonProcess("ability",0)}//削除ボタンに処理を適用する
+    }else{//データがないときの処理
+/*         result+=createAbilityBox().content
+        if(page==="edit"){setDeleteButtonProcess("ability",0)}//削除ボタンに処理を適用する */
     }
     if(page==="edit"){setAddButtonProcess(boxName)}//特性に追加ボタンの処理を適用する
     return result
 }
-function createAbilityBox(ability={name:"",effect:""},index=null,page=Page){//追加する特性を作成する関数
+function createAbilityBox(ability=newData.abilities[0],index=null,page=Page){//追加する特性を作成する関数
     let abilityIndex=0
     if(Boolean(index)===true){
         abilityIndex=index
@@ -767,6 +862,293 @@ function createAbilityBox(ability={name:"",effect:""},index=null,page=Page){//�
         index:abilityIndex
     }
     return result
+}
+function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加する技を作成する関数
+    const moveBoxMaster=document.getElementById("move")//技欄の親要素を入れるための親要素
+        //状態異常のリストを作成する
+        const statusEffectList=[
+            "炎","氷","幻惑","毒","眠り","混乱","スタン","呪い","攻撃力低下","物理防御力低下","息防御力低下","魔法防御力低下","素早さ低下"
+        ]
+        const statusEffectListId="statusEffectList"
+        const statusEffectListElement=document.createElement("div")
+        statusEffectListElement.innerHTML=createDataList(statusEffectListId,statusEffectList)
+        moveBoxMaster.appendChild(statusEffectListElement.firstElementChild)
+    function createMoveElements(move){//技欄を1つ作成する関数
+        function createMoveCheckBox(list,boxName){//チェックボックスを作成する関数
+            //チェックボックスの親要素を作成
+            const checkBoxElement=document.createElement("div")
+            checkBoxElement.classList.add("cardTableContent")
+            let result=""
+            let isChecked=""
+            let property=undefined
+            if(boxName==="move-element"){
+                property=move.elements
+            }else if(boxName==="move-type"){
+                property=move.types
+            }
+            for(let i in list){
+                if(Boolean(property)===true){
+                    if(property.includes(list[i])){
+                        isChecked="checked"
+                    }else{
+                        isChecked=""
+                    }
+                }
+                const checkBoxKey=uniqueKey.next().value
+                result+=`
+                    <div class="${boxName}">
+                        <label for="move-checkBox-${checkBoxKey}">${list[i]}</label>
+                        <br>
+                        <input type="checkbox" id="move-checkBox-${checkBoxKey}" class="${boxName}-${i}" ${isChecked}>
+                    </div>
+                `
+            }
+            checkBoxElement.innerHTML=result
+            return checkBoxElement
+        }
+        function createMoveStatusEffectBox(statusEffects=move.statusEffects){//状態異常欄を作成する関数
+            const freeSpace=new Array
+            //状態異常欄の親要素を作成する
+            freeSpace[0]=document.createElement("div")
+            freeSpace[0].classList.add("cardTable-move-statusEffect","clearFix")
+            //タイトル欄を作成する
+            freeSpace[1]=document.createElement("div")
+            freeSpace[1].classList.add("cardTable-move-statusEffect-title","clearFix")
+            //種別のタイトル欄を作成する
+            freeSpace[2]=document.createElement("div")//種別欄を入れるための親要素
+            freeSpace[2].classList.add("cardTable-move-statusEffect-type")
+            freeSpace[3]=document.createElement("div")//種別欄のタイトル
+            freeSpace[3].classList.add("cardTableTitle")
+            freeSpace[3].textContent="状態異常"
+            freeSpace[2].appendChild(freeSpace[3])
+            //レベルのタイトル欄を作成する
+            freeSpace[4]=document.createElement("div")//レベル欄を入れるための親要素
+            freeSpace[4].classList.add("cardTable-move-statusEffect-level")
+            freeSpace[5]=document.createElement("div")//レベル欄のタイトル
+            freeSpace[5].classList.add("cardTableTitle")
+            freeSpace[5].textContent="レベル"
+            freeSpace[4].appendChild(freeSpace[5])
+            //ターンのタイトル欄を作成する
+            freeSpace[6]=document.createElement("div")//ターン欄を入れるための親要素
+            freeSpace[6].classList.add("cardTable-move-statusEffect-turn")
+            freeSpace[7]=document.createElement("div")//ターン欄のタイトル
+            freeSpace[7].classList.add("cardTableTitle")
+            freeSpace[7].textContent="ターン"
+            freeSpace[6].appendChild(freeSpace[7])
+            //値欄を作成する
+            freeSpace[8]=document.createElement("div")
+            freeSpace[8].classList.add("cardTable-move-statusEffect-value","clearFix")
+            function addMoveStatusEffectBox(statusEffect){//状態異常欄の値を1つ追加する関数
+                const newStatusElement=new Array
+                //値の親要素を作成する
+                newStatusElement[0]=document.createElement("div")
+                newStatusElement[0].classList.add("clearFix")
+                //種別欄の値を作成する
+                newStatusElement[1]=document.createElement("input")
+                newStatusElement[1].type="text"
+                newStatusElement[1].setAttribute("list",statusEffectListId)//datalistを登録する
+                newStatusElement[1].classList.add("cardTableContent","cardTable-move-statusEffect-type")
+                newStatusElement[1].value=statusEffect.effectType
+                newStatusElement[0].appendChild(newStatusElement[1])//種別欄の値を追加する
+                //レベル欄の値を作成する
+                newStatusElement[2]=document.createElement("input")
+                newStatusElement[2].type="number"
+                newStatusElement[2].classList.add("cardTableContent","cardTable-move-statusEffect-level")
+                newStatusElement[2].value=statusEffect.level
+                newStatusElement[0].appendChild(newStatusElement[2])//レベル欄の値を追加する
+                //ターン欄の値を作成する
+                newStatusElement[3]=document.createElement("input")
+                newStatusElement[3].type="number"
+                newStatusElement[3].classList.add("cardTableContent","cardTable-move-statusEffect-turn")
+                newStatusElement[3].value=statusEffect.turn
+                newStatusElement[0].appendChild(newStatusElement[3])//ターン欄の値を追加する
+                //削除ボタンを作成する
+                newStatusElement[4]=document.createElement("button")
+                newStatusElement[4].classList.add("deleteButton")
+                newStatusElement[4].textContent="削除"
+                newStatusElement[4].addEventListener("click",function(){
+                    //削除ボタンの親要素を削除する
+                    newStatusElement[0].remove()
+                },false)
+                newStatusElement[0].appendChild(newStatusElement[4])//削除ボタンを追加する
+                return newStatusElement[0]
+            }
+            for(let i in statusEffects){//状態異常欄の値を追加していく
+                freeSpace[8].appendChild(addMoveStatusEffectBox(statusEffects[i]))
+            }
+            //追加ボタンを作成する
+            freeSpace[9]=document.createElement("button")
+            freeSpace[9].classList.add("addButton")
+            freeSpace[9].textContent="追加"
+            freeSpace[9].addEventListener("click",function(){
+                const newStatusEffect={
+                    effectType:"",
+                    level:"",
+                    turn:""
+                }
+                freeSpace[8].appendChild(addMoveStatusEffectBox(newStatusEffect))//新しい状態異常欄を追加する
+            },false)
+            //作成したものを親要素にぶち込んでいく
+            freeSpace[1].appendChild(freeSpace[2])//種別のタイトル欄
+            freeSpace[1].appendChild(freeSpace[4])//レベルのタイトル欄
+            freeSpace[1].appendChild(freeSpace[6])//ターンのタイトル欄
+            freeSpace[0].appendChild(freeSpace[1])//タイトル欄
+            freeSpace[0].appendChild(freeSpace[9])//追加ボタン
+            freeSpace[0].appendChild(freeSpace[8])//値欄
+            return freeSpace[0]
+        }
+        function createMoveEffectBox(effects=move.effects){//効果欄を作成する関数
+            const freeSpace=new Array
+            //効果欄の親要素を作成する
+            freeSpace[0]=document.createElement("div")
+            freeSpace[0].classList.add("cardTable-move-effect","clearFix")
+            //タイトル欄を作成する
+            freeSpace[1]=document.createElement("div")
+            freeSpace[1].classList.add("cardTableTitle")
+            freeSpace[1].textContent="効果"
+            freeSpace[0].appendChild(freeSpace[1])
+            function addMoveEffectBox(effect){//効果欄の値を1つ追加する関数
+                const newEffectElement=new Array
+                //値欄の親要素を作成する
+                newEffectElement[0]=document.createElement("div")
+                newEffectElement[0].classList.add("clearFix","move-effect-value")
+                //値欄を作成する
+                newEffectElement[1]=document.createElement("textarea")
+                newEffectElement[1].classList.add("cardTableContent")
+                newEffectElement[1].rows="1"
+                newEffectElement[1].textContent=effect
+                newEffectElement[0].appendChild(newEffectElement[1])
+                //削除ボタンを作成する
+                newEffectElement[2]=document.createElement("button")
+                newEffectElement[2].classList.add("deleteButton")
+                newEffectElement[2].textContent="削除"
+                newEffectElement[2].addEventListener("click",function(){
+                    //削除ボタンの親要素を削除する
+                    newEffectElement[0].remove()
+                },false)
+                newEffectElement[0].appendChild(newEffectElement[2])//削除ボタンを追加する
+                return newEffectElement[0]
+            }
+            //効果欄を作成する
+            for(let i in effects){
+                freeSpace[0].appendChild(addMoveEffectBox(effects[i]))
+            }
+            //追加ボタンを作成する
+            freeSpace[2]=document.createElement("button")
+            freeSpace[2].classList.add("addButton")
+            freeSpace[2].textContent="追加"
+            freeSpace[2].addEventListener("click",function(){
+                freeSpace[0].appendChild(addMoveEffectBox(""))//新しい効果欄を追加する
+            },false)
+            freeSpace[0].appendChild(freeSpace[2])
+            return freeSpace[0]
+        }
+        //技欄を1つ作成する
+        const newMoveBox=document.createElement("div")
+        newMoveBox.classList.add("cardTable","clearFix")
+        const elementBoxes=new Array
+        //技番号欄と技名欄の作成
+        elementBoxes[0]=document.createElement("div")
+        elementBoxes[0].classList.add("clearFix")
+        elementBoxes[0].innerHTML=`
+            <div class="cardTable-move-index">
+                <div class="cardTableTitle">技番号</div>
+                <input type="number" class="cardTableContent" value="${move.index}">
+            </div>
+            <div class="cardTable-move-name">
+                <div class="cardTableTitle">技名</div>
+                <input type="text" class="cardTableContent" value="${move.name}">
+            </div>
+        `
+        //属性欄と種別欄の作成
+        elementBoxes[1]=document.createElement("div")
+        elementBoxes[1].classList.add("clearFix")
+        const freeSpace=new Array
+        freeSpace[0]=document.createElement("div")//属性欄を作成する
+        freeSpace[0].classList.add("cardTable-move-element")
+        freeSpace[1]=document.createElement("div")
+        freeSpace[1].classList.add("cardTableTitle")
+        freeSpace[1].textContent="属性"
+        freeSpace[0].appendChild(freeSpace[1])
+        freeSpace[0].appendChild(createMoveCheckBox(elementList,"move-element"))
+        elementBoxes[1].appendChild(freeSpace[0])//属性欄を追加する
+        freeSpace[2]=document.createElement("div")//種別欄を作成する
+        freeSpace[2].classList.add("cardTable-move-type")
+        freeSpace[3]=document.createElement("div")
+        freeSpace[3].classList.add("cardTableTitle")
+        freeSpace[3].textContent="種別"
+        freeSpace[2].appendChild(freeSpace[3])
+        freeSpace[2].appendChild(createMoveCheckBox(attackTypeList,"move-type"))
+        elementBoxes[1].appendChild(freeSpace[2])//種別欄を追加する
+        //射程欄と範囲欄の作成
+        elementBoxes[2]=document.createElement("div")
+        elementBoxes[2].classList.add("clearFix")
+        elementBoxes[2].innerHTML=`
+            <div class="cardTable-move-reach">
+                <div class="cardTableTitle">射程</div>
+                <input type="number" class="cardTableContent" value="${move.reach}">
+            </div>
+            <div class="cardTable-move-range">
+                <div class="cardTableTitle">範囲</div>
+                <input type="text" class="cardTableContent" value="${move.range}">
+            </div>
+        `
+        //成功率欄と攻撃回数欄とダメージ欄の作成
+        elementBoxes[3]=document.createElement("div")
+        elementBoxes[3].classList.add("clearFix")
+        elementBoxes[3].innerHTML=`
+            <div class="cardTable-move-successRate">
+                <div class="cardTableTitle">成功率</div>
+                <input type="number" class="cardTableContent" value="${move.successRate}">
+                <div class="move-add">%</div>
+            </div>
+            <div class="cardTable-move-attackNumber">
+                <div class="cardTableTitle">攻撃回数</div>
+                <input type="text" class="cardTableContent" value="${move.attackNumber}">
+            </div>
+            <div class="cardTable-move-damage">
+                <div class="cardTableTitle">ダメージ</div>
+                <input type="text" class="cardTableContent" value="${move.damage}">
+            </div>
+        `
+        //状態異常欄の作成
+        elementBoxes[4]=createMoveStatusEffectBox()
+        //効果欄の作成
+        elementBoxes[5]=createMoveEffectBox()
+        //削除ボタンを作成する
+        const deleteButtonMove=document.createElement("button")
+        deleteButtonMove.classList.add("deleteButton")
+        deleteButtonMove.textContent="削除"
+        deleteButtonMove.addEventListener("click",function(){
+            //削除ボタンの親要素を削除する
+            deleteButtonMove.parentNode.parentNode.remove()
+        },false)
+        elementBoxes[0].appendChild(deleteButtonMove)//作成した削除ボタンを技欄に追加する
+        //作成した複数の欄を技欄に追加する
+        for(let i in elementBoxes){
+            newMoveBox.appendChild(elementBoxes[i])
+        }
+        return newMoveBox
+    }
+    //技欄の親要素を作成
+    const moveBoxContent=document.createElement("div")
+    moveBoxContent.classList.add("move-content")
+    //1つずつ技欄を作成する
+    const sortedMoves=getSortedMoves(moves)
+    for(let i in sortedMoves){
+        moveBoxContent.appendChild(createMoveElements(sortedMoves[i]))
+    }
+    //技欄追加ボタンを作成
+    const addButtonMove=document.createElement("button")
+    addButtonMove.classList.add("addButton")
+    addButtonMove.textContent="追加"
+    addButtonMove.addEventListener("click",function(){
+        //新しい技欄を追加する
+        moveBoxContent.appendChild(createMoveElements(newData.moves[0]))
+    },false)
+    //完成した技欄を入れるための親要素と追加ボタンを技欄の親要素を入れるための親要素に追加
+    moveBoxMaster.appendChild(moveBoxContent)
+    moveBoxMaster.appendChild(addButtonMove)
 }
 
 /* 閲覧ページを表示中に使う関数 */
@@ -897,7 +1279,8 @@ function addMoveBox(enemyData){//閲覧ページの技欄を作成する関数
                     </div>
                     <div class="cardTable-move-successRate">
                         <div class="cardTableTitle">成功率</div>
-                        <input readonly type="text" class="cardTableContent" value="${addValue(sortedMoves[i].successRate,"%","")}">
+                        <input readonly type="text" class="cardTableContent" value="${sortedMoves[i].successRate}">
+                        <div class="move-add">%</div>
                     </div>
                     <div class="cardTable-move-attackNumber">
                         <div class="cardTableTitle">攻撃回数</div>
@@ -988,7 +1371,6 @@ const addedElementsIndex={//編集ページで、追加ボタンで追加する�
         effect:[]
     }
 }
-
 function getEditPage(enemyData){
     let result=`
         <div class="cardBox">
@@ -1003,6 +1385,10 @@ function getEditPage(enemyData){
                     <div class="cardTableContent">
                         <label for="symbol-name">名前</label>
                         <input type="text" id="symbol-name" value="${enemyData.name}">
+                    </div>
+                    <div class="cardTableContent">
+                        <label for="symbol-level">Lv</label>
+                        <input type="number" id="symbol-level" value="${enemyData.level}">
                     </div>
                     <div class="cardTableContent">
                         <label for="symbol-tag">タグ</label>
@@ -1026,7 +1412,7 @@ function getEditPage(enemyData){
                                 <td>
                                     <input type="text" id="symbol-parameter-sanCheck-success" value="${enemyData.sanCheck.success}">
                                     <div class=cardTableContent-add>/</div>
-                                    <input type="text" id="symbol-parameter-sanCheck-success" value="${enemyData.sanCheck.failure}">
+                                    <input type="text" id="symbol-parameter-sanCheck-failure" value="${enemyData.sanCheck.failure}">
                                 </td>
                             </tr>
                             <tr>
@@ -1055,7 +1441,7 @@ function getEditPage(enemyData){
                             <tr>
                                 <td>行動回数</td>
                                 <td>
-                                <input type="number" id="symbol-parameter-actionPoint" value="${enemyData.actionPoint}">
+                                <input type="number" id="symbol-parameter-actionNumber" value="${enemyData.actionPoint}">
                                 <div class=cardTableContent-add>回</div>
                                 </td>
                             </tr>
@@ -1186,13 +1572,11 @@ function getEditPage(enemyData){
                     <span id="abilityArrow" class="arrowDown"></span>
                 </a>
             </div>
-            <div class="cardBody">
-                <div id="ability">
-                    <div id="ability-content">
-                        ${addAbilityBox(enemyData.abilities)}
-                    </div>
-                    <button id="addButton-ability" class="button">追加</button>
+            <div id="ability" class="cardBody">
+                <div id="ability-content">
+                    ${addAbilityBox(enemyData.abilities)}
                 </div>
+                <button id="addButton-ability" class="button">追加</button>
             </div>
         </div>
         <div class="cardBox">
@@ -1203,7 +1587,7 @@ function getEditPage(enemyData){
                 </a>
             </div>
             <div id="move" class="cardBody">
-                ${addMoveBox(enemyData)}
+
             </div>
         </div>
         <div class="cardBox">
@@ -1215,14 +1599,14 @@ function getEditPage(enemyData){
         </div>
         <div id="note" class="cardBody">
             <div class="cardTable">
-                <textarea readonly id="note0" class="cardTableContent" rows="1">${enemyData.note}</textarea>
+                <textarea id="note0" class="cardTableContent" rows="1">${enemyData.note}</textarea>
             </div>
         </div>
     `
     return result
+    //技欄は後で作成する(クソ設計でごめん)
 }
 function createElementCheckBox(enemyData,boxName){//9属性のチェックボックスを作成する関数
-    const elementList=["無","火","氷","風","土","雷","水","光","闇"]
     let result=""
     let isChecked=""
     for(let i in elementList){
@@ -1250,8 +1634,8 @@ function addSpecieBox(speciesArray){//種族を取得して、追加する関数
             result+=createSpeciesBox(speciesArray[i],i).content
             setDeleteButtonProcess(boxName,i)//削除ボタンに処理を適用する
         }
-    }else{
-        result+=createSpeciesBox().content
+    }else{//データがないときの処理
+        result+=createSpeciesBox().content//データがないとき、デフォルトで1枠作成しておく
         setDeleteButtonProcess(boxName,0)//削除ボタンに処理を適用する
     }
     setAddButtonProcess(boxName)//種族に追加ボタンの処理を適用する
@@ -1269,7 +1653,8 @@ function createSpeciesBox(species="",index=null){//追加する種族を作成�
     let content=""
     content=`
         <div class="cardTableContent">
-            <input type="text" id="symbol-species-${speciesIndex}" value="${species}">
+            <input type="text" id="symbol-species-${speciesIndex}" list="speciesList" value="${species}" autocomplete="off">
+            ${createDataList("speciesList",speciesList)}
             <button id="deleteButton-symbol-species-${speciesIndex}" class="button deleteButton">削除</button>
             <div class=cardTableContent-add>系</div>
         </div>
@@ -1297,7 +1682,8 @@ function createAddContent(boxName){//boxNameに応じて追加する中身を作
     }
     content=gottenObject.content
     index=gottenObject.index
-    boxId.innerHTML+=content
+    const contentElement=stringToHTML(content)
+    boxId.appendChild(contentElement)//要素を追加する
     setDeleteButtonProcess(boxName,index)//削除ボタンの処理を適用する
 }
 function setAddButtonProcess(boxName){//プロパティの追加ボタン処理を適用する処理
@@ -1348,9 +1734,117 @@ function createStealthSelect(stealth){//隠密のセレクトボックスのopti
     return result
 }
 function getInputEnemyData(){//入力フォームからデータを取得する関数
-    //TODO 現在の入力内容を取得する処理
+    const result=JSON.parse(JSON.stringify(emptyData))//値渡しでデータを受け取る
     if(Page!=="edit"){return}
-    return newData
+    result.name=document.getElementById("symbol-name").value
+    result.level=document.getElementById("symbol-level").value
+    result.tag=document.getElementById("symbol-tag").value
+    result.elements=getElements()
+    result.species=getSpecies()
+    result.sanCheck.success=document.getElementById("symbol-parameter-sanCheck-success").value
+    result.sanCheck.failure=document.getElementById("symbol-parameter-sanCheck-failure").value
+    result.HP=document.getElementById("symbol-parameter-HP").value
+    result.armor=document.getElementById("symbol-parameter-armor").value
+    result.initiative=document.getElementById("symbol-parameter-initiative").value
+    result.actionPoint=document.getElementById("symbol-parameter-actionPoint").value
+    result.dodge=document.getElementById("symbol-parameter-dodge").value
+    result.actionNumber=document.getElementById("symbol-parameter-actionNumber").value
+    result.statusEffects.flame=document.getElementById("statusEffects-flame").value
+    result.statusEffects.ice=document.getElementById("statusEffects-ice").value
+    result.statusEffects.dazzle=document.getElementById("statusEffects-dazzle").value
+    result.statusEffects.poison=document.getElementById("statusEffects-poison").value
+    result.statusEffects.sleep=document.getElementById("statusEffects-sleep").value
+    result.statusEffects.confusion=document.getElementById("statusEffects-confusion").value
+    result.statusEffects.stun=document.getElementById("statusEffects-stun").value
+    result.statusEffects.curse=document.getElementById("statusEffects-curse").value
+    result.statusEffects.atkDown=document.getElementById("statusEffects-atkDown").value
+    result.statusEffects.defDown.physical=document.getElementById("statusEffects-defDown-physical").value
+    result.statusEffects.defDown.breath=document.getElementById("statusEffects-defDown-breath").value
+    result.statusEffects.defDown.magic=document.getElementById("statusEffects-defDown-magic").value
+    result.statusEffects.spdDown=document.getElementById("statusEffects-spdDown").value
+    result.statusEffects.spdDown=document.getElementById("statusEffects-spdDown").value
+    result.stealth=document.getElementById("statusEffects-stealth").value
+    result.abilities=getAbilities()
+    result.moves=getMoves()
+    result.note=document.getElementById("note0").value
+    function getElements(){//入力フォームから敵の属性データを取得する関数
+        const result=new Array
+        for(let i=0;i<elementList.length;i++){
+            if(document.getElementById(`symbol-element-${i}`).checked){
+                result.push(elementList[i])
+            }
+        }
+        return result
+    }
+    function getSpecies(){//入力フォームから敵の種族データを取得する関数
+        const result=new Array
+        const speciesElements=$('input[id^="symbol-species-"]')
+        for(let i=0;i<speciesElements.length;i++){
+            result.push(speciesElements[i].value);
+        }
+        return result
+    }
+    function getAbilities(){//入力フォームから敵の特性データを取得する関数
+        const result=new Array
+        const abilitiesElements=$('textarea[id^="ability-effect"]')
+        for(let i=0;i<abilitiesElements.length;i++){
+            const newAbility={
+                name:"",
+                effect:""
+            }
+            newAbility.name=abilitiesElements[i].parentNode.parentNode.querySelector(".cardTable-ability-name").querySelector(".cardTableContent").value
+            newAbility.effect=abilitiesElements[i].value
+            result.push(newAbility);
+        }
+        return result
+    }
+    function getMoves(){//入力フォームから敵の技データを取得する関数
+        function getMoveCheckBox(parentElement,className,list){//技のチェックボックスを取得する関数
+            const listElement=parentElement.querySelectorAll(`${className} input`)
+            const result=new Array
+            if(list.length===listElement.length){
+                for(let j=0;j<listElement.length;j++){
+                    if(listElement[j].checked){
+                        result.push(list[j])
+                    }
+                }
+            }
+            return result
+        }
+        const result=new Array
+        const movesElement=document.querySelector(".move-content").children
+        for(let i=0;i<movesElement.length;i++){//技単位でループ
+            const newMove=new Object
+            newMove.index=movesElement[i].querySelector("div.cardTable-move-index > input").value
+            newMove.name=movesElement[i].querySelector("div.cardTable-move-name > input").value
+            newMove.elements=getMoveCheckBox(movesElement[i],".move-element",elementList)//属性を取得する
+            newMove.types=getMoveCheckBox(movesElement[i],".move-type",attackTypeList)//攻撃種別を取得する
+            newMove.reach=movesElement[i].querySelector("div.cardTable-move-reach > input").value
+            newMove.range=movesElement[i].querySelector("div.cardTable-move-range > input").value
+            newMove.successRate=movesElement[i].querySelector("div.cardTable-move-successRate > input").value
+            newMove.attackNumber=movesElement[i].querySelector("div.cardTable-move-attackNumber > input").value
+            newMove.damage=movesElement[i].querySelector("div.cardTable-move-damage > input").value
+            const statusEffects=new Array
+            const statusEffectsElement=movesElement[i].querySelector(".cardTable-move-statusEffect-value").children
+            for(let j=0;j<statusEffectsElement.length;j++){//状態異常単位でループ
+                const newStatusEffect=new Object
+                newStatusEffect.effectType=statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-type").value
+                newStatusEffect.level=statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-level").value
+                newStatusEffect.turn=statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-turn").value
+                statusEffects.push(newStatusEffect)
+            }
+            newMove.statusEffects=statusEffects
+            const effects=new Array
+            const effectsElement=movesElement[i].querySelectorAll(".cardTable-move-effect textarea.cardTableContent")
+            for(let j=0;j<effectsElement.length;j++){//効果単位でループ
+                effects.push(effectsElement[j].value)
+            }
+            newMove.effects=effects
+            result.push(newMove)
+        }
+        return result
+    }
+    return result
 }
 function getReplacedData(data,key,enemyData){//データの一部を置換する関数
     const result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
@@ -1421,7 +1915,7 @@ function toggleArrowIcon(arrowIcon,target){//矢印アイコンを切り替え�
             $(arrowIcon).removeClass(getArrowIcon(isOpenList.symbol))
             isOpenList.symbol=!isOpenList.symbol
             break
-        case "resistance":
+        case "statusEffects":
             $(arrowIcon).addClass(getArrowIcon(!isOpenList.resistance))
             $(arrowIcon).removeClass(getArrowIcon(isOpenList.resistance))
             isOpenList.resistance=!isOpenList.resistance
@@ -1710,21 +2204,72 @@ function importJson(importElement){//受け取ったjsonのデータを読み込
         }
     }
 }
+function fileDrop(){//ファイルのドラッグ&ドロップ処理を実装する関数
+    const ddarea = document.getElementById("import");
+
+        // ドラッグされたデータが有効かどうかチェック
+    const isValid = e => e.dataTransfer.types.indexOf("Files") >= 0;
+
+    const ddEvent = {
+        "dragover" : e=>{
+            e.preventDefault(); // 既定の処理をさせない
+            if( !e.currentTarget.isEqualNode( ddarea ) ) {
+                    // ドロップエリア外ならドロップを無効にする
+                e.dataTransfer.dropEffect = "none";return;
+            }
+            e.stopPropagation(); // イベント伝播を止める
+
+            if( !isValid(e) ){
+                    // 無効なデータがドラッグされたらドロップを無効にする
+                e.dataTransfer.dropEffect = "none";return;
+            }
+                    // ドロップのタイプを変更
+            e.dataTransfer.dropEffect = "copy";
+            ddarea.classList.add("ddefect");
+        },
+        "dragleave" : e=>{
+            if( !e.currentTarget.isEqualNode( ddarea ) ) {
+                return;
+            }
+            e.stopPropagation(); // イベント伝播を止める
+            ddarea.classList.remove("ddefect");
+        },
+        "drop":e=>{
+            e.preventDefault(); // 既定の処理をさせない
+            e.stopPropagation(); // イベント伝播を止める
+
+            const files = e.dataTransfer;
+            importJson(files)//ファイルを読み込む処理
+
+            ddarea.classList.remove("ddefect");
+        }
+    };
+
+    Object.keys( ddEvent ).forEach( e=>{
+        ddarea.addEventListener(e,ddEvent[e]);
+        document.body.addEventListener(e,ddEvent[e])
+    });
+}
 
 /* デバッグ用処理 */
 document.addEventListener("keyup",keyupEvent);
 function keyupEvent(event){
-    switch(event.keyCode){
-        case 13://Enterキーが押されたとき
-            sendDefaultData()
-            break
-        case 46://Deleteキーが押されたとき
-            dataBase_delete("reload")
-            break
-        case 32://Spaceキーが押されたとき
-            setUser()
-            dataBase_get(dataBaseUrl)
-            break
+    if(event.ctrlKey){//Ctrlキー同時押し
+        switch(event.keyCode){
+            case 13://Enterキーが押されたとき
+                //デフォルトデータをぶちこむ
+                sendDefaultData()
+                break
+            case 46://Deleteキーが押されたとき
+                //データを全消ししてリロード
+                dataBase_delete("reload")
+                break
+            case 32://Spaceキーが押されたとき
+                //ユーザー選択(未実装)
+                setUser()
+                dataBase_get(dataBaseUrl)
+                break
+        }
     }
 }
 function sendDefaultData(){//ローカルのjsonデータをサーバーにアップロードする

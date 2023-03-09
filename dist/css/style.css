@@ -2,6 +2,7 @@ html{
     background-color: #272B30;
     color: #AAAAAA;
     font-size: 16px;
+    font-family: "sans-serif";
     /*上下方向にはみ出した要素ををスクロールさせる*/
     overflow-y: scroll;
     /*スクロールバー非表示（IE・Edge）*/
@@ -9,12 +10,15 @@ html{
     /*スクロールバー非表示（Firefox）*/
     scrollbar-width: none;
 }
+input, select, button, textarea{
+    font-family: "sans-serif";
+}
 /*スクロールバー非表示（Chrome・Safari）*/
 html::-webkit-scrollbar{
     display:none;
 }
 body{
-    margin-top:0;
+    margin:0;
     overflow-x: hidden;
 }
 
@@ -83,6 +87,9 @@ body{
 .button:hover{
     border:solid 1px #7A8288;
     cursor: pointer;
+}
+#import.ddefect{
+    border:solid 1px #F5F5F5;
 }
 .caption{
     color: #AAAAAA;
@@ -176,7 +183,7 @@ textarea{
         position: fixed;
         width: 100%;
         height: 0;
-        margin: 0 auto;
+        margin: 0 auto 0 10px;
         z-index: 12;
     }
     #userMenuContent{
@@ -193,6 +200,7 @@ textarea{
         top: 50px;
         width: 132px;
         height: calc((60px + 2px)*3 + (10px)*2);
+        margin-left: 10px;
         position: fixed;
     }
     #downloadJson,#downloadText,#import{
@@ -303,4 +311,9 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 .clearFix {
 	display: block;
+}
+
+/* チェックボックス */
+label, input[type='checkbox'] {
+    cursor: pointer;
 }

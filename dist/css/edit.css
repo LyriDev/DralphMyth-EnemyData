@@ -18,7 +18,7 @@
 }
 
 /* 操作ボタン */
-#addButton-symbol-species,.deleteButton{
+#addButton-symbol-species,.addButton,.deleteButton{
     font-size: 1.25rem;
 }
 #addButton-symbol-species,.deleteButton-ability{
@@ -82,6 +82,12 @@ td input:hover{
     display: flex;
     margin-bottom: 10px;
 }
+#symbol .cardTableContent:has(#symbol-name){
+    float: left;
+}
+#symbol .cardTableContent:has(#symbol-level){
+    padding-left: 10px;
+}
 #symbol .cardTableContent:last-child{
     margin-bottom: 0;
 }
@@ -99,6 +105,9 @@ td input:hover{
     border-bottom-left-radius: 3px;
     background-color: #202328;
     transition: background-color 0.3s;
+}
+#symbol-species > label{
+    padding: 6px 3px;
 }
 #symbol > .cardTable > .cardTableContent > label:hover,#symbol-species > label:hover{
     background-color: #1A1D21;
@@ -127,7 +136,10 @@ td input:hover{
 
 /* 基本情報 */
 #symbol-name{
-    width: 300px;
+    width: 250px;
+}
+#symbol-level{
+    width: 50px;
 }
 #symbol-tag{
     width: 300px;
@@ -208,7 +220,6 @@ select{
 }
 
 
-
 /* 特性 */
 .cardTable-ability-name,.cardTable-ability-name .cardTableTitle{
     width: calc(440px/2);
@@ -230,9 +241,248 @@ select{
 }
 
 
+/* 技 */
+/* 技 ボタン関係全部 */
+#move .addButton,#move .deleteButton{
+    border:solid 1px #5D656D;
+    border-radius: 3px;
+    background-color: #3A3F44;
+    color: #F5F5F5;
+    transition: border 0.3s;
+}
+#move .addButton:hover,#move .deleteButton:hover{
+    border:solid 1px #7A8288;
+    cursor: pointer;
+}
+#move > .addButton,#move > .cardTable > .deleteButton{
+    font-size: 1.25rem;
+}
+#move > .addButton{
+    margin: 10px;
+    margin-bottom: 5px;
+}
+#move .cardTable > div > .deleteButton{
+    float: right;
+    margin-right: 0;
+}
+/* 技 技番号 */
+.cardTable-move-index{
+    float: left;
+}
+.cardTable-move-index,.cardTable-move-index .cardTableTitle{
+    width: 70px;
+}
+.cardTable-move-index .cardTableContent{
+    width: calc((70px - (2px + 10px + 2px)));
+}
+/* 技 技名 */
+.cardTable-move-name{
+    float: left;
+}
+.cardTable-move-name,.cardTable-move-name .cardTableTitle{
+    width: calc(440px - 70px*3);
+}
+.cardTable-move-name .cardTableContent{
+    width: calc(((440px - 70px*3) - (2px + 10px + 2px)));
+}
+/* 技 属性 */
+.cardTable-move-element{
+    float: left;
+    width:fit-content;
+}
+.cardTable-move-element .cardTableContent{
+    display: block;
+    padding: 2px;
+    border: solid 2px #52575C;
+    border-radius: 3px;
+    background-color: #656D75;
+}
+.cardTable-move-element .cardTableContent:hover{
+    border-color: #6A6E72;
+}
+.move-element{
+    display: inline-block;
+    width: 1rem;
+    margin: 0 5px;
+}
+.move-element label{
+    display: inline-block;
+    margin: 0 auto;
+}
+.move-element input[type="checkBox"]{
+    display: block;
+    margin:0 auto;
+}
+/* 技 種別 */
+.cardTable-move-type{
+    float: left;
+    width:fit-content;
 
-
-
+}
+.cardTable-move-type .cardTableContent{
+    display: block;
+    padding: 2px;
+    border: solid 2px #52575C;
+    border-radius: 3px;
+    background-color: #656D75;
+}
+.cardTable-move-type .cardTableContent:hover{
+    border-color: #6A6E72;
+}
+.move-type{
+    display: inline-block;
+    width: 2rem;
+    margin: 0 2px;
+    text-align: center;
+}
+.move-type label{
+    display: inline-block;
+    margin: 0 auto;
+}
+.move-type input[type="checkBox"]{
+    display: block;
+    margin:0 auto;
+}
+/* 技 射程 */
+.cardTable-move-reach{
+    float: left;
+}
+.cardTable-move-reach,.cardTable-move-reach .cardTableTitle{
+    width: 70px;
+}
+.cardTable-move-reach .cardTableContent{
+    width: calc((70px - (2px + 10px + 2px)));
+}
+/* 技 範囲 */
+.cardTable-move-range{
+    float: left;
+}
+.cardTable-move-range,.cardTable-move-range .cardTableTitle{
+    width: calc(440px - 70px);
+}
+.cardTable-move-range .cardTableContent{
+    width: calc(((440px - 70px) - (2px + 10px + 2px)));
+}
+/* 技 成功率 */
+.cardTable-move-successRate{
+    float: left;
+}
+.cardTable-move-successRate,.cardTable-move-successRate .cardTableTitle{
+    width: calc(70px + 1rem + 10px);
+}
+.cardTable-move-successRate .cardTableContent{
+    float: left;
+    width: calc(((70px) - (2px + 10px + 2px)));
+}
+.cardTable-move-successRate .move-add{
+    height: calc(2px + 5px + 1rem + 5px + 2px + 2px);
+    line-height: calc(2px + 5px + 1rem + 5px + 2px + 2px);
+}
+/* 技 攻撃回数 */
+.cardTable-move-attackNumber{
+    float: left;
+}
+.cardTable-move-attackNumber,.cardTable-move-attackNumber .cardTableTitle{
+    width: 70px;
+}
+.cardTable-move-attackNumber .cardTableContent{
+    width: calc((70px - (2px + 10px + 2px)));
+}
+/* 技 ダメージ */
+.cardTable-move-damage{
+    float: left;
+}
+.cardTable-move-damage,.cardTable-move-damage .cardTableTitle{
+    width: calc(440px - ((70px + 1rem + 10px) + 70px));
+}
+.cardTable-move-damage .cardTableContent{
+    width: calc((440px - ((70px + 1rem + 10px) + 70px)) - (2px + 10px + 2px));
+}
+/* 技 状態異常 */
+.cardTable-move-statusEffect{
+    position: relative;
+    clear: left;
+}
+/* 技 状態異常 種類 */
+.cardTable-move-statusEffect-type{
+    float: left;
+}
+.cardTable-move-statusEffect-type,.cardTable-move-statusEffect-type .cardTableTitle{
+    width: calc((70px + 1rem + 10px) + 70px);
+}
+.cardTable-move-statusEffect-type.cardTableContent{
+    width: calc((((70px + 1rem + 10px) + 70px) - (2px + 10px + 2px)));
+}
+/* 技 状態異常 レベル */
+.cardTable-move-statusEffect-level{
+    float: left;
+}
+.cardTable-move-statusEffect-level,.cardTable-move-statusEffect-level .cardTableTitle{
+    width: 70px;
+}
+.cardTable-move-statusEffect-level.cardTableContent{
+    width: calc((70px - (2px + 10px + 2px)));
+}
+/* 技 状態異常 ターン */
+.cardTable-move-statusEffect-turn{
+    float: left;
+}
+.cardTable-move-statusEffect-turn,.cardTable-move-statusEffect-turn .cardTableTitle{
+    width: 70px;
+}
+.cardTable-move-statusEffect-turn.cardTableContent{
+    width: calc((70px - (2px + 10px + 2px)));
+}
+/* 技 値欄 */
+.cardTable-move-statusEffect-value{
+    height: fit-content;
+    min-height: calc((2px + 5px + 1rem + 5px + 2px) + 2px);
+}
+/* 技 状態異常 削除ボタン */
+.cardTable-move-statusEffect-value > div > .deleteButton{
+    float: left;
+    margin-left: 10px;
+}
+/* 技 状態異常 追加ボタン */
+.cardTable-move-statusEffect > .addButton{
+    position: absolute;
+    right: 0;
+}
+/* 技 効果 */
+.cardTable-move-effect{
+    position: relative;
+    clear: left;
+    height: fit-content;
+    min-height: calc((2px + 5px + 1rem + 5px + 2px) + 1rem + 2px);
+}
+.move-effect-value{
+    margin-bottom: 10px;
+}
+.cardTable-move-effect,.cardTable-move-effect .cardTableTitle{
+    width: 440px;
+}
+.cardTable-move-effect .cardTableContent{
+    width: calc((440px - (2px + 10px + 2px)));
+    /* これがないと謎の隙間がある */
+    margin-bottom: calc((5px + 2px)*-1);
+}
 .cardTableTitle,.cardTableContent{
     font-size: 1rem;
+}
+.cardTable-move-effect .deleteButton{
+    float: left;
+    margin-top: 3px;
+}
+.cardTable-move-effect .addButton{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+/* 備考 */
+#note0{
+    clear: left;
+    width: calc((440px - (2px + 10px + 2px)));
+    /* これがないと謎の隙間がある */
+    margin-bottom: calc((5px + 2px)*-1);
 }
