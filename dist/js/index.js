@@ -144,11 +144,13 @@ function convertString(value,target,alt=""){//文字列から特定の文字を�
     result=value.replace(regularExpression,alt)
     return result
 }
-function convertAvailability(value){//有効/無効を〇/×に変換する関数
-    if(value==="有効"){
-        return "&#9675;"
-    }else if(value==="無効"){
-        return "&#10005;"
+function convertAvailability(value){//0~100を〇/×に変換する関数
+    if(value===100){
+        return "&#9675;"//マル
+    }else if(value===0){
+        return "&#10005;"//バツ
+    }else if(typeof value==="number"){
+        return "&#9651;"//三角
     }else if(value===""){
         return "&#8722;"
     }else{
@@ -1719,7 +1721,7 @@ function setDeleteButtonProcess(boxName,index){//プロパティの削除ボタ�
 }
 function createStealthSelect(stealth){//隠密のセレクトボックスのoptionを作成する関数
     const selection=["","",""]
-    switch(stealth){
+    switch(convertPercent(stealth)){
         case "不明":
         case "":
             selection[0]="selected"
