@@ -1365,7 +1365,7 @@ function getEditPage(enemyData){
                         <label for="symbol-level">Lv</label>
                         <input type="number" id="symbol-level" value="${enemyData.level}">
                     </div>
-                    <div class="cardTableContent">
+                    <div class="cardTableContent clearFix">
                         <label for="symbol-tag">タグ</label>
                         <input type="text" id="symbol-tag" value="${enemyData.tag}">
                     </div>
