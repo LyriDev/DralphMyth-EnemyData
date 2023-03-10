@@ -62,10 +62,10 @@
 
 /* 特性 */
 .cardTable-ability-name,.cardTable-ability-name .cardTableTitle{
-    width: calc(440px/2);
+    width: calc(440px/4*3);
 }
 .cardTable-ability-name .cardTableContent{
-    width: calc((440px/2 - (2px + 10px + 2px)));
+    width: calc((440px/4*3 - (2px + 10px + 2px)));
 }
 .cardTable-ability-effect,.cardTable-ability-effect .cardTableTitle{
     width: 440px;
