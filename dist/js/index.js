@@ -1117,13 +1117,21 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
             </div>
         `
         //状態異常欄の作成
+        let statusEffects
         if(move.statusEffects){
-            elementBoxes[4]=createMoveStatusEffectBox(move.statusEffects)
+            statusEffects=move.statusEffects
+        }else{
+            statusEffects=new Array
         }
+        elementBoxes[4]=createMoveStatusEffectBox(statusEffects)
         //効果欄の作成
+        let effects
         if(move.effects){
-            elementBoxes[5]=createMoveEffectBox(move.effects)
+            effects=move.effects
+        }else{
+            effects=new Array
         }
+        elementBoxes[5]=createMoveEffectBox(effects)
         //削除ボタンを作成する
         const deleteButtonMove=document.createElement("button")
         deleteButtonMove.classList.add("deleteButton")
