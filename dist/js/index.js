@@ -2164,7 +2164,7 @@ function convertJsonToText(enemyData){//jsonデータをtxt形式に変換する
         `行動p${convertProperty(enemyData.actionPoint)}`,
         `回避${convertProperty(enemyData.dodge)}%`,
         `行動回数${convertProperty(enemyData.actionNumber)}回`,
-        `隠密${convertProperty(enemyData.stealth,"","不明")}`
+        `隠密${convertPercent(enemyData.stealth)}`
     ]
     const row4=[//状態異常耐性
         `${convertPercent(enemyData.statusEffects.flame,"炎")}`,
