@@ -1357,13 +1357,15 @@ function getEditPage(enemyData){
             </div>
             <div id="symbol" class="cardBody">
                 <div class="cardTable">
-                    <div class="cardTableContent">
-                        <label for="symbol-name">名前</label>
-                        <input type="text" id="symbol-name" value="${enemyData.name}">
-                    </div>
-                    <div class="cardTableContent">
-                        <label for="symbol-level">Lv</label>
-                        <input type="number" id="symbol-level" value="${enemyData.level}">
+                    <div class="clearFix">
+                        <div class="cardTableContent">
+                            <label for="symbol-name">名前</label>
+                            <input type="text" id="symbol-name" value="${enemyData.name}">
+                        </div>
+                        <div class="cardTableContent">
+                            <label for="symbol-level">Lv</label>
+                            <input type="number" id="symbol-level" value="${enemyData.level}">
+                        </div>
                     </div>
                     <div class="cardTableContent">
                         <label for="symbol-tag">タグ</label>
