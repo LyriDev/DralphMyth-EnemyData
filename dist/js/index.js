@@ -182,6 +182,26 @@ function convertPercent(value,propertyName="",hideEffectiveProperty=false){//100
     }
     return `${propertyName}${result}`
 }
+function convertValueToPercent(value){//有効を100,無効を0,半減を50に変換する関数
+    let result=""
+    switch(value){
+        case "有効":
+            result=100
+            break
+        case "半減":
+            result=50
+            break
+        case "無効":
+            result=0
+            break
+        case "不明":
+            result=""
+            break
+        default:
+            break
+    }
+    return result
+}
 function addDotToArray(array,value){//配列の間に要素を追加して文字列として返す関数
     let result=""
     if(array.length<2){//配列の"間"がないなら処理を終了
@@ -1751,7 +1771,7 @@ function getInputEnemyData(){//入力フォームからデータを取得する�
     result.statusEffects.defDown.magic=NumberOrEmpty(document.getElementById("statusEffects-defDown-magic").value)
     result.statusEffects.spdDown=NumberOrEmpty(document.getElementById("statusEffects-spdDown").value)
     result.statusEffects.spdDown=NumberOrEmpty(document.getElementById("statusEffects-spdDown").value)
-    result.stealth=document.getElementById("statusEffects-stealth").value
+    result.stealth=convertValueToPercent(document.getElementById("statusEffects-stealth").value)
     result.abilities=getAbilities()
     result.moves=getMoves()
     result.note=document.getElementById("note0").value
