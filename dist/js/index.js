@@ -877,7 +877,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
         const statusEffectListElement=document.createElement("div")
         statusEffectListElement.innerHTML=createDataList(statusEffectListId,statusEffectList)
         moveBoxMaster.appendChild(statusEffectListElement.firstElementChild)
-    function createMoveElements(move,defaultEffectRows=1){//技欄を1つ作成する関数
+    function createMoveElements(move,moveEffectRows=1){//技欄を1つ作成する関数
         function createMoveCheckBox(list,boxName){//チェックボックスを作成する関数
             //チェックボックスの親要素を作成
             const checkBoxElement=document.createElement("div")
@@ -1001,7 +1001,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
             freeSpace[0].appendChild(freeSpace[8])//値欄
             return freeSpace[0]
         }
-        function createMoveEffectBox(effects,defaultEffectRows=1){//効果欄を作成する関数
+        function createMoveEffectBox(effects,effectRows=moveEffectRows){//効果欄を作成する関数
             const freeSpace=new Array
             //効果欄の親要素を作成する
             freeSpace[0]=document.createElement("div")
@@ -1020,7 +1020,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                 newEffectElement[1]=document.createElement("textarea")
                 newEffectElement[1].classList.add("cardTableContent")
                 newEffectElement[1].setAttribute("id",`move-effect${uniqueKey.next().value}`)
-                newEffectElement[1].rows=`${defaultEffectRows}`
+                newEffectElement[1].setAttribute("rows",`${effectRows}`)
                 newEffectElement[1].textContent=effect
                 newEffectElement[0].appendChild(newEffectElement[1])
                 //削除ボタンを作成する
@@ -1161,7 +1161,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
     const disruptiveWave={
         index:"",name:"いてつく波動",
         reach:"",range:"全範囲",
-        successRate:"",attackNumber:"",damage:"0",
+        successRate:"",attackNumber:"1",damage:"0",
         effects:["相手のバフを全解除,\n全員に必中,\n(次の自分のターンが終わるまで再使用しない)"]
     }
     const addDisWavButtonMove=document.createElement("button")
