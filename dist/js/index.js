@@ -157,11 +157,11 @@ function convertAvailability(value){//0~100を〇/×に変換する関数
         return ""
     }
 }
-function convertPercent(value,propertyName="",hideEffectiveProperty=false){//100を有効,0を無効,50を半減に変換する関数
+function convertPercent(value,propertyName="",hideUnknown=false,hideEffective=false){//100を有効,0を無効,50を半減に変換する関数
     let result=""
     switch(String(value)){
         case "100":
-            if(hideEffectiveProperty===true){return ""}//「有効」を隠す
+            if(hideEffective===true){return ""}//「有効」を隠す
             result="有効"
             break
         case "50":
@@ -171,7 +171,7 @@ function convertPercent(value,propertyName="",hideEffectiveProperty=false){//100
             result="無効"
             break
         case "":
-            if(hideEffectiveProperty===true){return ""}//「不明」も隠す
+            if(hideUnknown===true){return ""}//「不明」も隠す
             result="不明"
             break
         default:
@@ -2037,21 +2037,21 @@ function getAbilitiesAsCcfoliaData(enemyData,subSeparateBar){//ココフォリ�
             `AI${convertProperty(enemyData.actionNumber)}回行動`
         ],
         resistance_statusEffect:[
-            `${convertPercent(enemyData.statusEffects.flame,"炎",true)}`,
-            `${convertPercent(enemyData.statusEffects.ice,"氷",true)}`,
-            `${convertPercent(enemyData.statusEffects.dazzle,"幻惑",true)}`,
-            `${convertPercent(enemyData.statusEffects.poison,"毒",true)}`,
-            `${convertPercent(enemyData.statusEffects.sleep,"眠り",true)}`,
-            `${convertPercent(enemyData.statusEffects.confusion,"混乱",true)}`,
-            `${convertPercent(enemyData.statusEffects.stun,"スタン",true)}`,
-            `${convertPercent(enemyData.statusEffects.curse,"呪い",true)}`
+            `${convertPercent(enemyData.statusEffects.flame,"炎",true,true)}`,
+            `${convertPercent(enemyData.statusEffects.ice,"氷",true,true)}`,
+            `${convertPercent(enemyData.statusEffects.dazzle,"幻惑",true,true)}`,
+            `${convertPercent(enemyData.statusEffects.poison,"毒",true,true)}`,
+            `${convertPercent(enemyData.statusEffects.sleep,"眠り",true,true)}`,
+            `${convertPercent(enemyData.statusEffects.confusion,"混乱",true,true)}`,
+            `${convertPercent(enemyData.statusEffects.stun,"スタン",true,true)}`,
+            `${convertPercent(enemyData.statusEffects.curse,"呪い",true,true)}`
         ],
         resistance_parameterDown:[
-            `${convertPercent(enemyData.statusEffects.atkDown,"攻撃力低下",true)}`,
-            `${convertPercent(enemyData.statusEffects.defDown.physical,"物理防御力低下",true)}`,
-            `${convertPercent(enemyData.statusEffects.defDown.breath,"息防御力低下",true)}`,
-            `${convertPercent(enemyData.statusEffects.defDown.magic,"魔法防御力低下",true)}`,
-            `${convertPercent(enemyData.statusEffects.spdDown,"素早さ低下",true)}`
+            `${convertPercent(enemyData.statusEffects.atkDown,"攻撃力低下",true,true)}`,
+            `${convertPercent(enemyData.statusEffects.defDown.physical,"物理防御力低下",true,true)}`,
+            `${convertPercent(enemyData.statusEffects.defDown.breath,"息防御力低下",true,true)}`,
+            `${convertPercent(enemyData.statusEffects.defDown.magic,"魔法防御力低下",true,true)}`,
+            `${convertPercent(enemyData.statusEffects.spdDown,"素早さ低下",true,true)}`
         ]
     }
     if(enemyData.stealth==="無効"){
@@ -2164,24 +2164,24 @@ function convertJsonToText(enemyData){//jsonデータをtxt形式に変換する
         `行動p${convertProperty(enemyData.actionPoint)}`,
         `回避${convertProperty(enemyData.dodge)}%`,
         `行動回数${convertProperty(enemyData.actionNumber)}回`,
-        `隠密${convertPercent(enemyData.stealth)}`
+        `${convertPercent(enemyData.stealth,"隠密",true)}`
     ]
     const row4=[//状態異常耐性
-        `${convertPercent(enemyData.statusEffects.flame,"炎")}`,
-        `${convertPercent(enemyData.statusEffects.ice,"氷")}`,
-        `${convertPercent(enemyData.statusEffects.dazzle,"幻惑")}`,
-        `${convertPercent(enemyData.statusEffects.poison,"毒")}`,
-        `${convertPercent(enemyData.statusEffects.sleep,"眠り")}`,
-        `${convertPercent(enemyData.statusEffects.confusion,"混乱")}`,
-        `${convertPercent(enemyData.statusEffects.stun,"スタン")}`,
-        `${convertPercent(enemyData.statusEffects.curse,"呪い")}`
+        `${convertPercent(enemyData.statusEffects.flame,"炎",true)}`,
+        `${convertPercent(enemyData.statusEffects.ice,"氷",true)}`,
+        `${convertPercent(enemyData.statusEffects.dazzle,"幻惑",true)}`,
+        `${convertPercent(enemyData.statusEffects.poison,"毒",true)}`,
+        `${convertPercent(enemyData.statusEffects.sleep,"眠り",true)}`,
+        `${convertPercent(enemyData.statusEffects.confusion,"混乱",true)}`,
+        `${convertPercent(enemyData.statusEffects.stun,"スタン",true)}`,
+        `${convertPercent(enemyData.statusEffects.curse,"呪い",true)}`
     ]
     const row5=[//パラメータ低下耐性
-        `${convertPercent(enemyData.statusEffects.atkDown,"攻撃力低下")}`,
-        `${convertPercent(enemyData.statusEffects.defDown.physical,"物理防御力低下")}`,
-        `${convertPercent(enemyData.statusEffects.defDown.breath,"息防御力低下")}`,
-        `${convertPercent(enemyData.statusEffects.defDown.magic,"魔法防御力低下")}`,
-        `${convertPercent(enemyData.statusEffects.spdDown,"素早さ低下")}`
+        `${convertPercent(enemyData.statusEffects.atkDown,"攻撃力低下",true)}`,
+        `${convertPercent(enemyData.statusEffects.defDown.physical,"物理防御力低下",true)}`,
+        `${convertPercent(enemyData.statusEffects.defDown.breath,"息防御力低下",true)}`,
+        `${convertPercent(enemyData.statusEffects.defDown.magic,"魔法防御力低下",true)}`,
+        `${convertPercent(enemyData.statusEffects.spdDown,"素早さ低下",true)}`
     ]
     const row6=[//備考
         enemyData.note
