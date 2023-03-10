@@ -209,6 +209,12 @@ textarea{
     #downloadJson,#downloadText{
         margin-bottom: 10px;
     }
+    #logoutButton{
+        margin-left: calc(50% - (1px + 5px + 1.25rem*5 + 5px + 1px) - (500px)/2 - 10px);
+    }
+    #sideMenu{
+        margin-left: calc(50% - (1px + 5px + 1.25rem*6 + 5px + 1px) - (500px)/2);
+    }
 }
 
 /* 閲覧・編集ページ */
