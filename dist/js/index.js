@@ -2045,6 +2045,9 @@ function getAbilitiesAsCcfoliaData(enemyData,subSeparateBar){//ココフォリ�
             result.push(convertProperty(enemyData.abilities[i].effect))
         }
     }
+    if(Boolean(enemyData.note)===true){//備考欄があるときの処理
+        result.push(enemyData.note)
+    }
     return deleteValueInArray(result,"")
 }
 function getMovesAsCcfoliaData(moves,subSeparateBar){//ココフォリアコマの技欄を作成する関数
