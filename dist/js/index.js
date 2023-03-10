@@ -1019,6 +1019,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                 //値欄を作成する
                 newEffectElement[1]=document.createElement("textarea")
                 newEffectElement[1].classList.add("cardTableContent")
+                newEffectElement[1].setAttribute("id",`move-effect${uniqueKey.next().value}`)
                 newEffectElement[1].rows="1"
                 newEffectElement[1].textContent=effect
                 newEffectElement[0].appendChild(newEffectElement[1])
@@ -1888,14 +1889,17 @@ function saveByShortCutKey(data){//ショートカットキーで保存する処
 /* htmlのふるまいを適用する関数 */
 function updateAllTextarea(idName){//全てのtextareaの初期値に合わせてそれぞれ高さを自動調整する関数
     const textareaList = $(`textarea[id^="${idName}"]`);
-    for(let i=0;i<textareaList.length;i++){
-        updateTextarea(`#${idName}${i}`)
-    }
+    textareaList.each(function(i, elem) {
+        updateTextarea(`#${$(elem).attr("id")}`)
+    });
 }
 function updateTextarea(textareaId){//textareaの初期値に合わせて高さを自動調整する関数
     $(function(){
         const targetArea = $(textareaId);
         const rawTarget = targetArea.get(0);
+        // console.log(textareaId)
+        // console.log(targetArea)
+        // console.log(rawTarget)
         let lineHeight = Number(targetArea.attr("rows"));
         while (rawTarget.scrollHeight > rawTarget.offsetHeight){
             lineHeight++;
