@@ -124,6 +124,13 @@ function NumberOrEmpty(value){//値が空文字列以外の時はString型をNum
     if(value==="")return ""
     return Number(value)
 }
+function getAmbiguousArrayLength(array){//存在しないかもしれない配列のlengthを返す関数
+    try{
+        return array.length
+    }catch(error){
+        return 0
+    }
+}
 function convertProperty(value,target="",alt="?"){//null値などを代替テキストに変換する関数
     if(value===target){
         return alt
@@ -1987,7 +1994,7 @@ function getChatPalette(enemyData){//出力するココフォリアコマのチ�
             ":HP+",
             ":HP-",
             `CCB<=${convertProperty(enemyData.dodge)} 【回避】`,
-            `1d${enemyData.moves.length} 攻撃方法`
+            `1d${getAmbiguousArrayLength(enemyData.moves)} 攻撃方法`
         ],
         move:getMovesAsCcfoliaData(enemyData.moves,subSeparateBar)
     }
