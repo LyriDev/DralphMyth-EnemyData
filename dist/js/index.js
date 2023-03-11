@@ -307,11 +307,18 @@ function createDataList(dataListId,list){//datalistタグを作成する関数
     result+="</datalist>"
     return result
 }
-function stringToHTML (str){//文字列をhtmlの要素に変換する関数
+function stringToHTML(str){//文字列をhtmlの要素に変換する関数
     var dom = document.createElement('div');
     dom.innerHTML = str;
     const domChild=dom.firstElementChild
     return domChild;
+}
+function viewReach(reach,canDiagonal,text="斜め可"){//射程を斜め可付きで取得する関数
+    let result=String(reach)
+    if(canDiagonal){
+        result+=`(${text})`
+    }
+    return result
 }
 function* getUniqueKey(){//一意キーを取得する関数
     let count=0
@@ -787,7 +794,7 @@ function getMovesAsText(enemyData){//技一覧をテキストで取得する関�
         content[1]=addDotToArray(content[1],",")
         /* 射程,範囲の表示 */
         if((Number(move.reach)!==0)||(move.reach==="")){//射程の表示
-            content[2].push(`射程${convertProperty(move.reach)}`)
+            content[2].push(`射程${viewReach(convertProperty(move.reach),move.canDiagonal)}`)
         }
         if(move.range!==""){//範囲の表示
             content[2].push(move.range)
@@ -889,10 +896,14 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                 property=move.elements
             }else if(boxName==="move-type"){
                 property=move.types
+            }else if(boxName==="move-canDiagonal"){
+                console.log(move.canDiagonal)
+                if(move.canDiagonal===undefined)move.canDiagonal=false
+                property=[move.canDiagonal]
             }
             for(let i in list){
                 if(Boolean(property)===true){
-                    if(property.includes(list[i])){
+                    if((property.includes(list[i]))||(move.canDiagonal)){
                         isChecked="checked"
                     }else{
                         isChecked=""
@@ -1092,7 +1103,12 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
             <div class="cardTable-move-reach">
                 <div class="cardTableTitle">射程</div>
                 <input type="number" class="cardTableContent" value="${move.reach}">
-            </div>
+            </div>`
+        const canDiagonalBox=document.createElement("div")
+        canDiagonalBox.classList.add("cardTable-move-canDiagonal")
+        canDiagonalBox.appendChild(createMoveCheckBox(["斜め可"],"move-canDiagonal"))
+        elementBoxes[2].appendChild(canDiagonalBox)
+        elementBoxes[2].innerHTML+=`
             <div class="cardTable-move-range">
                 <div class="cardTableTitle">範囲</div>
                 <input type="text" class="cardTableContent" value="${move.range}">
@@ -1168,7 +1184,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
     //いてつく波動追加ボタンを作成する
     const disruptiveWave={
         index:"",name:"いてつく波動",
-        reach:"",range:"全範囲",
+        reach:"",canDiagonal:false,range:"全範囲",
         successRate:"",attackNumber:"1",damage:"0",
         effects:["相手のバフを全解除,\n全員に必中,\n(次の自分のターンが終わるまで再使用しない)"]
     }
@@ -1305,7 +1321,7 @@ function addMoveBox(enemyData){//閲覧ページの技欄を作成する関数
                     </div>
                     <div class="cardTable-move-reach">
                         <div class="cardTableTitle">射程</div>
-                        <input readonly type="text" class="cardTableContent" value="${sortedMoves[i].reach}">
+                        <input readonly type="text" class="cardTableContent" value="${viewReach(sortedMoves[i].reach,sortedMoves[i].canDiagonal)}">
                     </div>
                     <div class="cardTable-move-range">
                         <div class="cardTableTitle">範囲</div>
@@ -1854,6 +1870,7 @@ function getInputEnemyData(){//入力フォームからデータを取得する�
             newMove.elements=getMoveCheckBox(movesElement[i],".move-element",elementList)//属性を取得する
             newMove.types=getMoveCheckBox(movesElement[i],".move-type",attackTypeList)//攻撃種別を取得する
             newMove.reach=NumberOrEmpty(movesElement[i].querySelector("div.cardTable-move-reach > input").value)
+            newMove.canDiagonal=movesElement[i].querySelector(".move-canDiagonal input").checked
             newMove.range=movesElement[i].querySelector("div.cardTable-move-range > input").value
             newMove.successRate=NumberOrEmpty(movesElement[i].querySelector("div.cardTable-move-successRate > input").value)
             newMove.attackNumber=movesElement[i].querySelector("div.cardTable-move-attackNumber > input").value
@@ -2110,7 +2127,7 @@ function getMovesAsCcfoliaData(moves,subSeparateBar){//ココフォリアコマ�
         //射程と範囲
         const reachRange=new Array
         if((Number(sortedMoves[i].reach)!==0)||(sortedMoves[i].reach==="")){
-            reachRange.push(`射程${convertProperty(sortedMoves[i].reach)}`)
+            reachRange.push(`射程${viewReach(convertProperty(sortedMoves[i].reach),sortedMoves[i].canDiagonal)}`)
         }
         if(sortedMoves[i].range!==""){
             reachRange.push(sortedMoves[i].range)

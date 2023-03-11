@@ -122,20 +122,20 @@
     float: left;
 }
 .cardTable-move-reach,.cardTable-move-reach .cardTableTitle{
-    width: 70px;
+    width: calc(70px*2);
 }
 .cardTable-move-reach .cardTableContent{
-    width: calc((70px - (2px + 10px + 2px)));
+    width: calc((70px*2 - (2px + 10px + 2px)));
 }
 /* 技 範囲 */
 .cardTable-move-range{
     float: left;
 }
 .cardTable-move-range,.cardTable-move-range .cardTableTitle{
-    width: calc(440px - 70px);
+    width: calc(440px - 70px*2);
 }
 .cardTable-move-range .cardTableContent{
-    width: calc(((440px - 70px) - (2px + 10px + 2px)));
+    width: calc(((440px - 70px*2) - (2px + 10px + 2px)));
 }
 /* 技 成功率 */
 .cardTable-move-successRate{
