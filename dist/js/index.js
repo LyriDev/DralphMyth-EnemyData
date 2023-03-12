@@ -320,6 +320,13 @@ function viewReach(reach,canDiagonal,text="斜め可"){//射程を斜め可付�
     }
     return result
 }
+function hideTheStatusEffectLevelByType(statusEffectType,value){//レベルのない状態異常のレベルを隠して取得する関数
+    let result=""
+    if(!statusEffectWithoutLevelList.includes(statusEffectType)){
+        result=value
+    }
+    return result
+}
 function* getUniqueKey(){//一意キーを取得する関数
     let count=0
     while(true){
@@ -357,6 +364,12 @@ const elementList=[//属性リスト
     "水",
     "光",
     "闇"
+]
+const statusEffectList=[//状態異常リスト
+    "炎","氷","幻惑","毒","眠り","混乱","スタン","呪い","攻撃力低下","物理防御力低下","息防御力低下","魔法防御力低下","素早さ低下"
+]
+const statusEffectWithoutLevelList=[//レベルのない状態異常のリスト
+    statusEffectList[4],statusEffectList[5],statusEffectList[7]
 ]
 
 /* ページごとに表示するコンテンツを変更するための関数 */
@@ -802,7 +815,7 @@ function getMovesAsText(enemyData){//技一覧をテキストで取得する関�
         content[2]=addDotToArray(content[2],",")
         /* 状態異常の表示 */
         for(let k in move.statusEffects){
-            content[3].push(`${convertProperty(move.statusEffects[k].effectType)}Lv${convertProperty(move.statusEffects[k].level)}(${convertProperty(move.statusEffects[k].turn)}ターン)`)
+            content[3].push(`${convertProperty(move.statusEffects[k].effectType)}${hideTheStatusEffectLevelByType(move.statusEffects[k].effectType,`Lv${convertProperty(move.statusEffects[k].level)}`)}(${convertProperty(move.statusEffects[k].turn)}ターン)`)
         }
         content[3]=addDotToArray(content[3],"\n"+indent)
         /* 効果の表示 */
@@ -877,9 +890,6 @@ function createAbilityBox(ability=newData.abilities[0],index=null,page=Page){//�
 function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加する技を作成する関数
     const moveBoxMaster=document.getElementById("move")//技欄の親要素を入れるための親要素
         //状態異常のリストを作成する
-        const statusEffectList=[
-            "炎","氷","幻惑","毒","眠り","混乱","スタン","呪い","攻撃力低下","物理防御力低下","息防御力低下","魔法防御力低下","素早さ低下"
-        ]
         const statusEffectListId="statusEffectList"
         const statusEffectListElement=document.createElement("div")
         statusEffectListElement.innerHTML=createDataList(statusEffectListId,statusEffectList)
@@ -897,7 +907,6 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
             }else if(boxName==="move-type"){
                 property=move.types
             }else if(boxName==="move-canDiagonal"){
-                console.log(move.canDiagonal)
                 if(move.canDiagonal===undefined)move.canDiagonal=false
                 property=[move.canDiagonal]
             }
@@ -1882,7 +1891,11 @@ function getInputEnemyData(){//入力フォームからデータを取得する�
                 for(let j=0;j<statusEffectsElement.length;j++){//状態異常単位でループ
                     const newStatusEffect=new Object
                     newStatusEffect.effectType=statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-type").value
-                    newStatusEffect.level=NumberOrEmpty(statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-level").value)
+                    let statusEffectLevel=0
+                    if(!statusEffectWithoutLevelList.includes(newStatusEffect.effectType)){
+                        statusEffectLevel=NumberOrEmpty(statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-level").value)
+                    }
+                    newStatusEffect.level=statusEffectLevel
                     newStatusEffect.turn=NumberOrEmpty(statusEffectsElement[j].querySelector(".cardTable-move-statusEffect-turn").value)
                     statusEffects.push(newStatusEffect)
                 }
@@ -2135,7 +2148,7 @@ function getMovesAsCcfoliaData(moves,subSeparateBar){//ココフォリアコマ�
         result.push(addDotToArray(reachRange,","))
         //状態異常
         for(let j in sortedMoves[i].statusEffects){
-            result.push(`${convertProperty(sortedMoves[i].statusEffects[j].effectType)}Lv${convertProperty(sortedMoves[i].statusEffects[j].level)}(${convertProperty(sortedMoves[i].statusEffects[j].turn)}ターン)`)
+            result.push(`${convertProperty(sortedMoves[i].statusEffects[j].effectType)}${hideTheStatusEffectLevelByType(sortedMoves[i].statusEffects[j].effectType,`Lv${convertProperty(sortedMoves[i].statusEffects[j].level)}`)}(${convertProperty(sortedMoves[i].statusEffects[j].turn)}ターン)`)
         }
         //技効果
         for(let j in sortedMoves[i].effects){
