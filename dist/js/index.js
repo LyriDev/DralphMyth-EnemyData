@@ -320,9 +320,9 @@ function viewReach(reach,canDiagonal,text="斜め可"){//射程を斜め可付�
     }
     return result
 }
-function hideTheStatusEffectLevelByType(statusEffectType,value){//レベルのない状態異常のレベルを隠して取得する関数
+function hideTheStatusEffectLevelByType(statusEffectLevel,value){//レベルのない状態異常のレベルを隠して取得する関数
     let result=""
-    if(!statusEffectWithoutLevelList.includes(statusEffectType)){
+    if(statusEffectLevel!==0){
         result=value
     }
     return result
@@ -815,7 +815,7 @@ function getMovesAsText(enemyData){//技一覧をテキストで取得する関�
         content[2]=addDotToArray(content[2],",")
         /* 状態異常の表示 */
         for(let k in move.statusEffects){
-            content[3].push(`${convertProperty(move.statusEffects[k].effectType)}${hideTheStatusEffectLevelByType(move.statusEffects[k].effectType,`Lv${convertProperty(move.statusEffects[k].level)}`)}(${convertProperty(move.statusEffects[k].turn)}ターン)`)
+            content[3].push(`${convertProperty(move.statusEffects[k].effectType)}${hideTheStatusEffectLevelByType(move.statusEffects[k].level,`Lv${convertProperty(move.statusEffects[k].level)}`)}(${convertProperty(move.statusEffects[k].turn)}ターン)`)
         }
         content[3]=addDotToArray(content[3],"\n"+indent)
         /* 効果の表示 */
@@ -2148,7 +2148,7 @@ function getMovesAsCcfoliaData(moves,subSeparateBar){//ココフォリアコマ�
         result.push(addDotToArray(reachRange,","))
         //状態異常
         for(let j in sortedMoves[i].statusEffects){
-            result.push(`${convertProperty(sortedMoves[i].statusEffects[j].effectType)}${hideTheStatusEffectLevelByType(sortedMoves[i].statusEffects[j].effectType,`Lv${convertProperty(sortedMoves[i].statusEffects[j].level)}`)}(${convertProperty(sortedMoves[i].statusEffects[j].turn)}ターン)`)
+            result.push(`${convertProperty(sortedMoves[i].statusEffects[j].effectType)}${hideTheStatusEffectLevelByType(sortedMoves[i].statusEffects[j].level,`Lv${convertProperty(sortedMoves[i].statusEffects[j].level)}`)}(${convertProperty(sortedMoves[i].statusEffects[j].turn)}ターン)`)
         }
         //技効果
         for(let j in sortedMoves[i].effects){
