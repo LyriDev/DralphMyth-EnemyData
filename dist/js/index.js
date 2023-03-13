@@ -654,7 +654,11 @@ function getSortedEnemyObject(data,tagFilter="",nameFilter="",keyAddOption=false
             enemyArray.push(getEnemyDataByTag(gottenData,allEnemyTag[i],nameFilter,keyAddOption))
         }
     }else{//タグフィルターありのとき
-        enemyArray.push(getEnemyDataByTag(gottenData,tagFilter,nameFilter,keyAddOption))//指定されたタグを持つデータのみを出力する
+        const tmp={enemy:getEnemyDataByTag(gottenData,tagFilter,nameFilter,keyAddOption,true)}//タグ名を前方一致で取得する
+        let allEnemyTag=getAllEnemyTag(tmp)
+        for(let i in allEnemyTag){//タグ毎にデータをまとめて出力する
+            enemyArray.push(getEnemyDataByTag(tmp,allEnemyTag[i],nameFilter,keyAddOption))//指定されたタグを持つデータのみを出力する
+        }
     }
     gottenData["enemy"]=enemyArray.flat()
     return gottenData
@@ -667,17 +671,31 @@ function getAllEnemyTag(data){//敵データの全タグ種を取得する関数
     let enemyTagList=getTypeArray(enemyTagArray)
     return enemyTagList
 }
-function getEnemyDataByTag(data,tagName,nameFilter,keyAddOption){//指定されたタグに合致する敵データを取得する関数
+function getEnemyDataByTag(data,tagName,nameFilter,keyAddOption,leftHandMatchTag=false){//指定されたタグに合致する敵データを取得する関数
     let result=new Array
     let enemyArray=new Array
     $.each(data.enemy,function(key,value){
-        if(tagName===value.tag){
-            if(nameFilter===""){//名前フィルターなしのとき
-                enemyArray.push({key:key,value:value})
-            }else{//名前フィルターありのとき
-                const nameFilterReg=new RegExp("^"+nameFilter+".*")//前方部分一致の正規表現
-                if(nameFilterReg.test(value.name)){
+        if(leftHandMatchTag){
+            const tagFilterReg=new RegExp("^"+tagName+".*")//タグでフィルターする前方部分一致の正規表現
+            if(tagFilterReg.test(value.tag)){
+                if(nameFilter===""){//名前フィルターなしのとき
                     enemyArray.push({key:key,value:value})
+                }else{//名前フィルターありのとき
+                    const nameFilterReg=new RegExp("^"+nameFilter+".*")//前方部分一致の正規表現
+                    if(nameFilterReg.test(value.name)){
+                        enemyArray.push({key:key,value:value})
+                    }
+                }
+            }
+        }else{
+            if(tagName===value.tag){
+                if(nameFilter===""){//名前フィルターなしのとき
+                    enemyArray.push({key:key,value:value})
+                }else{//名前フィルターありのとき
+                    const nameFilterReg=new RegExp("^"+nameFilter+".*")//前方部分一致の正規表現
+                    if(nameFilterReg.test(value.name)){
+                        enemyArray.push({key:key,value:value})
+                    }
                 }
             }
         }
