@@ -308,6 +308,7 @@ select{
 .move-element label{
     display: inline-block;
     margin: 0 auto;
+
 }
 .move-element input[type="checkBox"]{
     display: block;

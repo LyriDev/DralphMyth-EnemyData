@@ -365,6 +365,17 @@ const elementList=[//属性リスト
     "光",
     "闇"
 ]
+const elementColorList=[//属性カラーリスト
+    "#F5F5F5",
+    "#F5CC88",
+    "#97FAFB",
+    "#ADFB8E",
+    "#F5D09A",
+    "#FEFA87",
+    "#65A6F9",
+    "#ECE9D8",
+    "#B488DD"
+]
 const statusEffectList=[//状態異常リスト
     "炎","氷","幻惑","毒","眠り","混乱","スタン","呪い","攻撃力低下","物理防御力低下","息防御力低下","魔法防御力低下","素早さ低下"
 ]
@@ -918,6 +929,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                         isChecked=""
                     }
                 }
+
                 const checkBoxKey=uniqueKey.next().value
                 result+=`
                     <div class="${boxName}">
@@ -928,6 +940,16 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                 `
             }
             checkBoxElement.innerHTML=result
+            if(boxName==="move-element"){//属性ラベルに属性色をつける
+                const elementsLabel=checkBoxElement.querySelectorAll(".move-element label")
+                for(let i=0;i<elementsLabel.length;i++){
+                    for(let j=0;j<elementList.length;j++){
+                        if(elementsLabel[i].textContent===elementList[j]){
+                            elementsLabel[i].style.color=elementColorList[j]
+                        }
+                    }
+                }
+            }
             return checkBoxElement
         }
         function createMoveStatusEffectBox(statusEffects){//状態異常欄を作成する関数
