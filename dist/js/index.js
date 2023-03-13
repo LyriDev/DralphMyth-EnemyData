@@ -929,27 +929,18 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
                         isChecked=""
                     }
                 }
-
+                let color=""
+                if(boxName==="move-element")color=`style="color:${elementColorList[i]};"`//属性ラベルに属性色を付ける
                 const checkBoxKey=uniqueKey.next().value
                 result+=`
                     <div class="${boxName}">
-                        <label for="move-checkBox-${checkBoxKey}">${list[i]}</label>
+                        <label for="move-checkBox-${checkBoxKey}" ${color}>${list[i]}</label>
                         <br>
                         <input type="checkbox" id="move-checkBox-${checkBoxKey}" class="${boxName}-${i}" ${isChecked}>
                     </div>
                 `
             }
             checkBoxElement.innerHTML=result
-            if(boxName==="move-element"){//属性ラベルに属性色をつける
-                const elementsLabel=checkBoxElement.querySelectorAll(".move-element label")
-                for(let i=0;i<elementsLabel.length;i++){
-                    for(let j=0;j<elementList.length;j++){
-                        if(elementsLabel[i].textContent===elementList[j]){
-                            elementsLabel[i].style.color=elementColorList[j]
-                        }
-                    }
-                }
-            }
             return checkBoxElement
         }
         function createMoveStatusEffectBox(statusEffects){//状態異常欄を作成する関数
@@ -1698,9 +1689,10 @@ function createElementCheckBox(enemyData,boxName){//9属性のチェックボッ
                 isChecked=""
             }
         }
+        const color=`style="color:${elementColorList[i]};"`//属性ラベルに属性色を付ける
         result+=`
             <div class="${boxName}">
-                <label for="${boxName}-${i}">${elementList[i]}</label>
+                <label for="${boxName}-${i}" ${color}>${elementList[i]}</label>
                 <input type="checkbox" id="${boxName}-${i}" ${isChecked}>
             </div>
         `
