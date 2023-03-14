@@ -2075,7 +2075,7 @@ function convertJsonToPiece(enemyData){//Jsonデータをココフォリアコ�
                 {label:"装甲",value:0,max:0}
             ],
             params:[
-                {label:"",value:""}
+                {label:"回避",value:`${convertProperty(enemyData.dodge)}`}
             ],
             iconUrl:"",
             faces:[],
@@ -2108,6 +2108,7 @@ function getChatPalette(enemyData){//出力するココフォリアコマのチ�
             ":HP+",
             ":HP-",
             `CCB<=${convertProperty(enemyData.dodge)} 【回避】`,
+            `CCB<=${convertProperty(enemyData.dodge)}/`,
             `1d${getAmbiguousArrayLength(enemyData.moves)} 攻撃方法`
         ],
         move:getMovesAsCcfoliaData(enemyData.moves,subSeparateBar)
