@@ -2160,6 +2160,7 @@ function getAbilitiesAsCcfoliaData(enemyData,subSeparateBar){//ココフォリ�
         }
     }
     if(Boolean(enemyData.note)===true){//備考欄があるときの処理
+        result.push(subSeparateBar)
         result.push(enemyData.note)
     }
     return deleteValueInArray(result,"")
