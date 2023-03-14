@@ -313,6 +313,9 @@ function stringToHTML(str){//文字列をhtmlの要素に変換する関数
     const domChild=dom.firstElementChild
     return domChild;
 }
+function escapeRegExp(str){//正規表現で特殊な意味を持つ文字を全てエスケープさせる関数
+    return str.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&');
+}
 function viewReach(reach,canDiagonal,text="斜め可"){//射程を斜め可付きで取得する関数
     let result=String(reach)
     if(canDiagonal){
@@ -676,12 +679,12 @@ function getEnemyDataByTag(data,tagName,nameFilter,keyAddOption,leftHandMatchTag
     let enemyArray=new Array
     $.each(data.enemy,function(key,value){
         if(leftHandMatchTag){
-            const tagFilterReg=new RegExp("^"+tagName+".*")//タグでフィルターする前方部分一致の正規表現
+            const tagFilterReg=new RegExp("^"+escapeRegExp(tagName)+".*")//タグでフィルターする前方部分一致の正規表現
             if(tagFilterReg.test(value.tag)){
                 if(nameFilter===""){//名前フィルターなしのとき
                     enemyArray.push({key:key,value:value})
                 }else{//名前フィルターありのとき
-                    const nameFilterReg=new RegExp("^"+nameFilter+".*")//前方部分一致の正規表現
+                    const nameFilterReg=new RegExp("^"+escapeRegExp(nameFilter)+".*")//前方部分一致の正規表現
                     if(nameFilterReg.test(value.name)){
                         enemyArray.push({key:key,value:value})
                     }
@@ -692,7 +695,7 @@ function getEnemyDataByTag(data,tagName,nameFilter,keyAddOption,leftHandMatchTag
                 if(nameFilter===""){//名前フィルターなしのとき
                     enemyArray.push({key:key,value:value})
                 }else{//名前フィルターありのとき
-                    const nameFilterReg=new RegExp("^"+nameFilter+".*")//前方部分一致の正規表現
+                    const nameFilterReg=new RegExp("^"+escapeRegExp(nameFilter)+".*")//前方部分一致の正規表現
                     if(nameFilterReg.test(value.name)){
                         enemyArray.push({key:key,value:value})
                     }
