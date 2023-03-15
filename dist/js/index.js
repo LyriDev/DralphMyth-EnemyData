@@ -843,23 +843,23 @@ function getMovesAsText(enemyData){//技一覧をテキストで取得する関�
         if((Number(move.damage)!==0)||(move.damage==="")){//属性と攻撃種別の表示
             content[0]+=`(${convertProperty(addDotToArray(deleteValueInArray(move.elements,""),"・"))}属性,${convertProperty(addDotToArray(deleteValueInArray(move.types,""),"・"))})`
         }
-        /* 成功率,攻撃回数,ダメージの表示 */
-        if((Number(move.successRate)<100)||(move.successRate==="")){//成功率の表示
-            content[1].push(`成功率${convertProperty(move.successRate)}%`)
-        }
-        if((String(move.attackNumber)!=="1")&&(String(move.attackNumber)!=="0")){//攻撃回数の表示
-            content[1].push(`攻撃回数${convertProperty(move.attackNumber)}回`)
-        }
-        if((Number(move.damage)!==0)||(move.damage==="")){//ダメージの表示
-            content[1].push(`ダメージ${convertProperty(move.damage)}`)
-        }
-        content[1]=addDotToArray(content[1],",")
         /* 射程,範囲の表示 */
         if((Number(move.reach)!==0)||(move.reach==="")){//射程の表示
-            content[2].push(`射程${viewReach(convertProperty(move.reach),move.canDiagonal)}`)
+            content[1].push(`射程${viewReach(convertProperty(move.reach),move.canDiagonal)}`)
         }
         if(move.range!==""){//範囲の表示
-            content[2].push(move.range)
+            content[1].push(move.range)
+        }
+        content[1]=addDotToArray(content[1],",")
+        /* 成功率,攻撃回数,ダメージの表示 */
+        if((Number(move.successRate)<100)||(move.successRate==="")){//成功率の表示
+            content[2].push(`成功率${convertProperty(move.successRate)}%`)
+        }
+        if((String(move.attackNumber)!=="1")&&(String(move.attackNumber)!=="0")){//攻撃回数の表示
+            content[2].push(`攻撃回数${convertProperty(move.attackNumber)}回`)
+        }
+        if((Number(move.damage)!==0)||(move.damage==="")){//ダメージの表示
+            content[2].push(`ダメージ${convertProperty(move.damage)}`)
         }
         content[2]=addDotToArray(content[2],",")
         /* 状態異常の表示 */
