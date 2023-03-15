@@ -1228,7 +1228,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
     const disruptiveWave={
         index:"",name:"いてつく波動",
         reach:"",canDiagonal:false,range:"全範囲",
-        successRate:"",attackNumber:"1",damage:"0",
+        successRate:100,attackNumber:"1",damage:"0",
         effects:["相手のバフを全解除,\n全員に必中,\n(次の自分のターンが終わるまで再使用しない)"]
     }
     const addDisWavButtonMove=document.createElement("button")
