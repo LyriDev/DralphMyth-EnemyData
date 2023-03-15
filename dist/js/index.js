@@ -323,6 +323,15 @@ function viewReach(reach,canDiagonal,text="斜め可"){//射程を斜め可付�
     }
     return result
 }
+function checkHaveTheMove(moves,moveName){//とある技を持っているかどうか調べる関数
+    let result=false
+    for(let i in moves){
+        if(moves[i].name===moveName){
+            result=true
+        }
+    }
+    return result
+}
 function hideTheStatusEffectLevelByType(statusEffectLevel,value){//レベルのない状態異常のレベルを隠して取得する関数
     let result=""
     if(statusEffectLevel!==0){
@@ -2121,6 +2130,7 @@ function getChatPalette(enemyData){//出力するココフォリアコマのチ�
         ],
         move:getMovesAsCcfoliaData(enemyData.moves,subSeparateBar)
     }
+    if(checkHaveTheMove(enemyData.moves,"いてつく波動"))chatPalette.controller.push(`1d${getAmbiguousArrayLength(enemyData.moves)-1} 攻撃方法`)//いてつく波動波動持ちのとき、いてつく波動なしの攻撃方法選択チャパレを作成する
     const sections=new Array
     for(let key in chatPalette){
         if(chatPalette[key]===""){continue}//セクションに何もないなら処理をしない
