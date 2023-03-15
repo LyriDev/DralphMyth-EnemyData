@@ -1246,7 +1246,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
         index:"",name:"いてつく波動",
         reach:0,canDiagonal:false,range:"全範囲",
         successRate:100,attackNumber:"1",damage:"0",
-        effects:["相手のバフを全解除,\n全員に必中,\n(次の自分のターンが終わるまで再使用しない)"]
+        effects:["敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"]
     }
     const addDisWavButtonMove=document.createElement("button")
     addDisWavButtonMove.classList.add("addButton")
