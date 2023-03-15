@@ -2164,7 +2164,8 @@ function getAbilitiesAsCcfoliaData(enemyData,subSeparateBar){//ココフォリ�
     if(Boolean(enemyData.abilities)===true){//特性があるときの処理
         for(let i in enemyData.abilities){
             result.push(subSeparateBar)
-            result.push(`『${convertProperty(enemyData.abilities[i].name)}』`)
+            console.log(enemyData.abilities[i].name)
+            if(enemyData.abilities[i].name!=="")result.push(`『${convertProperty(enemyData.abilities[i].name)}』`)
             result.push(convertProperty(enemyData.abilities[i].effect))
         }
     }
@@ -2290,7 +2291,12 @@ function convertJsonToText(enemyData){//jsonデータをtxt形式に変換する
     ]
     const row7=new Array//特性
     for(let i in enemyData.abilities){
-        row7.push(`${convertProperty(enemyData.abilities[i].name)}[${convertProperty(convertString(enemyData.abilities[i].effect,"\n"))}]`)
+        if(enemyData.abilities[i].name===""){
+            row7.push(`[${convertProperty(convertString(enemyData.abilities[i].effect,"\n"))}]`)
+        }else{
+            row7.push(`${convertProperty(enemyData.abilities[i].name)}[${convertProperty(convertString(enemyData.abilities[i].effect,"\n"))}]`)
+        }
+
     }
     const row8=getMovesAsText(enemyData)//技
     const rowAll=[row0,row1,row2,row3,row4,row5,row6,row7,row8]
