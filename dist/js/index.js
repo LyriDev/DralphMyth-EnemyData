@@ -1253,7 +1253,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
     addDisWavButtonMove.textContent="いてつく波動追加"
     addDisWavButtonMove.addEventListener("click",function(){
         //新しい技欄を追加する
-        moveBoxContent.appendChild(createMoveElements(disruptiveWave,3))
+        moveBoxContent.appendChild(createMoveElements(disruptiveWave,2))
     },false)
     //完成した技欄を入れるための親要素と追加ボタンを技欄の親要素を入れるための親要素に追加
     moveBoxMaster.appendChild(moveBoxContent)
