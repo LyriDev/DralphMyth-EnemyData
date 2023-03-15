@@ -447,6 +447,7 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
         case "view"://閲覧ページのヘッダー
             result=`
             <div id="headerContent">
+                <div id="explanation">ドラルフ神話戦闘データエディタ</div>
                 <div id="headerButtonArea">
                     <button class="button" id="indexButton">一覧</button>
                     <button class="button" id="editButton"}>編集</button>
@@ -456,6 +457,9 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             `
             setUrl("#indexButton",indexUrl)
             setUrl("#editButton",editUrl)
+            $(document).on("mousedown","#explanation",function(event){//ホームボタンにクリック処理を適用する
+                window.open("../README.md")
+            })
             $(document).on("click","#exportButton",function(){
                 exportEnemyPiece(data.enemy[Index])//出力ボタン処理を適用する
             })
@@ -463,6 +467,7 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
         case "edit"://編集ページのヘッダー
             result=`
             <div id="headerContent">
+                <div id="explanation">ドラルフ神話戦闘データエディタ</div>
                 <div id="headerButtonArea">
                     <button class="button" id="indexButton">一覧</button>
                     <button class="button" id="viewButton">閲覧</button>
@@ -470,6 +475,9 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
                 </div>
             </div>
             `
+            $(document).on("mousedown","#explanation",function(event){//ホームボタンにクリック処理を適用する
+                window.open("../README.md")
+            })
             $(document).on("mousedown","#indexButton",function(event){//一覧ボタンにクリック処理を適用する
                 const inputData=getInputData(data)
                 viewButton_clickedProcess(inputData,event,indexUrl)

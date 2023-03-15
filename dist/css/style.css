@@ -76,6 +76,16 @@ body{
     padding: 10px 0;
     text-align: right;
 }
+#headerContent > #explanation{
+    float: left;
+    height: 50px;
+    line-height:50px;
+    width: 15rem;
+    padding: 0 10px;
+}
+#headerContent > #explanation:hover{
+    background-color:#151719;
+}
 .button{
     border:solid 1px #5D656D;
     border-radius: 3px;
