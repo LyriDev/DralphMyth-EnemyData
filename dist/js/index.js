@@ -869,7 +869,7 @@ function getMovesAsText(enemyData){//技一覧をテキストで取得する関�
         content[3]=addDotToArray(content[3],"\n"+indent)
         /* 効果の表示 */
         for(let k in move.effects){
-            content[4].push(`${convertProperty(move.effects[k])}`)
+            content[4].push(`${convertString(convertProperty(move.effects[k]),"\n","\n"+indent)}`)
         }
         content[4]=addDotToArray(content[4],"\n"+indent)
         /* 表示加工処理 */
