@@ -271,11 +271,12 @@ function getTypeArray(array){//数値と空白文字を含む配列から要素�
     if(valueList.includes("")){//空白文字を含む場合
         valueList=deleteValueInArray(valueList,"")//一旦空白文字を消して、
         valueList=valueList.sort()//ソートして、
-        valueList.push("")//消した空白文字を追加する
+        valueList.unshift("")//先頭に消した空白文字を追加する
     }else{//空白文字を含まない場合
         valueList=valueList.sort()
     }
     return valueList
+
 }
 function setUrl(idName,url){//クリックしたらurlを開く処理を適用する関数
     $(document).on("mousedown",idName,function(event){
