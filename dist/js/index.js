@@ -2236,16 +2236,21 @@ function getMovesAsCcfoliaData(moves,subSeparateBar){//ココフォリアコマ�
     return deleteValueInArray(result,"")
 }
 function downloadJson(data,idName,convertText=false){//jsonのデータをダウンロードする関数
-    const sortedData=getSortedEnemyObject(data)
+    let sortedData
     let dataString=""
     let blob
     let mime
     let fileName="data"
     if(convertText===false){//jsonでダウンロード
+        sortedData=getSortedEnemyObject(data)
         dataString=JSON.stringify(sortedData)
         mime="application/json"
         fileName+=".json"
     }else if(convertText===true){//txtでダウンロードする場合
+        const tagFilter=$("#searchTag").val()//タグ検索ボックスに入力された値
+        const nameFilter=$("#searchName").val()//名前検索ボックスに入力された値
+        sortedData=getSortedEnemyObject(data,tagFilter,nameFilter)//敵データにフィルターをかけて取得する
+        console.log(sortedData)
         for(let i in sortedData.enemy){//jsonデータをtxt形式に変換する
             dataString+=convertJsonToText(sortedData.enemy[i])+"\n\n"
         }
