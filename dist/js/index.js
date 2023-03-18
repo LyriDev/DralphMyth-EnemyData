@@ -351,6 +351,15 @@ function* getUniqueKey(){//一意キーを取得する関数
         count++
     }
 }
+function getDataWithIndex(data){//全データをインデックス付きで取得する関数
+    let result={enemy:[]}
+    for(let i=0;i<data.enemy.length;i++){
+        const enemyData=data.enemy[i]
+        enemyData.index=i
+        result.enemy.push(enemyData)
+    }
+    return result
+}
 const uniqueKey=getUniqueKey()//一意キー
 
 /* 種別リスト */
@@ -671,7 +680,8 @@ function showEnemyData(data,tagFilter="",nameFilter=""){//表示する敵デー�
 }
 function getSortedEnemyObject(data,tagFilter="",nameFilter="",keyAddOption=false){//ソートされた敵データを作成する関数
     /* 「タグ>名前>レベル」の順番にソートされる仕様 */
-    const gottenData=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
+    const passedData=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
+    const gottenData=getDataWithIndex(passedData)//データをインデックス付きで取得する関数
     const enemyArray=new Array
     if(tagFilter===""){//タグフィルターなしのとき
         let allEnemyTag=getAllEnemyTag(gottenData)
@@ -704,22 +714,22 @@ function getEnemyDataByTag(data,tagName,nameFilter,keyAddOption,leftHandMatchTag
             const tagFilterReg=new RegExp("^"+escapeRegExp(tagName)+".*")//タグでフィルターする前方部分一致の正規表現
             if(tagFilterReg.test(value.tag)){
                 if(nameFilter===""){//名前フィルターなしのとき
-                    enemyArray.push({key:key,value:value})
+                    enemyArray.push({key:value.index,value:value})
                 }else{//名前フィルターありのとき
                     const nameFilterReg=new RegExp("^"+escapeRegExp(nameFilter)+".*")//前方部分一致の正規表現
                     if(nameFilterReg.test(value.name)){
-                        enemyArray.push({key:key,value:value})
+                        enemyArray.push({key:value.index,value:value})
                     }
                 }
             }
         }else{
             if(tagName===value.tag){
                 if(nameFilter===""){//名前フィルターなしのとき
-                    enemyArray.push({key:key,value:value})
+                    enemyArray.push({key:value.index,value:value})
                 }else{//名前フィルターありのとき
                     const nameFilterReg=new RegExp("^"+escapeRegExp(nameFilter)+".*")//前方部分一致の正規表現
                     if(nameFilterReg.test(value.name)){
-                        enemyArray.push({key:key,value:value})
+                        enemyArray.push({key:value.index,value:value})
                     }
                 }
             }
@@ -735,8 +745,8 @@ function getEnemyDataByName(enemyArray,keyAddOption){//敵データを名前別�
         const enemyArraySortedByName=new Array
         for(let j in enemyArray){
             if(enemyArray[j].value.name===enemyNameList[i]){
-                const Key=enemyArray[j].key
                 const Value=enemyArray[j].value
+                const Key=Value.index
                 enemyArraySortedByName.push({key:Key,value:Value})
             }
         }
