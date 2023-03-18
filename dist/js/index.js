@@ -716,7 +716,7 @@ function getEnemyDataByTag(data,tagName,nameFilter,keyAddOption,leftHandMatchTag
                 if(nameFilter===""){//名前フィルターなしのとき
                     enemyArray.push({key:value.index,value:value})
                 }else{//名前フィルターありのとき
-                    const nameFilterReg=new RegExp("^"+escapeRegExp(nameFilter)+".*")//前方部分一致の正規表現
+                    const nameFilterReg=new RegExp(escapeRegExp(nameFilter)+".*")//前方部分一致の正規表現
                     if(nameFilterReg.test(value.name)){
                         enemyArray.push({key:value.index,value:value})
                     }
@@ -727,7 +727,7 @@ function getEnemyDataByTag(data,tagName,nameFilter,keyAddOption,leftHandMatchTag
                 if(nameFilter===""){//名前フィルターなしのとき
                     enemyArray.push({key:value.index,value:value})
                 }else{//名前フィルターありのとき
-                    const nameFilterReg=new RegExp("^"+escapeRegExp(nameFilter)+".*")//前方部分一致の正規表現
+                    const nameFilterReg=new RegExp(escapeRegExp(nameFilter)+".*")//前方部分一致の正規表現
                     if(nameFilterReg.test(value.name)){
                         enemyArray.push({key:value.index,value:value})
                     }
