@@ -439,7 +439,7 @@ function updateTitle(data){//タイトルを変更する関数
         const titleArea=document.getElementById("title")
         const enemyName=data.enemy[Index].name
         const enemyLevel=data.enemy[Index].level
-        titleArea.innerHTML=`${enemyName}Lv${enemyLevel} - ドラルフ神話`//タイトルを変更する
+        titleArea.innerHTML=`${enemyName}Lv${convertProperty(enemyLevel)} - ドラルフ神話`//タイトルを変更する
     }
 }
 function updateHeader(data,_page=Page){//ヘッダーを変更する関数
