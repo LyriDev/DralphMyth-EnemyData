@@ -1,807 +1,6899 @@
 {
-    "enemy":[
-        {
-            "name":"ミ＝ゴ",
-            "level":5,
-            "tag":"道中敵",
-            "elements":["氷"],
-            "species":["虫"],
-            "sanCheck":{
-                "success":"0",
-                "failure":"1d6"
-            },
-            "HP":80,
-            "armor":12,
-            "initiative":16,
-            "actionPoint":5,
-            "dodge":100,
-            "actionNumber":2,
-            "statusEffects":{
-                "flame":100,
-                "ice":100,
-                "dazzle":100,
-                "poison":100,
-                "sleep":100,
-                "confusion":100,
-                "stun":100,
-                "curse":100,
-                "atkDown":100,
-                "defDown":{
-                    "physical":100,
-                    "breath":100,
-                    "magic":100
-                },
-                "spdDown":100
-                },
-            "stealth":"有効",
-            "abilities":[
-                {
-                    "name":"連鎖",
-                    "effect":"雷攻撃が命中時に発動、その命中した敵の中心に３×３マスにいる敵に命中する。(連鎖した敵には連鎖判定は発生しない)"
-                },
-                {
-                    "name":"貫通",
-                    "effect":"「電気ライフル」の攻撃時のみ発動、対象に命中するまでに通ったマスにいる敵にも命中する。"
-                }
-            ],
-            "moves":[
-                {
-                    "index":1,
-                    "name":"改造電気ライフル",
-                    "elements":["雷"],
-                    "types":["魔法"],
-                    "reach":5,
-                    "range":"",
-                    "successRate":90,
-                    "attackNumber":"2",
-                    "damage":"8d10",
-                    "statusEffects":[
-                        {
-                            "effectType":"スタン",
-                            "level":2,
-                            "turn":5
-                        }
-                    ],
-                    "effects":[
-                    ]
-                },
-                {
-                    "index":2,
-                    "name":"鋏攻撃",
-                    "elements":["無"],
-                    "types":["物理"],
-                    "successRate":85,
-                    "attackNumber":"1",
-                    "damage":"6d6",
-                    "reach":1,
-                    "range":"",
-                    "statusEffects":[
-                        {
-                            "effectType":"スタン",
-                            "level":2,
-                            "turn":5
-                        }
-                    ],
-                    "effects":[
-                    ]
-                },
-                {
-                    "index":3,
-                    "name":"改造電気銃",
-                    "elements":["雷"],
-                    "types":["魔法"],
-                    "successRate":80,
-                    "attackNumber":"5",
-                    "damage":"5d10",
-                    "reach":5,
-                    "range":"",
-                    "statusEffects":[
-                        {
-                            "effectType":"スタン",
-                            "level":2,
-                            "turn":5
-                        }
-                    ],
-                    "effects":[
-                        "ファンブル無効",
-                        "ファンブル時、次回行動で使用不可"
-                    ]
-                }
-            ],
-            "note":"hoge"
-        },
-        {
-            "name":"",
-            "level":"",
-            "tag":"",
-            "elements":[
-            ],
-            "species":[
-            ],
-            "sanCheck":{
-                "success":"",
-                "failure":""
-            },
-            "HP":"",
-            "armor":"",
-            "initiative":"",
-            "actionPoint":"",
-            "dodge":"",
-            "actionNumber":"",
-            "statusEffects":{
-                "flame":"",
-                "ice":"",
-                "dazzle":"",
-                "poison":"",
-                "sleep":"",
-                "confusion":"",
-                "stun":"",
-                "curse":"",
-                "atkDown":"",
-                "defDown":{
-                    "physical":"",
-                    "breath":"",
-                    "magic":""
-                },
-                "spdDown":""
-            },
-            "stealth":"",
-            "abilities":[
-            ],
-            "moves":[
-                {
-                    "index":"",
-                    "name":"",
-                    "successRate":"",
-                    "types":[
-                    ],
-                    "elements":[
-                    ],
-                    "damage":"",
-                    "attackNumber":"",
-                    "reach":"",
-                    "range":"",
-                    "statusEffects":[
-                    ],
-                    "effects":[
-                    ]
-                }
-            ],
-            "note":""
-        },
-        {
-            "name":"",
-            "level":"",
-            "tag":"",
-            "elements":[
-            ],
-            "species":[
-            ],
-            "sanCheck":{
-                "success":"",
-                "failure":""
-            },
-            "HP":"",
-            "armor":"",
-            "initiative":"",
-            "actionPoint":"",
-            "dodge":"",
-            "actionNumber":"",
-            "statusEffects":{
-                "flame":"",
-                "ice":"",
-                "dazzle":"",
-                "poison":"",
-                "sleep":"",
-                "confusion":"",
-                "stun":"",
-                "curse":"",
-                "atkDown":"",
-                "defDown":{
-                    "physical":"",
-                    "breath":"",
-                    "magic":""
-                },
-                "spdDown":""
-            },
-            "stealth":"",
-            "abilities":[
-                {
-                    "name":"",
-                    "effect":""
-                }
-            ],
-            "moves":[
-                {
-                    "index":"",
-                    "name":"",
-                    "successRate":"",
-                    "types":[
-                    ],
-                    "elements":[
-                    ],
-                    "damage":"",
-                    "attackNumber":"",
-                    "reach":"",
-                    "range":"",
-                    "statusEffects":[
-                        {
-                            "effectType":"",
-                            "level":"",
-                            "turn":""
-                        }
-                    ],
-                    "effects":[
-                        ""
-                    ]
-                }
-            ],
-            "note":""
-        },
-        {
-            "name":"ミ＝ゴ",
-            "level":5,
-            "tag":"デバッグ用1",
-            "elements":["氷"],
-            "species":["虫"],
-            "sanCheck":{
-                "success":"0",
-                "failure":"1d6"
-            },
-            "HP":80,
-            "armor":12,
-            "initiative":16,
-            "actionPoint":5,
-            "dodge":100,
-            "actionNumber":2,
-            "statusEffects":{
-                "flame":0,
-                "ice":0,
-                "dazzle":50,
-                "poison":30,
-                "sleep":70,
-                "confusion":0,
-                "stun":0,
-                "curse":100,
-                "atkDown":0,
-                "defDown":{
-                    "physical":50,
-                    "breath":0,
-                    "magic":100
-                },
-                "spdDown":100
-                },
-            "stealth":"無効",
-            "abilities":[
-                {
-                    "name":"連鎖",
-                    "effect":"雷攻撃が命中時に発動、その命中した敵の中心に３×３マスにいる敵に命中する。(連鎖した敵には連鎖判定は発生しない)"
-                },
-                {
-                    "name":"貫通",
-                    "effect":"「電気ライフル」の攻撃時のみ発動、対象に命中するまでに通ったマスにいる敵にも命中する。"
-                }
-            ],
-            "moves":[
-                {
-                    "index":5,
-                    "name":"改造電気ライフル",
-                    "elements":["雷"],
-                    "types":["魔法"],
-                    "reach":5,
-                    "range":"着弾点を中心に3×3",
-                    "successRate":90,
-                    "attackNumber":"2",
-                    "damage":"8d10",
-                    "statusEffects":[
-                        {
-                            "effectType":"スタン",
-                            "level":2,
-                            "turn":5
-                        }
-                    ],
-                    "effects":[
-                    ]
-                },
-                {
-                    "index":2,
-                    "name":"鋏攻撃",
-                    "elements":["無"],
-                    "types":["物理"],
-                    "successRate":85,
-                    "attackNumber":"1",
-                    "damage":"6d6",
-                    "reach":1,
-                    "range":"横3×縦2マス",
-                    "statusEffects":[
-                        {
-                            "effectType":"スタン",
-                            "level":2,
-                            "turn":5
-                        }
-                    ],
-                    "effects":[
-                    ]
-                },
-                {
-                    "index":3,
-                    "name":"改造電気銃",
-                    "elements":["雷"],
-                    "types":["魔法"],
-                    "successRate":80,
-                    "attackNumber":"3d3",
-                    "damage":"5d10",
-                    "reach":5,
-                    "range":"",
-                    "statusEffects":[
-                        {
-                            "effectType":"スタン",
-                            "level":2,
-                            "turn":5
-                        }
-                    ],
-                    "effects":[
-                        "ファンブル無効",
-                        "ファンブル時、次回行動で使用不可"
-                    ]
-                }
-            ],
-            "note":"hoge"
-        },
-        {
-            "name":"ミーゴ",
-            "level":5,
-            "tag":"デバッグ用0",
-            "elements":["氷","火"],
-            "species":["虫","ドラゴン"],
-            "sanCheck":{
-                "success":"0",
-                "failure":"1d6"
-            },
-            "HP":80,
-            "armor":12,
-            "initiative":16,
-            "actionPoint":5,
-            "dodge":100,
-            "actionNumber":2,
-            "statusEffects":{
-                "flame":100,
-                "ice":100,
-                "dazzle":100,
-                "poison":100,
-                "sleep":100,
-                "confusion":100,
-                "stun":100,
-                "curse":100,
-                "atkDown":100,
-                "defDown":{
-                    "physical":100,
-                    "breath":100,
-                    "magic":100
-                },
-                "spdDown":100
-                },
-            "stealth":"有効",
-            "abilities":[
-                {
-                    "name":"連鎖",
-                    "effect":"雷攻撃が命中時に発動、その命中した敵の中心に３×３マスにいる敵に命中する。(連鎖した敵には連鎖判定は発生しない)"
-                },
-                {
-                    "name":"貫通",
-                    "effect":"「電気ライフル」の攻撃時のみ発動、対象に命中するまでに通ったマスにいる敵にも命中する。"
-                }
-            ],
-            "moves":[
-                {
-                    "index":1,
-                    "name":"改造電気ライフル",
-                    "elements":["雷","氷"],
-                    "types":["魔法","息"],
-                    "reach":5,
-                    "range":"",
-                    "successRate":90,
-                    "attackNumber":"2",
-                    "damage":"8d10",
-                    "statusEffects":[
-                        {
-                            "effectType":"スタン",
-                            "level":2,
-                            "turn":5
-                        },
-                        {
-                            "effectType":"魔法防御力低下",
-                            "level":3,
-                            "turn":2
-                        }
-                    ],
-                    "effects":[
-                    ]
-                },
-                {
-                    "index":2,
-                    "name":"鋏攻撃",
-                    "elements":["無"],
-                    "types":["物理"],
-                    "successRate":85,
-                    "attackNumber":"1",
-                    "damage":"6d6",
-                    "reach":1,
-                    "range":"",
-                    "statusEffects":[
-                        {
-                            "effectType":"スタン",
-                            "level":2,
-                            "turn":5
-                        }
-                    ],
-                    "effects":[
-                    ]
-                },
-                {
-                    "index":3,
-                    "name":"改造電気銃",
-                    "elements":["雷"],
-                    "types":["魔法"],
-                    "successRate":80,
-                    "attackNumber":"5",
-                    "damage":"5d10",
-                    "reach":5,
-                    "range":"",
-                    "statusEffects":[
-                        {
-                            "effectType":"スタン",
-                            "level":2,
-                            "turn":5
-                        },
-                        {
-                            "effectType":"物理防御力低下",
-                            "level":3,
-                            "turn":2
-                        }
-                    ],
-                    "effects":[
-                        "ファンブル無効",
-                        "ファンブル時、次回行動で使用不可"
-                    ]
-                }
-            ],
-            "note":""
-        },
-        {
-            "name":"ミ＝ゴ",
-            "level":4,
-            "tag":"道中敵",
-            "elements":["氷"],
-            "species":["虫"],
-            "sanCheck":{
-                "success":"0",
-                "failure":"1d6"
-            },
-            "HP":80,
-            "armor":12,
-            "initiative":16,
-            "actionPoint":5,
-            "dodge":100,
-            "actionNumber":2,
-            "statusEffects":{
-                "flame":100,
-                "ice":100,
-                "dazzle":100,
-                "poison":100,
-                "sleep":100,
-                "confusion":100,
-                "stun":100,
-                "curse":100,
-                "atkDown":100,
-                "defDown":{
-                    "physical":100,
-                    "breath":100,
-                    "magic":100
-                },
-                "spdDown":100
-                },
-            "stealth":"有効",
-            "abilities":[
-                {
-                    "name":"連鎖",
-                    "effect":"雷攻撃が命中時に発動、その命中した敵の中心に３×３マスにいる敵に命中する。(連鎖した敵には連鎖判定は発生しない)"
-                },
-                {
-                    "name":"貫通",
-                    "effect":"「電気ライフル」の攻撃時のみ発動、対象に命中するまでに通ったマスにいる敵にも命中する。"
-                }
-            ],
-            "moves":[
-                {
-                    "index":1,
-                    "name":"改造電気ライフル",
-                    "elements":["雷"],
-                    "types":["魔法"],
-                    "reach":5,
-                    "range":"",
-                    "successRate":90,
-                    "attackNumber":"2",
-                    "damage":"8d10",
-                    "statusEffects":[
-                        {
-                            "effectType":"スタン",
-                            "level":2,
-                            "turn":5
-                        }
-                    ],
-                    "effects":[
-                    ]
-                },
-                {
-                    "index":2,
-                    "name":"鋏攻撃",
-                    "elements":["無"],
-                    "types":["物理"],
-                    "successRate":85,
-                    "attackNumber":"1",
-                    "damage":"6d6",
-                    "reach":1,
-                    "range":"",
-                    "statusEffects":[
-                        {
-                            "effectType":"スタン",
-                            "level":2,
-                            "turn":5
-                        }
-                    ],
-                    "effects":[
-                    ]
-                },
-                {
-                    "index":3,
-                    "name":"改造電気銃",
-                    "elements":["雷"],
-                    "types":["魔法"],
-                    "successRate":80,
-                    "attackNumber":"5",
-                    "damage":"5d10",
-                    "reach":5,
-                    "range":"",
-                    "statusEffects":[
-                        {
-                            "effectType":"スタン",
-                            "level":2,
-                            "turn":5
-                        }
-                    ],
-                    "effects":[
-                        "ファンブル無効",
-                        "ファンブル時、次回行動で使用不可"
-                    ]
-                }
-            ],
-            "note":""
-        },
-        {
-            "name":"ミゴ",
-            "level":5,
-            "tag":"道中敵",
-            "elements":["氷"],
-            "species":["虫"],
-            "sanCheck":{
-                "success":"0",
-                "failure":"1d6"
-            },
-            "HP":80,
-            "armor":12,
-            "initiative":16,
-            "actionPoint":5,
-            "dodge":100,
-            "actionNumber":2,
-            "statusEffects":{
-                "flame":100,
-                "ice":100,
-                "dazzle":100,
-                "poison":100,
-                "sleep":100,
-                "confusion":100,
-                "stun":100,
-                "curse":100,
-                "atkDown":100,
-                "defDown":{
-                    "physical":100,
-                    "breath":100,
-                    "magic":100
-                },
-                "spdDown":100
-                },
-            "stealth":"有効",
-            "abilities":[
-                {
-                    "name":"連鎖",
-                    "effect":"雷攻撃が命中時に発動、その命中した敵の中心に３×３マスにいる敵に命中する。(連鎖した敵には連鎖判定は発生しない)"
-                },
-                {
-                    "name":"貫通",
-                    "effect":"「電気ライフル」の攻撃時のみ発動、対象に命中するまでに通ったマスにいる敵にも命中する。"
-                }
-            ],
-            "moves":[
-                {
-                    "index":1,
-                    "name":"改造電気ライフル",
-                    "elements":["雷"],
-                    "types":["魔法"],
-                    "reach":5,
-                    "range":"",
-                    "successRate":90,
-                    "attackNumber":"2",
-                    "damage":"8d10",
-                    "statusEffects":[
-                        {
-                            "effectType":"スタン",
-                            "level":2,
-                            "turn":5
-                        }
-                    ],
-                    "effects":[
-                    ]
-                },
-                {
-                    "index":2,
-                    "name":"鋏攻撃",
-                    "elements":["無"],
-                    "types":["物理"],
-                    "successRate":85,
-                    "attackNumber":"1",
-                    "damage":"6d6",
-                    "reach":1,
-                    "range":"",
-                    "statusEffects":[
-                        {
-                            "effectType":"スタン",
-                            "level":2,
-                            "turn":5
-                        }
-                    ],
-                    "effects":[
-                    ]
-                },
-                {
-                    "index":3,
-                    "name":"改造電気銃",
-                    "elements":["雷"],
-                    "types":["魔法"],
-                    "successRate":80,
-                    "attackNumber":"5",
-                    "damage":"5d10",
-                    "reach":5,
-                    "range":"",
-                    "statusEffects":[
-                        {
-                            "effectType":"スタン",
-                            "level":2,
-                            "turn":5
-                        }
-                    ],
-                    "effects":[
-                        "ファンブル無効",
-                        "ファンブル時、次回行動で使用不可"
-                    ]
-                }
-            ],
-            "note":""
-        },
-        {
-            "name":"蛇人間",
-            "level":5,
-            "tag":"道中敵",
-            "elements":[],
-            "species":[],
-            "sanCheck":{
-                "success":"0",
-                "failure":"1d6"
-            },
-            "HP":100,
-            "armor":10,
-            "initiative":16,
-            "actionPoint":7,
-            "dodge":50,
-            "actionNumber":2,
-            "statusEffects":{
-                "flame":"",
-                "ice":"",
-                "dazzle":"",
-                "poison":"",
-                "sleep":"",
-                "confusion":"",
-                "stun":"",
-                "curse":"",
-                "atkDown":"",
-                "defDown":{
-                    "physical":"",
-                    "breath":"",
-                    "magic":""
-                },
-                "spdDown":""
-                },
-            "stealth":"",
-            "abilities":[
-                {
-                    "name":"盾",
-                    "effect":"盾技能80%で盾を使用する。\n(盾装甲+10,耐久力∞)"
-                }
-            ],
-            "moves":[
-                {
-                    "index":1,
-                    "name":"毒吐き",
-                    "elements":["無"],
-                    "types":["魔法"],
-                    "reach":"",
-                    "range":"",
-                    "successRate":80,
-                    "attackNumber":"1",
-                    "damage":"8d6",
-                    "statusEffects":[
-                        {
-                            "effectType":"毒",
-                            "level":4,
-                            "turn":5
-                        }
-                    ],
-                    "effects":[
-                    ]
-                },
-                {
-                    "index":2,
-                    "name":"連続噛み付き",
-                    "elements":["無"],
-                    "types":["物理"],
-                    "successRate":80,
-                    "attackNumber":"3",
-                    "damage":"9d6",
-                    "reach":1,
-                    "range":"",
-                    "statusEffects":[
-                        {
-                            "effectType":"",
-                            "level":"",
-                            "turn":""
-                        }
-                    ],
-                    "effects":[
-                    ]
-                },
-                {
-                    "index":3,
-                    "name":"剣攻撃",
-                    "elements":["無"],
-                    "types":["物理"],
-                    "successRate":80,
-                    "attackNumber":"2",
-                    "damage":"",
-                    "reach":1,
-                    "range":"",
-                    "statusEffects":[
-                    ],
-                    "effects":[
-                    ]
-                },
-                {
-                    "index":4,
-                    "name":"治癒の魔法",
-                    "elements":[],
-                    "types":[],
-                    "successRate":100,
-                    "attackNumber":"1",
-                    "damage":"0",
-                    "reach":"なし",
-                    "range":"",
-                    "statusEffects":[
-                    ],
-                    "effects":[
-                        "味方1体を6d6回復"
-                    ]
-                }
-            ],
-            "note":"他Lvと同じで氷属性かも？\n爬虫類だから土属性かも"
-        }
-    ]
+	"enemy": [
+		{
+			"HP": "",
+			"abilities": [
+				{
+					"effect": "自分のHPが1/2を下回った時に発動する、\n自分の攻撃力+1,物理守備力-1",
+					"name": "怒り"
+				},
+				{
+					"effect": "攻撃を受けてHPが0になっても、そのラウンドが終わるまでは倒れずに残って行動できる。",
+					"name": "狂戦士"
+				}
+			],
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"index": 1,
+			"initiative": "",
+			"level": "",
+			"name": "ゴブリン",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": 100,
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "お供(ホブゴブリン)"
+		},
+		{
+			"HP": 75,
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"index": 2,
+			"initiative": "",
+			"level": "",
+			"name": "マイアラーク",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "お供(マイアラーククイーン)"
+		},
+		{
+			"HP": 100,
+			"abilities": [
+				{
+					"effect": "戦場「水中」時、自分の全技能+20%",
+					"name": ""
+				},
+				{
+					"effect": "50%の確率で発動、敵の隠密を無効化する,\n味方に対しても発動可",
+					"name": "下竜眼"
+				}
+			],
+			"actionNumber": 1,
+			"actionPoint": 4,
+			"armor": 7,
+			"dodge": 40,
+			"elements": [
+				"水"
+			],
+			"index": 3,
+			"initiative": 20,
+			"level": 1,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": true,
+					"damage": "",
+					"effects": [
+						"貫通\n(攻撃する際にターゲットの途中に他の敵がいた場合、その敵にも命中する)"
+					],
+					"elements": [
+						"無",
+						"火",
+						"氷",
+						"風",
+						"土",
+						"雷",
+						"水",
+						"光",
+						"闇"
+					],
+					"index": 2,
+					"name": "ウォータービーム",
+					"range": "前方縦無限×横1マス",
+					"reach": 0,
+					"successRate": 70,
+					"types": [
+						"物理",
+						"息",
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"index": 3,
+					"name": "雄叫び",
+					"range": "",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "行動停止",
+							"level": 0,
+							"turn": 1
+						}
+					],
+					"successRate": 70
+				}
+			],
+			"name": "シェリス",
+			"note": "ボス「ヴェルヌズLv1」のお供として2体登場する",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": 50
+			},
+			"stealth": "",
+			"tag": "お供(ヴェルヌズ)"
+		},
+		{
+			"HP": 150,
+			"actionNumber": 2,
+			"actionPoint": 4,
+			"armor": 5,
+			"dodge": 30,
+			"elements": [
+				"闇"
+			],
+			"index": 4,
+			"initiative": "",
+			"level": 1,
+			"moves": [
+				{
+					"attackNumber": "5",
+					"canDiagonal": false,
+					"damage": "4d6",
+					"index": 1,
+					"name": "",
+					"range": "",
+					"reach": 1,
+					"successRate": 90
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"index": 2,
+					"name": "",
+					"range": "自分から後ろの列以外の全範囲",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "行動停止",
+							"level": 0,
+							"turn": 1
+						}
+					],
+					"successRate": 70
+				}
+			],
+			"name": "オブスキュラ",
+			"note": "(ゲートの敵,1d6→6)",
+			"sanCheck": {
+				"failure": "1d10",
+				"success": "1d4"
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ゲート"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"index": 5,
+			"initiative": "",
+			"level": "",
+			"name": "ヒステリック",
+			"note": "(ゲートの敵,1d6→2)",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": 100,
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": 100,
+			"tag": "ゲート"
+		},
+		{
+			"HP": "",
+			"abilities": [
+				{
+					"effect": "光城 雫の杖で討伐可",
+					"name": "攻撃無効?"
+				}
+			],
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"index": 6,
+			"initiative": "",
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"index": "",
+					"name": "歌",
+					"range": "",
+					"reach": "",
+					"successRate": ""
+				},
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"index": "",
+					"name": "組み付き",
+					"range": "",
+					"reach": "",
+					"successRate": ""
+				},
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "100d100",
+					"index": "",
+					"name": "攻撃",
+					"range": "",
+					"reach": "",
+					"successRate": ""
+				}
+			],
+			"name": "繧｢繝ｫ繝",
+			"note": "(ゲートの敵,1d6→4)",
+			"sanCheck": {
+				"failure": "1d20",
+				"success": "1d6"
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ゲート"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"闇"
+			],
+			"index": 7,
+			"initiative": "",
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"effects": [
+						"SANダメージ1d3"
+					],
+					"index": 2,
+					"name": "悪魔の叫び声",
+					"range": "",
+					"reach": "",
+					"successRate": ""
+				},
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"effects": [
+						"敵1体にかかっている良効果を全解除"
+					],
+					"index": 3,
+					"name": "凍てつく眼光",
+					"range": "",
+					"reach": "",
+					"successRate": ""
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "8d6",
+					"effects": [
+						"即死10%"
+					],
+					"index": 4,
+					"name": "デーモンスピア",
+					"range": "",
+					"reach": 2,
+					"successRate": 80
+				}
+			],
+			"name": "ガーゴイル",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ダンジョン"
+		},
+		{
+			"HP": "",
+			"abilities": [
+				{
+					"effect": "常に守備力+1段階",
+					"name": ""
+				}
+			],
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"闇"
+			],
+			"index": 8,
+			"initiative": "",
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "9d6",
+					"index": 1,
+					"name": "押しつぶし",
+					"range": "",
+					"reach": "",
+					"successRate": 95
+				},
+				{
+					"attackNumber": "2d3",
+					"canDiagonal": false,
+					"damage": "",
+					"index": 2,
+					"name": "偽足で捕まえる",
+					"range": "",
+					"reach": 1,
+					"successRate": 80
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"index": 3,
+					"name": "拳",
+					"range": "",
+					"reach": 1,
+					"successRate": 90
+				}
+			],
+			"name": "ショゴス・ロード",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ダンジョン"
+		},
+		{
+			"HP": "",
+			"abilities": [
+				{
+					"effect": "敵全体の隠れる技能-50%",
+					"name": ""
+				},
+				{
+					"effect": "5ラウンド毎に相手に[CON×5]%を振らせ、\n判定失敗で1d6ターン全技能半減",
+					"name": "死体安置所の臭い"
+				},
+				{
+					"effect": "自分を含めた攻撃に対する命中-70%,\nSANコスト1d3で無効化可",
+					"name": "空間を捻じ曲げる"
+				},
+				{
+					"effect": "自動HP回復+5",
+					"name": ""
+				}
+			],
+			"actionNumber": 2,
+			"actionPoint": "",
+			"armor": "",
+			"dodge": 70,
+			"elements": [
+				"闇"
+			],
+			"index": 9,
+			"initiative": "",
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"当たった敵のPOWを1d3永久喪失させる"
+					],
+					"index": 1,
+					"name": "舌",
+					"range": "",
+					"reach": "",
+					"successRate": 85
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "8d6",
+					"index": 2,
+					"name": "かぎ爪",
+					"range": "",
+					"reach": 1,
+					"successRate": 85
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "8d6",
+					"index": 3,
+					"name": "嚙みつき",
+					"range": "",
+					"reach": 1,
+					"statusEffects": [
+						{
+							"effectType": "特殊毒(毎ターン装甲無視2d6ダメージ)",
+							"level": 0,
+							"turn": 3
+						}
+					],
+					"successRate": 85
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "7d6",
+					"effects": [
+						"敵の受け流し時、受け流しに使用した武器や盾の耐久力を-2d6する"
+					],
+					"index": 4,
+					"name": "腐敗の息",
+					"range": "",
+					"reach": "",
+					"successRate": 85,
+					"types": [
+						"息"
+					]
+				}
+			],
+			"name": "ティンダロスの猟犬",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": 0,
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ダンジョン"
+		},
+		{
+			"HP": "",
+			"actionNumber": 2,
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"闇"
+			],
+			"index": 10,
+			"initiative": "",
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "7d6",
+					"elements": [
+						"無"
+					],
+					"index": 1,
+					"name": "かぎ爪",
+					"range": "",
+					"reach": 1,
+					"successRate": 60,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": true,
+					"damage": "8d6",
+					"index": 2,
+					"name": "蠍の尾",
+					"range": "",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "スタン",
+							"level": 2,
+							"turn": 3
+						}
+					],
+					"successRate": 70
+				},
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "0",
+					"index": 3,
+					"name": "猛毒の息",
+					"range": "前方縦3×横5マス",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "毒",
+							"level": "",
+							"turn": ""
+						}
+					],
+					"successRate": 75,
+					"types": [
+						"息"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 4,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "バズズ",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ダンジョン"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"闇"
+			],
+			"index": 11,
+			"initiative": "",
+			"level": "",
+			"name": "外なる神の従者",
+			"note": "(水等倍)",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ダンジョン"
+		},
+		{
+			"HP": "",
+			"abilities": [
+				{
+					"effect": "3ターンに1度、相手に[CONorPOW×3]%を振らせ、\n判定失敗で混乱(2ターン)を付与",
+					"name": "吐き気ボディ"
+				}
+			],
+			"actionNumber": 2,
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"風"
+			],
+			"index": 12,
+			"initiative": "",
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "8d6",
+					"elements": [
+						"風"
+					],
+					"index": 1,
+					"name": "バギクロス",
+					"range": "着地地点を中心に３×３マス",
+					"reach": 3,
+					"statusEffects": [
+						{
+							"effectType": "混乱",
+							"level": 0,
+							"turn": 3
+						}
+					],
+					"successRate": 100,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "2d6",
+					"canDiagonal": false,
+					"damage": "1d6",
+					"effects": [
+						"装甲無視",
+						"軽減無視"
+					],
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "触手攻撃",
+					"range": "",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "スタン",
+							"level": 1,
+							"turn": 2
+						}
+					],
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"index": 3,
+					"name": "眠りの息",
+					"range": "前方縦3×横5",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "眠り",
+							"level": 0,
+							"turn": ""
+						}
+					],
+					"successRate": "",
+					"types": [
+						"息"
+					]
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "隣接ダメージ9d6,2マス先ダメージ?",
+					"elements": [
+						"風"
+					],
+					"index": 4,
+					"name": "突風",
+					"range": "",
+					"reach": "",
+					"successRate": 95,
+					"types": [
+						"魔法"
+					]
+				}
+			],
+			"name": "飛行するポリプ",
+			"note": "空中の敵(ムーンサルトや飛天斬りの対空中敵倍率の対象になる)",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": 0,
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ダンジョン"
+		},
+		{
+			"HP": "",
+			"actionNumber": 2,
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"index": 13,
+			"initiative": "",
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "9d6",
+					"elements": [
+						"無"
+					],
+					"index": 3,
+					"name": "噛み付き",
+					"range": "",
+					"reach": 1,
+					"successRate": 90,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"MPダメージ"
+					],
+					"index": 1,
+					"name": "マホトラ",
+					"range": "",
+					"reach": "",
+					"successRate": 90,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"この攻撃に対する回避不可"
+					],
+					"index": 2,
+					"name": "ザキ",
+					"range": "",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "即死",
+							"level": 0,
+							"turn": 0
+						}
+					],
+					"successRate": 10,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"無"
+					],
+					"index": 4,
+					"name": "痛恨の一撃",
+					"range": "",
+					"reach": 1,
+					"successRate": 40,
+					"types": [
+						"物理"
+					]
+				}
+			],
+			"name": "ミミック",
+			"note": "(雷等倍)",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": 0,
+			"tag": "ダンジョン(宝箱)"
+		},
+		{
+			"HP": 500,
+			"actionNumber": 12,
+			"actionPoint": 12,
+			"armor": 20,
+			"dodge": 40,
+			"elements": [
+				"風"
+			],
+			"initiative": 85,
+			"level": 2,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "12d6",
+					"effects": [
+						"当たった敵をフィールドの一番奥までノックバックさせる"
+					],
+					"elements": [
+						"風"
+					],
+					"index": 1,
+					"name": "ウィンドバースト",
+					"range": "",
+					"reach": 1,
+					"successRate": 90,
+					"types": [
+						"息"
+					]
+				},
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "かぎ爪",
+					"range": "",
+					"reach": 1,
+					"successRate": 85,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "10d6",
+					"elements": [
+						"風"
+					],
+					"index": 4,
+					"name": "バギクロス",
+					"range": "着弾点を中心に3×3マス",
+					"reach": 3,
+					"statusEffects": [
+						{
+							"effectType": "混乱",
+							"level": 0,
+							"turn": 3
+						}
+					],
+					"successRate": 100,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "12d6",
+					"elements": [
+						"風"
+					],
+					"index": 4,
+					"name": "乱れ来る竜巻",
+					"range": "自分を中心に5×5マス内の白黒どちらかのマス",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "混乱",
+							"level": 0,
+							"turn": 3
+						}
+					],
+					"successRate": 95,
+					"types": [
+						"息"
+					]
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "10d6",
+					"elements": [
+						"無"
+					],
+					"index": 5,
+					"name": "尻尾で切り裂く",
+					"range": "自分を中心に5×5マス",
+					"reach": 0,
+					"successRate": 85,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 6,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "ウインドドラゴン",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				"ドラゴン"
+			],
+			"statusEffects": {
+				"atkDown": 100,
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": 100,
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ボス",
+			"index": 79
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"水"
+			],
+			"index": 14,
+			"initiative": "",
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"index": "",
+					"name": "かぶとわり",
+					"range": "",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "物理防御力低下",
+							"level": 1,
+							"turn": ""
+						}
+					],
+					"successRate": ""
+				},
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"index": "",
+					"name": "ブレードゼロ",
+					"range": "",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "バフ無効化",
+							"level": 0,
+							"turn": 1
+						}
+					],
+					"successRate": ""
+				}
+			],
+			"name": "キラーマジンガ",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": 0,
+			"tag": "ボス"
+		},
+		{
+			"HP": 500,
+			"actionNumber": 3,
+			"actionPoint": 6,
+			"armor": 15,
+			"dodge": 25,
+			"elements": [
+				"土"
+			],
+			"initiative": 15,
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "12d6",
+					"elements": [
+						"土"
+					],
+					"index": 1,
+					"name": "ロックストーム",
+					"range": "前方縦3×横5マス",
+					"reach": 0,
+					"successRate": 90,
+					"types": [
+						"息"
+					]
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "爪攻撃",
+					"range": "",
+					"reach": 1,
+					"successRate": 85,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "8d6+5",
+					"elements": [
+						"土"
+					],
+					"index": 3,
+					"name": "ジバリーナ",
+					"range": "自分を中心に5×5の範囲内の自分のマスと同じ色",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "素早さ低下",
+							"level": "",
+							"turn": ""
+						}
+					],
+					"successRate": 100,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "10d6",
+					"elements": [
+						"土"
+					],
+					"index": 4,
+					"name": "アースクェイク",
+					"range": "自分を中心に5×5マス",
+					"reach": 0,
+					"successRate": 90,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "9d6",
+					"elements": [
+						"無"
+					],
+					"index": 5,
+					"name": "尻尾で切り裂く",
+					"range": "自分を中心に5×5マス",
+					"reach": 0,
+					"successRate": 85,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 6,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "グランドドラゴン",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				"ドラゴン"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ボス",
+			"index": 76
+		},
+		{
+			"HP": 350,
+			"abilities": [
+				{
+					"effect": "3ターンに1度、そのターンの息ダメージ1.5倍",
+					"name": "たまに息を吸い込む"
+				}
+			],
+			"actionNumber": 3,
+			"actionPoint": 6,
+			"armor": 10,
+			"dodge": 40,
+			"elements": [
+				"火"
+			],
+			"initiative": 35,
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "11d6",
+					"elements": [
+						"火"
+					],
+					"index": 1,
+					"name": "はげしいほのお",
+					"range": "前方縦3×横5マス",
+					"reach": 0,
+					"successRate": 85,
+					"types": [
+						"息"
+					]
+				},
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "9d6",
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "爪攻撃",
+					"range": "",
+					"reach": 1,
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"index": 3,
+					"name": "噛み砕く",
+					"range": "",
+					"reach": 1,
+					"statusEffects": [
+						{
+							"effectType": "物理防御力低下",
+							"level": 1,
+							"turn": 3
+						}
+					],
+					"successRate": 80
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "9d6",
+					"elements": [
+						"無"
+					],
+					"index": 4,
+					"name": "尻尾で切り裂く",
+					"range": "自分を中心に3×3マス",
+					"reach": 0,
+					"successRate": 80
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 5,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "スカイドラゴン",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				"ドラゴン"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": 100,
+			"tag": "ボス",
+			"index": 77
+		},
+		{
+			"HP": 200,
+			"abilities": [
+				{
+					"effect": "受ける雷属性ダメージ2倍",
+					"name": ""
+				}
+			],
+			"actionNumber": 3,
+			"actionPoint": 7,
+			"armor": 8,
+			"dodge": "",
+			"index": 15,
+			"initiative": 30,
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "6d6",
+					"elements": [
+						"無"
+					],
+					"index": 1,
+					"name": "回転切り",
+					"range": "",
+					"reach": "",
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"index": 3,
+					"name": "スーパーレーザー攻撃",
+					"range": "前方縦無限×横3マス",
+					"reach": 0,
+					"successRate": 90
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"光"
+					],
+					"index": 5,
+					"name": "ギガスラッシュ",
+					"range": "前方3マス",
+					"reach": "",
+					"successRate": 90,
+					"types": [
+						"物理",
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 6,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "スーパーキラーマシン",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ボス"
+		},
+		{
+			"HP": 400,
+			"abilities": [
+				{
+					"effect": "戦闘開始時にグールを2体呼び出す",
+					"name": ""
+				},
+				{
+					"effect": "攻撃を受けてHPが0になっても、そのラウンドが終わるまでは倒れずに残って行動できる。",
+					"name": "亡者の執念"
+				},
+				{
+					"effect": "死亡時(亡者の執念解除時)に発動、HP半分の状態で復活する。",
+					"name": "亡者の怨嗟"
+				}
+			],
+			"actionNumber": 3,
+			"actionPoint": 4,
+			"armor": 5,
+			"dodge": 60,
+			"initiative": 11,
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "1d10+1d6",
+					"effects": [
+						"装甲無視",
+						"軽減無視",
+						"かばう系無視",
+						"回避・盾・受け流し不可"
+					],
+					"index": 1,
+					"name": "光線一線",
+					"range": "",
+					"reach": 1,
+					"successRate": 90
+				},
+				{
+					"attackNumber": "5",
+					"canDiagonal": false,
+					"damage": "10d6",
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "カギ爪",
+					"range": "",
+					"reach": 1,
+					"statusEffects": [
+						{
+							"effectType": "毒",
+							"level": 2,
+							"turn": 3
+						}
+					],
+					"successRate": 70,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"無"
+					],
+					"index": 3,
+					"name": "噛みちぎる",
+					"range": "",
+					"reach": "",
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "10d6",
+					"index": 4,
+					"name": "恐怖の爪",
+					"range": "",
+					"reach": "",
+					"successRate": 80
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 5,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "ゾンビマスク",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				"ゾンビ"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ボス",
+			"index": 75
+		},
+		{
+			"HP": "",
+			"abilities": [
+				{
+					"effect": "戦場「泡」時、自分の行動P＆回避技能2倍",
+					"name": "バブルフォーム"
+				},
+				{
+					"effect": "HPが1/2以下,1/4以下を下回るとそれぞれ発動、\n自分の与えるダメージ1.5倍,ファンブル無効(5ターン)",
+					"name": "怒り状態"
+				}
+			],
+			"actionNumber": 4,
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"水"
+			],
+			"index": 16,
+			"initiative": "",
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "20d6",
+					"elements": [
+						"水"
+					],
+					"index": 1,
+					"name": "バブルエアショット",
+					"range": "前方縦3×横5マス",
+					"reach": 0,
+					"successRate": 95,
+					"types": [
+						"息"
+					]
+				},
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "14d6",
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "長鉤爪",
+					"range": "",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "泡状態",
+							"level": 0,
+							"turn": ""
+						}
+					],
+					"successRate": 90,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "15d6",
+					"elements": [
+						"無"
+					],
+					"index": 3,
+					"name": "ボディプレス",
+					"range": "対象を中心に3×3マス",
+					"reach": 1,
+					"successRate": 90,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "",
+					"effects": [
+						"次のターンから戦場を「泡」に変更する"
+					],
+					"elements": [
+						"水"
+					],
+					"index": 4,
+					"name": "泡の嵐",
+					"range": "自分を中心に3×3マス+縦横6マス",
+					"reach": 0,
+					"successRate": 90,
+					"types": [
+						"息"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 5,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "タマミツネ",
+			"note": "「戦場【泡】」\n毎ターン、[DEX×5]%に失敗で、\nそのターンの自分の回避技能が半減される\n\n「泡状態」\nDEX半減(回避は変動しない),\n素早さ1段階低下",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				"ドラゴン"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ボス"
+		},
+		{
+			"HP": 888,
+			"abilities": [
+				{
+					"effect": "氷,雷属性ダメージ半減",
+					"name": ""
+				},
+				{
+					"effect": "攻撃クリティカル時、行動回数+1(1ターンに1度)",
+					"name": "移植音速(ビーワルガー)"
+				},
+				{
+					"effect": "消費MP+2",
+					"name": "移植第三の目(イリアスター)"
+				},
+				{
+					"effect": "1ターンに1回までファンブル無効",
+					"name": "移植崩れぬ鎧(ブラッドナイト)"
+				},
+				{
+					"effect": "自動HP回復+8",
+					"name": "移植魔再生(ドラゴンゾンビ)"
+				},
+				{
+					"effect": "隠密無効",
+					"name": "移植竜眼(ヴェルヌズ)"
+				},
+				{
+					"effect": "自分が受ける状態異常を反射する",
+					"name": "反射装甲"
+				}
+			],
+			"actionNumber": 4,
+			"actionPoint": 20,
+			"armor": 10,
+			"dodge": 150,
+			"elements": [
+				"無"
+			],
+			"index": 17,
+			"initiative": 80,
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "4",
+					"canDiagonal": false,
+					"damage": "14d6",
+					"index": 1,
+					"name": "ラピッドステップ",
+					"range": "自分を中心に3×3マス",
+					"reach": 0,
+					"successRate": 90
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "14d6",
+					"effects": [
+						"当たった相手の状態変化を解除する"
+					],
+					"index": 2,
+					"name": "キャンセルステップ",
+					"range": "自分を中心に3×3マス",
+					"reach": 0,
+					"successRate": 90,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"MPダメージ 2d10"
+					],
+					"index": 3,
+					"name": "ギガマホトラ踊り",
+					"range": "自分を中心に3×3マス",
+					"reach": 0,
+					"successRate": 90
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "0",
+					"index": 4,
+					"name": "メダパニダンス",
+					"range": "自分を中心に3×3マス",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "混乱",
+							"level": 0,
+							"turn": ""
+						}
+					],
+					"successRate": 90
+				},
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "14d6",
+					"elements": [
+						"光"
+					],
+					"index": 5,
+					"name": "ノーブルステップ",
+					"range": "自分を中心に3×3マス",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "幻惑",
+							"level": 2,
+							"turn": 3
+						}
+					],
+					"successRate": 90,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 6,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "チクタクマン",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ボス"
+		},
+		{
+			"HP": 350,
+			"abilities": [
+				{
+					"effect": "隠密無効",
+					"name": "竜眼"
+				},
+				{
+					"effect": "特定攻撃後の次ターンに発動、\nそのターンのイニシアチブ&行動ポイントを3倍",
+					"name": "猪突猛進"
+				},
+				{
+					"effect": "攻撃する際にターゲットの途中に他の敵がいた場合、その敵にも命中する",
+					"name": "貫通"
+				},
+				{
+					"effect": "クリティカル・スペシャル攻撃時、ダメージ軽減無視",
+					"name": "天貫きし一角"
+				}
+			],
+			"actionNumber": 3,
+			"actionPoint": 6,
+			"armor": 8,
+			"dodge": 100,
+			"elements": [
+				"水"
+			],
+			"initiative": 15,
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"effects": [
+						"最後に命中した敵の前まで移動",
+						"特性「猪突猛進」発動"
+					],
+					"elements": [
+						"水"
+					],
+					"index": 1,
+					"name": "トルネイブ",
+					"range": "前方縦無限×横1マス",
+					"reach": 0,
+					"successRate": 85,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "",
+					"index": 2,
+					"name": "ドリルクラウラー",
+					"range": "",
+					"reach": 1,
+					"statusEffects": [
+						{
+							"effectType": "混乱(25%)",
+							"level": 0,
+							"turn": ""
+						}
+					],
+					"successRate": 85
+				},
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "11d6",
+					"elements": [
+						"水"
+					],
+					"index": 3,
+					"name": "水流陣",
+					"range": "自分を中心に5×5マス",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "回避技能-20%",
+							"level": 0,
+							"turn": ""
+						}
+					],
+					"successRate": 85,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "10d6",
+					"elements": [
+						"無"
+					],
+					"index": 4,
+					"name": "ダブルピアッサー",
+					"range": "全範囲",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "物理防御力低下",
+							"level": 1,
+							"turn": 5
+						}
+					],
+					"successRate": 85,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 5,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "トリトニス",
+			"note": "(回避技能の100%は特性発動中のもの)",
+			"sanCheck": {
+				"failure": "1d10",
+				"success": "1d3"
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": 50,
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": 100,
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ボス",
+			"index": 80
+		},
+		{
+			"HP": 300,
+			"abilities": [
+				{
+					"effect": "毒状態の敵に攻撃する際、毒のLvを+1し、ターンを更新する",
+					"name": "重ね毒"
+				},
+				{
+					"effect": "毒・スタン・混乱状態の相手に攻撃する際、回避回数-1分扱いで判定させる",
+					"name": "森のハンター"
+				}
+			],
+			"actionNumber": 3,
+			"actionPoint": 7,
+			"armor": 3,
+			"dodge": 75,
+			"initiative": 75,
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "",
+					"index": 1,
+					"name": "毒針",
+					"range": "",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "毒",
+							"level": "",
+							"turn": ""
+						}
+					],
+					"successRate": ""
+				},
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"index": "",
+					"name": "",
+					"range": "",
+					"reach": "",
+					"successRate": ""
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"風"
+					],
+					"index": 2,
+					"name": "風切り",
+					"range": "着弾点+着弾点から左右上下1マス",
+					"reach": 3,
+					"statusEffects": [
+						{
+							"effectType": "スタン",
+							"level": "",
+							"turn": ""
+						}
+					],
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"index": 3,
+					"name": "超音波",
+					"range": "着弾点から3×3マス",
+					"reach": 2,
+					"statusEffects": [
+						{
+							"effectType": "混乱",
+							"level": 0,
+							"turn": 3
+						}
+					],
+					"successRate": 80
+				},
+				{
+					"attackNumber": "2d2",
+					"canDiagonal": false,
+					"damage": "8d6",
+					"index": 4,
+					"name": "毒連毒射",
+					"range": "",
+					"reach": 1,
+					"statusEffects": [
+						{
+							"effectType": "毒",
+							"level": 3,
+							"turn": ""
+						}
+					],
+					"successRate": 80
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 5,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "ビトクイーン",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ボス",
+			"index": 78
+		},
+		{
+			"HP": "",
+			"abilities": [
+				{
+					"effect": "受ける火属性ダメージ無効",
+					"name": ""
+				},
+				{
+					"effect": "自分の技能ロールでスペシャル時に発動する、\n1ターン3回まで、\n次回行動の行動回数+1",
+					"name": "加速"
+				}
+			],
+			"actionNumber": 2,
+			"actionPoint": "",
+			"armor": "",
+			"dodge": 150,
+			"elements": [
+				"土"
+			],
+			"index": 18,
+			"initiative": "",
+			"level": 1,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"index": 1,
+					"name": "眠りの羽音",
+					"range": "自分を中心に5×5マス",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "眠り",
+							"level": 0,
+							"turn": ""
+						}
+					],
+					"successRate": 90
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "6d6",
+					"effects": [
+						"装甲無視"
+					],
+					"index": 2,
+					"name": "悪夢",
+					"range": "",
+					"reach": 0,
+					"successRate": 85
+				},
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"effects": [
+						"相手の回避を回避回数-1回分扱いで判定させる"
+					],
+					"index": 3,
+					"name": "ステルスキル",
+					"range": "",
+					"reach": "",
+					"successRate": ""
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "8d6",
+					"effects": [
+						"眠り状態の敵に対する与ダメージ2倍"
+					],
+					"index": 4,
+					"name": "バットエアノーズ",
+					"range": "",
+					"reach": 1,
+					"successRate": 85
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 5,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "ビーワルガー",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ボス"
+		},
+		{
+			"HP": 600,
+			"abilities": [
+				{
+					"effect": "受ける火属性ダメージ無効",
+					"name": ""
+				},
+				{
+					"effect": "発狂時発狂効果+1個",
+					"name": "狂気の渦"
+				},
+				{
+					"effect": "加速追加分の行動回数消費でファンブル無効",
+					"name": "音速"
+				},
+				{
+					"effect": "加速カウンターを4つ以上保有しているとき発動する、\n加速カウンターを消費し、自分へのカウンター攻撃を無効にする",
+					"name": "音速飛行"
+				},
+				{
+					"effect": "自分の技能ロールでスペシャル時に発動する、\n1ターン5回まで、\n次回行動の行動回数+1",
+					"name": "超加速"
+				}
+			],
+			"actionNumber": 3,
+			"actionPoint": 8,
+			"armor": 10,
+			"dodge": 150,
+			"elements": [
+				"土"
+			],
+			"index": 19,
+			"initiative": "",
+			"level": 2,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"index": 1,
+					"name": "眠りと幻惑の羽音",
+					"range": "自分を中心に5×5マス",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "眠り",
+							"level": 0,
+							"turn": 5
+						},
+						{
+							"effectType": "幻惑",
+							"level": 2,
+							"turn": 5
+						}
+					],
+					"successRate": 90
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "8d6",
+					"effects": [
+						"装甲無視",
+						"SANダメージ 1d5\n(眠り状態の敵にはSANダメージ2倍)"
+					],
+					"index": 2,
+					"name": "ナイトメア",
+					"range": "",
+					"reach": 1,
+					"successRate": 85
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "14d6",
+					"effects": [
+						"相手の回避を回避回数-1回分扱いで判定させる"
+					],
+					"index": 3,
+					"name": "ステルスキル",
+					"range": "",
+					"reach": 1,
+					"successRate": 99
+				},
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "14d6",
+					"effects": [
+						"眠り状態の敵にはダメージ2倍"
+					],
+					"index": 4,
+					"name": "バットエアノーズ",
+					"range": "",
+					"reach": 1,
+					"successRate": 85
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 5,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "ビーワルガー",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ボス"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"氷"
+			],
+			"index": 20,
+			"initiative": "",
+			"level": 3,
+			"moves": [
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"effects": [
+						"氷状態の敵に攻撃命中時行動停止付与"
+					],
+					"index": "",
+					"name": "",
+					"range": "",
+					"reach": "",
+					"successRate": ""
+				}
+			],
+			"name": "フロストドラゴン",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ボス"
+		},
+		{
+			"HP": "",
+			"abilities": [
+				{
+					"effect": "闇属性無効",
+					"name": ""
+				}
+			],
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"闇"
+			],
+			"index": 21,
+			"initiative": "",
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"index": "",
+					"name": "〇〇〇の爪(名前忘れた)",
+					"range": "",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "蘇生不可",
+							"level": "",
+							"turn": ""
+						}
+					],
+					"successRate": ""
+				}
+			],
+			"name": "ヘルドラゴン",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ボス"
+		},
+		{
+			"HP": 350,
+			"abilities": [
+				{
+					"effect": "戦闘開始時にゴブリンを2体呼び出す",
+					"name": "愉快な仲間達"
+				},
+				{
+					"effect": "他のゴブリンが存在するとき、\n受ける物理魔法体技ダメージ0.75倍",
+					"name": "一族の誓い"
+				}
+			],
+			"actionNumber": 3,
+			"actionPoint": 6,
+			"armor": 5,
+			"dodge": 70,
+			"elements": [
+				"土"
+			],
+			"index": 22,
+			"initiative": 17,
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "9d6",
+					"index": 1,
+					"name": "大岩投げ",
+					"range": "対象を中心に3×3マス",
+					"reach": "",
+					"successRate": ""
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "8d6",
+					"effects": [
+						"ファンブル無効"
+					],
+					"index": 2,
+					"name": "天下無双",
+					"range": "",
+					"reach": 1,
+					"statusEffects": [
+						{
+							"effectType": "混乱",
+							"level": 0,
+							"turn": 3
+						},
+						{
+							"effectType": "毒",
+							"level": 3,
+							"turn": 5
+						}
+					],
+					"successRate": 80
+				},
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"index": 4,
+					"name": "ブレイクソード",
+					"range": "",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "物理防御力低下",
+							"level": 1,
+							"turn": ""
+						}
+					],
+					"successRate": ""
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 5,
+					"name": "身も凍る雄叫び",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "ホブゴブリン",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ボス"
+		},
+		{
+			"HP": 500,
+			"abilities": [
+				{
+					"effect": "隠密無効",
+					"name": "竜眼"
+				}
+			],
+			"actionNumber": 3,
+			"actionPoint": 5,
+			"armor": 10,
+			"dodge": 10,
+			"elements": [
+				"水"
+			],
+			"index": 23,
+			"initiative": 5,
+			"level": 1,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "5d6",
+					"elements": [
+						"水"
+					],
+					"index": 1,
+					"name": "水脈の呪詛",
+					"range": "自分を中心に5×5マス",
+					"reach": 0,
+					"successRate": 90,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "8d6",
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "かぎ爪",
+					"range": "",
+					"reach": 1,
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "10d6",
+					"elements": [
+						"水"
+					],
+					"index": 3,
+					"name": "水海両断波",
+					"range": "自分を中心に3×3マス",
+					"reach": 0,
+					"successRate": 85,
+					"types": [
+						"息"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"(この技は戦場が「平地」のときにのみ使用する)",
+						"戦場を「水中」に変更する"
+					],
+					"index": 5,
+					"name": "泡沫招来(平地)",
+					"range": "",
+					"reach": 0,
+					"successRate": 80
+				},
+				{
+					"attackNumber": "2d2",
+					"canDiagonal": false,
+					"damage": "14d6",
+					"effects": [
+						"(この技は戦場が「水中」のときにのみ使用する)",
+						"戦場「水中」を解除する"
+					],
+					"elements": [
+						"水"
+					],
+					"index": 5,
+					"name": "ウォーターハザード(水中)",
+					"range": "自分を中心に5×5マス",
+					"reach": 0,
+					"successRate": 90
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 6,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "ヴェルヌズ",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ボス"
+		},
+		{
+			"HP": 400,
+			"abilities": [
+				{
+					"effect": "自分のHPが1/2を下回ったときに発動、\n攻撃力1段階上昇",
+					"name": "虫のさざめき"
+				},
+				{
+					"effect": "自分が混乱状態のとき、\n常に攻撃力1段階上昇",
+					"name": "やたらめったら"
+				}
+			],
+			"actionNumber": 3,
+			"actionPoint": 8,
+			"armor": 5,
+			"dodge": 50,
+			"elements": [
+				"土"
+			],
+			"index": 24,
+			"initiative": 25,
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "8d6",
+					"elements": [
+						"無"
+					],
+					"index": 1,
+					"name": "鎌で切り裂く",
+					"range": "",
+					"reach": 1,
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "4",
+					"canDiagonal": false,
+					"damage": "8d6",
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "鎌で連続で切り裂く",
+					"range": "",
+					"reach": 1,
+					"statusEffects": [
+						{
+							"effectType": "毒",
+							"level": 2,
+							"turn": 3
+						}
+					],
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "5d6",
+					"effects": [
+						"装甲無視",
+						"軽減無視"
+					],
+					"index": 3,
+					"name": "アルマドルト",
+					"range": "",
+					"reach": 1,
+					"successRate": 85
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 5,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "ヴォリデリア",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": 100,
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "ボス"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"光"
+			],
+			"index": 25,
+			"initiative": "",
+			"level": "",
+			"name": "アーリー",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "メルヘン"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"光"
+			],
+			"index": 26,
+			"initiative": "",
+			"level": "",
+			"name": "エルヴィラ",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "メルヘン"
+		},
+		{
+			"HP": "",
+			"abilities": [
+				{
+					"effect": "常にマホカンタ",
+					"name": "ミラージュボディ"
+				}
+			],
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"光"
+			],
+			"index": 27,
+			"initiative": "",
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"index": 1,
+					"name": "ブラックアウト",
+					"range": "対象を中心に3×3マス",
+					"reach": "",
+					"successRate": ""
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"1ターンの間、全体の経過ラウンドを固定する\n(バフやデバフの持続ターンが1ターン延長される)"
+					],
+					"index": 2,
+					"name": "ザックロック",
+					"range": "",
+					"reach": 0,
+					"successRate": 100
+				},
+				{
+					"attackNumber": "4",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"MPダメージ 1d10+5"
+					],
+					"index": 3,
+					"name": "ギガマホヘル",
+					"range": "",
+					"reach": "",
+					"successRate": ""
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 4,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "オズボーン",
+			"note": "非空中の敵(ムーンサルトや飛天斬りの対空中敵倍率の対象にならない)",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": 0,
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": 0,
+			"tag": "メルヘン"
+		},
+		{
+			"HP": "",
+			"abilities": [
+				{
+					"effect": "常にマホカンタ",
+					"name": "ミラージュボディ"
+				}
+			],
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"光"
+			],
+			"index": 28,
+			"initiative": "",
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"index": "",
+					"name": "",
+					"range": "",
+					"reach": "",
+					"successRate": ""
+				}
+			],
+			"name": "サウセイル",
+			"note": "非空中の敵(ムーンサルトや飛天斬りの対空中敵倍率が乗らない)",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "メルヘン"
+		},
+		{
+			"HP": 120,
+			"actionNumber": 2,
+			"actionPoint": 3,
+			"armor": 10,
+			"dodge": 25,
+			"index": 29,
+			"initiative": 12,
+			"level": 2,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "6d6",
+					"elements": [
+						"無"
+					],
+					"index": 1,
+					"name": "パンチ",
+					"range": "",
+					"reach": 1,
+					"successRate": 70,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": true,
+					"damage": "",
+					"effects": [
+						"貫通\n(攻撃する際にターゲットの途中に他の敵がいた場合、その敵にも命中する)"
+					],
+					"index": 2,
+					"name": "レーザー攻撃",
+					"range": "前方縦無限×横1マス",
+					"reach": 0,
+					"successRate": 70
+				}
+			],
+			"name": "ゴルーグ",
+			"note": "(火,風,土,雷,闇等倍)\nCON25(スタン解除判定50%)",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				"物質"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": 100,
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": 100,
+				"ice": "",
+				"poison": "",
+				"sleep": 0,
+				"spdDown": 100,
+				"stun": 100
+			},
+			"stealth": 0,
+			"tag": "空島"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"index": 30,
+			"initiative": "",
+			"level": "",
+			"name": "ゴーレム",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "空島"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"土"
+			],
+			"index": 31,
+			"initiative": "",
+			"level": "",
+			"name": "デスクロー",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "荒廃世界"
+		},
+		{
+			"HP": 200,
+			"abilities": [
+				{
+					"effect": "戦闘開始時にマイアラークを呼び出す",
+					"name": ""
+				}
+			],
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": 25,
+			"dodge": "",
+			"index": 32,
+			"initiative": "",
+			"level": "",
+			"name": "マイアラーククイーン",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "荒廃世界"
+		},
+		{
+			"HP": 100,
+			"actionNumber": 2,
+			"actionPoint": 5,
+			"armor": 12,
+			"dodge": "",
+			"index": 33,
+			"initiative": 17,
+			"level": 4,
+			"moves": [
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"無"
+					],
+					"index": 1,
+					"name": "デスクローガントレット",
+					"range": "",
+					"reach": 1,
+					"successRate": 85,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "4",
+					"canDiagonal": false,
+					"damage": "9d6",
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "ハンドメイドライフル",
+					"range": "",
+					"reach": "",
+					"successRate": 85,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "12d6",
+					"effects": [
+						"装甲無視"
+					],
+					"elements": [
+						"無"
+					],
+					"index": 3,
+					"name": "ヌカグレネード",
+					"range": "対象を中心に3×3マス",
+					"reach": "",
+					"successRate": 75,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "0",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"自身のHPを5d10回復する\n(自身のHPが減少しているときのみ技選択候補になる)"
+					],
+					"index": 4,
+					"name": "スーパーステームパック",
+					"range": "",
+					"reach": 0,
+					"successRate": 100
+				},
+				{
+					"attackNumber": "0",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"自身の攻撃力を1段階上昇させる(5ターン)"
+					],
+					"index": 5,
+					"name": "サイコを摂取する",
+					"range": "",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "レイダー",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "荒廃世界"
+		},
+		{
+			"HP": 100,
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": 8,
+			"dodge": "",
+			"index": 34,
+			"initiative": "",
+			"level": "",
+			"name": "？？？ミュータント(名前忘れた)",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "荒廃世界"
+		},
+		{
+			"HP": "",
+			"abilities": [
+				{
+					"effect": "致死ダメージを受けた際に90-20*{発動回数}%で発動、HP1の状態でそのダメージを耐える",
+					"name": "くじけぬ心"
+				}
+			],
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"index": 35,
+			"initiative": "",
+			"level": "",
+			"name": "アイン",
+			"note": "",
+			"sanCheck": {
+				"failure": "0",
+				"success": "0"
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": "",
+			"abilities": [
+				{
+					"effect": "敵全体の消費MP+2",
+					"name": "第三の目"
+				}
+			],
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"index": 36,
+			"initiative": "",
+			"level": 2,
+			"moves": [
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"index": "",
+					"name": "呪槍",
+					"range": "",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "蘇生不可",
+							"level": 0,
+							"turn": 5
+						}
+					],
+					"successRate": ""
+				}
+			],
+			"name": "イリアスター",
+			"note": "(光等倍)",
+			"sanCheck": {
+				"failure": "1d6",
+				"success": "0"
+			},
+			"species": [
+				"悪魔"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": 0,
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": 0,
+			"tag": "道中"
+		},
+		{
+			"HP": 150,
+			"abilities": [
+				{
+					"effect": "状態異常耐性に成功した次のターン、\n攻撃力+１段階,全防御段階+1段階,即死成功確率+10％",
+					"name": "全てを穿つ肉体"
+				}
+			],
+			"actionNumber": 2,
+			"actionPoint": 4,
+			"armor": 10,
+			"dodge": 25,
+			"elements": [
+				"水"
+			],
+			"index": 37,
+			"initiative": 13,
+			"level": 2,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"無"
+					],
+					"index": 1,
+					"name": "獰猛なるかぎ爪",
+					"range": "",
+					"reach": 1,
+					"statusEffects": [
+						{
+							"effectType": "毒",
+							"level": 3,
+							"turn": 20
+						},
+						{
+							"effectType": "眠り",
+							"level": 0,
+							"turn": 3
+						}
+					],
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"effects": [
+						"相手のバフの上昇補正Lvを下降補整Lvに逆転して判定"
+					],
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "リバースバイト",
+					"range": "",
+					"reach": 1,
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "11d6",
+					"effects": [
+						"相手の眠り耐性を-25%で判定する(最大で0%まで低下)"
+					],
+					"elements": [
+						"水"
+					],
+					"index": 3,
+					"name": "デビルクライム",
+					"range": "自分を中心に3×3",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "眠り",
+							"level": 0,
+							"turn": 3
+						}
+					],
+					"successRate": 80,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"相手の回避を-3回にして判定する",
+						"即死耐性-25%(重ね掛け可[2]),5ターン"
+					],
+					"index": 4,
+					"name": "戦慄のカウントダウン",
+					"range": "自分を中心に5×5",
+					"reach": 0,
+					"successRate": 90
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 5,
+					"name": "いてつく咆哮",
+					"range": "全範囲",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "即死(5%)",
+							"level": 0,
+							"turn": 0
+						}
+					],
+					"successRate": 100
+				}
+			],
+			"name": "ジュクジャク",
+			"note": "",
+			"sanCheck": {
+				"failure": "1d15",
+				"success": "0"
+			},
+			"species": [
+				"？？？"
+			],
+			"statusEffects": {
+				"atkDown": 75,
+				"confusion": 75,
+				"curse": 75,
+				"dazzle": 75,
+				"defDown": {
+					"breath": 75,
+					"magic": 75,
+					"physical": 75
+				},
+				"flame": 75,
+				"ice": 75,
+				"poison": 75,
+				"sleep": 75,
+				"spdDown": 75,
+				"stun": 75
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": 100,
+			"actionNumber": 2,
+			"actionPoint": 5,
+			"armor": 8,
+			"dodge": 60,
+			"index": 38,
+			"initiative": 18,
+			"level": 1,
+			"moves": [
+				{
+					"attackNumber": "1d2",
+					"canDiagonal": true,
+					"damage": "",
+					"index": 2,
+					"name": "",
+					"range": "",
+					"reach": 2,
+					"statusEffects": [
+						{
+							"effectType": "物理防御力低下",
+							"level": 1,
+							"turn": 5
+						}
+					],
+					"successRate": 85,
+					"types": [
+						"物理",
+						"息",
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "9d6",
+					"elements": [
+						"無"
+					],
+					"index": 3,
+					"name": "邪神の魔眼",
+					"range": "前方縦無限×横3マス",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "全状態異常からランダムに1つ",
+							"level": 5,
+							"turn": ""
+						}
+					],
+					"successRate": 90,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"次の攻撃の与ダメージ1.3倍",
+						"次の攻撃の与状態異常Lv+1"
+					],
+					"index": 4,
+					"name": "ふてきな笑い",
+					"range": "",
+					"reach": 0,
+					"successRate": 100
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 5,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "デメテス",
+			"note": "(光等倍)",
+			"sanCheck": {
+				"failure": "1d8",
+				"success": "1d3"
+			},
+			"species": [
+				"？？？"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": 0,
+			"tag": "道中"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"水"
+			],
+			"index": 39,
+			"initiative": "",
+			"level": "",
+			"name": "ナガアエ",
+			"note": "死亡時、自分中心3×3の範囲にいる敵が聞き耳成功でSANc",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"風"
+			],
+			"index": 40,
+			"initiative": "",
+			"level": "",
+			"name": "ビヤーキー",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": 50
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": 100,
+			"actionNumber": 2,
+			"actionPoint": 6,
+			"armor": 10,
+			"dodge": 60,
+			"elements": [
+				"風"
+			],
+			"index": 41,
+			"initiative": 25,
+			"level": 5,
+			"moves": [
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "9d6",
+					"elements": [
+						"無"
+					],
+					"index": 1,
+					"name": "かぎ爪",
+					"range": "",
+					"reach": 1,
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "9d6",
+					"index": 2,
+					"name": "スクリームファング",
+					"range": "",
+					"reach": 1,
+					"statusEffects": [
+						{
+							"effectType": "攻撃力低下",
+							"level": 1,
+							"turn": ""
+						}
+					],
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				}
+			],
+			"name": "ビヤーキー",
+			"note": "(「かぎ爪」の追加効果不明)",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": 100,
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": 60,
+			"abilities": [
+				{
+					"effect": "常に敵全体の隠密(ステルスアタック以外も含む)-30%",
+					"name": "猟犬の目"
+				},
+				{
+					"effect": "毎ターンHP+5(ストック制)",
+					"name": "自己治癒"
+				}
+			],
+			"actionNumber": 2,
+			"actionPoint": 7,
+			"armor": 3,
+			"dodge": 80,
+			"elements": [
+				"闇"
+			],
+			"index": 42,
+			"initiative": 25,
+			"level": 1,
+			"moves": [
+				{
+					"attackNumber": "1d3",
+					"canDiagonal": false,
+					"damage": "8d6",
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "かぎ爪",
+					"range": "",
+					"reach": 1,
+					"statusEffects": [
+						{
+							"effectType": "毒",
+							"level": 3,
+							"turn": ""
+						}
+					],
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"相手のPOWを1d4減少させる"
+					],
+					"index": 3,
+					"name": "舌で突き刺す",
+					"range": "",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "物理防御力低下",
+							"level": 1,
+							"turn": 5
+						},
+						{
+							"effectType": "息防御力低下",
+							"level": 1,
+							"turn": 5
+						},
+						{
+							"effectType": "魔法防御力低下",
+							"level": 1,
+							"turn": 5
+						}
+					],
+					"successRate": 85
+				},
+				{
+					"attackNumber": "1d2",
+					"canDiagonal": false,
+					"damage": "9d6",
+					"effects": [
+						"与ダメージの半分自分のHPを回復"
+					],
+					"elements": [
+						"無"
+					],
+					"index": 4,
+					"name": "ライフイーター",
+					"range": "自分を中心に３×３マス",
+					"reach": 0,
+					"successRate": 85,
+					"types": [
+						"物理"
+					]
+				}
+			],
+			"name": "ベビ・ティンクス",
+			"note": "",
+			"sanCheck": {
+				"failure": "1d8",
+				"success": "1d3"
+			},
+			"species": [
+				"？？？"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": 100,
+			"abilities": [
+				{
+					"effect": "常に敵全体の隠密(ステルスアタック以外も含む)-30%",
+					"name": "猟犬の目"
+				},
+				{
+					"effect": "毎ターンHP+10(ストック制)",
+					"name": "自己治癒"
+				}
+			],
+			"actionNumber": 2,
+			"actionPoint": 8,
+			"armor": 3,
+			"dodge": 80,
+			"elements": [
+				"闇"
+			],
+			"index": 43,
+			"initiative": 25,
+			"level": 3,
+			"moves": [
+				{
+					"attackNumber": "2d2+1",
+					"canDiagonal": false,
+					"damage": "11d6",
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "かぎ爪",
+					"range": "",
+					"reach": 1,
+					"statusEffects": [
+						{
+							"effectType": "毒",
+							"level": 4,
+							"turn": 3
+						}
+					],
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"当たった敵のPOWを1d4永久喪失させる"
+					],
+					"index": 3,
+					"name": "舌で突き刺す",
+					"range": "",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "物理防御力低下",
+							"level": 1,
+							"turn": 5
+						},
+						{
+							"effectType": "息防御力低下",
+							"level": 1,
+							"turn": 5
+						},
+						{
+							"effectType": "魔法防御力低下",
+							"level": 1,
+							"turn": 5
+						}
+					],
+					"successRate": 85
+				},
+				{
+					"attackNumber": "2d2",
+					"canDiagonal": false,
+					"damage": "12d6",
+					"effects": [
+						"与ダメージの半分自分のHPを回復"
+					],
+					"elements": [
+						"無"
+					],
+					"index": 4,
+					"name": "ライフイーター",
+					"range": "自分を中心に３×３マス",
+					"reach": 0,
+					"successRate": 85,
+					"types": [
+						"物理"
+					]
+				}
+			],
+			"name": "ベビ・ティンクス",
+			"note": "",
+			"sanCheck": {
+				"failure": "1d8",
+				"success": "1d3"
+			},
+			"species": [
+				"？？？"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"氷"
+			],
+			"index": 44,
+			"initiative": "",
+			"level": "",
+			"name": "ミ＝ゴ",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": 80,
+			"abilities": [
+				{
+					"effect": "雷攻撃が命中時に発動、\nその命中した敵の中心に３×３マスにいる敵に命中する。\n（連鎖した敵には連鎖判定はしない）",
+					"name": "連鎖"
+				},
+				{
+					"effect": "「電気ライフル」の攻撃時のみ発動、\n対象に命中するまでに通ったマスにいる敵にも命中する。",
+					"name": "貫通"
+				}
+			],
+			"actionNumber": 2,
+			"actionPoint": 5,
+			"armor": 12,
+			"dodge": "",
+			"index": 45,
+			"initiative": 16,
+			"level": 5,
+			"moves": [
+				{
+					"attackNumber": "2",
+					"canDiagonal": true,
+					"damage": "8d10",
+					"elements": [
+						"雷"
+					],
+					"index": 1,
+					"name": "改造電気ライフル",
+					"range": "",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "スタン",
+							"level": 2,
+							"turn": 5
+						}
+					],
+					"successRate": 90,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "鋏攻撃",
+					"range": "",
+					"reach": 1,
+					"successRate": 85,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "5",
+					"canDiagonal": true,
+					"damage": "5d10",
+					"effects": [
+						"ファンブル無効",
+						"ファンブル時、次回の自分の行動が終わるまで使用不可"
+					],
+					"elements": [
+						"雷"
+					],
+					"index": 3,
+					"name": "改造電気銃",
+					"range": "",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "スタン",
+							"level": 2,
+							"turn": 5
+						}
+					],
+					"successRate": 80,
+					"types": [
+						"魔法"
+					]
+				}
+			],
+			"name": "ミ＝ゴ",
+			"note": "(火属性ダメージ等倍)",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": 100,
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"氷"
+			],
+			"index": 46,
+			"initiative": "",
+			"level": "",
+			"name": "ムーンビースト",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				"悪魔"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": 100,
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": 0
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": 160,
+			"abilities": [
+				{
+					"effect": "隠密無効",
+					"name": "気配察知"
+				},
+				{
+					"effect": "相手のショックロール-30%",
+					"name": "残虐な心"
+				}
+			],
+			"actionNumber": 2,
+			"actionPoint": 6,
+			"armor": 0,
+			"dodge": 40,
+			"index": 47,
+			"initiative": 18,
+			"level": 5,
+			"moves": [
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "8d10+4d6",
+					"effects": [
+						"<成功回数-1>段階物理防御力無視"
+					],
+					"index": 1,
+					"name": "連撃跳槍",
+					"range": "",
+					"reach": "",
+					"successRate": 50
+				},
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "15d10",
+					"effects": [
+						"物理防御力無視"
+					],
+					"index": 2,
+					"name": "一閃突き",
+					"range": "",
+					"reach": "",
+					"successRate": 50
+				}
+			],
+			"name": "ムーンビースト",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": 100,
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": 150,
+			"abilities": [
+				{
+					"effect": "",
+					"name": ""
+				}
+			],
+			"actionNumber": 8,
+			"actionPoint": 8,
+			"armor": 15,
+			"dodge": 75,
+			"initiative": 70,
+			"level": 1,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"闇"
+					],
+					"index": 1,
+					"name": "混沌の吐息",
+					"range": "前方左右？",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "",
+							"level": "",
+							"turn": ""
+						},
+						{
+							"effectType": "",
+							"level": "",
+							"turn": ""
+						}
+					],
+					"successRate": 90,
+					"types": [
+						"息"
+					]
+				},
+				{
+					"attackNumber": "4",
+					"canDiagonal": false,
+					"damage": "12d6",
+					"effects": [
+						"相手の回避・盾技能を-30%にして判定させる"
+					],
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "喰らい尽くす",
+					"range": "",
+					"reach": 1,
+					"statusEffects": [
+						{
+							"effectType": "即死(10%)",
+							"level": 0,
+							"turn": 0
+						}
+					],
+					"successRate": 85,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"effects": [
+						"SANダメージ",
+						"MPダメージ"
+					],
+					"elements": [
+						"無"
+					],
+					"index": 3,
+					"name": "マインドブレイク",
+					"range": "",
+					"reach": 1,
+					"successRate": 90,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "",
+					"effects": [
+						"装甲無視"
+					],
+					"elements": [
+						"無"
+					],
+					"index": 4,
+					"name": "貪り喰う",
+					"range": "",
+					"reach": 1,
+					"statusEffects": [
+						{
+							"effectType": "回復不可",
+							"level": 0,
+							"turn": 5
+						}
+					],
+					"successRate": 85,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"index": 5,
+					"name": "",
+					"range": "",
+					"reach": "",
+					"successRate": ""
+				}
+			],
+			"name": "ラフム",
+			"note": "(水属性被ダメ等倍)",
+			"sanCheck": {
+				"failure": "1d10",
+				"success": "1d5"
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中",
+			"index": 0
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"闇"
+			],
+			"index": 48,
+			"initiative": "",
+			"level": "",
+			"name": "リーパー",
+			"note": "",
+			"sanCheck": {
+				"failure": "1d4",
+				"success": "0"
+			},
+			"species": [
+				"亜人"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": 0
+			},
+			"stealth": 0,
+			"tag": "道中"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"火"
+			],
+			"index": 49,
+			"initiative": "",
+			"level": "",
+			"name": "ワイバーン",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				"ドラゴン"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": 100,
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": 0,
+				"sleep": 0,
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": 150,
+			"actionNumber": 2,
+			"actionPoint": 4,
+			"armor": 10,
+			"dodge": 50,
+			"elements": [
+				"火"
+			],
+			"index": 50,
+			"initiative": 40,
+			"level": 4,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "11d6",
+					"elements": [
+						"火"
+					],
+					"index": 1,
+					"name": "灼熱の息",
+					"range": "前方縦3×横5マス",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "炎",
+							"level": 3,
+							"turn": 3
+						}
+					],
+					"successRate": 90,
+					"types": [
+						"息"
+					]
+				},
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "9d6",
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "爪で裂く",
+					"range": "",
+					"reach": 1,
+					"successRate": 85,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"風"
+					],
+					"index": 3,
+					"name": "トルネード",
+					"range": "自分を中心に5×5マス",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "混乱",
+							"level": 0,
+							"turn": ""
+						}
+					],
+					"successRate": 85,
+					"types": [
+						"魔法"
+					]
+				}
+			],
+			"name": "ワイバーン",
+			"note": "(「爪で裂く」に追加効果は無し)",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				"ドラゴン"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": 100,
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": "",
+			"abilities": [
+				{
+					"effect": "近接攻撃を受けた際、\n相手に跳躍を振らせ、跳躍失敗でその攻撃を無効化する",
+					"name": "飛竜"
+				}
+			],
+			"actionNumber": 2,
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"火"
+			],
+			"index": 51,
+			"initiative": "",
+			"level": 5,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"火"
+					],
+					"index": 1,
+					"name": "灼熱の息",
+					"range": "前方縦3×横5マス",
+					"reach": "",
+					"successRate": 90,
+					"types": [
+						"息"
+					]
+				},
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "10d6",
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "連続爪",
+					"range": "",
+					"reach": 1,
+					"successRate": 90,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "12d6",
+					"elements": [
+						"風"
+					],
+					"index": 3,
+					"name": "トルネード",
+					"range": "自分を中心に5×5マス",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "混乱",
+							"level": 0,
+							"turn": ""
+						}
+					],
+					"successRate": 90,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 4,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "ワイバーン",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": "",
+			"abilities": [
+				{
+					"effect": "近接攻撃してきた相手の素早さを1回まで1段階低下",
+					"name": "粘着ボディ"
+				},
+				{
+					"effect": "無属性攻撃無効？",
+					"name": ""
+				}
+			],
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"水"
+			],
+			"index": 52,
+			"initiative": "",
+			"level": "",
+			"name": "宇宙からの色",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"闇"
+			],
+			"index": 53,
+			"initiative": "",
+			"level": "",
+			"name": "旅するもの",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				"スライム"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": 100,
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": 130,
+			"abilities": [
+				{
+					"effect": "隠密無効,\nカウンター無効",
+					"name": "体温検知"
+				}
+			],
+			"actionNumber": 2,
+			"actionPoint": 10,
+			"armor": 15,
+			"dodge": 85,
+			"elements": [
+				"闇"
+			],
+			"index": 54,
+			"initiative": 30,
+			"level": 5,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"index": 1,
+					"name": "線状組織",
+					"range": "",
+					"reach": 1,
+					"statusEffects": [
+						{
+							"effectType": "毒",
+							"level": 4,
+							"turn": 5
+						},
+						{
+							"effectType": "スタン",
+							"level": 3,
+							"turn": 5
+						}
+					],
+					"successRate": 95
+				},
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "12d6",
+					"index": 2,
+					"name": "デスサイズ",
+					"range": "前方横3×縦2マス",
+					"reach": 0,
+					"successRate": 85,
+					"types": [
+						"魔法"
+					]
+				}
+			],
+			"name": "旅するもの",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": "0"
+			},
+			"species": [
+				"スライム"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"闇"
+			],
+			"index": 55,
+			"initiative": "",
+			"level": "",
+			"name": "星の精",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"水"
+			],
+			"index": 56,
+			"initiative": "",
+			"level": "",
+			"name": "深きもの",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				"自然"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": 80,
+			"actionNumber": 1,
+			"actionPoint": 4,
+			"armor": 8,
+			"dodge": "",
+			"elements": [
+				"土"
+			],
+			"index": 57,
+			"initiative": 15,
+			"level": 4,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"index": 1,
+					"name": "砂かけ",
+					"range": "",
+					"reach": 1,
+					"statusEffects": [
+						{
+							"effectType": "幻惑",
+							"level": 1,
+							"turn": 3
+						}
+					],
+					"successRate": 80
+				},
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "かぎ爪",
+					"range": "",
+					"reach": 1,
+					"successRate": 75,
+					"types": [
+						"物理"
+					]
+				}
+			],
+			"name": "砂に潜む者",
+			"note": "(「かぎ爪」の追加効果不明)",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": "",
+			"abilities": [
+				{
+					"effect": "盾技能を使用し、成功で盾装甲を得る",
+					"name": "盾"
+				}
+			],
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"氷"
+			],
+			"index": 58,
+			"initiative": "",
+			"level": "",
+			"name": "蛇人間",
+			"note": "",
+			"sanCheck": {
+				"failure": "1d6",
+				"success": "0"
+			},
+			"species": [
+				"魔獣"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": 0,
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": 90,
+			"abilities": [
+				{
+					"effect": "盾技能80%,盾装甲10",
+					"name": "盾"
+				}
+			],
+			"actionNumber": 1,
+			"actionPoint": 5,
+			"armor": 10,
+			"dodge": 50,
+			"elements": [
+				"氷"
+			],
+			"index": 59,
+			"initiative": 15,
+			"level": 4,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "8d6",
+					"elements": [
+						"無"
+					],
+					"index": 1,
+					"name": "毒吐き",
+					"range": "",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "毒",
+							"level": 3,
+							"turn": 3
+						}
+					],
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "9d6",
+					"index": 2,
+					"name": "連続噛み付き",
+					"range": "",
+					"reach": 1,
+					"successRate": 80
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"無"
+					],
+					"index": 3,
+					"name": "剣攻撃",
+					"range": "",
+					"reach": 1,
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"味方1体を6d6回復"
+					],
+					"index": 4,
+					"name": "治癒の魔法",
+					"range": "",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "蛇人間",
+			"note": "(Lv4以下のときは氷属性だったので、氷属性かもしれない\nでもミ＝ゴLv5はミ＝ゴLv4以下と違って氷属性ではなかったので、蛇人間Lv5も氷属性ではないかもしれない)\n(連続噛みつきの追加効果不明,毒とか？)",
+			"sanCheck": {
+				"failure": "1d6",
+				"success": "0"
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": 100,
+			"abilities": [
+				{
+					"effect": "盾技能80%,盾装甲10",
+					"name": "盾"
+				}
+			],
+			"actionNumber": 2,
+			"actionPoint": 7,
+			"armor": 10,
+			"dodge": 50,
+			"index": 60,
+			"initiative": 16,
+			"level": 5,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "8d6",
+					"elements": [
+						"無"
+					],
+					"index": 1,
+					"name": "毒吐き",
+					"range": "",
+					"reach": "",
+					"statusEffects": [
+						{
+							"effectType": "毒",
+							"level": 4,
+							"turn": 5
+						}
+					],
+					"successRate": 80
+				},
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "9d6",
+					"index": 2,
+					"name": "連続噛み付き",
+					"range": "",
+					"reach": 1,
+					"successRate": 80
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"無"
+					],
+					"index": 3,
+					"name": "剣攻撃",
+					"range": "",
+					"reach": 1,
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"味方1体を6d6回復"
+					],
+					"index": 4,
+					"name": "治癒の魔法",
+					"range": "",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "蛇人間",
+			"note": "(Lv4以下のときは氷属性だったので、氷属性かもしれない\nでもミ＝ゴLv5はミ＝ゴLv4以下と違って氷属性ではなかったので、蛇人間Lv5も氷属性ではないかもしれない)\n(連続噛みつきの追加効果不明,毒とか？)",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"index": 61,
+			"initiative": "",
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "",
+					"effects": [
+						"装甲無視"
+					],
+					"index": "",
+					"name": "トライピアース",
+					"range": "",
+					"reach": "",
+					"successRate": ""
+				},
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"index": "",
+					"name": "霊体の剃刀",
+					"range": "",
+					"reach": "",
+					"successRate": ""
+				}
+			],
+			"name": "黒いフードの人物",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": "0"
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": 150,
+			"abilities": [
+				{
+					"effect": "魔法無効",
+					"name": ""
+				}
+			],
+			"actionNumber": 2,
+			"actionPoint": 8,
+			"armor": 10,
+			"dodge": 70,
+			"index": 62,
+			"initiative": 25,
+			"level": 3,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "10d6",
+					"effects": [
+						"相手の回避技能を回避-1回分にして判定させる"
+					],
+					"elements": [
+						"無"
+					],
+					"index": 1,
+					"name": "霊体の剃刀",
+					"range": "敵全体",
+					"reach": 0,
+					"successRate": 85,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"回避不可",
+						"相手に対するPOW対抗で判定する(POW12?)\n(POW62の相手に-200%で自動失敗だった)"
+					],
+					"index": 2,
+					"name": "支配",
+					"range": "",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "行動停止",
+							"level": 0,
+							"turn": 1
+						}
+					],
+					"successRate": 100
+				},
+				{
+					"attackNumber": "3",
+					"canDiagonal": false,
+					"damage": "6d6",
+					"effects": [
+						"装甲無視",
+						"軽減無視"
+					],
+					"elements": [
+						"無"
+					],
+					"index": 3,
+					"name": "トライピアース",
+					"range": "",
+					"reach": 1,
+					"successRate": 85,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "8d6",
+					"elements": [
+						"火"
+					],
+					"index": 4,
+					"name": "メラゾーマ",
+					"range": "着弾地点+着地地点に左右上下１マス",
+					"reach": 3,
+					"statusEffects": [
+						{
+							"effectType": "炎",
+							"level": 1,
+							"turn": 5
+						}
+					],
+					"successRate": 100,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"effects": [
+						"相手に[CON×3]%の判定を振らせ、判定失敗で気絶させる"
+					],
+					"elements": [
+						"無"
+					],
+					"index": 5,
+					"name": "ヨグソトースのこぶし",
+					"range": "",
+					"reach": 1,
+					"successRate": 85
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 6,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "黒いフードの人物",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中"
+		},
+		{
+			"HP": 400,
+			"abilities": [
+				{
+					"effect": "魔法無効",
+					"name": ""
+				},
+				{
+					"effect": "フィールドに存在する限り、\nサポートスキル・魔術・マジックスキルを使う際の消費MPを+3する。",
+					"name": "魔術師の領域"
+				},
+				{
+					"effect": "物理ダメを受けた際に発動、\n相手に1ｄ6の装甲無視を与える。",
+					"name": "いばらの鎧"
+				}
+			],
+			"actionNumber": 4,
+			"actionPoint": 10,
+			"armor": 20,
+			"dodge": 95,
+			"elements": [
+				"無"
+			],
+			"initiative": 50,
+			"level": 5,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "14d6",
+					"effects": [
+						"相手の回避技能を回避-1回分にして判定させる"
+					],
+					"elements": [
+						"無"
+					],
+					"index": 1,
+					"name": "霊体の剃刀・改良版",
+					"range": "敵全体",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "毒",
+							"level": 5,
+							"turn": 3
+						}
+					],
+					"successRate": 88,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"回避不可",
+						"相手に対するPOW対抗で判定する\n(POW63vs黒いフードの人物のPOWで、ロール結果41で気絶させられた)"
+					],
+					"index": 2,
+					"name": "支配",
+					"range": "",
+					"reach": 1,
+					"successRate": 100
+				},
+				{
+					"attackNumber": "4",
+					"canDiagonal": false,
+					"damage": "7d6",
+					"effects": [
+						"攻撃範囲内に移動して攻撃できる",
+						"装甲無視"
+					],
+					"elements": [
+						"無"
+					],
+					"index": 3,
+					"name": "グラビティマグナム",
+					"range": "",
+					"reach": "",
+					"successRate": 90,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "12d6",
+					"elements": [
+						"火"
+					],
+					"index": 4,
+					"name": "メラガイアー",
+					"range": "着弾地点+着地地点に左右上下１マス",
+					"reach": 3,
+					"statusEffects": [
+						{
+							"effectType": "炎",
+							"level": 7,
+							"turn": 5
+						}
+					],
+					"successRate": 100,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"effects": [
+						"当たった敵に[CON×2]%の判定を振らせ、\n判定に失敗で気絶させる"
+					],
+					"index": 5,
+					"name": "ヨグソトースのこぶし",
+					"range": "",
+					"reach": 1,
+					"successRate": 90
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"敵全員に必中、かかっている良効果を全解除\n(次の自分のターンが終わるまで再使用しない)"
+					],
+					"index": 7,
+					"name": "いてつく波動",
+					"range": "全範囲",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "黒いフードの人物",
+			"note": "",
+			"sanCheck": {
+				"failure": "0",
+				"success": "0"
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中",
+			"index": 63
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"闇"
+			],
+			"index": 64,
+			"initiative": "",
+			"level": "",
+			"name": "サエリット",
+			"note": "火属性2倍弱点",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中(墓場)"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"闇"
+			],
+			"index": 65,
+			"initiative": "",
+			"level": "",
+			"name": "シガザイ",
+			"note": "火属性2倍弱点",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中(墓場)"
+		},
+		{
+			"HP": "",
+			"abilities": [
+				{
+					"effect": "攻撃を受けてHPが0になっても、そのラウンドが終わるまでは倒れずに残って行動できる。",
+					"name": "亡者の執念"
+				}
+			],
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"闇"
+			],
+			"index": 66,
+			"initiative": "",
+			"level": 2,
+			"moves": [
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"無"
+					],
+					"index": 1,
+					"name": "ヘイルバレット",
+					"range": "",
+					"reach": "",
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"雷"
+					],
+					"index": 3,
+					"name": "サンダーアロー",
+					"range": "",
+					"reach": "",
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				}
+			],
+			"name": "シガザイ",
+			"note": "火属性2倍弱点",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				"ゾンビ"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": 0,
+			"tag": "道中(墓場)"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"闇"
+			],
+			"index": 67,
+			"initiative": "",
+			"level": "",
+			"name": "ジャガラン",
+			"note": "火属性2倍弱点",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中(墓場)"
+		},
+		{
+			"HP": 70,
+			"actionNumber": "",
+			"actionPoint": 4,
+			"armor": 10,
+			"dodge": "",
+			"elements": [
+				"闇"
+			],
+			"index": 68,
+			"initiative": "",
+			"level": 2,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "6d6",
+					"elements": [
+						"闇"
+					],
+					"index": 1,
+					"name": "ドルクマ",
+					"range": "着地地点を中心に３×３マス",
+					"reach": 3,
+					"statusEffects": [
+						{
+							"effectType": "眠り",
+							"level": 0,
+							"turn": 2
+						}
+					],
+					"successRate": 100,
+					"types": [
+						"魔法"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "8d6",
+					"elements": [
+						"氷"
+					],
+					"index": 2,
+					"name": "マヒャド",
+					"range": "着地地点に左右それぞれ２マス",
+					"reach": 3,
+					"statusEffects": [
+						{
+							"effectType": "氷",
+							"level": 1,
+							"turn": 3
+						}
+					],
+					"successRate": 100,
+					"types": [
+						"魔法"
+					]
+				}
+			],
+			"name": "ジャガラン",
+			"note": "魔法暴走率10%,\n火属性2倍弱点",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中(墓場)"
+		},
+		{
+			"HP": 150,
+			"abilities": [
+				{
+					"effect": "攻撃を受けてHPが0になっても、そのラウンドが終わるまでは倒れずに残って行動できる。",
+					"name": "亡者の執念"
+				},
+				{
+					"effect": "死亡時(亡者の執念解除時)に発動、1回攻撃する。",
+					"name": "最後の一撃"
+				}
+			],
+			"actionNumber": 1,
+			"actionPoint": 4,
+			"armor": 12,
+			"dodge": "",
+			"elements": [
+				"闇"
+			],
+			"index": 69,
+			"initiative": 14,
+			"level": 2,
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "",
+					"effects": [
+						"与ダメージの1/4分、自身のHPを回復する"
+					],
+					"elements": [
+						"無"
+					],
+					"index": 1,
+					"name": "ミラクルソード",
+					"range": "",
+					"reach": 1,
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "2",
+					"canDiagonal": false,
+					"damage": "",
+					"elements": [
+						"無"
+					],
+					"index": 2,
+					"name": "はやぶさ斬り",
+					"range": "",
+					"reach": 1,
+					"successRate": 80,
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"index": 3,
+					"name": "",
+					"range": "",
+					"reach": "",
+					"successRate": ""
+				}
+			],
+			"name": "ドグルズ",
+			"note": "火属性2倍弱点",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				"ゾンビ"
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中(墓場)"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"index": 70,
+			"initiative": "",
+			"level": "",
+			"name": "スフィンクス",
+			"note": "風属性無効",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中(砂漠)"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"土"
+			],
+			"index": 71,
+			"initiative": "",
+			"level": "",
+			"name": "砂に潜むもの",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中(砂漠)"
+		},
+		{
+			"HP": "",
+			"actionNumber": 1,
+			"actionPoint": "",
+			"armor": "",
+			"dodge": 200,
+			"index": 72,
+			"initiative": "",
+			"level": "",
+			"moves": [
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"戦闘から離脱する"
+					],
+					"index": "",
+					"name": "逃走",
+					"range": "",
+					"reach": 0,
+					"successRate": 70
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"effects": [
+						"次の自分のターンまで、自分の回避技能を+50%"
+					],
+					"index": "",
+					"name": "回避に専念",
+					"range": "",
+					"reach": 0,
+					"successRate": 100
+				}
+			],
+			"name": "クリボー",
+			"note": "1つアイテムをドロップする\n(何がドロップするかは1d6で決定する)\n1.DR^2F薬\n2.\n3.\n4.\n5.\n6.エルフの飲み薬",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": 0,
+			"tag": "道中クリティカル"
+		},
+		{
+			"HP": 400,
+			"actionNumber": 2,
+			"actionPoint": 4,
+			"armor": 10,
+			"dodge": 25,
+			"index": 73,
+			"initiative": 10,
+			"level": 2,
+			"moves": [
+				{
+					"attackNumber": "",
+					"canDiagonal": false,
+					"damage": "",
+					"index": 2,
+					"name": "タックル",
+					"range": "",
+					"reach": "",
+					"successRate": "",
+					"types": [
+						"物理"
+					]
+				},
+				{
+					"attackNumber": "1",
+					"canDiagonal": false,
+					"damage": "0",
+					"index": 3,
+					"name": "おたけび",
+					"range": "自分を中心に5×5マス",
+					"reach": 0,
+					"statusEffects": [
+						{
+							"effectType": "行動停止",
+							"level": 0,
+							"turn": 1
+						}
+					],
+					"successRate": 95
+				},
+				{
+					"attackNumber": "5",
+					"canDiagonal": false,
+					"damage": "10d6",
+					"index": 4,
+					"name": "棍棒振り回し",
+					"range": "",
+					"reach": 1,
+					"successRate": 85,
+					"types": [
+						"物理"
+					]
+				}
+			],
+			"name": "トロール",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中ファンブル"
+		},
+		{
+			"HP": "",
+			"actionNumber": "",
+			"actionPoint": "",
+			"armor": "",
+			"dodge": "",
+			"elements": [
+				"土"
+			],
+			"index": 74,
+			"initiative": "",
+			"level": "",
+			"name": "黒い子ヤギ",
+			"note": "",
+			"sanCheck": {
+				"failure": "",
+				"success": ""
+			},
+			"species": [
+				""
+			],
+			"statusEffects": {
+				"atkDown": "",
+				"confusion": "",
+				"curse": "",
+				"dazzle": "",
+				"defDown": {
+					"breath": "",
+					"magic": "",
+					"physical": ""
+				},
+				"flame": "",
+				"ice": "",
+				"poison": "",
+				"sleep": "",
+				"spdDown": "",
+				"stun": ""
+			},
+			"stealth": "",
+			"tag": "道中ファンブル"
+		}
+	]
 }
