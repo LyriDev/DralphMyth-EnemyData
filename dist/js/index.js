@@ -360,6 +360,16 @@ function getDataWithIndex(data){//全データをインデックス付きで取�
     }
     return result
 }
+function getDataWithoutNotSavedData(data){//未保存のデータ以外を取得する関数
+    let result={enemy:[]}
+    for(let i=0;i<data.enemy.length;i++){
+        const enemyData=data.enemy[i]
+        if(!enemyData.isNotSaved){//未保存のデータでなければ
+            result.enemy.push(enemyData)//データを取得する
+        }
+    }
+    return result
+}
 const uniqueKey=getUniqueKey()//一意キー
 
 /* 種別リスト */
@@ -412,7 +422,12 @@ const statusEffectWithoutLevelList=[//レベルのない状態異常のリスト
 /* ページごとに表示するコンテンツを変更するための関数 */
 function dataBase_get(url){//データベースのデータを取得する関数
     fetch(url).then(response=>response.json()).then(respondedData=>{
-        updateHTML(respondedData)//HTMLを更新する
+        let dataWithoutWasteData=respondedData
+        if(Page===null){//一覧ページの場合
+            dataWithoutWasteData=getDataWithoutNotSavedData(respondedData)//未保存の新規データを削除して取得する
+            console.log(dataWithoutWasteData)
+        }
+        updateHTML(dataWithoutWasteData)//HTMLを更新する
     })
 }
 function updateHTML(data){//HTMLを更新する関数
@@ -459,7 +474,7 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             </div>
             `
             $(document).on("mousedown","#createButton",function(event){//新規作成ボタンに処理を適用する
-                createButton_clickedProcess(data,event)
+                createButton_clickedProcess(event)
             })
             $(document).on("input","#searchTag,#searchName",function(){//検索ボックスに処理を適用する
                 const tagFilter=$("#searchTag").val()//タグ検索ボックスに入力された値
@@ -525,7 +540,7 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
                 </div>
             `
             $(document).on("mousedown","#createButton",function(event){//新規作成ボタンに処理を適用する
-                createButton_clickedProcess(data,event)
+                createButton_clickedProcess(event)
             })
             break
         default:
@@ -629,29 +644,33 @@ function updateMain(data,_page=Page){//メインを変更する関数
 function updateMainContent(content){//メインの中身を上書きする関数
     mainArea.innerHTML=content//メインの中身を変更する
 }
-function createButton_clickedProcess(data,event){//新規作成ボタンが押されたときの処理
-    let result
-    if(Boolean(data)===true){//データが入っているときの処理
-        result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
-        result.enemy.push(emptyData)//データに新規データを追加する
-    }else{
-        result={enemy:[]}//空データを作詞絵
-        result.enemy.push(emptyData)//データに新規データを追加する
-    }
-    const newPageUrl=`${htmlUrl}?page=edit&index=${result.enemy.length-1}`
-    switch(event.button){
-        case 0://左クリックのときの処理
-            dataBase_update(dataBaseUrl,result,"jump",newPageUrl)
-            break
-        case 1://中クリックのときの処理
-            dataBase_update(dataBaseUrl,result,"open",newPageUrl)
-            break
-        case 2://右クリックのときの処理
-            break
-        default:
-            break
-    }
-
+function createButton_clickedProcess(event){//新規作成ボタンが押されたときの処理
+    //くそ設計なのでisNotSavedプロパティを取り除いていないデータの取得方法がデータの再取得しか思いつかなかった
+    fetch(dataBaseUrl).then(response=>response.json()).then(data=>{
+        let newCreateData=JSON.parse(JSON.stringify(emptyData))
+        newCreateData.isNotSaved=true//未保存のデータとして定義(未保存のデータは保存されない)
+        let result
+        if(Boolean(data)===true){//データが入っているときの処理
+            result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
+            result.enemy.push(newCreateData)//データに新規データを追加する
+        }else{
+            result={enemy:[]}//空データを作詞絵
+            result.enemy.push(newCreateData)//データに新規データを追加する
+        }
+        const newPageUrl=`${htmlUrl}?page=edit&index=${result.enemy.length-1}`
+        switch(event.button){
+            case 0://左クリックのときの処理
+                dataBase_update(dataBaseUrl,result,"jump",newPageUrl)
+                break
+            case 1://中クリックのときの処理
+                dataBase_update(dataBaseUrl,result,"open",newPageUrl)
+                break
+            case 2://右クリックのときの処理
+                break
+            default:
+                break
+        }
+    })
 }
 function viewButton_clickedProcess(data,event,url){//編集ページの一覧/閲覧ボタンが押されたときの処理
     let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
@@ -1992,6 +2011,7 @@ function getInputData(data){//入力されたデータを含む全体のデー�
 }
 function saveEditData(data){//入力したデータを保存する関数
     const inputData=getInputData(data)
+    delete inputData.isNotSaved//未保存のデータであるというプロパティを削除する
     dataBase_update(dataBaseUrl,inputData)//jsonファイルを上書き更新する
     alert("保存しました")
 }
