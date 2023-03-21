@@ -364,7 +364,7 @@ function getDataWithoutNotSavedData(data){//未保存のデータ以外を取得
     let result={enemy:[]}
     for(let i=0;i<data.enemy.length;i++){
         const enemyData=data.enemy[i]
-        if(!enemyData.isNotSaved){//未保存のデータでなければ
+        if((!enemyData.isNotSaved)&&(!enemyData.founder)){//未保存のデータや仮置きデータでなければ
             result.enemy.push(enemyData)//データを取得する
         }
     }
@@ -422,6 +422,14 @@ const statusEffectWithoutLevelList=[//レベルのない状態異常のリスト
 /* ページごとに表示するコンテンツを変更するための関数 */
 function dataBase_get(url){//データベースのデータを取得する関数
     fetch(url).then(response=>response.json()).then(respondedData=>{
+        if(!respondedData){//データが存在しない場合、新規データを追加する
+            console.log("hoge")
+            console.log(url)
+            const dataFramework={enemy:[{founder:true}]}//新規データ
+            dataBase_update(dataBaseUrl,dataFramework,"reload")
+            return
+        }
+        console.log(respondedData)
         let dataWithoutWasteData=respondedData
         if(Page===null){//一覧ページの場合
             dataWithoutWasteData=getDataWithoutNotSavedData(respondedData)//未保存の新規データを削除して取得する
@@ -2427,7 +2435,7 @@ function fileDrop(){//ファイルのドラッグ&ドロップ処理を実装す
 }
 
 /* デバッグ用処理 */
-if(false)document.addEventListener("keyup",keyupEvent)
+if(true)document.addEventListener("keyup",keyupEvent)
 function keyupEvent(event){
     if(event.ctrlKey){//Ctrlキー同時押し
         switch(event.keyCode){
