@@ -827,7 +827,7 @@ function createEnemyElement(enemyData,data){//表示する敵データの要素�
                 <button class="button" id="editButton${key}">編集</button>
                 <button class="button" id="viewButton${key}">閲覧</button>
                 <button class="button" id="exportButton${key}">出力</button>
-                <button class="button" id="deleteButton${key}")">削除</button>
+                <button class="button" id="deleteButton${key}">削除</button>
             </div>
         </div>
     `
