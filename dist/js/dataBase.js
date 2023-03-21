@@ -28,7 +28,6 @@ function dataBase_delete(option=""){//データベースのデータを全て削
     })
 }
 function dataBase_update(url,data,option="",optionUrl=""){//データベースのデータを更新する関数
-    console.log(data)
     fetch(url,{
         method:'PUT',
         mode:'cors',
@@ -37,7 +36,7 @@ function dataBase_update(url,data,option="",optionUrl=""){//データベース�
         },
         body: JSON.stringify(data)
     }).then(res=>{
-        console.log("From update\n"+res.statusText)
+        //console.log("From update\n"+res.statusText)
         switch(option){
             case "reload":
                 location.reload()//更新し終えたら画面を再読み込みする

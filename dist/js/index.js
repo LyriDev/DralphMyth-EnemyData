@@ -355,7 +355,7 @@ function getDataWithIndex(data){//全データをインデックス付きで取�
     let result={enemy:[]}
     for(let i=0;i<data.enemy.length;i++){
         const enemyData=data.enemy[i]
-        enemyData.index=i
+        enemyData.Index=i
         result.enemy.push(enemyData)
     }
     return result
@@ -364,6 +364,7 @@ function getDataWithoutNotSavedData(data){//未保存のデータ以外を取得
     let result={enemy:[]}
     for(let i=0;i<data.enemy.length;i++){
         const enemyData=data.enemy[i]
+        enemyData.index=i
         if((!enemyData.isNotSaved)&&(!enemyData.founder)){//未保存のデータや仮置きデータでなければ
             result.enemy.push(enemyData)//データを取得する
         }
@@ -423,17 +424,13 @@ const statusEffectWithoutLevelList=[//レベルのない状態異常のリスト
 function dataBase_get(url){//データベースのデータを取得する関数
     fetch(url).then(response=>response.json()).then(respondedData=>{
         if(!respondedData){//データが存在しない場合、新規データを追加する
-            console.log("hoge")
-            console.log(url)
             const dataFramework={enemy:[{founder:true}]}//新規データ
             dataBase_update(dataBaseUrl,dataFramework,"reload")
             return
         }
-        console.log(respondedData)
         let dataWithoutWasteData=respondedData
         if(Page===null){//一覧ページの場合
             dataWithoutWasteData=getDataWithoutNotSavedData(respondedData)//未保存の新規データを削除して取得する
-            console.log(dataWithoutWasteData)
         }
         updateHTML(dataWithoutWasteData)//HTMLを更新する
     })
@@ -707,8 +704,7 @@ function showEnemyData(data,tagFilter="",nameFilter=""){//表示する敵デー�
 }
 function getSortedEnemyObject(data,tagFilter="",nameFilter="",keyAddOption=false){//ソートされた敵データを作成する関数
     /* 「タグ>名前>レベル」の順番にソートされる仕様 */
-    const passedData=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
-    const gottenData=getDataWithIndex(passedData)//データをインデックス付きで取得する関数
+    const gottenData=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
     const enemyArray=new Array
     if(tagFilter===""){//タグフィルターなしのとき
         let allEnemyTag=getAllEnemyTag(gottenData)
@@ -2111,7 +2107,12 @@ function setAutoAdjustTextarea(target){//textareaの入力時に縦幅を自動�
 /* データを編集・出力する関数 */
 function deleteEnemyPiece(key,data){//jsonのデータを削除する関数
     let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
-    result.enemy.splice(key,1)//削除する
+    for(let i=0;i<result.enemy.length;i++){//いちいち全部のデータを参照しようとするので重い 改善するべき設計
+        if(result.enemy[i].index===key){
+            result.enemy.splice(i,1)//削除する
+            break
+        }
+    }
     dataBase_update(dataBaseUrl,result,"reload")//データベースを削除されたデータで上書きする
 }
 function exportEnemyPiece(enemyData){//敵コマをクリップボードに出力する関数
@@ -2217,7 +2218,6 @@ function getAbilitiesAsCcfoliaData(enemyData,subSeparateBar){//ココフォリ�
     if(Boolean(enemyData.abilities)===true){//特性があるときの処理
         for(let i in enemyData.abilities){
             result.push(subSeparateBar)
-            console.log(enemyData.abilities[i].name)
             if(enemyData.abilities[i].name!=="")result.push(`『${convertProperty(enemyData.abilities[i].name)}』`)
             result.push(convertProperty(enemyData.abilities[i].effect))
         }
@@ -2288,7 +2288,6 @@ function downloadJson(data,idName,convertText=false){//jsonのデータをダウ
         const tagFilter=$("#searchTag").val()//タグ検索ボックスに入力された値
         const nameFilter=$("#searchName").val()//名前検索ボックスに入力された値
         sortedData=getSortedEnemyObject(data,tagFilter,nameFilter)//敵データにフィルターをかけて取得する
-        console.log(sortedData)
         for(let i in sortedData.enemy){//jsonデータをtxt形式に変換する
             dataString+=convertJsonToText(sortedData.enemy[i])+"\n\n"
         }
@@ -2435,7 +2434,7 @@ function fileDrop(){//ファイルのドラッグ&ドロップ処理を実装す
 }
 
 /* デバッグ用処理 */
-if(true)document.addEventListener("keyup",keyupEvent)
+if(false)document.addEventListener("keyup",keyupEvent)
 function keyupEvent(event){
     if(event.ctrlKey){//Ctrlキー同時押し
         switch(event.keyCode){
