@@ -8,33 +8,36 @@ function getLoginForm(){
     return result
 }
 
-async function signIn(email, password){
-    try {
-        const auth = getAuth()
-        await signInWithEmailAndPassword(
-            auth,
-            email,
-            password
-        )
-        location.href = "./index.html"
-    } catch (e) {
-        console.log(e)
-        window.alert("ログインに失敗しました。\nパスワードが間違っているか、アカウントが存在しない可能性があります。")
-    }
+function signIn(email, password) {
+    const auth = firebase.auth()
+    auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+            location.href = "./index.html"
+        })
+        .catch((error) => {
+            console.log(error)
+            window.alert("ログインに失敗しました。\nパスワードが間違っているか、アカウントが存在しない可能性があります。")
+        })
 }
 
-async function login(){//ボタンに適用する、ログインする処理
+function login(){//ボタンに適用する、ログインする処理
     const data = getLoginForm()
-    await signIn(data["email"],data["password"])
+    signIn(data["email"],data["password"])
 }
 
 function resetPassword(){//パスワードをリセットする関数
     //パスワードリセットのメールを送るために、アカウントのメールアドレスを求める
     const email = window.prompt("パスワードをリセットするためのメールを送ります。\nアカウントのメールアドレスを入力してください。", "");
     if(mailCheck(email)){// 入力内容が正しいメールアドレス場合
-        const auth = getAuth()
-        sendPasswordResetEmail(auth, email); // パスワードリセットのメールを送る
-        window.alert("パスワードリセットのメールを送りました。");
+        const auth = firebase.auth()
+        auth.sendPasswordResetEmail(email) // パスワードリセットのメールを送る
+            .then(() => {
+                window.alert("パスワードリセットのメールを送りました。");
+            })
+            .catch((error) => {
+                console.log(error)
+                window.alert("パスワードリセットのメール送信に失敗しました。")
+            })
     }else{// 空の場合やキャンセルした場合は警告ダイアログを表示
         window.alert("正しいメールアドレスを入力してください。");
     }
