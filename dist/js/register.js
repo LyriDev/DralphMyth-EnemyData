@@ -10,23 +10,17 @@ function getRegisterForm(){
     return result
 }
 
-async function signUp(email, password){
-    try {
-        const auth = getAuth()
-        const userCredential = await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-        )
-        await sendEmailVerification(userCredential.user)
-        window.alert("メールアドレスに登録確認メールを送信しました。")
-        location.href = "./index.html"
-    } catch (e) {
-        if (e instanceof FirebaseError) {
-            console.log(e)
+function signUp(email, password) {
+    const auth = firebase.auth()
+    auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            userCredential.user.sendEmailVerification()
+            location.href = "./index.html"
+        })
+        .catch((error) => {
+            console.log(error)
             window.alert("ユーザー登録に失敗しました。\n既にメールアドレスが使用されている可能性があります。")
-        }
-    }
+        })
 }
 
 function register(){//ボタンに適用する、アカウント登録する処理

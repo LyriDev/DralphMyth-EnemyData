@@ -557,7 +557,6 @@ function createUserMenu(){//ユーザーメニューを作成する関数
     const userMenu=document.getElementById("userMenu")
     const userMenuContent=`
         <div id="userMenuContent">
-            <div class="button" id="userButton">${userName}</div>
             <button id="logoutButton" onclick="logout()">ログアウト</button>
         </div>
     `

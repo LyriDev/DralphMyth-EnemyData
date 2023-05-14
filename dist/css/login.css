@@ -228,7 +228,7 @@
     color: #202328!important;
 }
 
-.field:nth-child(3){
+.last-field{
     margin-bottom: 2rem;
 }
 

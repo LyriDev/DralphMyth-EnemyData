@@ -18,16 +18,14 @@ async function signIn(email, password){
         )
         location.href = "./index.html"
     } catch (e) {
-        if (e instanceof FirebaseError) {
-            console.log(e)
-            window.alert("ログインに失敗しました。\nパスワードが間違っているか、アカウントが存在しない可能性があります。")
-        }
+        console.log(e)
+        window.alert("ログインに失敗しました。\nパスワードが間違っているか、アカウントが存在しない可能性があります。")
     }
 }
 
-function login(){//ボタンに適用する、ログインする処理
+async function login(){//ボタンに適用する、ログインする処理
     const data = getLoginForm()
-    signIn(data["email"],data["password"])
+    await signIn(data["email"],data["password"])
 }
 
 function resetPassword(){//パスワードをリセットする関数
