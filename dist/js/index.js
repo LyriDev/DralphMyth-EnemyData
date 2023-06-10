@@ -2136,7 +2136,7 @@ function convertJsonToPiece(enemyData){//Jsonデータをココフォリアコ�
                 {label:"装甲",value:0,max:0}
             ],
             params:[
-                {label:"回避",value:`${convertProperty(enemyData.dodge)}`}
+                {label:"回避技能",value:`${convertProperty(enemyData.dodge)}`}
             ],
             iconUrl:"",
             faces:[],
