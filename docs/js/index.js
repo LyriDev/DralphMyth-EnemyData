@@ -281,18 +281,14 @@ function getTypeArray(array){//数値と空白文字を含む配列から要素�
 function setUrl(idName,url){//クリックしたらurlを開く処理を適用する関数
     $(document).off("click",idName)
     $(document).on("click",idName,function(event){
-        switch(event.button){
-            case 0://左クリックのときの処理
-                location.href=url
-                break
-            case 1://中クリックのときの処理
-                window.open(url,"_blank")
-                break
-            case 2://右クリックのときの処理
-                break
-            default:
-                break
-        }
+        //左クリックのときの処理
+        if(event.button == 0) location.href=url
+    })
+
+    $(document).off("mousedown",idName)
+    $(document).on("mousedown",idName,function(event){
+        //中クリックのときの処理
+        if(event.button == 1) window.open(url,"_blank")
     })
 }
 function exportToClipboard(value){//テキストデータをクリップボードに出力する関数
