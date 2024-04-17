@@ -502,7 +502,7 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             setUrl("#indexButton",indexUrl)
             setUrl("#editButton",editUrl)
             $(document).on("mousedown","#explanation",function(event){//ホームボタンにクリック処理を適用する
-                window.open("../index.html")
+                window.open("https://github.com/LyriDev/DralphMyth-EnemyData/blob/release/README.md")
             })
             $(document).on("click","#exportButton",function(){
                 exportEnemyPiece(data.enemy[Index])//出力ボタン処理を適用する
@@ -520,7 +520,7 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             </div>
             `
             $(document).on("mousedown","#explanation",function(event){//ホームボタンにクリック処理を適用する
-                window.open("../index.html")
+                window.open("https://github.com/LyriDev/DralphMyth-EnemyData/blob/release/README.md")
             })
             $(document).on("mousedown","#indexButton",function(event){//一覧ボタンにクリック処理を適用する
                 const inputData=getInputData(data)
