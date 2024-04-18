@@ -119,6 +119,7 @@ const newData={//新規データの枠組み(技・特性欄に空要素を1つ�
     note:""
 }
 const fileReader=new FileReader()//File API
+let firebaseIdToken = null;
 
 function NumberOrEmpty(value){//値が空文字列以外の時はString型をNumber型に変換する関数
     if(value==="")return ""
@@ -419,10 +420,16 @@ const statusEffectWithoutLevelList=[//レベルのない状態異常のリスト
 
 /* ページごとに表示するコンテンツを変更するための関数 */
 function dataBase_get(url){//データベースのデータを取得する関数
-    fetch(url).then(response=>response.json()).then(respondedData=>{
+    console.log("get", firebaseIdToken)
+    fetch(url, {
+        method: "GET",
+        headers: {
+            // Authorization: `Bearer ${firebaseIdToken}`
+        }
+    }).then(response=>response.json()).then(respondedData=>{
         if(!respondedData){//データが存在しない場合、新規データを追加する
             const dataFramework={enemy:[{founder:true}]}//新規データ
-            dataBase_update(dataBaseUrl,dataFramework,"reload")
+            dataBase_update(dataBaseUrl,dataFramework,firebaseIdToken,"reload")
             return
         }
         let dataWithoutWasteData=respondedData
@@ -647,7 +654,12 @@ function updateMainContent(content){//メインの中身を上書きする関数
 }
 function createButton_clickedProcess(event){//新規作成ボタンが押されたときの処理
     //くそ設計なのでisNotSavedプロパティを取り除いていないデータの取得方法がデータの再取得しか思いつかなかった
-    fetch(dataBaseUrl).then(response=>response.json()).then(data=>{
+    fetch(dataBaseUrl, {
+        method: "GET",
+        headers: {
+            "authorization": `Bearer ${firebaseIdToken}`
+        }
+    }).then(response=>response.json()).then(data=>{
         let newCreateData=JSON.parse(JSON.stringify(emptyData))
         newCreateData.isNotSaved=true//未保存のデータとして定義(未保存のデータは保存されない)
         let result
@@ -661,10 +673,10 @@ function createButton_clickedProcess(event){//新規作成ボタンが押され�
         const newPageUrl=`${htmlUrl}?page=edit&index=${result.enemy.length-1}`
         switch(event.button){
             case 0://左クリックのときの処理
-                dataBase_update(dataBaseUrl,result,"jump",newPageUrl)
+                dataBase_update(dataBaseUrl,result,firebaseIdToken,"jump",newPageUrl)
                 break
             case 1://中クリックのときの処理
-                dataBase_update(dataBaseUrl,result,"open",newPageUrl)
+                dataBase_update(dataBaseUrl,result,firebaseIdToken,"open",newPageUrl)
                 break
             case 2://右クリックのときの処理
                 break
@@ -677,10 +689,10 @@ function viewButton_clickedProcess(data,event,url){//編集ページの一覧/�
     let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
     switch(event.button){
         case 0://左クリックのときの処理
-            dataBase_update(dataBaseUrl,result,"jump",url)
+            dataBase_update(dataBaseUrl,result,firebaseIdToken,"jump",url)
             break
         case 1://中クリックのときの処理
-            dataBase_update(dataBaseUrl,result,"open",url)
+            dataBase_update(dataBaseUrl,result,firebaseIdToken,"open",url)
             break
         case 2://右クリックのときの処理
             break
@@ -2012,7 +2024,7 @@ function getInputData(data){//入力されたデータを含む全体のデー�
 function saveEditData(data){//入力したデータを保存する関数
     const inputData=getInputData(data)
     delete inputData.isNotSaved//未保存のデータであるというプロパティを削除する
-    dataBase_update(dataBaseUrl,inputData)//jsonファイルを上書き更新する
+    dataBase_update(dataBaseUrl,inputData,firebaseIdToken)//jsonファイルを上書き更新する
     alert("保存しました")
 }
 function saveByShortCutKey(data){//ショートカットキーで保存する処理を適用する関数
@@ -2109,7 +2121,7 @@ function deleteEnemyPiece(key,data){//jsonのデータを削除する関数
             break
         }
     }
-    dataBase_update(dataBaseUrl,result,"reload")//データベースを削除されたデータで上書きする
+    dataBase_update(dataBaseUrl,result,firebaseIdToken,"reload")//データベースを削除されたデータで上書きする
 }
 function exportEnemyPiece(enemyData){//敵コマをクリップボードに出力する関数
     let result=""
@@ -2377,7 +2389,7 @@ function importJson(importElement){//受け取ったjsonのデータを読み込
             alert("json形式のデータをインポートしてください。")
         }finally{
             if(Boolean(jsonData)===true){//例外が起こらずにデータを正しく受け取れた場合の処理
-                dataBase_update(dataBaseUrl,jsonData,"reload")//データを読み込んで表示する
+                dataBase_update(dataBaseUrl,jsonData,firebaseIdToken,"reload")//データを読み込んで表示する
             }
         }
     }
@@ -2440,7 +2452,7 @@ function keyupEvent(event){
                 break
             case 46://Deleteキーが押されたとき
                 //データを全消ししてリロード
-                dataBase_delete("reload")
+                dataBase_delete(firebaseIdToken,"reload")
                 break
             case 32://Spaceキーが押されたとき
                 //ユーザー選択(未実装)
@@ -2457,7 +2469,7 @@ function sendDefaultData(){//ローカルのjsonデータをサーバーにア�
             dataType:"json",// json形式でデータを取得
         })
         .done(function(data){
-            dataBase_update(dataBaseUrl,data,"reload")
+            dataBase_update(dataBaseUrl,data,firebaseIdToken,"reload")
         })
     })
 }
@@ -2465,8 +2477,19 @@ function sendDefaultData(){//ローカルのjsonデータをサーバーにア�
 /* ここから実際の処理 */
 firebase.auth().onAuthStateChanged((user)=>{//認証処理終了後の処理
     if(user){
-        setUser(user.displayName,user.uid)
-        main()
+        // ユーザーが認証されている場合
+        user.getIdToken(/* forceRefresh */ true).then((idToken) => {
+            // Firebase ID トークンが取得された場合の処理
+            // idToken 変数に Firebase ID トークンが含まれます
+            console.log("Firebase ID トークン:", idToken);
+            firebaseIdToken = idToken
+
+            setUser(user.displayName,user.uid)
+            main()
+        }).catch((error) => {
+            // Firebase ID トークンの取得中にエラーが発生した場合の処理
+            console.error("Firebase ID トークンの取得中にエラーが発生しました:", error);
+        });
     }else{//非ログイン時の処理
         location.href=loginPage//ログインページにリダイレクトする
     }

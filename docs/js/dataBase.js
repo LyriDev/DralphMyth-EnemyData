@@ -17,9 +17,12 @@ function logout(){//ログアウトする関数
 }
 
 /* データベースを管理する関数 */
-function dataBase_delete(option=""){//データベースのデータを全て削除する関数
+function dataBase_delete(idToken, option=""){//データベースのデータを全て削除する関数
     fetch(dataBaseUrl,{
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            "authorization": `Bearer ${idToken}`
+        }
     }).then(res=>{
         //console.log("From delete\n"+res.statusText)
         if(option==="reload"){
@@ -27,12 +30,13 @@ function dataBase_delete(option=""){//データベースのデータを全て削
         }
     })
 }
-function dataBase_update(url,data,option="",optionUrl=""){//データベースのデータを更新する関数
+function dataBase_update(url, data, idToken, option="", optionUrl=""){//データベースのデータを更新する関数
     fetch(url,{
         method:'PUT',
         mode:'cors',
         headers:{
-        'Content-Type':'application/json'
+            'Content-Type':'application/json',
+            "authorization": `Bearer ${idToken}`
         },
         body: JSON.stringify(data)
     }).then(res=>{
