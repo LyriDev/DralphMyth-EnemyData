@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=500,user-scalable=no">
+    <title id="title">ドラルフ神話 戦闘データエディタ</title>
+    <link rel="icon" href="resource/favicon.ico">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/login.css">
+  </head>
+  <body>
+    <div id="header"></div>
+    <div class="clearFix" id="userMenu"></div>
+    <div class="clearFix" id="sideMenu"></div>
+    <div id="main">
+      <h1 class="subtitle has-text-centered">ログイン</h1>
+      <div class="field"><label for="" class="label">メールアドレス</label>
+        <div class="control"><input type="text" placeholder="user@email.com" required="required" id="email" class="input has-text-dark"></div>
+      </div>
+      <div class="field last-field"><label for="" class="label">パスワード</label>
+        <div class="control"><input type="password" placeholder="*******" required="required" id="password" class="input has-text-dark"></div>
+      </div>
+      <div class="field"><button onclick="login()" class="button is-success">ログイン</button><a href="./register.html" class="is-pulled-right has-text-info" style="line-height: 2.5em;">アカウント登録</a></div>
+      <div class="field"><a onclick="resetPassword()" id="login-button" class="button is-dark">パスワードを忘れた方はこちら</a></div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.1/firebase-auth.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/login.js"></script>
+  </body>
+</html>

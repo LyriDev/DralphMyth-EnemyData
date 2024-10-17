@@ -283,18 +283,14 @@ function getTypeArray(array){//数値と空白文字を含む配列から要素�
 function setUrl(idName,url){//クリックしたらurlを開く処理を適用する関数
     $(document).off("click",idName)
     $(document).on("click",idName,function(event){
-        switch(event.button){
-            case 0://左クリックのときの処理
-                location.href=url
-                break
-            case 1://中クリックのときの処理
-                window.open(url,"_blank")
-                break
-            case 2://右クリックのときの処理
-                break
-            default:
-                break
-        }
+        //左クリックのときの処理
+        if(event.button == 0) location.href=url
+    })
+
+    $(document).off("mousedown",idName)
+    $(document).on("mousedown",idName,function(event){
+        //中クリックのときの処理
+        if(event.button == 1) window.open(url,"_blank")
     })
 }
 function exportToClipboard(value){//テキストデータをクリップボードに出力する関数
@@ -504,7 +500,7 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             setUrl("#indexButton",indexUrl)
             setUrl("#editButton",editUrl)
             $(document).on("mousedown","#explanation",function(event){//ホームボタンにクリック処理を適用する
-                window.open("../index.html")
+                window.open("https://github.com/LyriDev/DralphMyth-EnemyData/blob/release/README.md")
             })
             $(document).on("click","#exportButton",function(){
                 exportEnemyPiece(data.enemy[Index])//出力ボタン処理を適用する
@@ -522,7 +518,7 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             </div>
             `
             $(document).on("mousedown","#explanation",function(event){//ホームボタンにクリック処理を適用する
-                window.open("../index.html")
+                window.open("https://github.com/LyriDev/DralphMyth-EnemyData/blob/release/README.md")
             })
             $(document).on("mousedown","#indexButton",function(event){//一覧ボタンにクリック処理を適用する
                 const inputData=getInputData(data)
@@ -560,7 +556,6 @@ function createUserMenu(){//ユーザーメニューを作成する関数
     const userMenu=document.getElementById("userMenu")
     const userMenuContent=`
         <div id="userMenuContent">
-            <div class="button" id="userButton">${userName}</div>
             <button id="logoutButton" onclick="logout()">ログアウト</button>
         </div>
     `
