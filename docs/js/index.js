@@ -2207,7 +2207,7 @@ function getAbilitiesAsCcfoliaData(enemyData,subSeparateBar){//ココフォリ�
             `${convertPercent(enemyData.statusEffects.sleep,"眠り",true,true)}`,
             `${convertPercent(enemyData.statusEffects.confusion,"混乱",true,true)}`,
             `${convertPercent(enemyData.statusEffects.stun,"スタン",true,true)}`,
-            `${convertPercent(enemyData.statusEffects.curse,"呪い",true,true)}`
+            `${convertPercent(enemyData.statusEffects.curse,"呪い",true,true)}`,
             `${convertPercent(enemyData.statusEffects.death,"即死",true,true)}`
         ],
         resistance_parameterDown:[
