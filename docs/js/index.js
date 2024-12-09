@@ -517,16 +517,14 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
                 </div>
             </div>
             `
-            $(document).on("mousedown","#explanation",function(event){//ホームボタンにクリック処理を適用する
+            $(document).on("mousedown","#explanation",function(_event){//ホームボタンにクリック処理を適用する
                 window.open("https://github.com/LyriDev/DralphMyth-EnemyData/blob/release/README.md")
             })
             $(document).on("mousedown","#indexButton",function(event){//一覧ボタンにクリック処理を適用する
-                const inputData=getInputData(data)
-                viewButton_clickedProcess(inputData,event,indexUrl)
+                viewButton_clickedProcess(event,indexUrl)
             })
             $(document).on("mousedown","#viewButton",function(event){//閲覧ボタンにクリック処理を適用する
-                const inputData=getInputData(data)
-                viewButton_clickedProcess(inputData,event,viewUrl)
+                viewButton_clickedProcess(event,viewUrl)
             })
             $(document).on("click","#saveButton",function(){//保存ボタンに処理を適用する
                 saveEditData(data)
@@ -675,14 +673,16 @@ function createButton_clickedProcess(event){//新規作成ボタンが押され�
         }
     })
 }
-function viewButton_clickedProcess(data,event,url){//編集ページの一覧/閲覧ボタンが押されたときの処理
-    let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
+function viewButton_clickedProcess(event, url){//編集ページの一覧/閲覧ボタンが押されたときの処理
+    const nowData = getInputEnemyData()
+    let result=JSON.parse(JSON.stringify(nowData))//値渡しでデータを受け取る
+    const dataPath = `${dataBaseUserPath}/${Index}.json`
     switch(event.button){
         case 0://左クリックのときの処理
-            dataBase_update(dataBaseUrl,result,"jump",url)
+            dataBase_update(dataPath, result, "jump", url)
             break
         case 1://中クリックのときの処理
-            dataBase_update(dataBaseUrl,result,"open",url)
+            dataBase_update(dataPath, result, "open", url)
             break
         case 2://右クリックのときの処理
             break
@@ -2016,15 +2016,10 @@ function getReplacedData(data,key,enemyData){//データの一部を置換する
     result.enemy.splice(key,1,enemyData)//指定されたデータを置換する
     return result
 }
-function getInputData(data){//入力されたデータを含む全体のデータを取得する関数
-    const gottenEnemyData=getInputEnemyData()
-    const replacedData=getReplacedData(data,Index,gottenEnemyData)
-    return replacedData
-}
 function saveEditData(data){//入力したデータを保存する関数
-    const inputData=getInputData(data)
-    delete inputData.isNotSaved//未保存のデータであるというプロパティを削除する
-    dataBase_update(dataBaseUrl,inputData)//jsonファイルを上書き更新する
+    const gottenEnemyData = getInputEnemyData(data)
+    const dataPath = `${dataBaseUserPath}/${Index}.json`
+    dataBase_update(dataPath, gottenEnemyData)//jsonファイルを上書き更新する
     alert("保存しました")
 }
 function saveByShortCutKey(data){//ショートカットキーで保存する処理を適用する関数
@@ -2247,7 +2242,7 @@ function getMovesAsCcfoliaData(moves,subSeparateBar){//ココフォリアコマ�
         result.push(`【${convertProperty(sortedMoves[i].index)}】『${convertProperty(sortedMoves[i].name)}』`)
         //射程と範囲
         console.log({sortedMoves})
-        if(sortedMoves[i].elements || sortedMoves[i].types){ // TODO 技種別と属性
+        if(sortedMoves[i].elements || sortedMoves[i].types){
             let moveType = ""
             if(sortedMoves[i].elements) moveType += `${sortedMoves[i].elements.join("・")}属性`
             if(sortedMoves[i].types) moveType += sortedMoves[i].types.join("・")
