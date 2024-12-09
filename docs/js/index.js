@@ -995,7 +995,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
             }
             for(let i in list){
                 if(Boolean(property)===true){
-                    if((property.includes(list[i]))||(move.canDiagonal)){
+                    if((property.includes(list[i])) || (boxName==="move-canDiagonal" && move.canDiagonal)){
                         isChecked="checked"
                     }else{
                         isChecked=""
@@ -2128,8 +2128,8 @@ function convertJsonToPiece(enemyData){//Jsonデータをココフォリアコ�
             externalUrl:"",
             status:[
                 {label:"HP",value:0,max:0},
-                {label:"行動P",value:0,max:0},
-                {label:"装甲",value:0,max:0}
+                {label:"装甲",value:0,max:0},
+                {label:"行動P",value:0,max:0}
             ],
             params:[
                 {label:"回避技能",value:`${convertProperty(enemyData.dodge)}`}
@@ -2233,14 +2233,21 @@ function getMovesAsCcfoliaData(moves,subSeparateBar){//ココフォリアコマ�
         //技番号と名前
         result.push(`【${convertProperty(sortedMoves[i].index)}】『${convertProperty(sortedMoves[i].name)}』`)
         //射程と範囲
+        if(sortedMoves[i].elements || sortedMoves[i].types){ // TODO 技種別と属性
+            let moveType = ""
+            if(sortedMoves[i].elements) moveType += `${sortedMoves[i].elements}属性`
+            if(sortedMoves[i].types) moveType += sortedMoves[i].types
+            if(Number(sortedMoves[i].damage)!==0) moveType += "ダメージ"
+            result.push(moveType)
+        }
         const reachRange=new Array
         if((Number(sortedMoves[i].reach)!==0)||(sortedMoves[i].reach==="")){
             reachRange.push(`射程${viewReach(convertProperty(sortedMoves[i].reach),sortedMoves[i].canDiagonal)}`)
         }
         if(sortedMoves[i].range!==""){
-            reachRange.push(sortedMoves[i].range)
+            reachRange.push(`範囲: ${sortedMoves[i].range}`)
         }
-        result.push(addDotToArray(reachRange,","))
+        result.push(addDotToArray(reachRange,", "))
         //状態異常
         for(let j in sortedMoves[i].statusEffects){
             result.push(`${convertProperty(sortedMoves[i].statusEffects[j].effectType)}${hideTheZeroProperty(sortedMoves[i].statusEffects[j].level,`Lv${convertProperty(sortedMoves[i].statusEffects[j].level)}`)}${hideTheZeroProperty(sortedMoves[i].statusEffects[j].turn,`(${convertProperty(sortedMoves[i].statusEffects[j].turn)}ターン)`)}`)
