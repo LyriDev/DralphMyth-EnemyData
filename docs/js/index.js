@@ -2159,8 +2159,8 @@ function convertJsonToPiece(enemyData){//Jsonデータをココフォリアコ�
     ccfoliaPiece["data"]["name"]=(enemyData.name+addValue(enemyData.level," レベル","",0)).trimStart()
     ccfoliaPiece["data"]["initiative"]=enemyData.initiative
     ccfoliaPiece["data"]["status"][0]["value"]=ccfoliaPiece["data"]["status"][0]["max"]=enemyData.HP
-    ccfoliaPiece["data"]["status"][1]["value"]=enemyData.actionPoint
-    ccfoliaPiece["data"]["status"][2]["value"]=enemyData.armor
+    ccfoliaPiece["data"]["status"][1]["value"]=enemyData.armor
+    ccfoliaPiece["data"]["status"][2]["value"]=enemyData.actionPoint
     ccfoliaPiece["data"]["commands"]=getChatPalette(enemyData)
     //代入したデータを出力する
     result=JSON.stringify(ccfoliaPiece)
