@@ -6,6 +6,7 @@ let dataBaseUrl=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/users/
 function setUser(userDisplayName,userUid){//ユーザーを設定する関数
     userName=userDisplayName
     dataBaseUrl=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/users/${userUid}/data.json`
+    dataBaseUserPath=`https://dralphmyth-enemydata-default-rtdb.firebaseio.com/users/${userUid}/data/enemy`
 }
 function logout(){//ログアウトする関数
     firebase.auth().signOut().then(()=>{

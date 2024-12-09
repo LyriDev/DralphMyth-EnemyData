@@ -359,13 +359,13 @@ function getDataWithIndex(data){//全データをインデックス付きで取�
     }
     return result
 }
-function getDataWithoutNotSavedData(data){//未保存のデータ以外を取得する関数
-    let result={enemy:[]}
-    for(let i=0;i<data.enemy.length;i++){
-        const enemyData=data.enemy[i]
-        enemyData.index=i
-        if((!enemyData.isNotSaved)&&(!enemyData.founder)){//未保存のデータや仮置きデータでなければ
-            result.enemy.push(enemyData)//データを取得する
+function getDataWithoutNotSavedData(data){//仮置きデータ以外を取得する関数
+    let result={enemy: {}}
+    for(const key in data.enemy){
+        const enemyData=data.enemy[key]
+        enemyData.index=key
+        if((!enemyData.founder)){//仮置きデータでなければ
+            result.enemy[key] = enemyData//データを取得する
         }
     }
     return result
@@ -422,6 +422,16 @@ const statusEffectWithoutLevelList=[//レベルのない状態異常のリスト
 /* ページごとに表示するコンテンツを変更するための関数 */
 function dataBase_get(url){//データベースのデータを取得する関数
     fetch(url).then(response=>response.json()).then(respondedData=>{
+        if(Array.isArray(respondedData?.enemy)){
+            const newObj = {
+                enemy: respondedData.enemy
+                .map((item, index) => (item !== null ? { [index]: item } : null)) // nullを除いた部分オブジェクトに変換
+                .filter(item => item !== null) // nullを削除
+                .reduce((obj, item) => Object.assign(obj, item), {}) // オブジェクトに統合
+            }
+            respondedData = newObj
+        }
+
         if(!respondedData){//データが存在しない場合、新規データを追加する
             const dataFramework={enemy:[{founder:true}]}//新規データ
             dataBase_update(dataBaseUrl,dataFramework,"reload")
@@ -517,16 +527,14 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
                 </div>
             </div>
             `
-            $(document).on("mousedown","#explanation",function(event){//ホームボタンにクリック処理を適用する
+            $(document).on("mousedown","#explanation",function(_event){//ホームボタンにクリック処理を適用する
                 window.open("https://github.com/LyriDev/DralphMyth-EnemyData/blob/release/README.md")
             })
             $(document).on("mousedown","#indexButton",function(event){//一覧ボタンにクリック処理を適用する
-                const inputData=getInputData(data)
-                viewButton_clickedProcess(inputData,event,indexUrl)
+                viewButton_clickedProcess(event,indexUrl)
             })
             $(document).on("mousedown","#viewButton",function(event){//閲覧ボタンにクリック処理を適用する
-                const inputData=getInputData(data)
-                viewButton_clickedProcess(inputData,event,viewUrl)
+                viewButton_clickedProcess(event,viewUrl)
             })
             $(document).on("click","#saveButton",function(){//保存ボタンに処理を適用する
                 saveEditData(data)
@@ -648,41 +656,44 @@ function updateMainContent(content){//メインの中身を上書きする関数
     mainArea.innerHTML=content//メインの中身を変更する
 }
 function createButton_clickedProcess(event){//新規作成ボタンが押されたときの処理
-    //くそ設計なのでisNotSavedプロパティを取り除いていないデータの取得方法がデータの再取得しか思いつかなかった
-    fetch(dataBaseUrl).then(response=>response.json()).then(data=>{
-        let newCreateData=JSON.parse(JSON.stringify(emptyData))
-        newCreateData.isNotSaved=true//未保存のデータとして定義(未保存のデータは保存されない)
-        let result
-        if(Boolean(data)===true){//データが入っているときの処理
-            result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
-            result.enemy.push(newCreateData)//データに新規データを追加する
-        }else{
-            result={enemy:[]}//空データを作詞絵
-            result.enemy.push(newCreateData)//データに新規データを追加する
-        }
-        const newPageUrl=`${htmlUrl}?page=edit&index=${result.enemy.length-1}`
-        switch(event.button){
-            case 0://左クリックのときの処理
-                dataBase_update(dataBaseUrl,result,"jump",newPageUrl)
-                break
-            case 1://中クリックのときの処理
-                dataBase_update(dataBaseUrl,result,"open",newPageUrl)
-                break
-            case 2://右クリックのときの処理
-                break
-            default:
-                break
-        }
+    let newCreateData=JSON.parse(JSON.stringify(emptyData))
+    // newCreateData.isNotSaved = true//未保存のデータとして定義(未保存のデータは保存されない)
+    fetch(`${dataBaseUserPath}.json`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json", // JSON データを送信
+        },
+        body: JSON.stringify(newCreateData)
+    }).then((response) => {
+        console.log(response)
+        response.json().then(jsonRes => {
+            const newKey = jsonRes.name
+            const newPageUrl = `${htmlUrl}?page=edit&index=${newKey}`
+
+            switch(event.button){
+                case 0://左クリックのときの処理
+                    location.href = newPageUrl // URLへ移動
+                    break
+                case 1://中クリックのときの処理
+                    window.open(newPageUrl, "_blank") // 新しいタブでURLを開く
+                    break
+                case 2://右クリックのときの処理
+                default:
+                    break
+            }
+        })
     })
 }
-function viewButton_clickedProcess(data,event,url){//編集ページの一覧/閲覧ボタンが押されたときの処理
-    let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
+function viewButton_clickedProcess(event, url){//編集ページの一覧/閲覧ボタンが押されたときの処理
+    const nowData = getInputEnemyData()
+    let result=JSON.parse(JSON.stringify(nowData))//値渡しでデータを受け取る
+    const dataPath = `${dataBaseUserPath}/${Index}.json`
     switch(event.button){
         case 0://左クリックのときの処理
-            dataBase_update(dataBaseUrl,result,"jump",url)
+            dataBase_update(dataPath, result, "jump", url)
             break
         case 1://中クリックのときの処理
-            dataBase_update(dataBaseUrl,result,"open",url)
+            dataBase_update(dataPath, result, "open", url)
             break
         case 2://右クリックのときの処理
             break
@@ -839,7 +850,7 @@ function createEnemyElement(enemyData,data){//表示する敵データの要素�
     })
     $(document).off("click",`#deleteButton${key}`)
     $(document).on("click",`#deleteButton${key}`,function(){
-        deleteEnemyPiece(key,data)//削除ボタン処理を適用する
+        deleteEnemyPiece(key)//削除ボタン処理を適用する
     })
     return result
 }
@@ -997,7 +1008,7 @@ function createMoveBox(moves=newData.moves[0],index=null,page=Page){//追加す�
             }
             for(let i in list){
                 if(Boolean(property)===true){
-                    if((property.includes(list[i]))||(move.canDiagonal)){
+                    if((property.includes(list[i])) || (boxName==="move-canDiagonal" && move.canDiagonal)){
                         isChecked="checked"
                     }else{
                         isChecked=""
@@ -2016,15 +2027,10 @@ function getReplacedData(data,key,enemyData){//データの一部を置換する
     result.enemy.splice(key,1,enemyData)//指定されたデータを置換する
     return result
 }
-function getInputData(data){//入力されたデータを含む全体のデータを取得する関数
-    const gottenEnemyData=getInputEnemyData()
-    const replacedData=getReplacedData(data,Index,gottenEnemyData)
-    return replacedData
-}
 function saveEditData(data){//入力したデータを保存する関数
-    const inputData=getInputData(data)
-    delete inputData.isNotSaved//未保存のデータであるというプロパティを削除する
-    dataBase_update(dataBaseUrl,inputData)//jsonファイルを上書き更新する
+    const gottenEnemyData = getInputEnemyData(data)
+    const dataPath = `${dataBaseUserPath}/${Index}.json`
+    dataBase_update(dataPath, gottenEnemyData)//jsonファイルを上書き更新する
     alert("保存しました")
 }
 function saveByShortCutKey(data){//ショートカットキーで保存する処理を適用する関数
@@ -2113,15 +2119,11 @@ function setAutoAdjustTextarea(target){//textareaの入力時に縦幅を自動�
 }
 
 /* データを編集・出力する関数 */
-function deleteEnemyPiece(key,data){//jsonのデータを削除する関数
-    let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
-    for(let i=0;i<result.enemy.length;i++){//いちいち全部のデータを参照しようとするので重い 改善するべき設計
-        if(result.enemy[i].index===key){
-            result.enemy.splice(i,1)//削除する
-            break
-        }
-    }
-    dataBase_update(dataBaseUrl,result,"reload")//データベースを削除されたデータで上書きする
+function deleteEnemyPiece(key){//jsonのデータを削除する関数
+    const deletePath = `${dataBaseUserPath}/${key}.json`
+    fetch(deletePath, {method: 'DELETE'}).then((_res) => {
+        location.reload()//削除し終えたら画面を再読み込みする
+    })
 }
 function exportEnemyPiece(enemyData){//敵コマをクリップボードに出力する関数
     let result=""
@@ -2140,8 +2142,8 @@ function convertJsonToPiece(enemyData){//Jsonデータをココフォリアコ�
             externalUrl:"",
             status:[
                 {label:"HP",value:0,max:0},
-                {label:"行動P",value:0,max:0},
-                {label:"装甲",value:0,max:0}
+                {label:"装甲",value:0,max:0},
+                {label:"行動P",value:0,max:0}
             ],
             params:[
                 {label:"回避技能",value:`${convertProperty(enemyData.dodge)}`}
@@ -2246,14 +2248,21 @@ function getMovesAsCcfoliaData(moves,subSeparateBar){//ココフォリアコマ�
         //技番号と名前
         result.push(`【${convertProperty(sortedMoves[i].index)}】『${convertProperty(sortedMoves[i].name)}』`)
         //射程と範囲
+        if(sortedMoves[i].elements || sortedMoves[i].types){
+            let moveType = ""
+            if(sortedMoves[i].elements) moveType += `${sortedMoves[i].elements.join("・")}属性`
+            if(sortedMoves[i].types) moveType += sortedMoves[i].types.join("・")
+            if(Number(sortedMoves[i].damage)!==0) moveType += "ダメージ"
+            result.push(moveType)
+        }
         const reachRange=new Array
         if((Number(sortedMoves[i].reach)!==0)||(sortedMoves[i].reach==="")){
             reachRange.push(`射程${viewReach(convertProperty(sortedMoves[i].reach),sortedMoves[i].canDiagonal)}`)
         }
         if(sortedMoves[i].range!==""){
-            reachRange.push(sortedMoves[i].range)
+            reachRange.push(`範囲: ${sortedMoves[i].range}`)
         }
-        result.push(addDotToArray(reachRange,","))
+        result.push(addDotToArray(reachRange,", "))
         //状態異常
         for(let j in sortedMoves[i].statusEffects){
             result.push(`${convertProperty(sortedMoves[i].statusEffects[j].effectType)}${hideTheZeroProperty(sortedMoves[i].statusEffects[j].level,`Lv${convertProperty(sortedMoves[i].statusEffects[j].level)}`)}${hideTheZeroProperty(sortedMoves[i].statusEffects[j].turn,`(${convertProperty(sortedMoves[i].statusEffects[j].turn)}ターン)`)}`)
