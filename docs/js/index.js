@@ -360,12 +360,12 @@ function getDataWithIndex(data){//全データをインデックス付きで取�
     return result
 }
 function getDataWithoutNotSavedData(data){//未保存のデータ以外を取得する関数
-    let result={enemy:[]}
-    for(let i=0;i<data.enemy.length;i++){
-        const enemyData=data.enemy[i]
-        enemyData.index=i
+    let result={enemy: {}}
+    for(const key in data.enemy){
+        const enemyData=data.enemy[key]
+        enemyData.index=key
         if((!enemyData.isNotSaved)&&(!enemyData.founder)){//未保存のデータや仮置きデータでなければ
-            result.enemy.push(enemyData)//データを取得する
+            result.enemy[key] = enemyData//データを取得する
         }
     }
     return result
@@ -422,6 +422,15 @@ const statusEffectWithoutLevelList=[//レベルのない状態異常のリスト
 /* ページごとに表示するコンテンツを変更するための関数 */
 function dataBase_get(url){//データベースのデータを取得する関数
     fetch(url).then(response=>response.json()).then(respondedData=>{
+        console.log(respondedData)
+        const newObj = {
+            enemy: respondedData.enemy
+            .map((item, index) => (item !== null ? { [index]: item } : null)) // nullを除いた部分オブジェクトに変換
+            .filter(item => item !== null) // nullを削除
+            .reduce((obj, item) => Object.assign(obj, item), {}) // オブジェクトに統合
+        }
+
+        console.log(newObj)
         if(!respondedData){//データが存在しない場合、新規データを追加する
             const dataFramework={enemy:[{founder:true}]}//新規データ
             dataBase_update(dataBaseUrl,dataFramework,"reload")
@@ -429,7 +438,7 @@ function dataBase_get(url){//データベースのデータを取得する関数
         }
         let dataWithoutWasteData=respondedData
         if(Page===null){//一覧ページの場合
-            dataWithoutWasteData=getDataWithoutNotSavedData(respondedData)//未保存の新規データを削除して取得する
+            dataWithoutWasteData=getDataWithoutNotSavedData(newObj)//未保存の新規データを削除して取得する
         }
         updateHTML(dataWithoutWasteData)//HTMLを更新する
     })
@@ -839,7 +848,7 @@ function createEnemyElement(enemyData,data){//表示する敵データの要素�
     })
     $(document).off("click",`#deleteButton${key}`)
     $(document).on("click",`#deleteButton${key}`,function(){
-        deleteEnemyPiece(key,data)//削除ボタン処理を適用する
+        deleteEnemyPiece(key)//削除ボタン処理を適用する
     })
     return result
 }
@@ -2108,15 +2117,11 @@ function setAutoAdjustTextarea(target){//textareaの入力時に縦幅を自動�
 }
 
 /* データを編集・出力する関数 */
-function deleteEnemyPiece(key,data){//jsonのデータを削除する関数
-    let result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
-    for(let i=0;i<result.enemy.length;i++){//いちいち全部のデータを参照しようとするので重い 改善するべき設計
-        if(result.enemy[i].index===key){
-            result.enemy.splice(i,1)//削除する
-            break
-        }
-    }
-    dataBase_update(dataBaseUrl,result,"reload")//データベースを削除されたデータで上書きする
+function deleteEnemyPiece(key){//jsonのデータを削除する関数
+    const deletePath = `${dataBaseUserPath}/${key}.json`
+    fetch(deletePath, {method: 'DELETE'}).then((_res) => {
+        location.reload()//削除し終えたら画面を再読み込みする
+    })
 }
 function exportEnemyPiece(enemyData){//敵コマをクリップボードに出力する関数
     let result=""
