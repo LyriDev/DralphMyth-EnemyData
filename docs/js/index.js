@@ -359,12 +359,12 @@ function getDataWithIndex(data){//全データをインデックス付きで取�
     }
     return result
 }
-function getDataWithoutNotSavedData(data){//未保存のデータ以外を取得する関数
+function getDataWithoutNotSavedData(data){//仮置きデータ以外を取得する関数
     let result={enemy: {}}
     for(const key in data.enemy){
         const enemyData=data.enemy[key]
         enemyData.index=key
-        if((!enemyData.isNotSaved)&&(!enemyData.founder)){//未保存のデータや仮置きデータでなければ
+        if((!enemyData.founder)){//仮置きデータでなければ
             result.enemy[key] = enemyData//データを取得する
         }
     }
@@ -422,15 +422,16 @@ const statusEffectWithoutLevelList=[//レベルのない状態異常のリスト
 /* ページごとに表示するコンテンツを変更するための関数 */
 function dataBase_get(url){//データベースのデータを取得する関数
     fetch(url).then(response=>response.json()).then(respondedData=>{
-        console.log(respondedData)
-        const newObj = {
-            enemy: respondedData.enemy
-            .map((item, index) => (item !== null ? { [index]: item } : null)) // nullを除いた部分オブジェクトに変換
-            .filter(item => item !== null) // nullを削除
-            .reduce((obj, item) => Object.assign(obj, item), {}) // オブジェクトに統合
+        if(Array.isArray(respondedData?.enemy)){
+            const newObj = {
+                enemy: respondedData.enemy
+                .map((item, index) => (item !== null ? { [index]: item } : null)) // nullを除いた部分オブジェクトに変換
+                .filter(item => item !== null) // nullを削除
+                .reduce((obj, item) => Object.assign(obj, item), {}) // オブジェクトに統合
+            }
+            respondedData = newObj
         }
 
-        console.log(newObj)
         if(!respondedData){//データが存在しない場合、新規データを追加する
             const dataFramework={enemy:[{founder:true}]}//新規データ
             dataBase_update(dataBaseUrl,dataFramework,"reload")
@@ -438,7 +439,7 @@ function dataBase_get(url){//データベースのデータを取得する関数
         }
         let dataWithoutWasteData=respondedData
         if(Page===null){//一覧ページの場合
-            dataWithoutWasteData=getDataWithoutNotSavedData(newObj)//未保存の新規データを削除して取得する
+            dataWithoutWasteData=getDataWithoutNotSavedData(respondedData)//未保存の新規データを削除して取得する
         }
         updateHTML(dataWithoutWasteData)//HTMLを更新する
     })
@@ -655,31 +656,32 @@ function updateMainContent(content){//メインの中身を上書きする関数
     mainArea.innerHTML=content//メインの中身を変更する
 }
 function createButton_clickedProcess(event){//新規作成ボタンが押されたときの処理
-    //くそ設計なのでisNotSavedプロパティを取り除いていないデータの取得方法がデータの再取得しか思いつかなかった
-    fetch(dataBaseUrl).then(response=>response.json()).then(data=>{
-        let newCreateData=JSON.parse(JSON.stringify(emptyData))
-        newCreateData.isNotSaved=true//未保存のデータとして定義(未保存のデータは保存されない)
-        let result
-        if(Boolean(data)===true){//データが入っているときの処理
-            result=JSON.parse(JSON.stringify(data))//値渡しでデータを受け取る
-            result.enemy.push(newCreateData)//データに新規データを追加する
-        }else{
-            result={enemy:[]}//空データを作詞絵
-            result.enemy.push(newCreateData)//データに新規データを追加する
-        }
-        const newPageUrl=`${htmlUrl}?page=edit&index=${result.enemy.length-1}`
-        switch(event.button){
-            case 0://左クリックのときの処理
-                dataBase_update(dataBaseUrl,result,"jump",newPageUrl)
-                break
-            case 1://中クリックのときの処理
-                dataBase_update(dataBaseUrl,result,"open",newPageUrl)
-                break
-            case 2://右クリックのときの処理
-                break
-            default:
-                break
-        }
+    let newCreateData=JSON.parse(JSON.stringify(emptyData))
+    // newCreateData.isNotSaved = true//未保存のデータとして定義(未保存のデータは保存されない)
+    fetch(`${dataBaseUserPath}.json`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json", // JSON データを送信
+        },
+        body: JSON.stringify(newCreateData)
+    }).then((response) => {
+        console.log(response)
+        response.json().then(jsonRes => {
+            const newKey = jsonRes.name
+            const newPageUrl = `${htmlUrl}?page=edit&index=${newKey}`
+
+            switch(event.button){
+                case 0://左クリックのときの処理
+                    location.href = newPageUrl // URLへ移動
+                    break
+                case 1://中クリックのときの処理
+                    window.open(newPageUrl, "_blank") // 新しいタブでURLを開く
+                    break
+                case 2://右クリックのときの処理
+                default:
+                    break
+            }
+        })
     })
 }
 function viewButton_clickedProcess(event, url){//編集ページの一覧/閲覧ボタンが押されたときの処理
@@ -2246,7 +2248,6 @@ function getMovesAsCcfoliaData(moves,subSeparateBar){//ココフォリアコマ�
         //技番号と名前
         result.push(`【${convertProperty(sortedMoves[i].index)}】『${convertProperty(sortedMoves[i].name)}』`)
         //射程と範囲
-        console.log({sortedMoves})
         if(sortedMoves[i].elements || sortedMoves[i].types){
             let moveType = ""
             if(sortedMoves[i].elements) moveType += `${sortedMoves[i].elements.join("・")}属性`
