@@ -40,6 +40,7 @@ const emptyData={//新規データの枠組み(技・特性欄は空)
         confusion:"",
         stun:"",
         curse:"",
+        death:"",
         atkDown:"",
         defDown:{
             physical:"",
@@ -82,6 +83,7 @@ const newData={//新規データの枠組み(技・特性欄に空要素を1つ�
         confusion:"",
         stun:"",
         curse:"",
+        death:"",
         atkDown:"",
         defDown:{
             physical:"",
@@ -132,7 +134,7 @@ function getAmbiguousArrayLength(array){//存在しないかもしれない配�
     }
 }
 function convertProperty(value,target="",alt="?"){//null値などを代替テキストに変換する関数
-    if(value===target){
+    if(value===target||value===null||value===undefined){
         return alt
     }else{
         return value
@@ -411,10 +413,10 @@ const elementColorList=[//属性カラーリスト
     "#B488DD"
 ]
 const statusEffectList=[//状態異常リスト
-    "炎","氷","幻惑","毒","眠り","混乱","スタン","呪い","攻撃力低下","物理防御力低下","息防御力低下","魔法防御力低下","素早さ低下"
+    "炎","氷","幻惑","毒","眠り","混乱","スタン","呪い","即死","攻撃力低下","物理防御力低下","息防御力低下","魔法防御力低下","素早さ低下"
 ]
 const statusEffectWithoutLevelList=[//レベルのない状態異常のリスト
-    statusEffectList[4],statusEffectList[5],statusEffectList[7]
+    statusEffectList[4],statusEffectList[5],statusEffectList[7],statusEffectList[8]
 ]
 
 /* ページごとに表示するコンテンツを変更するための関数 */
@@ -1323,6 +1325,7 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
                 <th>混乱</th>
                 <th>スタン</th>
                 <th>呪い</th>
+                <th>即死</th>
                 <th>隠密</th>
             </tr>
             <tr>
@@ -1334,6 +1337,7 @@ function viewEnemyData(enemyDataValue){//閲覧ページを作成する関数
                 <td>${convertProperty(enemyDataValue.statusEffects.confusion)}%</td>
                 <td>${convertProperty(enemyDataValue.statusEffects.stun)}%</td>
                 <td>${convertProperty(enemyDataValue.statusEffects.curse)}%</td>
+                <td>${convertProperty(enemyDataValue.statusEffects.death)}%</td>
                 <td>${convertAvailability(enemyDataValue.stealth)}</td>
             </tr>
         </table>
@@ -1662,6 +1666,13 @@ function getEditPage(enemyData){
                                 </td>
                             </tr>
                             <tr>
+                                <td>即死</td>
+                                <td>
+                                    <input type="number" id="statusEffects-death" value="${enemyData.statusEffects.death}">
+                                    <div class=cardTableContent-add>%</div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>隠密</td>
                                 <td>
                                     <select id="statusEffects-stealth">
@@ -1902,6 +1913,7 @@ function getInputEnemyData(){//入力フォームからデータを取得する�
     result.statusEffects.confusion=NumberOrEmpty(document.getElementById("statusEffects-confusion").value)
     result.statusEffects.stun=NumberOrEmpty(document.getElementById("statusEffects-stun").value)
     result.statusEffects.curse=NumberOrEmpty(document.getElementById("statusEffects-curse").value)
+    result.statusEffects.death=NumberOrEmpty(document.getElementById("statusEffects-death").value)
     result.statusEffects.atkDown=NumberOrEmpty(document.getElementById("statusEffects-atkDown").value)
     result.statusEffects.defDown.physical=NumberOrEmpty(document.getElementById("statusEffects-defDown-physical").value)
     result.statusEffects.defDown.breath=NumberOrEmpty(document.getElementById("statusEffects-defDown-breath").value)
@@ -2195,7 +2207,8 @@ function getAbilitiesAsCcfoliaData(enemyData,subSeparateBar){//ココフォリ�
             `${convertPercent(enemyData.statusEffects.sleep,"眠り",true,true)}`,
             `${convertPercent(enemyData.statusEffects.confusion,"混乱",true,true)}`,
             `${convertPercent(enemyData.statusEffects.stun,"スタン",true,true)}`,
-            `${convertPercent(enemyData.statusEffects.curse,"呪い",true,true)}`
+            `${convertPercent(enemyData.statusEffects.curse,"呪い",true,true)}`,
+            `${convertPercent(enemyData.statusEffects.death,"即死",true,true)}`
         ],
         resistance_parameterDown:[
             `${convertPercent(enemyData.statusEffects.atkDown,"攻撃力低下",true,true)}`,
@@ -2338,6 +2351,7 @@ function convertJsonToText(enemyData){//jsonデータをtxt形式に変換する
         `${convertPercent(enemyData.statusEffects.confusion,"混乱",true)}`,
         `${convertPercent(enemyData.statusEffects.stun,"スタン",true)}`,
         `${convertPercent(enemyData.statusEffects.curse,"呪い",true)}`
+        `${convertPercent(enemyData.statusEffects.death,"即死",true)}`
     ]
     const row5=[//パラメータ低下耐性
         `${convertPercent(enemyData.statusEffects.atkDown,"攻撃力低下",true)}`,
