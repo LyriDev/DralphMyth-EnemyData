@@ -2246,10 +2246,11 @@ function getMovesAsCcfoliaData(moves,subSeparateBar){//ココフォリアコマ�
         //技番号と名前
         result.push(`【${convertProperty(sortedMoves[i].index)}】『${convertProperty(sortedMoves[i].name)}』`)
         //射程と範囲
+        console.log({sortedMoves})
         if(sortedMoves[i].elements || sortedMoves[i].types){ // TODO 技種別と属性
             let moveType = ""
-            if(sortedMoves[i].elements) moveType += `${sortedMoves[i].elements}属性`
-            if(sortedMoves[i].types) moveType += sortedMoves[i].types
+            if(sortedMoves[i].elements) moveType += `${sortedMoves[i].elements.join("・")}属性`
+            if(sortedMoves[i].types) moveType += sortedMoves[i].types.join("・")
             if(Number(sortedMoves[i].damage)!==0) moveType += "ダメージ"
             result.push(moveType)
         }
