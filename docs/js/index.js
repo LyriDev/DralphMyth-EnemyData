@@ -860,7 +860,7 @@ function getSortedMoves(moves){//ソートされた技配列を取得する関�
         const move=moves[i]
         moveIndexList.push(move.index)
     }
-    const moveIndexTypeList=getTypeArray(moveIndexList)//技番号の種類一覧
+    const moveIndexTypeList = moveIndexList.sort((a, b) => Number(a) - Number(b)); // ソートされた技番号
     const result=new Array
     for(let i in moveIndexTypeList){//技番号順に並び変える
         for(let j in moves){
