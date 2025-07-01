@@ -1,3 +1,8 @@
+#exChatPalette{
+    position: fixed;
+    margin: 10px 0;
+}
+
 #name,#tag,.parameterBox > div{
     color: #F5F5F5;
     font-size: 1.25rem;

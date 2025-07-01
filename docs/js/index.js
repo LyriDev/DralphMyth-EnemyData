@@ -497,9 +497,10 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             })
             break
         case "view"://閲覧ページのヘッダー
+            // <div id="explanation">ドラルフ神話戦闘データエディタ</div>
             result=`
             <div id="headerContent">
-                <div id="explanation">ドラルフ神話戦闘データエディタ</div>
+                <button class="button" id="exChatPalette">拡張チャットパレット出力</button>
                 <div id="headerButtonArea">
                     <button class="button" id="indexButton">一覧</button>
                     <button class="button" id="editButton"}>編集</button>
@@ -509,12 +510,15 @@ function updateHeader(data,_page=Page){//ヘッダーを変更する関数
             `
             setUrl("#indexButton",indexUrl)
             setUrl("#editButton",editUrl)
-            $(document).on("mousedown","#explanation",function(event){//ホームボタンにクリック処理を適用する
-                window.open("https://github.com/LyriDev/DralphMyth-EnemyData/blob/release/README.md")
-            })
+            // $(document).on("mousedown","#explanation",function(event){//ホームボタンにクリック処理を適用する
+            //     window.open("https://github.com/LyriDev/DralphMyth-EnemyData/blob/release/README.md")
+            // })
             $(document).on("click","#exportButton",function(){
                 exportEnemyPiece(data.enemy[Index])//出力ボタン処理を適用する
             })
+            $(document).on("click","#exChatPalette",function(){
+                exportExChatPalette(data.enemy[Index]); // 拡張チャットパレットの出力ボタン処理を適用する
+            });
             break
         case "edit"://編集ページのヘッダー
             result=`
@@ -2168,6 +2172,110 @@ function convertJsonToPiece(enemyData){//Jsonデータをココフォリアコ�
     result=JSON.stringify(ccfoliaPiece)
     return result
 }
+
+function exportExChatPalette(enemyData){ // 拡張チャットパレットをクリップボードに出力する関数
+    let result = "";
+    result = getExChatPalette(enemyData);
+    exportToClipboard(result); //クリップボードに出力
+    alert("拡張チャットパレットをクリップボードに出力しました。");
+}
+
+function getExChatPalette(enemyData){ // 指定された敵データの拡張チャットパレットを作成する関数
+    const nameHeader = `# ${convertProperty(enemyData.name)} レベル${convertProperty(enemyData.level)}`;
+    const sanCheck = `SANチェック ${convertProperty(enemyData.sanCheck.success)}/${convertProperty(enemyData.sanCheck.failure)}`;
+    const result = 
+`${nameHeader}
+---
+${nameHeader}
+\`${sanCheck}\`
+---
+${nameHeader}
+\`${getAbilities(enemyData)}\`
+`;
+    return result;
+
+    // パッシブスキル以外の特性欄を出力する
+    function getAbilities(enemyData){
+        const summary = [
+            `${convertProperty(addDotToArray(deleteValueInArray(enemyData.elements,""),"・"))}属性`,
+            `${addDotToArray(addValueToArray(deleteValueInArray(enemyData.species,""),"系"),"・")}`,
+            `AI${convertProperty(enemyData.actionNumber)}回行動`
+        ];
+        const summaryText = summary.join(", ");
+        const resistanceText = getResistance(enemyData.statusEffects);
+        let supplementaryText = "";
+        if(enemyData.note){
+            supplementaryText = `\n${enemyData.note}`;
+        }
+        let antiHide = "";
+        if(enemyData.stealth === 0) antiHide = "\n隠密無効";
+        else if(enemyData.stealth !== "" && enemyData.stealth < 100) antiHide = `\n隠密${100 - enemyData.stealth}%無効`;
+        return `${summaryText}\n${resistanceText}${antiHide}${supplementaryText}`;
+    }
+
+    // 状態異常耐性を出力する
+    function getResistance(statusEffects){
+        const baseEffects = [ // 基礎状態異常系のリスト
+            ['flame', '炎'],
+            ['ice', '氷'],
+            ['dazzle', '幻惑'],
+            ['poison', '毒'],
+            ['sleep', '眠り'],
+            ['confusion', '混乱'],
+            ['stun', 'スタン'],
+            ['curse', '呪い'],
+            ['death', '即死']
+        ];
+
+        const debuffEffects = [ // パラメータダウン系のリスト
+            ['atkDown', '攻撃力低下'],
+            ['defDown.physical', '物理防御力低下'],
+            ['defDown.breath', '息防御力低下'],
+            ['defDown.magic', '魔法防御力低下'],
+            ['spdDown', '素早さ低下']
+        ];
+
+        const result = [
+            formatEffects(baseEffects), // 1行目: 基礎状態異常系
+            formatEffects(debuffEffects) // 2行目: パラメータダウン系
+        ];
+
+        return result.join('\n');
+
+        // 状態異常耐性をフォーマットする関数
+        function formatEffects(effects) {
+            const groups = {
+                0: [],
+                25: [],
+                50: [],
+                75: [],
+                custom: []
+            };
+
+            for (const [key, label] of effects) {
+                const keys = key.split('.');
+                let value = statusEffects;
+                for (const k of keys) value = value?.[k];
+                if (value === undefined || value === 100 || value === "") continue;
+                if ([0, 25, 50, 75].includes(value)) {
+                    groups[value].push(label);
+                } else {
+                    groups.custom.push(`${label}${value}%無効`);
+                }
+            }
+
+            const result = [];
+            if (groups[0].length) result.push(`${groups[0].join('・')}無効`);
+            if (groups[25].length) result.push(`${groups[25].join('・')}激減`);
+            if (groups[50].length) result.push(`${groups[50].join('・')}半減`);
+            if (groups[75].length) result.push(`${groups[75].join('・')}低減`);
+            result.push(...groups.custom); // 個別パーセント
+
+            return result.join(', ');
+        }
+    }
+}
+
 function getChatPalette(enemyData){//出力するココフォリアコマのチャットパレットを作成する関数
     let result=""
     const separateBar="―――――――――――――――――"
@@ -2193,6 +2301,7 @@ function getChatPalette(enemyData){//出力するココフォリアコマのチ�
     result=addDotToArray(deleteValueInArray(sections,""),"\n"+separateBar+"\n")
     return result
 }
+
 function getAbilitiesAsCcfoliaData(enemyData,subSeparateBar){//ココフォリアコマの特性欄を作成する関数
     const result=new Array
     const abilities={
@@ -2239,6 +2348,7 @@ function getAbilitiesAsCcfoliaData(enemyData,subSeparateBar){//ココフォリ�
     }
     return deleteValueInArray(result,"")
 }
+
 function getMovesAsCcfoliaData(moves,subSeparateBar){//ココフォリアコマの技欄を作成する関数
     const result=new Array
     const sortedMoves=getSortedMoves(moves)
