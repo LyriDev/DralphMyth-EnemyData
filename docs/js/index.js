@@ -2190,17 +2190,18 @@ ${nameHeader}
 \`${sanCheck}\`
 ---
 ${nameHeader}
-\`${getAbilities(enemyData)}\`
+\`${getAbilities(enemyData)}\`${getPassiveSkills(enemyData.abilities, nameHeader)}
 `;
     return result;
 
     // パッシブスキル以外の特性欄を出力する
     function getAbilities(enemyData){
-        const summary = [
-            `${convertProperty(addDotToArray(deleteValueInArray(enemyData.elements,""),"・"))}属性`,
-            `${addDotToArray(addValueToArray(deleteValueInArray(enemyData.species,""),"系"),"・")}`,
-            `AI${convertProperty(enemyData.actionNumber)}回行動`
-        ];
+        const summary = []
+        summary.push(`${convertProperty(addDotToArray(deleteValueInArray(enemyData.elements,""),"・"))}属性`);
+        if(enemyData.species.length > 0 && enemyData.species[0] !== ""){
+            summary.push(`${addDotToArray(addValueToArray(deleteValueInArray(enemyData.species,""),"系"),"・")}`);
+        }
+        summary.push(`AI${convertProperty(enemyData.actionNumber)}回行動`);
         const summaryText = summary.join(", ");
         const resistanceText = getResistance(enemyData.statusEffects);
         let supplementaryText = "";
@@ -2274,6 +2275,27 @@ ${nameHeader}
             return result.join(', ');
         }
     }
+
+    // パッシブスキルを出力する
+    function getPassiveSkills(abilities, nameHeader){
+        if (!abilities || abilities.length === 0) return "";
+
+        // 特性効果を取得する
+        console.log(abilities)
+        const abilitiesText = abilities.map(ability => {
+            let result =
+`『${convertProperty(ability.name)}』
+${convertProperty(ability.effect)}`;
+            return result;
+        });
+
+        // 特性効果を拡張チャットパレット用にフォーマットする
+        const formattedAbilities = abilitiesText.map(text => {
+            return `${nameHeader}\n\`${text}\``
+        }).join("\n- - -\n");
+
+        return "\n" + formattedAbilities + "\n---";
+    }
 }
 
 function getChatPalette(enemyData){//出力するココフォリアコマのチャットパレットを作成する関数
@@ -2338,7 +2360,7 @@ function getAbilitiesAsCcfoliaData(enemyData,subSeparateBar){//ココフォリ�
     if(Boolean(enemyData.abilities)===true){//特性があるときの処理
         for(let i in enemyData.abilities){
             result.push(subSeparateBar)
-            if(enemyData.abilities[i].name!=="")result.push(`『${convertProperty(enemyData.abilities[i].name)}』`)
+            if(enemyData.abilities[i].name!=="") result.push(`『${convertProperty(enemyData.abilities[i].name)}』`)
             result.push(convertProperty(enemyData.abilities[i].effect))
         }
     }
