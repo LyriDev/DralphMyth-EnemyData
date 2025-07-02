@@ -2317,6 +2317,16 @@ ${getMoves(enemyData.moves, nameHeader)}
     function getMoves(moves, nameHeader){
         const sortedMoves = getSortedMoves(moves)
         return sortedMoves.map(move => {
+            // いてつく波動の場合、専用で処理する
+            if(move.name === "いてつく波動"){
+                return `
+${nameHeader}
+\`【${convertProperty(move.index)}】『いてつく波動』
+相手全員に必中、相手の強化状態を全解除
+(次の自ターンが終了時まで再使用しない)\`
+`.trim();
+            }
+
             //技番号と名前
             const title = `【${convertProperty(move.index)}】『${convertProperty(move.name)}』`;
 
