@@ -324,8 +324,11 @@ function viewReach(reach,canDiagonal,text="斜め可"){//射程を斜め可付�
     return result
 }
 function checkHaveDisruptiveWave(moves){//いてつく波動のような使うと次ターン終了時まで使えなくなるを持っているかどうか調べる関数
-    const checkTemplate="(次の自分のターンが終わるまで再使用しない)"
-    const regDisWave=new RegExp(checkTemplate)//非完全一致の正規表現
+    const checkTemplate = ["(次の自分のターンが終わるまで再使用しない)", "(次の自ターン終了時まで再使用しない)"];
+    const pattern = checkTemplate // 正規表現用に特殊文字をエスケープし、"or" 条件で結合
+        .map(str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))  // 正規表現の特殊文字をエスケープ
+        .join("|");
+    const regDisWave = new RegExp(pattern); //非完全一致の正規表現
     let result=false
     for(let i in moves){
         for(let j in moves[i].effects){
@@ -418,6 +421,9 @@ const statusEffectList=[//状態異常リスト
 const statusEffectWithoutLevelList=[//レベルのない状態異常のリスト
     statusEffectList[4],statusEffectList[5],statusEffectList[7],statusEffectList[8]
 ]
+const statusDebuffList = [ // デバフ系状態異常のリスト
+    statusEffectList[9], statusEffectList[10], statusEffectList[11], statusEffectList[12], statusEffectList[13]
+];
 
 /* ページごとに表示するコンテンツを変更するための関数 */
 function dataBase_get(url){//データベースのデータを取得する関数
@@ -2183,15 +2189,28 @@ function exportExChatPalette(enemyData){ // 拡張チャットパレットをク
 function getExChatPalette(enemyData){ // 指定された敵データの拡張チャットパレットを作成する関数
     const nameHeader = `# ${convertProperty(enemyData.name)} レベル${convertProperty(enemyData.level)}`;
     const sanCheck = `SANチェック ${convertProperty(enemyData.sanCheck.success)}/${convertProperty(enemyData.sanCheck.failure)}`;
-    const result = 
-`${nameHeader}
+    const controller = [ // 基本操作処理
+        ":HP-",
+        "1d{PC数} 攻撃対象",
+        `1d${getAmbiguousArrayLength(enemyData.moves)} 攻撃方法`,
+        checkHaveDisruptiveWave(enemyData.moves) && `1d${getAmbiguousArrayLength(enemyData.moves) - 1} 攻撃方法@波動済み`
+    ].filter(Boolean).map(line => `${nameHeader}\n\`${line}\``).join("\n");
+
+    const result = `
+${nameHeader}
 ---
 ${nameHeader}
 \`${sanCheck}\`
 ---
 ${nameHeader}
-\`${getAbilities(enemyData)}\`${getPassiveSkills(enemyData.abilities, nameHeader)}
-`;
+\`${getAbilities(enemyData)}\`
+---
+${getPassiveSkills(enemyData.abilities, nameHeader)}
+---
+${controller}
+---
+${getMoves(enemyData.moves, nameHeader)}
+`.trim();
     return result;
 
     // パッシブスキル以外の特性欄を出力する
@@ -2281,11 +2300,8 @@ ${nameHeader}
         if (!abilities || abilities.length === 0) return "";
 
         // 特性効果を取得する
-        console.log(abilities)
         const abilitiesText = abilities.map(ability => {
-            let result =
-`『${convertProperty(ability.name)}』
-${convertProperty(ability.effect)}`;
+            let result =`『${convertProperty(ability.name)}』\n${convertProperty(ability.effect)}`;
             return result;
         });
 
@@ -2294,7 +2310,84 @@ ${convertProperty(ability.effect)}`;
             return `${nameHeader}\n\`${text}\``
         }).join("\n- - -\n");
 
-        return "\n" + formattedAbilities + "\n---";
+        return formattedAbilities;
+    }
+
+    // 技を出力する
+    function getMoves(moves, nameHeader){
+        const sortedMoves = getSortedMoves(moves)
+        return sortedMoves.map(move => {
+            //技番号と名前
+            const title = `【${convertProperty(move.index)}】『${convertProperty(move.name)}』`;
+
+            //属性と攻撃種別
+            const elements =
+                (move.elements || move.types)
+                ? [
+                    move.elements && `${move.elements.join("・")}属性`,
+                    move.types && move.types.join("・"),
+                    (Number(move.damage) !== 0) && "ダメージ"
+                ].filter(Boolean).join("")
+                : "";
+
+            //射程と範囲
+            const reachRange = [
+                (Number(move.reach) !== 0 || move.reach === "") && 
+                    `射程${viewReach(convertProperty(move.reach), move.canDiagonal)}`,
+                (move.range !== "") &&
+                    `範囲: ${move.range}`
+            ].filter(Boolean).join(", ");
+
+            //状態異常
+            const statusEffects = (move.statusEffects || []).map(effect => {
+                const effectType = convertProperty(effect.effectType);
+                const effectLevel = (effect.level == 0) ? "" : `Lv${convertProperty(effect.level)}`;
+                const effectTurn = (effect.turn == 0) ? "" : `(${convertProperty(effect.turn)}ターン)`;
+                return effectType + effectLevel + effectTurn;
+            }).join("/");
+
+            // 効果
+            const effects = (move.effects || []).join("\n");
+
+            // 攻撃ロール
+            const moveName = convertProperty(move.name);
+            const attackCount = convertProperty(move.attackNumber);
+            const rate = convertProperty(move.successRate);
+            const atkNum = Number(move.attackNumber);
+
+            const attackRolls = isNaN(atkNum)
+            ? [`${attackCount} 【攻撃回数(${moveName})】`, `$valueB100<=${rate} 【${moveName}】`]
+            : (atkNum > 0)
+                ? [atkNum > 1
+                    ? `${attackCount}B100<=${rate} 【${moveName}】`
+                    : `CCB<=${rate} 【${moveName}】`]
+                : [];
+
+            // ダメージロール
+            const damageRoll = (Number(move.damage) !== 0) ? `${convertProperty(move.damage)} 【ダメージ(${moveName})】` : "";
+
+            // 出力する技のテキストを作成
+            let result = nameHeader + "\n";
+            result += `\`${title}`;
+            if(elements) result += `\n${elements}`;
+            if(reachRange) result += `\n${reachRange}`;
+            if(statusEffects) result += `\n${statusEffects}`;
+            if(effects) result += `\n${effects}`;
+            switch(attackRolls.length){
+                case 2:
+                    const rolls = `1\`${attackRolls[0]}\`\n2\`${attackRolls[1]}\``;
+                    result += `\`\n${nameHeader}\n${rolls}`;
+                    break;
+                case 1:
+                    result += `\n\`${attackRolls[0]}\``;
+                    break;
+                default:
+                    result += "`";
+                    break;
+            }
+            if(damageRoll) result += `\n${nameHeader}\n\`${damageRoll}\``;
+            return result;
+        }).join("\n- - -\n");
     }
 }
 
@@ -2374,6 +2467,7 @@ function getAbilitiesAsCcfoliaData(enemyData,subSeparateBar){//ココフォリ�
 function getMovesAsCcfoliaData(moves,subSeparateBar){//ココフォリアコマの技欄を作成する関数
     const result=new Array
     const sortedMoves=getSortedMoves(moves)
+    console.log(sortedMoves, moves)
     for(let i in sortedMoves){
         //間を区切る
         if(Number(i)!==0){result.push(subSeparateBar)}
