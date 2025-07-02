@@ -2332,7 +2332,7 @@ ${getMoves(enemyData.moves, nameHeader)}
 
             //射程と範囲
             const reachRange = [
-                (Number(move.reach) !== 0 || move.reach === "") && 
+                (Number(move.reach) > 1 || (move.range !== "" && Number(move.reach) !== 0) || move.reach === "") && 
                     `射程${viewReach(convertProperty(move.reach), move.canDiagonal)}`,
                 (move.range !== "") &&
                     `範囲: ${move.range}`
@@ -2373,16 +2373,17 @@ ${getMoves(enemyData.moves, nameHeader)}
             if(reachRange) result += `\n${reachRange}`;
             if(statusEffects) result += `\n${statusEffects}`;
             if(effects) result += `\n${effects}`;
+            result += `\``
             switch(attackRolls.length){
                 case 2:
                     const rolls = `1\`${attackRolls[0]}\`\n2\`${attackRolls[1]}\``;
-                    result += `\`\n${nameHeader}\n${rolls}`;
+                    result += `\n${nameHeader}\n${rolls}`;
                     break;
                 case 1:
                     result += `\n\`${attackRolls[0]}\``;
                     break;
                 default:
-                    result += "`";
+                    result += "";
                     break;
             }
             if(damageRoll) result += `\n${nameHeader}\n\`${damageRoll}\``;
