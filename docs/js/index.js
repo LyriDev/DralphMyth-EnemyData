@@ -2322,8 +2322,8 @@ ${getMoves(enemyData.moves, nameHeader)}
                 return `
 ${nameHeader}
 \`【${convertProperty(move.index)}】『いてつく波動』
-相手全員に必中、相手の強化状態を全解除
-(次の自ターンが終了時まで再使用しない)\`
+相手全員に必中、相手の全強化状態を解除
+(次の自ターン終了時まで再使用しない)\`
 `.trim();
             }
 
